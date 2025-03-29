@@ -12,13 +12,10 @@ import styles from "../css/NavigationBar.module.css";
 import "../css/Themes.css";
 
 function NavigationBar(props) {
-<<<<<<< HEAD
 	const prefersDarkMode =
 		window.matchMedia &&
 		window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-=======
->>>>>>> 5525838f8f767505d321a791e1b4940e8dfe9b30
 	const mode = useSelector((state) => state.themeReducer.mode);
 	const dispatch = useDispatch();
 
@@ -67,7 +64,6 @@ function NavigationBar(props) {
 	// Functions for the localStorage
 	useEffect(() => {
 		const savedMode = localStorage.getItem("themeMode"); // Gets the mode from the localStorage
-<<<<<<< HEAD
 		if (prefersDarkMode) {
 			dispatch(setMode("dark"));
 		} else if (!prefersDarkMode) {
@@ -76,12 +72,6 @@ function NavigationBar(props) {
 			dispatch(setMode(savedMode)); // Updates the mode with the user preferences
 		}
 	}, [dispatch, prefersDarkMode]);
-=======
-		if (savedMode) {
-			dispatch(setMode(savedMode)); // Updates the mode with the user preferences
-		}
-	}, [dispatch]);
->>>>>>> 5525838f8f767505d321a791e1b4940e8dfe9b30
 
 	useEffect(() => {
 		localStorage.setItem("themeMode", mode); // It updates the mode variable in localStorage
@@ -92,11 +82,7 @@ function NavigationBar(props) {
 	};
 
 	// Conditional rendering for the icon
-<<<<<<< HEAD
 	const icon = mode === "light" ? "🌙" : "🌞";
-=======
-	const icon = mode === "light" ? "🌙" : "☀️";
->>>>>>> 5525838f8f767505d321a791e1b4940e8dfe9b30
 
 	return (
 		<Row className={styles.nav}>

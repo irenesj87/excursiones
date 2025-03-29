@@ -54,11 +54,7 @@ export function Login() {
 			title="Inicia sesión"
 			autoClose={false}
 		>
-<<<<<<< HEAD
 			<Dropdown.Item className={styles.loginDropdownButtonText}>
-=======
-			<Dropdown.ItemText className={styles.loginDropdownButtonText}>
->>>>>>> 5525838f8f767505d321a791e1b4940e8dfe9b30
 				<div className={styles.formText}>
 					<ValidatedFormGroup
 						control="formBasicEmail"
@@ -70,13 +66,8 @@ export function Login() {
 					/>
 				</div>
 				<p>Nunca compartiremos tus datos con nadie</p>
-<<<<<<< HEAD
 			</Dropdown.Item>
 			<Dropdown.Item className={styles.loginDropdownButtonItem}>
-=======
-			</Dropdown.ItemText>
-			<Dropdown.ItemText>
->>>>>>> 5525838f8f767505d321a791e1b4940e8dfe9b30
 				<div className={styles.formText}>
 					<ValidatedFormGroup
 						control="formBasicPassword"
@@ -88,13 +79,8 @@ export function Login() {
 						message={false}
 					/>
 				</div>
-<<<<<<< HEAD
 			</Dropdown.Item>
 			<Dropdown.Item className={styles.loginDropdownButtonItem}>
-=======
-			</Dropdown.ItemText>
-			<Dropdown.ItemText>
->>>>>>> 5525838f8f767505d321a791e1b4940e8dfe9b30
 				{disabled && (
 					<Button
 						className={styles.sendBtn}
@@ -117,11 +103,7 @@ export function Login() {
 						Enviar
 					</Button>
 				)}
-<<<<<<< HEAD
 			</Dropdown.Item>
-=======
-			</Dropdown.ItemText>
->>>>>>> 5525838f8f767505d321a791e1b4940e8dfe9b30
 		</DropdownButton>
 	);
 }

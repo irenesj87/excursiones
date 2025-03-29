@@ -5,22 +5,8 @@
 	color: black;
 }
 
-<<<<<<< HEAD
 .userProfile .dropdownText {
 	color: black;
 	padding-top: 0.2rem; 
   	line-height: 1;
 }
-=======
-.userProfile.black {
-	color: black;
-}
-
-.dropdownText {
-	width: 200px;
-}
-
-.logoutBtn {
-	margin-left: 13%;
-}
->>>>>>> 5525838f8f767505d321a791e1b4940e8dfe9b30

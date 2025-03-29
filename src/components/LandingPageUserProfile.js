@@ -1,16 +1,5 @@
 import React from "react";
-<<<<<<< HEAD
 import { SplitButton, Dropdown, Container, Row, Col } from "react-bootstrap";
-=======
-import {
-	Button,
-	SplitButton,
-	Dropdown,
-	Container,
-	Row,
-	Col,
-} from "react-bootstrap";
->>>>>>> 5525838f8f767505d321a791e1b4940e8dfe9b30
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import "bootstrap/dist/css/bootstrap.css";
@@ -61,7 +50,6 @@ function LandingPageUserProfile(props) {
 						variant="success"
 						title={<div>Hola, {props.name}</div>}
 					>
-<<<<<<< HEAD
 						<Dropdown.Item
 							className={styles.dropdownText}
 							as={Link}
@@ -78,26 +66,6 @@ function LandingPageUserProfile(props) {
 						>
 							Cerrar sesión
 						</Dropdown.Item>
-=======
-						<Dropdown.ItemText className={styles.dropdownText}>
-							<Link
-								to="UserPage"
-								className={styles.userProfile + " " + styles.black}
-							>
-								Tu perfil
-							</Link>
-						</Dropdown.ItemText>
-						<Dropdown.Divider />
-						<Dropdown.ItemText className={styles.dropdownText}>
-							<Button
-								className={styles.logoutBtn}
-								variant="secondary"
-								onClick={logOut}
-							>
-								Cerrar sesión
-							</Button>
-						</Dropdown.ItemText>
->>>>>>> 5525838f8f767505d321a791e1b4940e8dfe9b30
 					</SplitButton>
 				</Col>
 			</Row>
