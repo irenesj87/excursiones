@@ -1,0 +1,105 @@
+<<<<<<< HEAD
+=======
+/* Base styles (common to both light and dark) */
+body {
+	transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+}
+
+>>>>>>> 5525838f8f767505d321a791e1b4940e8dfe9b30
+/********** Light Mode **********/
+body.light {
+	background-color: #f8f8f8;
+	color: #333;
+	--toggle-button-bg: #eee;
+
+	.accordion-button {
+		background-color: #f8f8f8;
+		color: #333;
+<<<<<<< HEAD
+		transition: none;
+=======
+		transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+>>>>>>> 5525838f8f767505d321a791e1b4940e8dfe9b30
+
+		&::after {
+			background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23333'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
+		}
+	}
+
+	.accordion-body,
+	#login {
+		background-color: #f8f8f8;
+		color: #333;
+<<<<<<< HEAD
+=======
+		transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+>>>>>>> 5525838f8f767505d321a791e1b4940e8dfe9b30
+	}
+}
+
+/********** Dark Mode **********/
+body.dark {
+	background-color: #222;
+	color: #eee;
+	--excursion-border-color: #eee; /* Override the variable for dark mode */
+	--toggle-button-color: #222;
+
+	.accordion-button {
+		background-color: #222;
+		color: #eee;
+<<<<<<< HEAD
+		transition: none;
+=======
+		transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+>>>>>>> 5525838f8f767505d321a791e1b4940e8dfe9b30
+
+		&::after {
+			background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23eee'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
+		}
+	}
+
+	.accordion-body,
+	#login,
+	tbody {
+		background-color: #222;
+		color: #eee;
+<<<<<<< HEAD
+=======
+		transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+>>>>>>> 5525838f8f767505d321a791e1b4940e8dfe9b30
+	}
+}
+
+/* Restore bottom radius for last accordion item in flush */
+.accordion-flush .accordion-item:last-child {
+	border-bottom-right-radius: 0.25rem;
+	border-bottom-left-radius: 0.25rem;
+}
+
+/******* Toggle Button ********/
+.toggleButton {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	cursor: pointer; /* Make it clear it's clickable */
+	user-select: none; /* Prevent text selection */
+	font-size: 1.5rem;
+	border-radius: 2rem;
+	padding: 0.5rem 0.9rem;
+	background-color: var(
+		--toggle-button-bg,
+		#eee
+	); /* Use CSS variable, fallback to #eee */
+<<<<<<< HEAD
+=======
+	transition: background-color 0.3s ease; /* Add transition for smooth color change */
+>>>>>>> 5525838f8f767505d321a791e1b4940e8dfe9b30
+}
+
+/* Dark Mode - Toggle Button */
+body.dark .toggleButton {
+	background-color: var(
+		--toggle-button-color,
+		#222
+	); /* Use the existing variable, fallback to #222 */
+}

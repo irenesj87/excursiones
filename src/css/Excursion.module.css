@@ -1,0 +1,22 @@
+.excursion {
+	margin-top: 30px;
+	padding-bottom: 50px;
+	border-bottom: 1px solid var(--excursion-border-color, #000); /* Default black */
+
+	&:last-child {
+		border-bottom: none;
+	}
+}
+
+.title {
+	font-size: 2rem;
+	padding-bottom: 30px;
+	font-weight: bolder;
+	text-transform: uppercase;
+}
+
+.bold {
+	display: inline-block;
+	font-size: large;
+	font-weight: bold;
+}

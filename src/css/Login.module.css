@@ -1,0 +1,30 @@
+.loginDropdownButton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-top: 15px;
+}
+
+.loginDropdownButtonText {
+	width: 340px;
+}
+
+<<<<<<< HEAD
+.loginDropdownButtonText p {
+	color: black;
+}
+
+.formText {
+	font-weight: bold;
+	margin-bottom: 10px;
+	color: black;
+=======
+.formText {
+	font-weight: bold;
+	margin-bottom: 10px;
+>>>>>>> 5525838f8f767505d321a791e1b4940e8dfe9b30
+}
+
+.sendBtn {
+	margin-left: 38%;
+}

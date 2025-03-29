@@ -1,0 +1,9 @@
+:root {
+	--green: #557027;
+	font-size: 16px;
+	--minheight: calc(100vh - 276px);
+}
+
+.container {
+	font-family: Arial, Helvetica, sans-serif;
+}

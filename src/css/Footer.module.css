@@ -1,0 +1,16 @@
+.footer {
+	position: relative;
+	left: 0;
+	bottom: 0;
+	padding: 55px 0 40px 0;
+	background-color: var(--green);
+	color: white;
+	text-align: center;
+
+	a {
+		color: white;
+		font-size: large;
+		font-weight: bold;
+		text-decoration: none;
+	}
+}

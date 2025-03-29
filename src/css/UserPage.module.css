@@ -1,0 +1,46 @@
+.container {
+	min-height: var(--minheight);
+}
+
+.title {
+	color: var(--green);
+	margin-top: 60px;
+	padding-bottom: 30px;
+	font-size: 30px;
+	font-weight: bolder;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.userInfo {
+	font-size: large;
+}
+
+.userInputLabel {
+	font-size: large;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.btns {
+	margin-top: 1.5rem;
+	margin-bottom: 1.5rem;
+}
+
+.excursionsJoinedTitle {
+	text-align: center;
+	text-transform: uppercase;
+	text-decoration: underline;
+	font-weight: bold;
+	margin-top: 4rem;
+	margin-bottom: 2rem;
+}
+
+.excursionsJoined thead {
+	background-color: var(--green);
+	color: #eee;
+}
+
+.noExcursionsJoined {
+	text-align: center;
+}

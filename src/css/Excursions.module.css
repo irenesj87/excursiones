@@ -1,0 +1,16 @@
+.container {
+	min-height: var(--minheight);
+}
+
+.title {
+	margin-top: 60px;
+	padding-bottom: 30px;
+	color: var(--green);
+	font-weight: bold;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.messageNotFound {
+	font-size: 1.6rem;
+}

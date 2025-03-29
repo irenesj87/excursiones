@@ -1,0 +1,16 @@
+.nav {
+	padding-top: 20px;
+	background-color: var(--green);
+	color: white;
+
+	a {
+		padding-top: 23.2px;
+		color: white;
+		text-decoration: none;
+	}
+}
+
+.noLoggedItems {
+	padding-bottom: 15px;
+	padding-top: 18px;
+}

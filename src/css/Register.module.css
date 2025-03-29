@@ -1,0 +1,28 @@
+.container {
+	min-height: var(--minheight);
+}
+
+.title {
+	margin-top: 60px;
+	padding-bottom: 20px;
+	color: var(--green);
+	font-weight: bold;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.form {
+	background-color: white;
+	padding: 3.5em;
+}
+
+.list {
+	padding-top: 1em;
+	margin-left: 15px;
+	color: #595c55;
+}
+
+.btn {
+	text-align: center;
+	padding-top: 30px;
+}
