@@ -1,3 +1,4 @@
+/* Login.module.css */
 .loginDropdownButton {
 	display: flex;
 	justify-content: center;
@@ -5,7 +6,7 @@
 	padding-top: 15px;
 }
 
-.loginDropdownButtonText {
+.loginDropdownButtonItem {
 	width: 340px;
 }
 
@@ -21,4 +22,28 @@
 
 .sendBtn {
 	margin-left: 38%;
+}
+
+/* Remove hover and click effects from Dropdown.Item */
+.loginDropdownButtonItem:hover,
+.loginDropdownButtonItem:focus,
+.loginDropdownButtonItem:active {
+  background-color: transparent; /* Remove background color change */
+  color: inherit; /* Keep the original text color */
+  text-decoration: none; /* Remove underline */
+  box-shadow: none; /* Remove box shadow */
+  cursor: inherit; /* Prevent cursor*/
+}
+
+/* Remove hover and click effects from the "Enviar" button */
+.sendBtn:active {
+  background-color: inherit; /* Keep the original background color */
+  border-color: inherit; /* Keep the original border color */
+  box-shadow: none; /* Remove box shadow */
+}
+
+/* Optional: Remove the focus outline */
+.sendBtn:focus,
+.loginDropdownButtonItem:focus {
+  outline: none;
 }

@@ -54,7 +54,7 @@ export function Login() {
 			title="Inicia sesión"
 			autoClose={false}
 		>
-			<Dropdown.Item className={styles.loginDropdownButtonText}>
+			<Dropdown.Item className={styles.loginDropdownButtonItem}>
 				<div className={styles.formText}>
 					<ValidatedFormGroup
 						control="formBasicEmail"
@@ -65,7 +65,6 @@ export function Login() {
 						message={false}
 					/>
 				</div>
-				<p>Nunca compartiremos tus datos con nadie</p>
 			</Dropdown.Item>
 			<Dropdown.Item className={styles.loginDropdownButtonItem}>
 				<div className={styles.formText}>
