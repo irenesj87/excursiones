@@ -40,7 +40,10 @@ body.dark {
 
 	.accordion-body,
 	#login,
-	tbody {
+	tbody,
+	.dropdown-menu,
+	.dropdown-item,
+	.formText {
 		background-color: #222;
 		color: #eee;
 	}
