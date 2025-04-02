@@ -15,7 +15,11 @@ body.light {
 	}
 
 	.accordion-body,
-	#login {
+	#login,
+	tbody,
+	.dropdown-menu,
+	.dropdown-item,
+	.formText {
 		background-color: #f8f8f8;
 		color: #333;
 	}
