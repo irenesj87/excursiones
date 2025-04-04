@@ -102,6 +102,7 @@ function Register() {
 							validationFunction={validateName}
 							value={name}
 							message={true}
+
 						/>
 						<ValidatedFormGroup
 							control="formGridAddress2"

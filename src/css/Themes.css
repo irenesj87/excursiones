@@ -51,6 +51,22 @@ body.dark {
 		background-color: #222;
 		color: #eee;
 	}
+
+	.nav-item .form-control {
+		background-color: black; /* Dark mode background color */
+		color: white; /* Dark mode text color */
+		border: 1px solid white; /* Dark mode border color */
+	}
+
+	.dropdown-menu {
+		border-color: #eee;
+	}
+
+	#login input {
+		background-color: black; /* Dark mode background color */
+		color: white; /* Dark mode text color */
+		border: 1px solid white; /* Dark mode border color */
+	}
 }
 
 /* Restore bottom radius for last accordion item in flush */
