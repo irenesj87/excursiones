@@ -22,8 +22,11 @@ function UserPage() {
 	const [surname, setSurname] = useState(user && user.surname);
 	// Variable that receive and change the phone that we received from the edit inputs
 	const [phone, setPhone] = useState(user && user.phone);
+	// Variable that saves the original name in case the user cancels the editing
 	const [originalName, setOriginalName] = useState(user && user.name);
+	// Variable that saves the original surname in case the user cancels the editing
 	const [originalSurname, setOriginalSurname] = useState(user && user.surname);
+	// Variable that saves the original phone in case the user cancels the editing
 	const [originalPhone, setOriginalPhone] = useState(user && user.phone);
 	// Variable that sets the information for the current user
 	const currentUser = {
