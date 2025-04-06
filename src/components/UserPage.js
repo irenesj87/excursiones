@@ -22,6 +22,9 @@ function UserPage() {
 	const [surname, setSurname] = useState(user && user.surname);
 	// Variable that receive and change the phone that we received from the edit inputs
 	const [phone, setPhone] = useState(user && user.phone);
+	const [originalName, setOriginalName] = useState(user && user.name);
+	const [originalSurname, setOriginalSurname] = useState(user && user.surname);
+	const [originalPhone, setOriginalPhone] = useState(user && user.phone);
 	// Variable that sets the information for the current user
 	const currentUser = {
 		name: name,
@@ -78,10 +81,18 @@ function UserPage() {
 	// Function that gives an alert when the user starts editing. Then the inputs to edit the user's info appears
 	const startEdit = () => {
 		setIsEditing(true);
+		//This variables store the original values when editing starts
+		setOriginalName(name);
+		setOriginalSurname(surname);
+		setOriginalPhone(phone);
 	};
 	// Function that gives an alert when the user cancels the editing. Then the inputs to edit the user's info disappears
 	const cancelEdit = () => {
 		setIsEditing(false);
+		//Reset to the original values when the user cancels the editing
+		setName(originalName);
+		setSurname(originalSurname);
+		setPhone(originalPhone);
 	};
 	// Function that saves the info the user has changed
 	const saveEdit = async () => {
