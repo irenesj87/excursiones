@@ -10,24 +10,18 @@ import styles from "../css/UserPage.module.css";
 function UserPage() {
 	// Variable that we need to be able to use dispatchers
 	const loginDispatch = useDispatch();
-
 	// This useSelector gives us the info if an user is logged or not
 	const { login: isLoggedIn, user } = useSelector(
 		(state) => state.loginReducer
 	);
-
 	// This variable says if the user is editing information or not
 	const [isEditing, setIsEditing] = useState(false);
-
 	// Variable that receive and change the name that we received from the edit inputs
 	const [name, setName] = useState(user && user.name);
-
 	// Variable that receive and change the surname that we received from the edit inputs
 	const [surname, setSurname] = useState(user && user.surname);
-
 	// Variable that receive and change the phone that we received from the edit inputs
 	const [phone, setPhone] = useState(user && user.phone);
-
 	// Variable that sets the information for the current user
 	const currentUser = {
 		name: name,
@@ -35,13 +29,10 @@ function UserPage() {
 		mail: user && user.mail,
 		phone: phone,
 	};
-
 	// Variable that has the url that is needed for the current user fetch
 	const url = `http://localhost:3001/users/${currentUser.mail}`;
-
 	// Variable that has the url that is needed for the excursions that the current user joined fetch
 	const excursionsUrl = `http://localhost:3001/excursions`;
-
 	// Variable that saves the options that the fetch needs
 	const options = {
 		method: "PUT",
@@ -52,27 +43,31 @@ function UserPage() {
 		},
 		body: JSON.stringify(currentUser),
 	};
-
 	// State for saving the user's excursions info
 	const [userExcursions, setUserExcursions] = useState([]);
 
 	// Fetch the user's excursions data
 	useEffect(() => {
-		if (isLoggedIn && user && user.excursions.length > 0) {
-			fetch(excursionsUrl)
-				.then((response) => response.json())
-				.then((data) => {
+		const fetchData = async () => {
+			if (isLoggedIn && user && user.excursions.length > 0) {
+				try {
+					const response = await fetch(excursionsUrl);
+					if (!response.ok) {
+						throw new Error(`HTTP error! status: ${response.status}`);
+					}
+					const data = await response.json();
 					const filteredExcursions = data.filter((excursion) =>
 						user.excursions.includes(excursion.id)
 					);
 					setUserExcursions(filteredExcursions);
-				})
-				.catch((error) => {
+				} catch (error) {
 					console.error("Error fetching excursions:", error);
-				});
-		} else {
-			setUserExcursions([]);
-		}
+				}
+			} else {
+				setUserExcursions([]);
+			}
+		};
+		fetchData();
 	}, [isLoggedIn, user, excursionsUrl]);
 
 	// If the user is not logged in we send him/her to the home page
@@ -84,35 +79,28 @@ function UserPage() {
 	const startEdit = () => {
 		setIsEditing(true);
 	};
-
 	// Function that gives an alert when the user cancels the editing. Then the inputs to edit the user's info disappears
 	const cancelEdit = () => {
 		setIsEditing(false);
 	};
-
 	// Function that saves the info the user has changed
-	const saveEdit = () => {
-		fetch(url, options)
-			.then((response) => {
-				if (response.status === 401) {
-					throw new Error("No estás autorizado/a para hacer esta operación");
-				} else {
-					return response.json();
-				}
-			})
-			.then((data) => {
-				loginDispatch(
-					updateUser({
-						user: data,
-					})
-				);
-			})
-			.catch(function (error) {
-				console.log(error);
-			})
-			.finally(() => {
-				setIsEditing(false);
-			});
+	const saveEdit = async () => {
+		try {
+			const response = await fetch(url, options);
+			if (response.status === 401) {
+				throw new Error("No estás autorizado/a para hacer esta operación");
+			}
+			const data = await response.json();
+			loginDispatch(
+				updateUser({
+					user: data,
+				})
+			);
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setIsEditing(false);
+		}
 	};
 
 	return (

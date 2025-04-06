@@ -11,29 +11,32 @@ function SearchBar(props) {
 	const { area, difficulty, time } = useSelector(
 		(state) => state.filterReducer
 	);
-
 	// Function that saves the information from the search bar input and updates its state
 	const introKeyPressed = (event) => {
 		let currentSearch = event.target.value;
 		setSearch(currentSearch);
 	};
-
 	// We need this variable in order to avoid a warning in the navigator
 	const { setExcursions } = props;
 
 	// This useEffect helps with the searching of an excursion
 	useEffect(() => {
-		const url = `http://localhost:3001/excursions?q=${search}&area=${area}&difficulty=${difficulty}&time=${time}`;
-
-		fetch(url)
-			.then((resp) => resp.json())
-			.then(function (data) {
+		const fetchData = async () => {
+			try {
+				// Variable that has the url that is needed for the fetch
+				const url = `http://localhost:3001/excursions?q=${search}&area=${area}&difficulty=${difficulty}&time=${time}`;
+				const response = await fetch(url);
+				if (!response.ok) {
+					throw new Error("HTTP error " + response.status);
+				}
+				const data = await response.json();
 				setExcursions(data);
-			})
-			.catch(function (error) {
-				console.log(error);
+			} catch (error) {
 				console.log("Fetch error: ", error);
-			});
+			}
+		};
+
+		fetchData();
 	}, [search, area, difficulty, time, setExcursions]);
 
 	return (
