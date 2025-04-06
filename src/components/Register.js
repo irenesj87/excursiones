@@ -37,29 +37,32 @@ function Register() {
 	const [samePassword, setSamePassword] = useState("");
 
 	// Function that allows register an user sending a POST request
-	const submit = (e) => {
+	const submit = async (e) => {
 		// Prevenir el comportamiento por defecto del formulario
 		e.preventDefault();
+		try {
+			/* We use the function for register an user from the helpers. This function sends a POST request to your 
+			server to create a new user. In many cases, the server might not send back any meaningful data in the 
+			response body for a successful registration. It might just send back a status code (like 201 Created) to 
+			indicate success.*/
+			await registerUser(name, surname, phone, mail, password);
+			// Log in the user automatically after registration
+			const loginData = await userLogin(mail, password);
 
-		// We use the function for register an user from the helpers
-		registerUser(name, surname, phone, mail, password)
-			.then((data) => {
-				// After registering, the user is logged in automatically
-				return userLogin(mail, password);
-			})
-			.then((data) => {
-				// If there´s no problem in the server, the user logs in and his/her information is saved in the store
-				loginDispatch(
-					login({
-						user: data.user,
-						token: data.token,
-					})
-				);
-				// And then his/her token is saved in the sessionStorage
-				window.sessionStorage["token"] = data.token;
-				navigate("/");
-			})
-			.catch((error) => alert(error));
+			// Dispatch the login action to update the Redux store
+			loginDispatch(
+				login({
+					user: loginData.user,
+					token: loginData.token,
+				})
+			);
+			// Save the token in sessionStorage
+			window.sessionStorage["token"] = loginData.token;
+			// Navigate to the home page
+			navigate("/");
+		} catch (error) {
+			alert(error);
+		}
 	};
 
 	// This useEffect disables the button to register until all the information in the register inputs is correct
@@ -95,7 +98,6 @@ function Register() {
 							validationFunction={validateName}
 							value={name}
 							message={true}
-
 						/>
 						<ValidatedFormGroup
 							control="formGridAddress2"
