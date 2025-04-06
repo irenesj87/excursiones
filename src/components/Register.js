@@ -19,27 +19,20 @@ import styles from "../css/Register.module.css";
 function Register() {
 	// Variable that we need to be able to use dispatchers
 	const loginDispatch = useDispatch();
-
+	// Variable that we need to be able to use navigate
 	const navigate = useNavigate();
-
 	// Variable that saves if the register button is disabled or not
 	const [disabled, setDisabled] = useState(true);
-
 	// Variable that receive and change the name that we received from the login form inputs
 	const [name, setName] = useState("");
-
 	// Variable that receive and change the surname that we received from the login form inputs
 	const [surname, setSurname] = useState("");
-
 	// Variable that receive and change the phone that we received from the login form inputs
 	const [phone, setPhone] = useState("");
-
 	// Variable that receive and change the mail that we received from the login form inputs
 	const [mail, setMail] = useState("");
-
 	// Variable that receive and change the password that we received from the login form inputs
 	const [password, setPassword] = useState("");
-
 	// Variable that receive and change the password that we received from the login form inputs
 	const [samePassword, setSamePassword] = useState("");
 

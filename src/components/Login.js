@@ -11,31 +11,29 @@ import styles from "../css/Login.module.css";
 export function Login() {
 	// Variable that we need to be able to use dispatchers
 	const loginDispatch = useDispatch();
-
 	// Variable that saves if the login button is disabled or not
 	const [disabled, setDisabled] = useState(true);
-
 	// Variable that receive and change the mail that we received from the login form inputs
 	const [mail, setMail] = useState("");
-
 	// Variable that receive and change the password that we received from the login form inputs
 	const [password, setPassword] = useState("");
 
 	// Function that submits the information for the login form, saves the user and the token in the store and in the case of the token saves it in the sessionStorage too
-	const submit = () => {
-		userLogin(mail, password)
-			.then((data) => {
-				// The user logs in and we store his/her info and his/her token in the store...
-				loginDispatch(
-					login({
-						user: data.user,
-						token: data.token,
-					})
-				);
-				// ...and then we save his/her token in the navigator sessionStorage
-				window.sessionStorage["token"] = data.token;
-			})
-			.catch((error) => alert(error));
+	const submit = async () => {
+		try {
+			const data = await userLogin(mail, password);
+			//The user logs in and we store his/her info and his/her token in the store
+			loginDispatch(
+				login({
+					user: data.user,
+					token: data.token,
+				})
+			);
+			//...and then we save his/her token in the browser sessionStorage
+			window.sessionStorage["token"] = data.token;
+		} catch (error) {
+			alert(error);
+		}
 	};
 
 	// This useEffect disables the button to log until all the information in the login inputs is correct

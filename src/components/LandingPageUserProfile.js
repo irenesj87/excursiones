@@ -23,7 +23,7 @@ function LandingPageUserProfile(props) {
 		},
 	};
 
-	/** The function for loggin out is a DELETE request to http://localhost:3001/login. 
+	/*The function for loggin out is a DELETE request to http://localhost:3001/login. 
 	Typically, a DELETE request to a login endpoint is used to invalidate a session or token on the server-side. 
 	In many cases, the server might not send back any meaningful data in the response body for a successful DELETE 
 	request. It might just send back a status code (like 204 No Content) to indicate success.*/
