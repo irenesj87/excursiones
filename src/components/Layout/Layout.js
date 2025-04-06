@@ -23,13 +23,11 @@ export const Layout = ({ children }) => {
 	// This useEffect controls the token in the sessionStorage. The token is saved in the sessionStorage for the user to be able to stay logged in
 	useEffect(() => {
 		// This function saves the current token and logs the user again in case that the webpage is refreshed. With this the user won´t lose his session
-		const loadToken = () => {
+		const loadToken = async () => {
 			// Gets the token from sessionStorage
 			const sessionToken = sessionStorage["token"];
-
 			// Variable that has the url that is needed for the fetch
 			const url = `http://localhost:3001/token/${sessionToken}`;
-
 			// Variable that saves the options that the fetch needs
 			const options = {
 				method: "GET",
@@ -37,30 +35,26 @@ export const Layout = ({ children }) => {
 				headers: { "Content-Type": "application/json" },
 			};
 
-			// If there´s a token and that token is not an empty string
+			// If there´s a token
 			if (sessionToken) {
-				fetch(url, options)
-					.then((response) => {
-						// If it´s the correct token and the correct user...
-						if (response.status === 404) {
-							throw new Error("Token not found or invalid");
-						}
-						return response.json();
-					})
-					.then(function (data) {
-						// ...the user gets logged in again
-						loginDispatch(
-							login({
-								user: data.user,
-								token: data.token,
-							})
-						);
-					})
-					.catch(function (error) {
-						console.log(error);
-						loginDispatch(logout());
-						delete sessionStorage["token"];
-					});
+				try {
+					// We wait for the server to respond
+					const response = await fetch(url, options);
+					if (response.status === 404) {
+						throw new Error("Token not found or invalid");
+					}
+					const data = await response.json();
+					loginDispatch(
+						login({
+							user: data.user,
+							token: data.token,
+						})
+					);
+				} catch (error) {
+					console.error("Token validation error:", error);
+					loginDispatch(logout());
+					sessionStorage.removeItem("token");
+				}
 			}
 		};
 
