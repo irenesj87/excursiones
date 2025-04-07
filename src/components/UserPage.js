@@ -139,7 +139,6 @@ function UserPage() {
 							Información Personal
 						</Card.Header>
 						<Card.Body className={styles.cardBody}>
-							{/* Usando Form.Group para consistencia */}
 							<Form.Group
 								as={Row}
 								className="mb-3"
@@ -236,7 +235,6 @@ function UserPage() {
 									size="sm"
 									className={styles.excursionsTable}
 								>
-									{/* Añadido responsive, hover, sm */}
 									<thead>
 										<tr>
 											<th>Nombre</th>
