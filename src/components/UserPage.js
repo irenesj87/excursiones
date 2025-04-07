@@ -159,9 +159,8 @@ function UserPage() {
 							<Form.Group
 								as={Row}
 								className="mb-3 align-items-center"
-								controlId="formPlaintextName"
 							>
-								<Form.Label column sm="3" className="text-sm-end">
+								<Form.Label column sm="3" className="text-sm-end" htmlFor="formPlaintextName">
 									Nombre:
 								</Form.Label>
 								<Col sm="9">
@@ -176,9 +175,8 @@ function UserPage() {
 							<Form.Group
 								as={Row}
 								className="mb-3 align-items-center"
-								controlId="formPlaintextSurname"
 							>
-								<Form.Label column sm="3" className="text-sm-end">
+								<Form.Label column sm="3" className="text-sm-end" htmlFor="formPlaintextSurname">
 									Apellidos:
 								</Form.Label>
 								<Col sm="9">
@@ -193,9 +191,8 @@ function UserPage() {
 							<Form.Group
 								as={Row}
 								className="mb-3 align-items-center"
-								controlId="formPlaintextPhone"
 							>
-								<Form.Label column sm="3" className="text-sm-end">
+								<Form.Label column sm="3" className="text-sm-end" htmlFor="formPlaintextPhone">
 									Teléfono:
 								</Form.Label>
 								<Col sm="9">

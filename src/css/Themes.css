@@ -94,6 +94,21 @@ body.dark {
 	.form-control-plaintext[readonly] {
 		color: var(--text-dark); /* White text */
 	}
+
+	/* Override Bootstrap's default form-control styles in dark mode */
+	.form-control {
+		background-color: rgb(47, 46, 46); /* Black background */
+		color: var(--text-dark); /* White text */
+		border: 1px solid var(--text-dark); /* White border */
+	}
+
+	/* Override Bootstrap's readonly/disabled styles in dark mode */
+	.form-control:disabled,
+	.form-control[readonly] {
+		background-color: black; /* Black background */
+		color: var(--text-dark); /* White text */
+		border: 1px solid var(--text-dark); /* White border */
+	}
 }
 
 /* Restore bottom radius for last accordion item in flush */
