@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Col, Button, Row, Container, Table } from "react-bootstrap";
+import {
+	Col,
+	Button,
+	Row,
+	Container,
+	Table,
+	Card,
+	Form,
+} from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { Navigate } from "react-router";
 import UserPageInputEdit from "./UserPageInputEdit";
@@ -118,111 +126,149 @@ function UserPage() {
 	};
 
 	return (
-		<div className={styles.container}>
-			<Container>
-				<Row>
-					<Col className={styles.title}>Tu perfil</Col>
-				</Row>
-				<Row>
-					<Col className="text-start text-md-end" xs="12" md="6">
-						<label className={styles.userInputLabel}>Correo:</label>
-					</Col>
-					<Col className="text-start" xs="12" md="6">
-						{user && user.mail}
-					</Col>
-				</Row>
-				<Row>
-					<Col className="text-start text-md-end" xs="12" md="6">
-						<label className={styles.userInputLabel}>Nombre:</label>
-					</Col>
-					<Col className="text-start" xs="12" md="4">
-						<UserPageInputEdit
-							isEditing={isEditing}
-							inputToChange={setName}
-							value={name}
-						/>
-					</Col>
-				</Row>
-				<Row>
-					<Col className="text-start text-md-end" xs="12" md="6">
-						<label className={styles.userInputLabel}>Apellidos:</label>
-					</Col>
-					<Col className="text-start" xs="12" md="4">
-						<UserPageInputEdit
-							isEditing={isEditing}
-							inputToChange={setSurname}
-							value={surname}
-						/>
-					</Col>
-				</Row>
-				<Row>
-					<Col className="text-start text-md-end" xs="12" md="6">
-						<label className={styles.userInputLabel}>Teléfono:</label>
-					</Col>
-					<Col className="text-start" xs="12" md="4">
-						<UserPageInputEdit
-							isEditing={isEditing}
-							inputToChange={setPhone}
-							value={phone}
-						/>
-					</Col>
-				</Row>
-				<Row className={styles.excursionsJoined}>
-					<Col>
-						<h4 className={styles.excursionsJoinedTitle}>
-							Excursiones a las que te has apuntado
-						</h4>
-						{userExcursions.length > 0 ? (
-							<Table bordered>
-								<thead>
-									<tr>
-										<th>Nombre</th>
-										<th>Zona</th>
-										<th>Dificultad</th>
-										<th>Tiempo Estimado</th>
-									</tr>
-								</thead>
-								<tbody>
-									{userExcursions.map((excursion) => (
-										<tr key={excursion.id}>
-											<td>{excursion.name}</td>
-											<td>{excursion.area}</td>
-											<td>{excursion.difficulty}</td>
-											<td>{excursion.time}</td>
+		<Container className={styles.userPage}>
+			<Row className="mb-4">
+				<Col>
+					<h2 className={styles.title}>Tu perfil</h2>
+				</Col>
+			</Row>
+			<Row className="mb-4 justify-content-center">
+				<Col xs="12" md="12" lg="8">
+					<Card className={`${styles.profileCard} mb-4`}>
+						<Card.Header className={styles.cardHeader}>
+							Información Personal
+						</Card.Header>
+						<Card.Body className={styles.cardBody}>
+							{/* Usando Form.Group para consistencia */}
+							<Form.Group
+								as={Row}
+								className="mb-3"
+								controlId="formPlaintextEmail"
+							>
+								<Form.Label column sm="3" className="text-sm-end">
+									Correo:
+								</Form.Label>
+								<Col sm="9">
+									<Form.Control
+										plaintext
+										readOnly
+										defaultValue={user?.mail ?? ""}
+									/>
+								</Col>
+							</Form.Group>
+							<Form.Group
+								as={Row}
+								className="mb-3 align-items-center"
+								controlId="formPlaintextName"
+							>
+								<Form.Label column sm="3" className="text-sm-end">
+									Nombre:
+								</Form.Label>
+								<Col sm="9">
+									<UserPageInputEdit
+										id="formPlaintextName"
+										isEditing={isEditing}
+										inputToChange={setName}
+										value={name}
+									/>
+								</Col>
+							</Form.Group>
+							<Form.Group
+								as={Row}
+								className="mb-3 align-items-center"
+								controlId="formPlaintextSurname"
+							>
+								<Form.Label column sm="3" className="text-sm-end">
+									Apellidos:
+								</Form.Label>
+								<Col sm="9">
+									<UserPageInputEdit
+										id="formPlaintextSurname"
+										isEditing={isEditing}
+										inputToChange={setSurname}
+										value={surname}
+									/>
+								</Col>
+							</Form.Group>
+							<Form.Group
+								as={Row}
+								className="mb-3 align-items-center"
+								controlId="formPlaintextPhone"
+							>
+								<Form.Label column sm="3" className="text-sm-end">
+									Teléfono:
+								</Form.Label>
+								<Col sm="9">
+									<UserPageInputEdit
+										id="formPlaintextPhone"
+										isEditing={isEditing}
+										inputToChange={setPhone}
+										value={phone}
+									/>
+								</Col>
+							</Form.Group>
+						</Card.Body>
+						<Card.Footer className={`${styles.cardFooter} text-end`}>
+							{/* Lógica de botones */}
+							{!isEditing && (
+								<Button variant="primary" onClick={startEdit}>
+									Editar Perfil
+								</Button>
+							)}
+							{isEditing && (
+								<div className="d-flex justify-content-end gap-2">
+									<Button variant="secondary" onClick={cancelEdit}>
+										Cancelar
+									</Button>
+									<Button variant="success" onClick={saveEdit}>
+										Guardar Cambios
+									</Button>
+								</div>
+							)}
+						</Card.Footer>
+					</Card>
+					<Card className={styles.excursionsCard}>
+						<Card.Header className={styles.cardHeader}>
+							Tus excursiones
+						</Card.Header>
+						<Card.Body className={styles.cardBody}>
+							{userExcursions.length > 0 ? (
+								<Table
+									responsive
+									bordered
+									size="sm"
+									className={styles.excursionsTable}
+								>
+									{/* Añadido responsive, hover, sm */}
+									<thead>
+										<tr>
+											<th>Nombre</th>
+											<th>Zona</th>
+											<th>Dificultad</th>
+											<th>Tiempo Estimado</th>
 										</tr>
-									))}
-								</tbody>
-							</Table>
-						) : (
-							<p className={styles.noExcursionsJoined}>
-								Aún no te has apuntado a ninguna excursión.
-							</p>
-						)}
-					</Col>
-				</Row>
-			</Container>
-			<Container className={styles.btns}>
-				<Row className="justify-content-center">
-					<Col xs="12" md="4">
-						{!isEditing && (
-							<Button className="w-100" variant="success" onClick={startEdit}>
-								Editar
-							</Button>
-						)}
-						{isEditing && (
-							<div className="d-flex justify-content-between">
-								<Button className="w-48" variant="danger" onClick={cancelEdit}>
-									Cancelar
-								</Button>
-								<Button className="w-48" variant="success" onClick={saveEdit}>
-									Guardar
-								</Button>
-							</div>
-						)}
-					</Col>
-				</Row>
-			</Container>
-		</div>
+									</thead>
+									<tbody>
+										{userExcursions.map((excursion) => (
+											<tr key={excursion.id}>
+												<td>{excursion.name}</td>
+												<td>{excursion.area}</td>
+												<td>{excursion.difficulty}</td>
+												<td>{excursion.time}</td>
+											</tr>
+										))}
+									</tbody>
+								</Table>
+							) : (
+								<p className={styles.noExcursionsJoined ?? "text-muted"}>
+									Aún no te has apuntado a ninguna excursión.
+								</p>
+							)}
+						</Card.Body>
+					</Card>
+				</Col>
+			</Row>
+		</Container>
 	);
 }
 

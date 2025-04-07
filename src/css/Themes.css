@@ -1,12 +1,12 @@
 /********** Light Mode **********/
 body.light {
-	background-color: #f8f8f8;
-	color: #333;
-	--toggle-button-bg: #eee;
+	background-color: var(--bg-light);
+	color: var(--text-light);
+	--toggle-button-bg: var(--text-dark);
 
 	.accordion-button {
-		background-color: #f8f8f8;
-		color: #333;
+		background-color: var(--bg-light);
+		color: var(--text-light);
 		transition: none;
 
 		&::after {
@@ -20,21 +20,23 @@ body.light {
 	.dropdown-menu,
 	.dropdown-item,
 	.formText {
-		background-color: #f8f8f8;
-		color: #333;
+		background-color: var(--bg-light);
+		color: var(--text-light);
 	}
 }
 
 /********** Dark Mode **********/
 body.dark {
-	background-color: #222;
-	color: #eee;
-	--excursion-border-color: #eee; /* Override the variable for dark mode */
-	--toggle-button-color: #222;
+	background-color: var(--bg-dark);
+	color: var(--text-dark);
+	--excursion-border-color: var(
+		--text-dark
+	); /* Override the variable for dark mode */
+	--toggle-button-color: var(--bg-dark);
 
 	.accordion-button {
-		background-color: #222;
-		color: #eee;
+		background-color: var(--bg-dark);
+		color: var(--text-dark);
 		transition: none;
 
 		&::after {
@@ -48,25 +50,49 @@ body.dark {
 	.dropdown-menu,
 	.dropdown-item,
 	.formText {
-		background-color: #222;
-		color: #eee;
+		background-color: var(--bg-dark);
+		color: var(--text-dark);
 	}
 
 	.nav-item .form-control {
 		background-color: black; /* Dark mode background color */
-		color: white; /* Dark mode text color */
-		border: 1px solid white; /* Dark mode border color */
+		color: var(--text-dark); /* Dark mode text color */
+		border: 1px solid var(--text-dark); /* Dark mode border color */
 	}
 
 	.dropdown-menu {
-		border-color: #eee;
+		border-color: var(--text-dark);
 	}
 
 	#login input,
 	.text-start input {
 		background-color: black; /* Dark mode background color */
-		color: white; /* Dark mode text color */
-		border: 1px solid white; /* Dark mode border color */
+		color: var(--text-dark); /* Dark mode text color */
+		border: 1px solid var(--text-dark); /* Dark mode border color */
+	}
+
+	.card,
+	.card-body{
+		background-color: var(--bg-dark);
+		color: var(--text-dark);
+	}
+
+	.card-body p {
+		background-color: #817e7e;
+		color: var(--text-dark);
+	}
+	
+
+	.card-header,
+	.card-footer {
+		background-color: #444;
+		color: var(--text-dark);
+		border-color: #555;
+	}
+
+	/* Specific style for plaintext and readOnly Form.Control in dark mode */
+	.form-control-plaintext[readonly] {
+		color: var(--text-dark); /* White text */
 	}
 }
 
@@ -86,10 +112,10 @@ body.dark {
 	font-size: 1.5rem;
 	border-radius: 2rem;
 	padding: 0.5rem 0.9rem;
-	background-color: var(--toggle-button-bg, #eee);
+	background-color: var(--toggle-button-bg, var(--text-dark));
 }
 
 /* Dark Mode - Toggle Button */
 body.dark .toggleButton {
-	background-color: var(--toggle-button-color, #222);
+	background-color: var(--toggle-button-color, var(--bg-dark));
 }

@@ -1,9 +1,13 @@
 :root {
+	--bg-light: #f8f8f8;
+	--text-light: #333;
+	--bg-dark: #222;
+	--text-dark: #eee;
 	--green: #557027;
 	font-size: 16px;
 	--minheight: calc(100vh - 276px);
 }
 
-.container {
+.layout {
 	font-family: Arial, Helvetica, sans-serif;
 }

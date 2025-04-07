@@ -11,6 +11,7 @@ function UserPageInputEdit(props) {
 
 	const editingInput = (
 		<input
+			id={props.id}
 			type="text"
 			className={styles.userInput}
 			onChange={inputChange}

@@ -62,7 +62,7 @@ export const Layout = ({ children }) => {
 	}, [loginDispatch]);
 
 	return (
-		<Container className={styles.container} fluid>
+		<Container className={styles.layout} fluid>
 			<NavigationBar setExcursions={setExcursionArray} />
 			<Row>
 				<Col>
