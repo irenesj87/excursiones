@@ -92,7 +92,7 @@ function Register() {
 				<Form id="login" className={styles.form} onSubmit={submit}>
 					<Row className="mb-3">
 						<ValidatedFormGroup
-							control="formGridAddress1"
+							id="formGridName"
 							name="Nombre"
 							inputToChange={setName}
 							validationFunction={validateName}
@@ -100,7 +100,7 @@ function Register() {
 							message={true}
 						/>
 						<ValidatedFormGroup
-							control="formGridAddress2"
+							id="formGridSurname"
 							name="Apellidos"
 							inputToChange={setSurname}
 							validationFunction={validateSurname}
@@ -110,46 +110,45 @@ function Register() {
 					</Row>
 					<Row className="mb-3">
 						<ValidatedFormGroup
-							control="formGridPhone"
-							inputType="tel"
+							id="formGridPhone"
 							name="Teléfono"
+							inputType="tel"
 							inputToChange={setPhone}
 							validationFunction={validatePhone}
 							value={phone}
 							message={true}
 						/>
 						<ValidatedFormGroup
-							control="formGridEmail"
-							inputType="email"
+							id="formGridEmail"
 							name="Correo electrónico"
+							inputType="email"
 							inputToChange={setMail}
 							validationFunction={validateMail}
 							value={mail}
 							message={true}
+							autocomplete="email"
 						/>
 					</Row>
 					<Row>
 						<ValidatedFormGroup
 							id="password"
-							control="formGridPassword1"
-							inputType="password"
 							name="Contraseña"
+							inputType="password"
 							inputToChange={setPassword}
 							validationFunction={validatePassword}
 							value={password}
 							message={true}
-							autocomplete="password"
+							autocomplete="new-password"
 						/>
 						<ValidatedFormGroup
 							id="confirm-password"
-							control="formGridPassword2"
-							inputType="password"
 							name="Repite la contraseña"
+							inputType="password"
 							inputToChange={setSamePassword}
 							validationFunction={validatePassword}
 							value={samePassword}
 							message={true}
-							autocomplete="confirm-password"
+							autocomplete="new-password"
 						/>
 					</Row>
 					<Row>
@@ -159,7 +158,7 @@ function Register() {
 								número
 							</li>
 							<li>
-								Debes estar registrado/a para poder apuntarte a las excursiones
+								Debes registrarte para poder apuntarte a las excursiones
 							</li>
 						</ul>
 					</Row>

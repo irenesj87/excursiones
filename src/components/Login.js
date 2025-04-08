@@ -62,6 +62,7 @@ export function Login() {
 						validationFunction={validateMail}
 						value={mail}
 						message={false}
+						autocomplete="email"
 						
 					/>
 					<ValidatedFormGroup
@@ -72,6 +73,7 @@ export function Login() {
 						validationFunction={validatePassword}
 						value={password}
 						message={false}
+						autocomplete="current-password"
 					/>
 					<Button
 						className={`${styles.sendBtn} mt-3`}
