@@ -15,12 +15,15 @@ function ValidatedFormGroup(props) {
 	};
 
 	return (
-		<Form.Group as={Col} controlId={props.control}>
+		<Form.Group as={Col} className="mb-3">
 			<Form.Label>{props.name}</Form.Label>
 			<Form.Control
 				type={props.inputType}
 				onChange={nameChange}
+				id={props.id}
+				name={props.id}
 				value={props.value}
+				autoComplete={props.autocomplete}
 			/>
 			{props.message && notValid && (
 				<p className={styles.errorMessage}>

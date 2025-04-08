@@ -257,6 +257,7 @@ function UserPage() {
 									<thead>
 										<tr>
 											<th>Nombre</th>
+											<th>Descripción</th>
 											<th>Zona</th>
 											<th>Dificultad</th>
 											<th>Tiempo Estimado</th>
@@ -266,6 +267,7 @@ function UserPage() {
 										{userExcursions.map((excursion) => (
 											<tr key={excursion.id}>
 												<td>{excursion.name}</td>
+												<td>{excursion.description}</td>
 												<td>{excursion.area}</td>
 												<td>{excursion.difficulty}</td>
 												<td>{excursion.time}</td>

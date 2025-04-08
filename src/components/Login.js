@@ -53,7 +53,7 @@ export function Login() {
 			autoClose={"outside"}
 		>
 			<Dropdown.Item as="div" className={styles.loginDropdownButtonItem}>
-				<Form noValidate onSubmit={submit} className={styles.formText}>
+				<Form id="loginForm" noValidate onSubmit={submit} className={styles.formText}>
 					<ValidatedFormGroup
 						id="formLoginDropdownEmail"
 						name="Correo electrónico"
@@ -62,7 +62,7 @@ export function Login() {
 						validationFunction={validateMail}
 						value={mail}
 						message={false}
-						className="mb-3"
+						
 					/>
 					<ValidatedFormGroup
 						id="formLoginDropdownPassword"
@@ -72,8 +72,6 @@ export function Login() {
 						validationFunction={validatePassword}
 						value={password}
 						message={false}
-						className="mb-3"
-						autocomplete="current-password"
 					/>
 					<Button
 						className={`${styles.sendBtn} mt-3`}
