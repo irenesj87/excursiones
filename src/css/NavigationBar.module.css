@@ -1,21 +1,117 @@
-.nav {
-	padding-top: 20px;
-	background-color: var(--green);
-	color: white;
-
-	a {
-		padding-top: 23.2px;
-		color: white;
-		text-decoration: none;
-	}
-	a:hover,
-	a:focus {
-		text-decoration: none;
-		color: white;
-	}
-}
-
-.noLoggedItems {
-	padding-bottom: 15px;
-	padding-top: 18px;
-}
+/* --- Estilos Generales de la Navbar --- */
+.customNavbar {
+	/* Usa variables CSS para facilitar el theming. Define estas variables en tu Themes.css o :root / body.dark */
+	padding-top: 0.6rem; /* Ajusta padding vertical */
+	padding-bottom: 0.6rem;
+	transition: background-color 0.3s ease;
+	width: 100%; /* Asegura ancho completo */
+  }
+  
+  /* --- Botón de Cambio de Tema --- */
+  .themeToggleBtn {
+	border-color: var(--toggle-border-color, #ced4da); /* Color del borde */
+	color: var(--toggle-icon-color, #495057);      /* Color del icono (luna/sol) */
+	background-color: transparent;                 /* Sin fondo */
+	/* size="sm" ya ajusta padding/font-size en el JSX */
+	line-height: 1;                                /* Alineación del icono */
+	transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+	border-radius: 1rem;                       /* Redondeo estándar */
+  }
+  
+  .themeToggleBtn:hover {
+	 background-color: var(--toggle-hover-bg, rgba(0, 0, 0, 0.05)); /* Fondo sutil al pasar el ratón */
+	 border-color: var(--toggle-hover-border-color, #adb5bd);       /* Borde cambia en hover */
+  }
+  
+  /* Quitar el anillo azul de foco (opcional, considera accesibilidad) */
+  .themeToggleBtn:focus {
+	box-shadow: none;
+  }
+  
+  /* --- Brand / Logo --- */
+  .navbarBrandCustom {
+	padding-top: 0; /* Quitar padding extra si Navbar.Brand lo añade */
+	padding-bottom: 0;
+  }
+  
+  /* Asegurarse que el Link dentro del Logo no esté subrayado */
+  /* Es mejor si Logo.module.css ya lo hace, pero por si acaso: */
+  .navbarBrandCustom a,
+  .navbarBrandCustom a:hover {
+	 text-decoration: none;
+	 color: inherit; /* Hereda el color */
+  }
+  
+  /* Intenta alinear verticalmente el contenido del Logo (si es img/svg) */
+  /* :first-child asume que Logo es el primer hijo directo de NavbarBrand */
+  .navbarBrandCustom > :first-child {
+	  vertical-align: middle;
+	  display: inline-block; /* Ayuda con la alineación */
+  }
+  
+  
+  /* --- Links de Navegación (Ej: "Regístrate") --- */
+  .navLinkCustom {
+	/* Hereda color por defecto, o define uno específico con variable */
+	color: var(--navbar-link-color, #343a40) !important; /* Color del texto */
+	font-weight: 500; /* Grosor de fuente */
+	padding: 0.4rem 0.8rem; /* Padding interno */
+	border-radius: 0.25rem; /* Bordes redondeados */
+	transition: background-color 0.2s ease, color 0.2s ease;
+	display: inline-block; /* Para padding correcto */
+	line-height: inherit; /* Hereda de su contenedor flex para alineación vertical */
+	text-decoration: none; /* Sin subrayado */
+  }
+  
+  .navLinkCustom:hover {
+	background-color: var(--navbar-link-hover-bg, rgba(0, 0, 0, 0.05)); /* Fondo en hover */
+	color: var(--navbar-link-hover-color, #0056b3) !important; /* Color texto en hover */
+	text-decoration: none !important; /* Asegurar no subrayado en hover */
+  }
+  
+  
+  /* ======================================== */
+  /* --- ESTILOS MODO OSCURO --- */
+  /* ======================================== */
+  /* Asume que tienes una clase 'dark' en el <body> cuando el modo oscuro está activo */
+  /* O define las variables directamente en Themes.css */
+  
+  body.dark .customNavbar {
+	/* Define las variables o sobreescribe directamente */
+	--navbar-bg: #212529;
+	--navbar-border-color: #343a40;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Sombra más oscura */
+  }
+  
+  body.dark .themeToggleBtn {
+	--toggle-border-color: #6c757d;
+	--toggle-icon-color: #adb5bd;
+	--toggle-hover-bg: rgba(255, 255, 255, 0.1);
+	--toggle-hover-border-color: #6c757d;
+  }
+  
+  /* Ajusta color del logo/brand si es necesario en modo oscuro */
+  body.dark .navbarBrandCustom {
+	 color: var(--bs-light); /* O un color específico */
+  }
+  body.dark .navbarBrandCustom a {
+	  color: var(--bs-light);
+  }
+  
+  
+  body.dark .navLinkCustom {
+	--navbar-link-color: #adb5bd; /* Color de link más claro */
+  }
+  
+  body.dark .navLinkCustom:hover {
+	--navbar-link-hover-bg: rgba(255, 255, 255, 0.1);
+	--navbar-link-hover-color: #ffffff; /* Link blanco en hover */
+  }
+  
+  /* Estilo para el icono de hamburguesa en modo oscuro */
+  body.dark .navbar-toggler {
+	border-color: rgba(255, 255, 255, 0.15);
+  }
+  body.dark .navbar-toggler-icon {
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.65)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  }
