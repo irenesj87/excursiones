@@ -49,7 +49,9 @@ body.dark {
 	tbody,
 	.dropdown-menu,
 	.dropdown-item,
-	.formText {
+	.formText,
+	.card,
+	.card-body {
 		background-color: var(--bg-dark);
 		color: var(--text-dark);
 	}
@@ -70,18 +72,6 @@ body.dark {
 		color: var(--text-dark); /* Dark mode text color */
 		border: 1px solid var(--text-dark); /* Dark mode border color */
 	}
-
-	.card,
-	.card-body{
-		background-color: var(--bg-dark);
-		color: var(--text-dark);
-	}
-
-	.card-body p {
-		background-color: #817e7e;
-		color: var(--text-dark);
-	}
-	
 
 	.card-header,
 	.card-footer {

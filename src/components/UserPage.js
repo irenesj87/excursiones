@@ -55,6 +55,11 @@ function UserPage() {
 			"Content-Type": "application/json",
 			Authorization: "Bearer " + window.sessionStorage["token"],
 		},
+		/* The body is a standard property within the fetch options. It defines the content you want to send in the body of the HTTP request. 
+		This is typically used with methods like POST or PUT where you need to send data to the server (in this case, to update user information)
+		JSON.stringify(...): This is a built-in JavaScript function. Its job is to take a JavaScript object (like the currentUser object) and convert it into a JSON string.
+		We have to convert it to a JSON string because web servers and APIs typically expect data sent in the request body to be in a standardized 
+		text format. JSON (JavaScript Object Notation) is the most common format for exchanging data between web clients (like this React app) and servers.*/
 		body: JSON.stringify(currentUser),
 	};
 	// State for saving the user's excursions info
@@ -110,7 +115,7 @@ function UserPage() {
 		try {
 			const response = await fetch(url, options);
 			if (response.status === 401) {
-				throw new Error("No estás autorizado/a para hacer esta operación");
+				throw new Error("No puedes hacer esta operación");
 			}
 			const data = await response.json();
 			loginDispatch(
@@ -151,15 +156,25 @@ function UserPage() {
 									<Form.Control
 										plaintext
 										readOnly
+										/* The user?.mail part attempts to access the mail property of the user object.
+										The key is the ?. It checks if user is null or undefined before trying to access .mail.
+										If user is null or undefined, the expression short-circuits and evaluates to undefined immediately,
+										without throwing an error (which would happen with just user.mail).
+										If user exists, it proceeds to access the mail property.*/
+										/* The operator (??) provides a default value. It checks if the value on its left-hand side (user?.mail in this case) is either null or undefined.
+										If the left-hand side is null or undefined, it returns the value on the right-hand side (which is "", an empty string).
+										If the left-hand side has any other value (including an empty string "", 0, false, etc.), it returns that left-hand side value.*/
 										defaultValue={user?.mail ?? ""}
 									/>
 								</Col>
 							</Form.Group>
-							<Form.Group
-								as={Row}
-								className="mb-3 align-items-center"
-							>
-								<Form.Label column sm="3" className="text-sm-end" htmlFor="formPlaintextName">
+							<Form.Group as={Row} className="mb-3 align-items-center">
+								<Form.Label
+									column
+									sm="3"
+									className="text-sm-end"
+									htmlFor="formPlaintextName"
+								>
 									Nombre:
 								</Form.Label>
 								<Col sm="9">
@@ -171,11 +186,13 @@ function UserPage() {
 									/>
 								</Col>
 							</Form.Group>
-							<Form.Group
-								as={Row}
-								className="mb-3 align-items-center"
-							>
-								<Form.Label column sm="3" className="text-sm-end" htmlFor="formPlaintextSurname">
+							<Form.Group as={Row} className="mb-3 align-items-center">
+								<Form.Label
+									column
+									sm="3"
+									className="text-sm-end"
+									htmlFor="formPlaintextSurname"
+								>
 									Apellidos:
 								</Form.Label>
 								<Col sm="9">
@@ -187,11 +204,13 @@ function UserPage() {
 									/>
 								</Col>
 							</Form.Group>
-							<Form.Group
-								as={Row}
-								className="mb-3 align-items-center"
-							>
-								<Form.Label column sm="3" className="text-sm-end" htmlFor="formPlaintextPhone">
+							<Form.Group as={Row} className="mb-3 align-items-center">
+								<Form.Label
+									column
+									sm="3"
+									className="text-sm-end"
+									htmlFor="formPlaintextPhone"
+								>
 									Teléfono:
 								</Form.Label>
 								<Col sm="9">

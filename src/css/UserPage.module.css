@@ -11,63 +11,52 @@
 	text-transform: uppercase;
 }
 
-/* Encabezado de las tarjetas */
+/* Card header */
 .cardHeader {
-	background-color: #e9ecef; /* Un gris claro para el encabezado */
-	color: #495057; /* Color de texto para el encabezado */
+	background-color: #e9ecef;
+	color: #495057;
 	text-transform: uppercase;
 	font-weight: bold;
-	padding: 1rem 1.25rem; /* Ajuste de padding */
-	border-bottom: 1px solid #dee2e6; /* Línea divisoria sutil */
-}
-
-/* Cuerpo de las tarjetas */
-.cardBody {
-	padding: 1.5rem; /* Más padding dentro de la tarjeta */
-}
-
-/* Footer de la tarjeta (donde están los botones) */
-.cardFooter {
-	background-color: #fff; /* Fondo blanco */
 	padding: 1rem 1.25rem;
-	border-top: 1px solid #f1f1f1; /* Línea superior muy sutil */
+	border-bottom: 1px solid #dee2e6;
 }
 
-/* Estilo para la tabla de excursiones */
+/* Body header */
+.cardBody {
+	padding: 1.5rem;
+}
+
+/* Card footer */
+.cardFooter {
+	background-color: #fff;
+	padding: 1rem 1.25rem;
+	border-top: 1px solid #f1f1f1;
+}
+
+/* Styles for the excursions table */
 .excursionsTable thead th {
-	background-color: var(
-		--green
-	); /* Fondo ligeramente distinto para la cabecera */
+	background-color: var(--green);
 	color: #eee;
 	font-weight: 600;
-	border-bottom-width: 2px; /* Borde inferior más grueso */
+	border-bottom-width: 2px;
 	border-color: #dee2e6;
-	text-align: left; /* Alinear texto a la izquierda por defecto */
+	text-align: left;
 	padding: 0.75rem;
 }
 
+/* Styles for the excursions table rows */
 .excursionsTable tbody td {
-	vertical-align: middle; /* Centrar verticalmente el contenido de las celdas */
+	vertical-align: middle;
 	padding: 0.75rem;
-	border-color: #e9ecef; /* Bordes más claros */
+	border-color: #e9ecef;
 }
 
-/* Efecto hover en las filas de la tabla */
-.excursionsTable tbody tr:hover {
-	background-color: rgba(
-		110,
-		148,
-		89,
-		0.05
-	); /* Un ligero tinte verde al pasar el ratón */
-}
-
-/* Mensaje cuando no hay excursiones */
+/* Message when there are no excursions */
 .noExcursionsJoined {
 	text-align: center;
 	padding: 2rem;
 	font-style: italic;
-	color: #6c757d; /* Color gris estándar de Bootstrap */
+	color: #6c757d;
 	background-color: #f8f9fa;
 	border-radius: 0.25rem;
 }
