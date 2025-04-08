@@ -6,8 +6,10 @@ import styles from "../css/Logo.module.css";
 
 function Logo() {
 	return (
-		<Col className={styles.logo} xs="12" md="3">
-			<Link to="/">Excursiones Juntos</Link>
+		<Col className={styles.logoContainer} xs="12" md="3">
+			<Link to="/">
+				<span className={styles.logoText}>Excursiones Juntos</span>
+			</Link>
 		</Col>
 	);
 }
