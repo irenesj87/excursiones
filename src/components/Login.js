@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Dropdown, DropdownButton } from "react-bootstrap";
+import { Button, Dropdown, DropdownButton, Form } from "react-bootstrap";
 import { validateMail, validatePassword } from "../validation/validations.js";
 import ValidatedFormGroup from "./ValidatedFormGroup";
 import { login } from "../slicers/loginSlice";
@@ -19,7 +19,8 @@ export function Login() {
 	const [password, setPassword] = useState("");
 
 	// Function that submits the information for the login form, saves the user and the token in the store and in the case of the token saves it in the sessionStorage too
-	const submit = async () => {
+	const submit = async (e) => {
+		e.preventDefault();
 		try {
 			const data = await userLogin(mail, password);
 			//The user logs in and we store his/her info and his/her token in the store
@@ -48,58 +49,41 @@ export function Login() {
 	return (
 		<DropdownButton
 			className={styles.loginDropdownButton}
-			variant="success"
 			title="Inicia sesión"
-			autoClose={false}
+			autoClose={"outside"}
 		>
-			<Dropdown.Item className={styles.loginDropdownButtonItem}>
-				<div className={styles.formText}>
+			<Dropdown.Item as="div" className={styles.loginDropdownButtonItem}>
+				<Form noValidate onSubmit={submit} className={styles.formText}>
 					<ValidatedFormGroup
-						control="formBasicEmail"
+						id="formLoginDropdownEmail"
 						name="Correo electrónico"
+						inputType="email"
 						inputToChange={setMail}
 						validationFunction={validateMail}
 						value={mail}
 						message={false}
+						className="mb-3"
 					/>
-				</div>
-			</Dropdown.Item>
-			<Dropdown.Item className={styles.loginDropdownButtonItem}>
-				<div className={styles.formText}>
 					<ValidatedFormGroup
-						control="formBasicPassword"
+						id="formLoginDropdownPassword"
 						inputType="password"
 						name="Contraseña"
 						inputToChange={setPassword}
 						validationFunction={validatePassword}
 						value={password}
 						message={false}
+						className="mb-3"
+						autocomplete="current-password"
 					/>
-				</div>
-			</Dropdown.Item>
-			<Dropdown.Item className={styles.loginDropdownButtonItem}>
-				{disabled && (
 					<Button
-						className={styles.sendBtn}
-						variant="secondary"
+						className={`${styles.sendBtn} mt-3`}
+						variant={disabled ? "secondary" : "success"} // Dynamic color
 						type="submit"
-						onClick={submit}
 						disabled={disabled}
 					>
 						Enviar
 					</Button>
-				)}
-				{!disabled && (
-					<Button
-						className={styles.sendBtn}
-						variant="success"
-						type="submit"
-						onClick={submit}
-						disabled={disabled}
-					>
-						Enviar
-					</Button>
-				)}
+				</Form>
 			</Dropdown.Item>
 		</DropdownButton>
 	);
