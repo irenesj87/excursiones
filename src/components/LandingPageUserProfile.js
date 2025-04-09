@@ -1,5 +1,5 @@
 import React from "react";
-import { SplitButton, Dropdown, Container, Row, Col } from "react-bootstrap";
+import { SplitButton, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import "bootstrap/dist/css/bootstrap.css";
@@ -43,34 +43,26 @@ function LandingPageUserProfile(props) {
 	};
 
 	return (
-		<Container>
-			<Row>
-				<Col xs="12" md="7" xl="12">
-					<SplitButton
-						className={styles.userProfile}
-						variant="success"
-						title={<div>Hola, {props.name}</div>}
-					>
-						<Dropdown.Item
-							className={styles.dropdownText}
-							as={Link}
-							to="UserPage"
-						>
-							Tu perfil
-						</Dropdown.Item>
-						<Dropdown.Divider />
-						<Dropdown.Item
-							className={styles.dropdownText}
-							as={Link}
-							to="/"
-							onClick={logOut}
-						>
-							Cerrar sesión
-						</Dropdown.Item>
-					</SplitButton>
-				</Col>
-			</Row>
-		</Container>
+		<>
+			<SplitButton
+				className={styles.userProfile}
+				title={<div>Hola, {props.name}</div>}
+				align="end"
+			>
+				<Dropdown.Item className={styles.dropdownText} as={Link} to="UserPage">
+					Tu perfil
+				</Dropdown.Item>
+				<Dropdown.Divider />
+				<Dropdown.Item
+					className={styles.dropdownText}
+					as={Link}
+					to="/"
+					onClick={logOut}
+				>
+					Cerrar sesión
+				</Dropdown.Item>
+			</SplitButton>
+		</>
 	);
 }
 

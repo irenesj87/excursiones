@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Nav } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import "bootstrap/dist/css/bootstrap.css";
-import styles from "../css/SearchBar.module.css";
 
 function SearchBar(props) {
 	// Variable that saves the search that the user writes in the search bar
@@ -40,17 +38,15 @@ function SearchBar(props) {
 	}, [search, area, difficulty, time, setExcursions]);
 
 	return (
-		<Nav.Item className={styles.searchBar} xs="12" md="12" xl="9">
-			<div className="form-group">
-				<input
-					id="searchBar"
-					className="form-control"
-					type="search"
-					placeholder="Busca el sitio al que quieras ir..."
-					onChange={introKeyPressed}
-				/>
-			</div>
-		</Nav.Item>
+		<>
+			<input
+				id="searchBar"
+				className="form-control"
+				type="search"
+				placeholder="Búsqueda"
+				onChange={introKeyPressed}
+			/>
+		</>
 	);
 }
 

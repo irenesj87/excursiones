@@ -24,7 +24,7 @@ function Excursions(props) {
 	);
 
 	return (
-		<Col className={styles.container} xs="12" md="9" lg="8">
+		<Col className={styles.container} xs="12" md="8" lg="8">
 			<h2 className={styles.title}>Próximas excursiones</h2>
 			{found && excursions}
 			{!found && notFound}

@@ -1,12 +1,5 @@
 import React, { useEffect } from "react";
-import {
-	Row,
-	Col,
-	Nav,
-	Container,
-	Button,
-	Navbar
-} from "react-bootstrap";
+import { Row, Col, Nav, Container, Button, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Logo from "./Logo";
@@ -14,6 +7,7 @@ import SearchBar from "./SearchBar";
 import Login from "./Login";
 import LandingPageUserProfile from "./LandingPageUserProfile";
 import { toggleMode, setMode } from "../slicers/themeSlice";
+import { RiMoonClearFill, RiSunFill } from "react-icons/ri";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/NavigationBar.module.css";
 import "../css/Themes.css";
@@ -73,16 +67,15 @@ function NavigationBar(props) {
 	};
 
 	// Conditional rendering for the icon
-	const icon = mode === "light" ? "🌙" : "🌞";
+	const icon = mode === "light" ? <RiMoonClearFill /> : <RiSunFill />;
 
 	return (
-		<Navbar expand="lg" className={styles.customNavbar} sticky="top">
+		<Navbar expand="lg" className={styles.customNavbar}>
 			<Container fluid>
-				{/* --- Elementos Siempre Visibles (Izquierda) --- */}
 				{/* Agrupados con d-flex para que estén juntos */}
 				<div className="d-flex align-items-center">
 					<Button
-						className={styles.themeToggleBtn} // Tu clase CSS
+						className={styles.themeToggleBtn}
 						variant="outline-secondary"
 						size="lg"
 						id="toggleButton"
@@ -90,43 +83,26 @@ function NavigationBar(props) {
 					>
 						{icon}
 					</Button>
-					<Navbar.Brand
-						as={Link}
-						to="/"
-						className={`${styles.navbarBrandCustom} ms-2`}
-					>
-						{" "}
+					<Navbar.Brand as={Link} to="/" className={"ms-2"}>
 						{/* ms-2 da espacio del botón */}
 						<Logo />
 					</Navbar.Brand>
 				</div>
-
-				{/* --- Botón Hamburguesa (Automático por `expand`) --- */}
-				<Navbar.Toggle aria-controls="navbar-content-row" />
-
-				{/* --- Contenido Colapsable --- */}
-				<Navbar.Collapse id="navbar-content-row">
-                <Row className="w-100 align-items-center mx-0">
-
-                    {/* Columna Espaciadora Izquierda (VISIBLE SOLO EN LG Y MAYORES) */}
-                    {/* Empuja las otras columnas hacia la derecha */}
-                    <Col lg={2} className="d-none d-lg-block"></Col> {/* lg={1} o lg={2} */}
-
-                    {/* Columna Central: SearchBar */}
-                    {/* Reducimos su 'lg' para compensar la columna espaciadora */}
-                    <Col xs={12} lg={6} className="my-3 my-lg-0"> {/* Ahora lg={6} (1+6+5 = 12) */}
-                        <SearchBar setExcursions={props.setExcursions} />
-                    </Col>
-
-                    {/* Columna Derecha: User Actions */}
-                    {/* Mantenemos lg={5} o ajustamos si es necesario */}
-                    <Col xs={12} lg={4} className="my-3 my-lg-0">
-                        <div className="d-flex justify-content-center justify-content-lg-end align-items-center w-100">
-                            {!isLoggedIn ? NoLoggedItems : LoggedItems}
-                        </div>
-                    </Col>
-                </Row>
-            </Navbar.Collapse>
+				<Row className="w-100 align-items-center mx-0">
+					{/* Columna Espaciadora Izquierda (VISIBLE SOLO EN LG Y MAYORES) */}
+					{/* Empuja las otras columnas hacia la derecha */}
+					<Col lg={2} className="d-none d-lg-block"></Col>
+					{/* Columna Central: SearchBar */}
+					{/* Reducimos su 'lg' para compensar la columna espaciadora */}
+					<Col xs={12} lg={5} xl={6} className="my-3 my-lg-0 w-lg-auto">
+						<SearchBar setExcursions={props.setExcursions} />
+					</Col>
+					<Col xs={12} lg={5} xl={4}className="my-3 my-lg-0">
+						<div className="d-flex justify-content-center justify-content-lg-end align-items-center">
+							{!isLoggedIn ? NoLoggedItems : LoggedItems}
+						</div>
+					</Col>
+				</Row>
 			</Container>
 		</Navbar>
 	);

@@ -1,4 +1,6 @@
-/********** Light Mode **********/
+/* ======================================== */
+/* --- LIGHT MODE STYLES --- */
+/* ======================================== */
 body.light {
 	background-color: var(--bg-light);
 	color: var(--text-light);
@@ -25,7 +27,9 @@ body.light {
 	}
 }
 
-/********** Dark Mode **********/
+/* ======================================== */
+/* --- DARK MODE STYLES --- */
+/* ======================================== */
 body.dark {
 	background-color: var(--bg-dark);
 	color: var(--text-dark);
@@ -56,6 +60,34 @@ body.dark {
 		color: var(--text-dark);
 	}
 
+	.accordion-item {
+		/* Override the default border */
+		border-color: transparent; /* Make the border invisible */
+	}
+
+	.customNavbar {
+		/* Define las variables o sobreescribe directamente */
+		--navbar-bg: #212529;
+		--navbar-border-color: #343a40;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Sombra más oscura */
+	}
+
+	.themeToggleBtn {
+		--toggle-border-color: #6c757d;
+		--toggle-icon-color: #adb5bd;
+		--toggle-hover-bg: rgba(255, 255, 255, 0.1);
+		--toggle-hover-border-color: #6c757d;
+	}
+
+	.navLinkCustom {
+		--navbar-link-color: #adb5bd; /* Color de link más claro */
+	}
+
+	.navLinkCustom:hover {
+		--navbar-link-hover-bg: rgba(255, 255, 255, 0.1);
+		--navbar-link-hover-color: #ffffff; /* Link blanco en hover */
+	}
+
 	.nav-item .form-control {
 		background-color: black; /* Dark mode background color */
 		color: var(--text-dark); /* Dark mode text color */
@@ -73,11 +105,19 @@ body.dark {
 		border: 1px solid var(--text-dark); /* Dark mode border color */
 	}
 
+	.card {
+		border-color: #444;
+	}
 	.card-header,
 	.card-footer {
 		background-color: #444;
 		color: var(--text-dark);
 		border-color: #555;
+	}
+
+	.card-body p {
+		background-color: #6f6b6b;
+		color: var(--text-dark);
 	}
 
 	/* Specific style for plaintext and readOnly Form.Control in dark mode */
@@ -99,28 +139,21 @@ body.dark {
 		color: var(--text-dark); /* White text */
 		border: 1px solid var(--text-dark); /* White border */
 	}
-}
 
-/* Restore bottom radius for last accordion item in flush */
-.accordion-flush .accordion-item:last-child {
-	border-bottom-right-radius: 0.25rem;
-	border-bottom-left-radius: 0.25rem;
-}
+	/* --- Accordion Specific Dark Mode Fixes --- */
 
-/******* Toggle Button ********/
-.toggleButton {
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
-	cursor: pointer; /* Make it clear it's clickable */
-	user-select: none; /* Prevent text selection */
-	font-size: 1.5rem;
-	border-radius: 2rem;
-	padding: 0.5rem 0.9rem;
-	background-color: var(--toggle-button-bg, var(--text-dark));
-}
+	/* Target the accordion item itself, especially within accordion-flush */
+	/*.accordion-flush .accordion-item, /* More specific for flush */
+	.accordion-item {
+		/* General fallback */
+		border: none; /* Remove ALL default borders first */
+		border-bottom: 1px solid var(--text-light); /* Add ONLY a white bottom border */
+		background-color: var(--bg-dark); /* Ensure background matches */
+	}
 
-/* Dark Mode - Toggle Button */
-body.dark .toggleButton {
-	background-color: var(--toggle-button-color, var(--bg-dark));
+	/* Restore bottom radius for last accordion item in flush */
+	.accordion-flush .accordion-item:last-child {
+		border-bottom-right-radius: 0.25rem;
+		border-bottom-left-radius: 0.25rem;
+	}
 }

@@ -1,5 +1,4 @@
 import React from "react";
-import { Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Footer.module.css";
 
@@ -12,15 +11,13 @@ function Footer() {
 
 	return (
 		<footer className={styles.footer} role="contentinfo">
-			<Col xs="12">
-				<p>
-					<a href="mailto:excursionesjuntos@gmail.com">Contáctanos</a>
-				</p>
-				<p>
-					© Excursiones Juntos 2021 - {getCurrentYear()}. Todos los derechos
-					reservados.
-				</p>
-			</Col>
+			<p>
+				<a href="mailto:excursionesjuntos@gmail.com">Contáctanos</a>
+			</p>
+			<p>
+				© Excursiones Juntos 2021 - {getCurrentYear()}. Todos los derechos
+				reservados.
+			</p>
 		</footer>
 	);
 }

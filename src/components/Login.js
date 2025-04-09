@@ -50,7 +50,8 @@ export function Login() {
 		<DropdownButton
 			className={styles.loginDropdownButton}
 			title="Inicia sesión"
-			autoClose={"outside"}
+			align="end"
+			autoClose="outside"
 		>
 			<Dropdown.Item as="div" className={styles.loginDropdownButtonItem}>
 				<Form id="loginForm" noValidate onSubmit={submit} className={styles.formText}>
@@ -77,7 +78,7 @@ export function Login() {
 					/>
 					<Button
 						className={`${styles.sendBtn} mt-3`}
-						variant={disabled ? "secondary" : "success"} // Dynamic color
+						variant={disabled ? "secondary" : "success"}
 						type="submit"
 						disabled={disabled}
 					>

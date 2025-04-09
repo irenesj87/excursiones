@@ -1,16 +1,20 @@
-/* En css/Filters.module.css */
-
 .filtersContainer {
-	/* Puedes añadir padding o margen si es necesario */
 	padding-top: 15px;
 }
 
 /* Estilo para la cabecera del acordeón */
 .customAccordionHeader button {
-	/* El botón dentro del header es lo que Bootstrap estiliza */
 	font-weight: 450; /* Hacer el texto un poco más grueso */
 	font-size: 1.1rem; /* Ajustar tamaño si es necesario */
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
+
+/* Add margin to the right of the icon */
+.customAccordionHeader button svg {
+	margin-right: 10px; /* Adjust this value as needed (e.g., 0.5rem) */
+} 
 
 /* Estilo para la cabecera cuando el item está abierto (activo) */
 .customAccordionHeader button:not(.collapsed) {
