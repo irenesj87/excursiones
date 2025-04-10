@@ -10,13 +10,10 @@ function Excursion(props) {
 	const { login: isLoggedIn, user } = useSelector(
 		(state) => state.loginReducer
 	);
-
 	// Variable that we need to be able to use dispatchers
 	const loginDispatch = useDispatch();
-
 	// Variable that saves the mail of the current user
 	const auxUserMail = user && user.mail;
-
 	// Variable that has the url that is needed for the fetch
 	const url = `http://localhost:3001/users/${auxUserMail}/excursions/${props.id}`;
 
@@ -54,7 +51,8 @@ function Excursion(props) {
 	const BtnJoiningNojoined = (
 		<>
 			<Button
-				className="w-100 mt-4"
+				className="mt-4"
+				variant="success"
 				type="button"
 				onClick={joinExcursion}
 			>
@@ -62,7 +60,6 @@ function Excursion(props) {
 			</Button>
 		</>
 	);
-
 	// Variable that has the button that appears when the user is signed up in that excursion in concrete
 	const BtnAlreadyJoined = (
 		<>
@@ -99,8 +96,8 @@ function Excursion(props) {
 					<div className={styles.bold}>Descripción:</div> {props.description}
 				</Col>
 			</Row>
-			<Row>
-				<Col xs="12" md="3">
+			<Row className="justify-content-center">
+				<Col xs="12" md="5" className="text-center">
 					{isLoggedIn &&
 						user &&
 						!user.excursions.includes(props.id) &&

@@ -24,10 +24,9 @@ function LandingPageUserProfile(props) {
 		},
 	};
 
-	/*The function for loggin out is a DELETE request to http://localhost:3001/login. 
-	Typically, a DELETE request to a login endpoint is used to invalidate a session or token on the server-side. 
-	In many cases, the server might not send back any meaningful data in the response body for a successful DELETE 
-	request. It might just send back a status code (like 204 No Content) to indicate success.*/
+	/* La función para desloguearse es una petición DELETE. Normalmente una petición de DELETE a un endpoint de login se utiliza
+	para invalidar la sesión o el token en el lado del servidor. En muchos casos, puede que el servidor no vuelva a mandar ningún dato 
+	importante en el cuerpo de una petición DELETE exitosa. Puede que mande un código de status (como 204 No Content) para indicar el éxito.*/
 	const logOut = async () => {
 		try {
 			const response = await fetch(url, options);
@@ -45,11 +44,19 @@ function LandingPageUserProfile(props) {
 
 	return (
 		<>
-			<Nav.Link className={`${styles.dropdownText} me-3`} as={Link} to="UserPage">
+			<Nav.Link
+				className={`${styles.dropdownText} me-3`}
+				as={Link}
+				to="UserPage"
+			>
 				<FaCircleUser />
 				Perfil
 			</Nav.Link>
-			<Button className={styles.dropdownText} variant="outline-danger" onClick={logOut}>
+			<Button
+				className={styles.dropdownText}
+				variant="outline-danger"
+				onClick={logOut}
+			>
 				Cerrar sesión
 			</Button>
 		</>

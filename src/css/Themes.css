@@ -57,7 +57,7 @@ body.dark {
 	/* --- Estilos para la barra de navegación --- */
 	.customNavbar {
 		/* Define las variables o sobreescribe directamente */
-		--navbar-bg: #212529;
+		background-color: var(--bg-dark-primary);
 		--navbar-border-color: #343a40;
 		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Sombra más oscura */
 	}
