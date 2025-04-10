@@ -1,23 +1,22 @@
-/* --- Estilos Generales de la Navbar --- */
+/* --- Estilos generales de la Navbar --- */
 .customNavbar {
-	/* Usa variables CSS para facilitar el theming. Define estas variables en tu Themes.css o :root / body.dark */
-	padding-top: 2.5rem; /* Ajusta padding vertical */
+	padding-top: 2.5rem;
 	padding-bottom: 4rem;
 	transition: background-color 0.3s ease;
-	width: 100%; /* Asegura ancho completo */
+	width: 100%;
 }
 
 /* --- Botón de Cambio de Tema --- */
 .themeToggleBtn {
-	border-color: var(--toggle-border-color, #ced4da); /* Color del borde */
-	background-color: transparent; /* Sin fondo */
-	line-height: 1; /* Alineación del icono */
+	border-color: #ced4da;
+	background-color: transparent;
+	line-height: 1;
 	transition: background-color 0.2s ease, border-color 0.2s ease,
 		color 0.2s ease;
-	border-radius: 5rem; /* Redondeo estándar */
-}
+	border-radius: 5rem;
 
-.themeToggleBtn:hover {
-	background-color: rgba(0, 0, 0, 0.05);
-	border-color: #adb5bd;
+	&:hover {
+		background-color: rgba(0, 0, 0, 0.05);
+		border-color: #adb5bd;
+	}
 }

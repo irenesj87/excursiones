@@ -28,7 +28,7 @@ function NavigationBar(props) {
 	// Items that are displayed in the nav bar when no user is logged
 	const NoLoggedItems = (
 		<>
-			<Nav.Link className="me-3 text-primary" as={Link} to="register">
+			<Nav.Link className="me-3" as={Link} to="register">
 				Regístrate
 			</Nav.Link>
 			<Login />
