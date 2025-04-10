@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { useNavigate } from "react-router";
 import { validateMail, validatePassword } from "../validation/validations.js";
 import ValidatedFormGroup from "./ValidatedFormGroup";
 import { login } from "../slicers/loginSlice";
@@ -10,6 +11,7 @@ import styles from "../css/LoginForm.module.css";
 // Recibe una prop 'onLoginSuccess' para notificar cuando el login es exitoso (útil para cerrar el modal)
 export function LoginForm({ onLoginSuccess }) {
 	const loginDispatch = useDispatch();
+	const navigate = useNavigate();
 	// Variable que guarda si el botón de login está deshabilitado o no
 	const [disabled, setDisabled] = useState(true);
 	// Variable que guarda el correo que recibimos del input
@@ -33,12 +35,16 @@ export function LoginForm({ onLoginSuccess }) {
 			// ...después guardamos su token en sessionStorage
 			window.sessionStorage["token"] = data.token;
 
+			// Cuando el usuario inicia sesión se le manda a su página de usuario
+			navigate("UserPage");
+
 			// Notifica al componente padre que el login fue exitoso
 			if (onLoginSuccess) {
 				onLoginSuccess();
 			}
 		} catch (error) {
-			alert(error);
+			console.error("Login failed:", error);
+			alert("Error al iniciar sesión.");
 		}
 	};
 
