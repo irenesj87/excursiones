@@ -28,7 +28,7 @@ function NavigationBar(props) {
 	// Items that are displayed in the nav bar when no user is logged
 	const NoLoggedItems = (
 		<>
-			<Nav.Link className="me-3 text-primary"  as={Link} to="register">
+			<Nav.Link className="me-3 text-primary" as={Link} to="register">
 				Regístrate
 			</Nav.Link>
 			<Login />
@@ -70,7 +70,7 @@ function NavigationBar(props) {
 	const icon = mode === "light" ? <RiMoonClearFill /> : <RiSunFill />;
 
 	return (
-		<Navbar expand="lg" className={styles.customNavbar}>
+		<Navbar expand="lg" className={styles.customNavbar} variant={mode}>
 			<Container fluid>
 				{/* Grouped with d-flex to be together */}
 				<div className="d-flex align-items-center">
@@ -83,7 +83,7 @@ function NavigationBar(props) {
 					>
 						{icon}
 					</Button>
-					<Navbar.Brand as={Link} to="/" maxWidth="100%">
+					<Navbar.Brand as={Link} to="/">
 						<Logo />
 					</Navbar.Brand>
 				</div>

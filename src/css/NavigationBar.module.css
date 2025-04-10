@@ -7,10 +7,6 @@
 	width: 100%; /* Asegura ancho completo */
 }
 
-.customNavBarBrand{
-	max-width: 100%;
-}
-
 /* --- Botón de Cambio de Tema --- */
 .themeToggleBtn {
 	border-color: var(--toggle-border-color, #ced4da); /* Color del borde */
