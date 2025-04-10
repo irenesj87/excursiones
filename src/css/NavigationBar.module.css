@@ -7,6 +7,10 @@
 	width: 100%; /* Asegura ancho completo */
 }
 
+.customNavBarBrand{
+	max-width: 100%;
+}
+
 /* --- Botón de Cambio de Tema --- */
 .themeToggleBtn {
 	border-color: var(--toggle-border-color, #ced4da); /* Color del borde */
@@ -18,63 +22,6 @@
 }
 
 .themeToggleBtn:hover {
-	background-color: var(
-		--toggle-hover-bg,
-		rgba(0, 0, 0, 0.05)
-	); /* Fondo sutil al pasar el ratón */
-	border-color: var(
-		--toggle-hover-border-color,
-		#adb5bd
-	); /* Borde cambia en hover */
-}
-
-/* Quitar el anillo azul de foco (opcional, considera accesibilidad) */
-.themeToggleBtn:focus {
-	box-shadow: none;
-}
-
-/* --- Brand / Logo --- */
-.navbarBrandCustom {
-	padding-top: 0; /* Quitar padding extra si Navbar.Brand lo añade */
-	padding-bottom: 0;
-}
-
-/* Asegurarse que el Link dentro del Logo no esté subrayado */
-/* Es mejor si Logo.module.css ya lo hace, pero por si acaso: */
-.navbarBrandCustom a,
-.navbarBrandCustom a:hover {
-	text-decoration: none;
-	color: inherit; /* Hereda el color */
-}
-
-/* Intenta alinear verticalmente el contenido del Logo (si es img/svg) */
-/* :first-child asume que Logo es el primer hijo directo de NavbarBrand */
-.navbarBrandCustom > :first-child {
-	vertical-align: middle;
-	display: inline-block; /* Ayuda con la alineación */
-}
-
-/* --- Links de Navegación (Ej: "Regístrate") --- */
-.navLinkCustom {
-	/* Hereda color por defecto, o define uno específico con variable */
-	color: var(--navbar-link-color, #343a40); /* Color del texto */
-	font-weight: 500; /* Grosor de fuente */
-	padding: 0.4rem 0.8rem; /* Padding interno */
-	border-radius: 0.25rem; /* Bordes redondeados */
-	transition: background-color 0.2s ease, color 0.2s ease;
-	display: inline-block; /* Para padding correcto */
-	line-height: inherit; /* Hereda de su contenedor flex para alineación vertical */
-	text-decoration: none; /* Sin subrayado */
-}
-
-.navLinkCustom:hover {
-	background-color: var(
-		--navbar-link-hover-bg,
-		rgba(0, 0, 0, 0.05)
-	); /* Fondo en hover */
-	color: var(
-		--navbar-link-hover-color,
-		#0056b3
-	);
-	text-decoration: none;
+	background-color: rgba(0, 0, 0, 0.05);
+	border-color: #adb5bd;
 }

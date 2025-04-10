@@ -45,7 +45,6 @@ function LandingPageUserProfile(props) {
 	return (
 		<>
 			<SplitButton
-				className={styles.userProfile}
 				title={<div>Hola, {props.name}</div>}
 				align="end"
 			>

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Row, Col, Nav, Container, Button, Navbar } from "react-bootstrap";
+import { Nav, Navbar, Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Logo from "./Logo";
@@ -28,7 +28,7 @@ function NavigationBar(props) {
 	// Items that are displayed in the nav bar when no user is logged
 	const NoLoggedItems = (
 		<>
-			<Nav.Link className="ml-auto" as={Link} to="register">
+			<Nav.Link className="me-3 text-primary"  as={Link} to="register">
 				Regístrate
 			</Nav.Link>
 			<Login />
@@ -72,7 +72,7 @@ function NavigationBar(props) {
 	return (
 		<Navbar expand="lg" className={styles.customNavbar}>
 			<Container fluid>
-				{/* Agrupados con d-flex para que estén juntos */}
+				{/* Grouped with d-flex to be together */}
 				<div className="d-flex align-items-center">
 					<Button
 						className={styles.themeToggleBtn}
@@ -83,26 +83,30 @@ function NavigationBar(props) {
 					>
 						{icon}
 					</Button>
-					<Navbar.Brand as={Link} to="/" className={"ms-2"}>
-						{/* ms-2 da espacio del botón */}
+					<Navbar.Brand as={Link} to="/" maxWidth="100%">
 						<Logo />
 					</Navbar.Brand>
 				</div>
-				<Row className="w-100 align-items-center mx-0">
-					{/* Columna Espaciadora Izquierda (VISIBLE SOLO EN LG Y MAYORES) */}
-					{/* Empuja las otras columnas hacia la derecha */}
-					<Col lg={2} className="d-none d-lg-block"></Col>
-					{/* Columna Central: SearchBar */}
-					{/* Reducimos su 'lg' para compensar la columna espaciadora */}
-					<Col xs={12} lg={5} xl={6} className="my-3 my-lg-0 w-lg-auto">
-						<SearchBar setExcursions={props.setExcursions} />
-					</Col>
-					<Col xs={12} lg={5} xl={4}className="my-3 my-lg-0">
-						<div className="d-flex justify-content-center justify-content-lg-end align-items-center">
-							{!isLoggedIn ? NoLoggedItems : LoggedItems}
+
+				{/* Botón Hamburguesa (aparece en pantallas pequeñas) */}
+				<Navbar.Toggle aria-controls="basic-navbar-nav" />
+
+				<Navbar.Collapse id="basic-navbar-nav">
+					<Nav className="w-100">
+						{/* Hacemos que Nav ocupe todo el ancho posible */}
+						{/* SearchBar centrada en pantallas grandes, arriba en pequeñas */}
+						{/* me-auto empuja hacia la izquierda, ms-auto empuja hacia la derecha */}
+						{/* d-flex y justify-content-center en el contenedor para centrar la barra */}
+						<div className="d-flex justify-content-center flex-grow-1 my-3 my-lg-0 px-lg-5">
+							<div style={{ maxWidth: "900px", width: "100%" }}>
+								<SearchBar setExcursions={props.setExcursions} />
+							</div>
 						</div>
-					</Col>
-				</Row>
+						<Nav className="ms-auto d-flex flex-row align-items-center">
+							{!isLoggedIn ? NoLoggedItems : LoggedItems}
+						</Nav>
+					</Nav>
+				</Navbar.Collapse>
 			</Container>
 		</Navbar>
 	);
