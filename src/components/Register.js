@@ -89,7 +89,7 @@ function Register() {
 				</Col>
 			</Row>
 			<Col>
-				<Form id="login" className={styles.form} onSubmit={submit}>
+				<Form id="registerForm" className={styles.form} onSubmit={submit}>
 					<Row className="mb-3">
 						<ValidatedFormGroup
 							id="formGridName"

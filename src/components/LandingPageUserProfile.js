@@ -1,11 +1,11 @@
 import React from "react";
-import { Nav } from "react-bootstrap";
+import { Nav, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { logout } from "../slicers/loginSlice";
 import { FaCircleUser } from "react-icons/fa6";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/LandingPageUserProfile.module.css";
-import { Link } from "react-router-dom";
 
 function LandingPageUserProfile(props) {
 	// Variable que se necesita para utilizar los dispatcher
@@ -49,9 +49,9 @@ function LandingPageUserProfile(props) {
 				<FaCircleUser />
 				Perfil
 			</Nav.Link>
-			<Nav.Link className={styles.dropdownText} to="/" onClick={logOut}>
+			<Button className={styles.dropdownText} variant="outline-danger" onClick={logOut}>
 				Cerrar sesión
-			</Nav.Link>
+			</Button>
 		</>
 	);
 }
