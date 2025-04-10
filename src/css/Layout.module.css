@@ -1,7 +1,9 @@
 :root {
-	--bg-light: #f8f8f8;
+	--bg-light-primary: #f8f8f8;
+	--bg-light-secondary:#f0f1f3;
 	--text-light: #333;
-	--bg-dark: #222;
+	--bg-dark-primary: #222;
+	--bg-dark-secondary: #444;
 	--text-dark: #eee;
 	--green: #588133;
 	font-size: 16px;

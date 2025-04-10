@@ -1,19 +1,20 @@
 import React from "react";
-import { SplitButton, Dropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Nav } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../slicers/loginSlice";
+import { FaCircleUser } from "react-icons/fa6";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/LandingPageUserProfile.module.css";
-import { logout } from "../slicers/loginSlice";
+import { Link } from "react-router-dom";
 
 function LandingPageUserProfile(props) {
-	// Variable that we need to be able to use dispatchers
+	// Variable que se necesita para utilizar los dispatcher
 	const logoutDispatch = useDispatch();
-	// This useSelector variable has the token that it is saved in the store
+	// Variable que tiene el token guardado en la store
 	const { token } = useSelector((state) => state.loginReducer);
-	// Variable that has the url that is needed for the fetch
+	// Variable que tiene la url que se necesita para el fetch
 	const url = "http://localhost:3001/login";
-	// Variable that saves the options that the fetch needs
+	// Opciones para el fetch
 	const options = {
 		method: "DELETE",
 		mode: "cors",
@@ -44,23 +45,13 @@ function LandingPageUserProfile(props) {
 
 	return (
 		<>
-			<SplitButton
-				title={<div>Hola, {props.name}</div>}
-				align="end"
-			>
-				<Dropdown.Item className={styles.dropdownText} as={Link} to="UserPage">
-					Tu perfil
-				</Dropdown.Item>
-				<Dropdown.Divider />
-				<Dropdown.Item
-					className={styles.dropdownText}
-					as={Link}
-					to="/"
-					onClick={logOut}
-				>
-					Cerrar sesión
-				</Dropdown.Item>
-			</SplitButton>
+			<Nav.Link className={`${styles.dropdownText} me-3`} as={Link} to="UserPage">
+				<FaCircleUser />
+				Perfil
+			</Nav.Link>
+			<Nav.Link className={styles.dropdownText} to="/" onClick={logOut}>
+				Cerrar sesión
+			</Nav.Link>
 		</>
 	);
 }

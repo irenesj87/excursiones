@@ -9,9 +9,9 @@ export function Login() {
 	const [showModal, setShowModal] = useState(false);
 	// Variable para saber si la pantalla es pequeña o no
 	const [isSmallScreen, setIsSmallScreen] = useState(false);
-
-	// --- Inicio: Corrección para estado en componente desmontado ---
-	const isMounted = useRef(true); // Usamos useRef para rastrear si está montado
+	/* Variable que se utiliza para mostrar si el componente está actualmente "montado" (es decir, si existe en el árbol DOM de la página)
+	o si ya ha sido "desmontado" (eliminado).*/
+	const isMounted = useRef(true);
 
 	useEffect(() => {
 		// Cuando el componente se monta, isMounted.current es true
@@ -21,18 +21,17 @@ export function Login() {
 			isMounted.current = false; // Marcar como desmontado
 		};
 	}, []); // El array vacío asegura que esto se ejecute solo al montar y desmontar
-	// --- Fin: Corrección ---
 
-	// Modifica handleClose y handleShow para verificar si está montado
+	// handleClose se utiliza para cerrar el Modal
 	const handleClose = () => {
 		if (isMounted.current) {
 			// Solo actualiza si está montado
 			setShowModal(false);
 		}
 	};
+	// handleShow se utiliza para mostrar el Modal
 	const handleShow = () => {
 		if (isMounted.current) {
-			// Buena práctica añadirlo aquí también
 			setShowModal(true);
 		}
 	};
@@ -47,10 +46,14 @@ export function Login() {
 			}
 		};
 
+		/* Añadimos un event listener a la ventana del navegador. Cada vez que el tamaño de la ventana cambie (evento resize), 
+		se ejecutará la función checkScreenSize.*/
 		window.addEventListener("resize", checkScreenSize);
 		checkScreenSize(); // Comprobación inicial
 
 		return () => {
+			/*Elimina el event listener cuando el componente se desmonta. Esto es crucial para evitar pérdidas de memoria 
+			(memory leaks) y errores, ya que el listener dejaría de tener sentido si el componente ya no existe.*/
 			window.removeEventListener("resize", checkScreenSize);
 		};
 		// No necesitamos dependencias aquí si solo leemos window.innerWidth
@@ -59,6 +62,7 @@ export function Login() {
 
 	// --- Renderizado Condicional ---
 	if (isSmallScreen) {
+		// Si la pantalla es pequeña, se utiliza el Modal...
 		return (
 			<>
 				<Button
@@ -74,13 +78,14 @@ export function Login() {
 						<Modal.Title>Iniciar sesión</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						{/* handleClose ya está protegido */}
+						{/* Si el login ha sido exitoso el LoginForm le dice a Login que puede cerrar el Modal */}
 						<LoginForm onLoginSuccess={handleClose} />
 					</Modal.Body>
 				</Modal>
 			</>
 		);
 	} else {
+		// ...Y si la pantalla es grande utilizamos el botón
 		return (
 			<DropdownButton
 				className={styles.loginDropdownButton}

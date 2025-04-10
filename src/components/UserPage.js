@@ -138,10 +138,10 @@ function UserPage() {
 				</Col>
 			</Row>
 			<Row className="mb-4 justify-content-center">
-				<Col xs="12" md="12" lg="8">
+				<Col xs="12" md="12" lg="9">
 					<Card className={`${styles.profileCard} mb-4`}>
 						<Card.Header className={styles.cardHeader}>
-							Información Personal
+							Datos Personales
 						</Card.Header>
 						<Card.Body className={styles.cardBody}>
 							<Form.Group

@@ -12,7 +12,7 @@
 
 /* Card header */
 .cardHeader {
-	background-color: #e9ecef;
+	background-color: var(--bg-light-primary);
 	color: #495057;
 	text-transform: uppercase;
 	font-weight: bold;

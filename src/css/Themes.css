@@ -2,12 +2,12 @@
 /* --- LIGHT MODE STYLES --- */
 /* ======================================== */
 body.light {
-	background-color: var(--bg-light);
+	background-color: var(--bg-light-primary);
 	color: var(--text-light);
 	--toggle-button-bg: var(--text-dark);
 
 	.accordion-button {
-		background-color: var(--bg-light);
+		background-color: var(--bg-light-primary);
 		color: var(--text-light);
 		transition: none;
 
@@ -19,19 +19,33 @@ body.light {
 	.accordion-body,
 	#login,
 	tbody,
-	.dropdown-menu,
-	.dropdown-item,
 	.formText {
-		background-color: var(--bg-light);
+		background-color: var(--bg-light-primary);
 		color: var(--text-light);
 	}
+
+	/* Contenedor principal del modal */
+    .modal-content {
+        background-color: var(--bg-light-primary); /* Usa tu variable o un fallback */
+        color: var(--text-light);
+        border: 1px solid var(--bg-light-primary); /* Borde sutil opcional */
+    }
+
+    /* Cabecera del modal */
+    .modal-header {
+        /* Hereda background y color de .modal-content */
+		background-color: var(--bg-light-secondary);
+        border-bottom-color: var(--bg-light-secondary); /* Color del borde inferior */
+    }
+
+    
 }
 
 /* ======================================== */
 /* --- DARK MODE STYLES --- */
 /* ======================================== */
 body.dark {
-	background-color: var(--bg-dark);
+	background-color: var(--bg-dark-primary);
 	color: var(--text-dark);
 	--excursion-border-color: var(
 		--text-dark
@@ -39,7 +53,7 @@ body.dark {
 	--toggle-button-color: var(--bg-dark);
 
 	.accordion-button {
-		background-color: var(--bg-dark);
+		background-color: var(--bg-dark-primary);
 		color: var(--text-dark);
 		transition: none;
 
@@ -56,7 +70,7 @@ body.dark {
 	.formText,
 	.card,
 	.card-body {
-		background-color: var(--bg-dark);
+		background-color: var(--bg-dark-primary);
 		color: var(--text-dark);
 	}
 
@@ -94,10 +108,6 @@ body.dark {
 		border: 1px solid var(--text-dark); /* Dark mode border color */
 	}
 
-	.dropdown-menu {
-		border-color: var(--text-dark);
-	}
-
 	#login input,
 	.text-start input {
 		background-color: black; /* Dark mode background color */
@@ -105,12 +115,34 @@ body.dark {
 		border: 1px solid var(--text-dark); /* Dark mode border color */
 	}
 
+	/* --- NUEVOS ESTILOS PARA EL MODAL --- */
+
+    /* Contenedor principal del modal */
+    .modal-content {
+        background-color: var(--bg-dark-primary, #212529); /* Usa tu variable o un fallback */
+        color: var(--text-dark, #dee2e6);
+        border: 1px solid var(--bg-dark-secondary, #343a40); /* Borde sutil opcional */
+    }
+
+    /* Cabecera del modal */
+    .modal-header {
+        /* Hereda background y color de .modal-content */
+		background-color: var(--bg-dark-secondary);
+        border-bottom-color: var(--bg-dark-secondary); /* Color del borde inferior */
+    }
+
+    /* Botón de cerrar (la 'X') */
+    .modal-header .btn-close {
+        /* Bootstrap 5 usa un filtro para cambiar el color del SVG a blanco en modo oscuro */
+        filter: invert(1) grayscale(100%) brightness(200%);
+	}
+
 	.card {
-		border-color: #444;
+		border-color: var(--bg-dark-secondary);
 	}
 	.card-header,
 	.card-footer {
-		background-color: #444;
+		background-color: var(--bg-dark-secondary);
 		color: var(--text-dark);
 		border-color: #555;
 	}
@@ -127,31 +159,27 @@ body.dark {
 
 	/* Override Bootstrap's default form-control styles in dark mode */
 	.form-control {
-		background-color: rgb(47, 46, 46); /* Black background */
-		color: var(--text-dark); /* White text */
-		border: 1px solid var(--text-dark); /* White border */
+		background-color: var(--bg-dark-secondary);
+		color: var(--text-dark);
+		border: 1px solid var(--text-dark); 
 	}
 
 	/* Override Bootstrap's readonly/disabled styles in dark mode */
 	.form-control:disabled,
 	.form-control[readonly] {
-		background-color: black; /* Black background */
-		color: var(--text-dark); /* White text */
-		border: 1px solid var(--text-dark); /* White border */
+		background-color: rgb(47, 46, 46);;
+		color: var(--text-dark);
+		border: 1px solid var(--text-dark);
 	}
 
 	/* --- Accordion Specific Dark Mode Fixes --- */
-
-	/* Target the accordion item itself, especially within accordion-flush */
-	/*.accordion-flush .accordion-item, /* More specific for flush */
 	.accordion-item {
-		/* General fallback */
-		border: none; /* Remove ALL default borders first */
-		border-bottom: 1px solid var(--text-light); /* Add ONLY a white bottom border */
-		background-color: var(--bg-dark); /* Ensure background matches */
+		border: none; /* Se eliminan todos los bordes */
+		border-bottom: 1px solid var(--text-light); /* Solo se añade el borde inferior en blanco */
+		background-color: var(--bg-dark); /* Nos aseguramos de que el color del fondo sea el mismo */
 	}
 
-	/* Restore bottom radius for last accordion item in flush */
+	/* Restablecer el radio del botón para el último item del acordeón en flush */
 	.accordion-flush .accordion-item:last-child {
 		border-bottom-right-radius: 0.25rem;
 		border-bottom-left-radius: 0.25rem;
