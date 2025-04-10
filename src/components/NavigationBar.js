@@ -70,7 +70,7 @@ function NavigationBar(props) {
 	const icon = mode === "light" ? <RiMoonClearFill /> : <RiSunFill />;
 
 	return (
-		<Navbar expand="lg" className={styles.customNavbar} variant={mode}>
+		<Navbar expand="lg" className="customNavbar" variant={mode} sticky="top">
 			<Container fluid>
 				{/* Grouped with d-flex to be together */}
 				<div className="d-flex align-items-center">
@@ -93,8 +93,6 @@ function NavigationBar(props) {
 
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="w-100">
-						{/* Hacemos que Nav ocupe todo el ancho posible */}
-						{/* SearchBar centrada en pantallas grandes, arriba en pequeñas */}
 						{/* me-auto empuja hacia la izquierda, ms-auto empuja hacia la derecha */}
 						{/* d-flex y justify-content-center en el contenedor para centrar la barra */}
 						<div className="d-flex justify-content-center flex-grow-1 my-3 my-lg-0 px-lg-5">

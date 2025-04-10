@@ -6,6 +6,15 @@ body.light {
 	color: var(--text-light);
 	--toggle-button-bg: var(--text-dark);
 
+	.customNavbar {
+		background-color: var(--bg-light-primary);
+		z-index: 1030;
+		color: var(--text-light);
+		padding-top: 2.5rem;
+		padding-bottom: 4rem;
+		width: 100%;
+	}
+
 	/* --- Estilos para filtros --- */
 	.accordion-button,
 	.accordion-body {
@@ -51,23 +60,15 @@ body.light {
 body.dark {
 	background-color: var(--bg-dark-primary);
 	color: var(--text-dark);
-	--excursion-border-color: var(--text-dark);
-	--toggle-button-color: var(--bg-dark);
 
 	/* --- Estilos para la barra de navegación --- */
 	.customNavbar {
-		/* Define las variables o sobreescribe directamente */
 		background-color: var(--bg-dark-primary);
-		--navbar-border-color: #343a40;
-		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Sombra más oscura */
-	}
-
-	/* --- Estilos para el botón de cambio de tema --- */
-	.themeToggleBtn {
-		--toggle-border-color: #6c757d;
-		--toggle-icon-color: #adb5bd;
-		--toggle-hover-bg: rgba(255, 255, 255, 0.1);
-		--toggle-hover-border-color: #6c757d;
+		z-index: 1030;
+		color: var(--text-dark);
+		padding-top: 2.5rem;
+		padding-bottom: 4rem;
+		width: 100%;
 	}
 
 	/* --- Estilos para los filtros --- */
