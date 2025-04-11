@@ -1,7 +1,7 @@
 .excursion {
 	margin-top: 30px;
 	padding-bottom: 50px;
-	border-bottom: 1px solid var(--excursion-border-color, #000); /* Default black */
+	border-bottom: 1px solid var(--excursion-border-bottom);
 
 	&:last-child {
 		border-bottom: none;

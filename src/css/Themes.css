@@ -6,6 +6,8 @@ body.light {
 	color: var(--text-light);
 	--toggle-button-bg: var(--text-dark);
 
+	/* --- Estilos para la barra de navegación --- */
+
 	.customNavbar {
 		background-color: var(--bg-light-primary);
 		z-index: 1030;
@@ -60,6 +62,7 @@ body.light {
 body.dark {
 	background-color: var(--bg-dark-primary);
 	color: var(--text-dark);
+	--excursion-border-bottom: var(--bg-light-secondary);
 
 	/* --- Estilos para la barra de navegación --- */
 	.customNavbar {

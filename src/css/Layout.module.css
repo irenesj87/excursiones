@@ -6,6 +6,7 @@
 	--bg-dark-secondary: #444;
 	--text-dark: #eee;
 	--green: #588133;
+	--excursion-border-bottom: var(--bg-dark-primary);
 	font-size: 16px;
 	--minheight: calc(100vh - 276px);
 }

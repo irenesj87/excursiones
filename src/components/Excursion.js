@@ -51,7 +51,7 @@ function Excursion(props) {
 	const BtnJoiningNojoined = (
 		<>
 			<Button
-				className="mt-4"
+				className="mt-4 w-100"
 				variant="success"
 				type="button"
 				onClick={joinExcursion}
@@ -63,8 +63,8 @@ function Excursion(props) {
 	// Variable that has the button that appears when the user is signed up in that excursion in concrete
 	const BtnAlreadyJoined = (
 		<>
-			<h5 className="mt-4 text-uppercase text-success">
-				<strong>Te has apuntado</strong>
+			<h5 className="mt-4 text-uppercase text-success w-100">
+				<strong>Apuntado/a</strong>
 			</h5>
 		</>
 	);
@@ -97,7 +97,7 @@ function Excursion(props) {
 				</Col>
 			</Row>
 			<Row className="justify-content-center">
-				<Col xs="12" md="5" className="text-center">
+				<Col xs="12" md="5" lg="4" xl="2" className="text-center">
 					{isLoggedIn &&
 						user &&
 						!user.excursions.includes(props.id) &&

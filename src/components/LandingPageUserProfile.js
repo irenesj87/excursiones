@@ -54,7 +54,7 @@ function LandingPageUserProfile(props) {
 			</Nav.Link>
 			<Button
 				className={styles.dropdownText}
-				variant="outline-danger"
+				variant="outline-secondary"
 				onClick={logOut}
 			>
 				Cerrar sesión
