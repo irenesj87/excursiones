@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { login, logout } from "../../slicers/loginSlice";
 import { Routes, Route } from "react-router-dom";
@@ -13,7 +13,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import styles from "../../css/Layout.module.css";
 
 //This is the layout, here goes the web structure.
-export const Layout = ({ children }) => {
+const Layout = () => {
 	// Variable we need to be able to use dispatchers
 	const loginDispatch = useDispatch();
 
@@ -64,26 +64,23 @@ export const Layout = ({ children }) => {
 	return (
 		<Container className={styles.layout} fluid>
 			<NavigationBar setExcursions={setExcursionArray} />
-			<Row>
-				<Col>
-					<main>{children}</main>
-				</Col>
-			</Row>
-			<Row>
-				<Routes>
-					<Route
-						path="/"
-						element={
-							<>
-								<Filters />
-								<Excursions excursionData={excursionArray} />
-							</>
-						}
-					/>
-					<Route path="register" element={<Register />} />
-					<Route path="userPage" element={<UserPage />} />
-				</Routes>
-			</Row>
+			<main>
+				<Row>
+					<Routes>
+						<Route
+							path="/"
+							element={
+								<>
+									<Filters />
+									<Excursions excursionData={excursionArray} />
+								</>
+							}
+						/>
+						<Route path="register" element={<Register />} />
+						<Route path="userPage" element={<UserPage />} />
+					</Routes>
+				</Row>
+			</main>
 			<Row>
 				<Footer />
 			</Row>

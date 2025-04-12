@@ -1,7 +1,7 @@
 // This function has the variables and the fetch that is neccessary for an user to logged
 const userLogin = (mail, password) => {
 	// Variable that has the url that is needed for the fetch
-	const url = "http://localhost:3001/login";
+	const url = `http://localhost:3001/login`;
 
 	// Login object that we pass to the server for it to authenticate the user
 	const credentials = {
