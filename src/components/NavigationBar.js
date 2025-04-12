@@ -46,12 +46,12 @@ function NavigationBar(props) {
 		document.body.classList.add(mode);
 	}, [mode]);
 
-	// Functions for the localStorage
+	// Functions for the localStorage 
 	useEffect(() => {
 		const savedMode = localStorage.getItem("themeMode"); // Gets the mode from the localStorage
-		if (prefersDarkMode) {
+		if (prefersDarkMode) { // If the user wants dark mode
 			dispatch(setMode("dark"));
-		} else if (!prefersDarkMode) {
+		} else if (!prefersDarkMode) { // If the user wants light mode
 			dispatch(setMode("light"));
 		} else if (savedMode) {
 			dispatch(setMode(savedMode)); // Updates the mode with the user preferences
@@ -70,7 +70,12 @@ function NavigationBar(props) {
 	const icon = mode === "light" ? <RiMoonClearFill /> : <RiSunFill />;
 
 	return (
-		<Navbar expand="lg" className="customNavbar" variant={mode} sticky="top">
+		<Navbar
+			expand="lg"
+			className="customNavbar"
+			variant={mode}
+			sticky="top"
+		>
 			<Container fluid>
 				{/* Grouped with d-flex to be together */}
 				<div className="d-flex align-items-center">
@@ -88,13 +93,13 @@ function NavigationBar(props) {
 					</Navbar.Brand>
 				</div>
 
-				{/* Botón Hamburguesa (aparece en pantallas pequeñas) */}
+				{/* Hamburguer button (appears in xs, sm and md breakpoints) */}
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="w-100">
 						{/* me-auto empuja hacia la izquierda, ms-auto empuja hacia la derecha */}
-						{/* d-flex y justify-content-center en el contenedor para centrar la barra */}
+						{/* d-flex y justify-content-center to center the search bar */}
 						<div className="d-flex justify-content-center flex-grow-1 my-3 my-lg-0 px-lg-5">
 							<div style={{ maxWidth: "900px", width: "100%" }}>
 								<SearchBar setExcursions={props.setExcursions} />
