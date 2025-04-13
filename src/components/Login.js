@@ -4,7 +4,7 @@ import LoginForm from "./LoginForm";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Login.module.css";
 
-export function Login() {
+export function Login(props) {
 	// Variable para saber si hay que mostrar el Modal o no
 	const [showModal, setShowModal] = useState(false);
 	// Variable para saber si la pantalla es pequeña o no
@@ -35,6 +35,13 @@ export function Login() {
 			setShowModal(true);
 		}
 	};
+
+	const handleShowAndCollapseNav = () => {
+        if (props.onClickCloseCollapsibleLogin) {
+            props.onClickCloseCollapsibleLogin(); // Llama a la función para cerrar el Navbar
+        }
+        handleShow(); // Llama a la función original para mostrar el Modal
+    };
 
 	// Modifica el efecto del tamaño de pantalla
 	useEffect(() => {
@@ -67,7 +74,7 @@ export function Login() {
 			<>
 				<Button
 					variant="outline-success"
-					onClick={handleShow}
+					onClick={handleShowAndCollapseNav}
 					className={styles.loginModalButton}
 				>
 					Inicia sesión

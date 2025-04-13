@@ -28,6 +28,9 @@ function LandingPageUserProfile(props) {
 	para invalidar la sesión o el token en el lado del servidor. En muchos casos, puede que el servidor no vuelva a mandar ningún dato 
 	importante en el cuerpo de una petición DELETE exitosa. Puede que mande un código de status (como 204 No Content) para indicar el éxito.*/
 	const logOut = async () => {
+		if (props.onClickCloseCollapsible) {
+			props.onClickCloseCollapsible();
+		}
 		try {
 			const response = await fetch(url, options);
 			if (!response.ok) {
@@ -47,7 +50,8 @@ function LandingPageUserProfile(props) {
 			<Nav.Link
 				className={`${styles.dropdownText} me-3`}
 				as={Link}
-				to="UserPage"
+				to="/UserPage"
+				onClick={props.onClickCloseCollapsible}
 			>
 				<FaCircleUser />
 				Perfil

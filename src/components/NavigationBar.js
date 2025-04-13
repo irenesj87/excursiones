@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Nav, Navbar, Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -13,6 +13,11 @@ import styles from "../css/NavigationBar.module.css";
 import "../css/Themes.css";
 
 function NavigationBar(props) {
+	// useState for the collapsible menu
+	const [navExpanded, setNavExpanded] = useState(false);
+	// Function to close the collapsible menu
+	const handleNavCollapse = () => setNavExpanded(false);
+
 	const prefersDarkMode =
 		window.matchMedia &&
 		window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -28,15 +33,15 @@ function NavigationBar(props) {
 	// Items that are displayed in the nav bar when no user is logged
 	const NoLoggedItems = (
 		<>
-			<Nav.Link className="me-3" as={Link} to="register">
+			<Nav.Link className="me-3" as={Link} to="/register" onClick={handleNavCollapse}>
 				Regístrate
 			</Nav.Link>
-			<Login />
+			<Login onClickCloseCollapsibleLogin={handleNavCollapse} />
 		</>
 	);
 
 	// Items that are displayed in the nav bar when an user is logged
-	const LoggedItems = <LandingPageUserProfile name={user && user.name} />;
+	const LoggedItems = <LandingPageUserProfile name={user && user.name} onClickCloseCollapsible={handleNavCollapse} />;
 
 	// Code for the dark mode
 	useEffect(() => {
@@ -71,10 +76,13 @@ function NavigationBar(props) {
 
 	return (
 		<Navbar
+			collapseOnSelect
 			expand="lg"
 			className="customNavbar"
 			variant={mode}
 			sticky="top"
+			expanded={navExpanded}
+			onToggle={setNavExpanded}
 		>
 			<Container fluid>
 				{/* Grouped with d-flex to be together */}
@@ -88,7 +96,7 @@ function NavigationBar(props) {
 					>
 						{icon}
 					</Button>
-					<Navbar.Brand as={Link} to="/">
+					<Navbar.Brand as={Link} to="/" onClick={handleNavCollapse}>
 						<Logo />
 					</Navbar.Brand>
 				</div>
