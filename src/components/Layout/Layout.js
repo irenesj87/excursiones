@@ -24,7 +24,7 @@ const Layout = () => {
 	useEffect(() => {
 		// This function saves the current token and logs the user again in case that the webpage is refreshed. With this the user won´t lose his session
 		const loadToken = async () => {
-			// Gets the token from sessionStorage
+			// Gets the token from browser´s sessionStorage
 			const sessionToken = sessionStorage["token"];
 			// Variable that has the url that is needed for the fetch
 			const url = `http://localhost:3001/token/${sessionToken}`;
@@ -43,16 +43,21 @@ const Layout = () => {
 					if (response.status === 404) {
 						throw new Error("Token not found or invalid");
 					}
+					// Turns the server response into a JavaScript object
 					const data = await response.json();
+					// Updates the Redux store state to put the user as logged in
 					loginDispatch(
 						login({
 							user: data.user,
 							token: data.token,
 						})
 					);
+					// If there is an error
 				} catch (error) {
 					console.error("Token validation error:", error);
+					// We log out...
 					loginDispatch(logout());
+					// ...and remove the token from the sessionStorage
 					sessionStorage.removeItem("token");
 				}
 			}
@@ -67,6 +72,7 @@ const Layout = () => {
 			<main>
 				<Row>
 					<Routes>
+						{/* It defines the default route */}
 						<Route
 							path="/"
 							element={
@@ -76,6 +82,7 @@ const Layout = () => {
 								</>
 							}
 						/>
+						{/* It defines the routes for the Register and UserPage components */}
 						<Route path="register" element={<Register />} />
 						<Route path="userPage" element={<UserPage />} />
 					</Routes>
