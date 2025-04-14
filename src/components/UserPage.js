@@ -55,11 +55,11 @@ function UserPage() {
 			"Content-Type": "application/json",
 			Authorization: "Bearer " + window.sessionStorage["token"],
 		},
-		/* The body is a standard property within the fetch options. It defines the content you want to send in the body of the HTTP request. 
-		This is typically used with methods like POST or PUT where you need to send data to the server (in this case, to update user information)
+		// body: It is a standard property within the fetch options. It defines the content to send in the body of the HTTP request. 
+		/* This is typically used with methods like POST or PUT where you need to send data to the server (in this case, to update user information)
 		JSON.stringify(...): This is a built-in JavaScript function. Its job is to take a JavaScript object (like the currentUser object) and convert it into a JSON string.
 		We have to convert it to a JSON string because web servers and APIs typically expect data sent in the request body to be in a standardized 
-		text format. JSON (JavaScript Object Notation) is the most common format for exchanging data between web clients (like this React app) and servers.*/
+		text format. JSON is the most common format for exchanging data between web clients and servers.*/
 		body: JSON.stringify(currentUser),
 	};
 	// State for saving the user's excursions info

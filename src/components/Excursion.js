@@ -25,21 +25,19 @@ function Excursion(props) {
 			mode: "cors",
 			headers: {
 				"Content-Type": "application/json",
-				// Authorization: It is the HTTP header standard name to send authentication credentials to the server
-				/* Bearer: A string that represents the very common authentication schema in the OAuth 2.0 (RFC 6750) standard. 
-				It indicates that the type of credential being attached is a 'bearer token'. This means that whoever'bears' this token 
-				is considered authorized to access the resources or perform the actions associated with that token, 
+				// Authorization: It is the HTTP header standard name to send authentication credentials to the server.
+				/* Bearer: A string that represents the authentication schema in the OAuth 2.0 (RFC 6750) standard. 
+				It indicates that the credential is a 'bearer token'. This means that whoever 'bears' this token 
+				is authorized to access the resources or perform the actions associated with that token, 
 				without needing additional proof such as cryptographic signatures on each request (although the token itself is usually 
 				signed or encrypted to ensure its integrity and authenticity). 
-				The space after Bearer is part of the standard format. The structure is Authorization: <scheme> <credential>.
+				The space after Bearer is part of the standard format. 
 				The Authorization: Bearer <token> header is used to demonstrate that you are already authenticated when you perform 
 				actions after having logged in. In contrast, the login process (in LoginForm.js, which calls userLogin in helpers.js) 
-				is precisely the moment when you obtain that token for the first time. */
+				is the moment when you obtain that token for the first time. */
 				Authorization: "Bearer " + window.sessionStorage["token"],
 			},
 			// body: It is a standard property within the fetch options. It defines the content to send in the body of the HTTP request.
-			/* The id is sent to know what is the specific excursion that the user is going to go.
-			   So, this line is preparing the data that will be send to the server when the user clicks in "Apuntarse" */
 			body: JSON.stringify({ id: props.id }),
 		};
 

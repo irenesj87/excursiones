@@ -15,8 +15,7 @@ function Footer() {
 				<a href="mailto:excursionesjuntos@gmail.com">Contáctanos</a>
 			</p>
 			<p>
-				© Excursiones Juntos 2021 - {getCurrentYear()}. Todos los derechos
-				reservados.
+				© Excursiones Juntos 2021 - {getCurrentYear()}. Todos los derechos reservados.
 			</p>
 		</footer>
 	);
