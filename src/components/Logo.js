@@ -5,7 +5,7 @@ import styles from "../css/Logo.module.css";
 
 function Logo() {
 	return (
-		<Col className={styles.logoContainer} xs="12" md="3">
+		<Col xs="12" md="3">
 			<span className={styles.logoText}>Excursiones Juntos</span>
 		</Col>
 	);

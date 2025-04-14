@@ -30,19 +30,6 @@ function NavigationBar(props) {
 		(state) => state.loginReducer
 	);
 
-	// Items that are displayed in the nav bar when no user is logged
-	const NoLoggedItems = (
-		<>
-			<Nav.Link className="me-3" as={Link} to="/register" onClick={handleNavCollapse}>
-				Regístrate
-			</Nav.Link>
-			<Login onClickCloseCollapsibleLogin={handleNavCollapse} />
-		</>
-	);
-
-	// Items that are displayed in the nav bar when an user is logged
-	const LoggedItems = <LandingPageUserProfile name={user && user.name} onClickCloseCollapsible={handleNavCollapse} />;
-
 	// Code for the dark mode
 	useEffect(() => {
 		//Removes classes 'light' and 'dark' to ensure there is no conflict
@@ -51,12 +38,14 @@ function NavigationBar(props) {
 		document.body.classList.add(mode);
 	}, [mode]);
 
-	// Functions for the localStorage 
+	// Functions for the localStorage
 	useEffect(() => {
 		const savedMode = localStorage.getItem("themeMode"); // Gets the mode from the localStorage
-		if (prefersDarkMode) { // If the user wants dark mode
+		if (prefersDarkMode) {
+			// If the user wants dark mode
 			dispatch(setMode("dark"));
-		} else if (!prefersDarkMode) { // If the user wants light mode
+		} else if (!prefersDarkMode) {
+			// If the user wants light mode
 			dispatch(setMode("light"));
 		} else if (savedMode) {
 			dispatch(setMode(savedMode)); // Updates the mode with the user preferences
@@ -74,6 +63,29 @@ function NavigationBar(props) {
 	// Conditional rendering for the icon
 	const icon = mode === "light" ? <RiMoonClearFill /> : <RiSunFill />;
 
+	// Items that are displayed in the nav bar when no user is logged
+	const NoLoggedItems = (
+		<>
+			<Nav.Link
+				className="me-3"
+				as={Link}
+				to="/register"
+				onClick={handleNavCollapse}
+			>
+				Regístrate
+			</Nav.Link>
+			<Login onClickCloseCollapsibleLogin={handleNavCollapse} />
+		</>
+	);
+
+	// Items that are displayed in the nav bar when an user is logged
+	const LoggedItems = (
+		<LandingPageUserProfile
+			name={user && user.name}
+			onClickCloseCollapsible={handleNavCollapse}
+		/>
+	);
+
 	return (
 		<Navbar
 			collapseOnSelect
@@ -87,22 +99,23 @@ function NavigationBar(props) {
 			<Container fluid>
 				{/* Grouped with d-flex to be together */}
 				<div className="d-flex align-items-center">
-					<Button
-						className={styles.themeToggleBtn}
-						variant="outline-secondary"
-						size="lg"
-						id="toggleButton"
-						onClick={toggleTheme}
-					>
-						{icon}
-					</Button>
 					<Navbar.Brand as={Link} to="/" onClick={handleNavCollapse}>
 						<Logo />
 					</Navbar.Brand>
 				</div>
 
-				{/* Hamburguer button (appears in xs, sm and md breakpoints) */}
-				<Navbar.Toggle aria-controls="basic-navbar-nav" />
+				<div className="d-flex align-items-center ms-auto">
+					<Button
+						className={`${styles.themeToggleBtn} me-2`}
+						variant="outline-secondary"
+						id="toggleButton"
+						onClick={toggleTheme}
+					>
+						{icon}
+					</Button>
+					{/* Hamburguer button (appears in xs, sm and md breakpoints) */}
+					<Navbar.Toggle aria-controls="basic-navbar-nav" />
+				</div>
 
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="w-100">

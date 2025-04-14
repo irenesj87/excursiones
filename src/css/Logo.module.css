@@ -1,12 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Fleur+De+Leah&display=swap");
 
-.logoContainer {
-	padding-left: 0.5rem;
-}
-
 .logoText {
 	font-family: "Fleur De Leah", cursive;
-	font-size: 2.5rem;
+	font-size: 2.3rem;
 	font-weight: 600;
 	color: var(--green);
 }
