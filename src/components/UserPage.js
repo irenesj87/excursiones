@@ -6,7 +6,7 @@ import {
 	Container,
 	Table,
 	Card,
-	Form,
+	Form
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { Navigate } from "react-router";
@@ -226,13 +226,13 @@ function UserPage() {
 						<Card.Footer className={`${styles.cardFooter} text-end`}>
 							{/* Lógica de botones */}
 							{!isEditing && (
-								<Button variant="primary" onClick={startEdit}>
+								<Button variant="secondary" onClick={startEdit}>
 									Editar Perfil
 								</Button>
 							)}
 							{isEditing && (
 								<div className="d-flex justify-content-end gap-2">
-									<Button variant="secondary" onClick={cancelEdit}>
+									<Button variant="danger" onClick={cancelEdit}>
 										Cancelar
 									</Button>
 									<Button variant="success" onClick={saveEdit}>

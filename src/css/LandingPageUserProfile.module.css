@@ -1,4 +1,4 @@
-.dropdownText {
+.profileLink {
 	text-decoration: none;
 	display: flex;
 	align-items: center;
@@ -6,7 +6,8 @@
 	font-size: 1.1rem;
 }
 
-/* Se añade margen a la derecha del icono */
-.dropdownText svg {
-	margin-right: 8px;
+.profileLink svg {
+	width: 28px;
+	height: 28px;
+	margin-right: 6px;
 }

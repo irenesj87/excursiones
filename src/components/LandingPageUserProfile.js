@@ -48,7 +48,7 @@ function LandingPageUserProfile(props) {
 	return (
 		<>
 			<Nav.Link
-				className={`${styles.dropdownText} me-3`}
+				className={`${styles.profileLink} me-3`}
 				as={Link}
 				to="/UserPage"
 				onClick={props.onClickCloseCollapsible}
@@ -57,7 +57,6 @@ function LandingPageUserProfile(props) {
 				Perfil
 			</Nav.Link>
 			<Button
-				className={styles.dropdownText}
 				variant="outline-secondary"
 				onClick={logOut}
 			>
