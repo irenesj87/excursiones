@@ -12,6 +12,8 @@ export function Login(props) {
 	/* Variable que se utiliza para mostrar si el componente está actualmente "montado" (es decir, si existe en el árbol DOM de la página)
 	o si ya ha sido "desmontado" (eliminado).*/
 	const isMounted = useRef(true);
+	const [mail, setMail] = useState("");
+	const [password, setPassword] = useState("");
 
 	useEffect(() => {
 		// Cuando el componente se monta, isMounted.current es true
@@ -22,13 +24,11 @@ export function Login(props) {
 		};
 	}, []); // El array vacío asegura que esto se ejecute solo al montar y desmontar
 
-	// handleClose se utiliza para cerrar el Modal
-	const handleClose = () => {
-		if (isMounted.current) {
-			// Solo actualiza si está montado
-			setShowModal(false);
-		}
+	const clearLoginInputs = () => {
+		setMail("");
+		setPassword("");
 	};
+
 	// handleShow se utiliza para mostrar el Modal
 	const handleShow = () => {
 		if (isMounted.current) {
@@ -36,12 +36,21 @@ export function Login(props) {
 		}
 	};
 
+	// handleClose se utiliza para cerrar el Modal
+	const handleClose = () => {
+		if (isMounted.current) {
+			// Solo actualiza si está montado
+			setShowModal(false);
+			clearLoginInputs();
+		}
+	};
+
 	const handleShowAndCollapseNav = () => {
-        if (props.onClickCloseCollapsibleLogin) {
-            props.onClickCloseCollapsibleLogin(); // Llama a la función para cerrar el Navbar
-        }
-        handleShow(); // Llama a la función original para mostrar el Modal
-    };
+		if (props.onClickCloseCollapsibleLogin) {
+			props.onClickCloseCollapsibleLogin(); // Llama a la función para cerrar el Navbar
+		}
+		handleShow(); // Llama a la función original para mostrar el Modal
+	};
 
 	// Modifica el efecto del tamaño de pantalla
 	useEffect(() => {
@@ -65,7 +74,28 @@ export function Login(props) {
 		};
 		// No necesitamos dependencias aquí si solo leemos window.innerWidth
 		// y la única escritura de estado está protegida por isMounted.current
-	}, []);
+	}, [isSmallScreen]);
+
+	const handleDropDownToggle = (isOpen) => {
+		// Si el dropdown está cerrado
+		if (!isOpen) {
+			// Se resetean los inputs
+			clearLoginInputs();
+		}
+	};
+
+	// Función que se pasará a LoginForm para cuando el login sea exitoso
+	// Ahora necesita limpiar el estado aquí también si el modal/dropdown no se cierra automáticamente
+	const handleLoginSuccess = () => {
+		if (isSmallScreen) {
+			handleClose(); // Cierra el modal si es pantalla pequeña
+		} else {
+			// En pantalla grande, el dropdown podría seguir abierto si autoClose no es 'true'.
+			// Si quieres cerrarlo programáticamente necesitarías controlar el estado 'show' del DropdownButton
+			// o simplemente limpiar los campos aquí también si no se cierra solo.
+			clearLoginInputs();
+		}
+	};
 
 	// --- Renderizado Condicional ---
 	if (isSmallScreen) {
@@ -86,7 +116,13 @@ export function Login(props) {
 					</Modal.Header>
 					<Modal.Body>
 						{/* Si el login ha sido exitoso el LoginForm le dice a Login que puede cerrar el Modal */}
-						<LoginForm onLoginSuccess={handleClose} />
+						<LoginForm
+							mail={mail}
+							password={password}
+							setMail={setMail}
+							setPassword={setPassword}
+							onLoginSuccess={handleLoginSuccess}
+						/>
 					</Modal.Body>
 				</Modal>
 			</>
@@ -100,9 +136,16 @@ export function Login(props) {
 				title="Inicia sesión"
 				align="end"
 				autoClose="outside"
+				onToggle={handleDropDownToggle}
 			>
 				<Dropdown.Item as="div" className={styles.loginDropdownButtonItem}>
-					<LoginForm />
+					<LoginForm
+						mail={mail}
+						password={password}
+						setMail={setMail}
+						setPassword={setPassword}
+						onLoginSuccess={handleLoginSuccess}
+					/>
 				</Dropdown.Item>
 			</DropdownButton>
 		);
