@@ -12,11 +12,11 @@ import styles from "../css/NavigationBar.module.css";
 import "../css/Themes.css";
 
 function NavigationBar(props) {
-	// State for Offcanvas visibility
+	// Estado de la visibilidad del Offcanvas
 	const [showOffcanvas, setShowOffcanvas] = useState(false);
-	// Function to close the Offcanvas
+	// Función para cerrar el Offcanvas
 	const handleCloseOffcanvas = () => setShowOffcanvas(false);
-	// Function to open the Offcanvas
+	// Función para abrir el Offcanvas
 	const handleShowOffcanvas = () => setShowOffcanvas(true);
 
 	const prefersDarkMode =
@@ -26,12 +26,12 @@ function NavigationBar(props) {
 	const mode = useSelector((state) => state.themeReducer.mode);
 	const dispatch = useDispatch();
 
-	// Variable that says if some user is logged in or not
+	// Variable que dice si hay un usuario logueado o no
 	const { login: isLoggedIn, user } = useSelector(
 		(state) => state.loginReducer
 	);
 
-	// Code for the dark mode
+	// Código para el modo oscuro
 	useEffect(() => {
 		//Removes classes 'light' and 'dark' to ensure there is no conflict
 		document.body.classList.remove("light", "dark");
@@ -39,7 +39,7 @@ function NavigationBar(props) {
 		document.body.classList.add(mode);
 	}, [mode]);
 
-	// Functions for the localStorage
+	// Funciones para el localStorage
 	useEffect(() => {
 		const savedMode = localStorage.getItem("themeMode"); // Gets the mode from the localStorage
 		if (prefersDarkMode) {
