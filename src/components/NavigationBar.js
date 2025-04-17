@@ -41,15 +41,16 @@ function NavigationBar(props) {
 
 	// Funciones para el localStorage
 	useEffect(() => {
-		const savedMode = localStorage.getItem("themeMode"); // Gets the mode from the localStorage
+		const savedMode = localStorage.getItem("themeMode");
 		if (prefersDarkMode) {
-			// If the user wants dark mode
+			// Si el usuario quiere el modo oscuro
 			dispatch(setMode("dark"));
 		} else if (!prefersDarkMode) {
-			// If the user wants light mode
+			// Si el usuario prefiere el modo claro
 			dispatch(setMode("light"));
 		} else if (savedMode) {
-			dispatch(setMode(savedMode)); // Updates the mode with the user preferences
+			// Actualiza el modo según las preferencias del usuario
+			dispatch(setMode(savedMode));
 		}
 	}, [dispatch, prefersDarkMode]);
 
@@ -68,19 +69,14 @@ function NavigationBar(props) {
 	const NoLoggedItems = (
 		<>
 			<Nav.Link
-				className="me-3"
+				className="me-2"
 				as={Link}
 				to="/register"
 				onClick={handleCloseOffcanvas}
 			>
 				Regístrate
 			</Nav.Link>
-			<Nav.Link
-				className="ms-lg-2"
-				as={Link}
-				to="/loginPage"
-				onClick={handleCloseOffcanvas}
-			>
+			<Nav.Link as={Link} to="/loginPage" onClick={handleCloseOffcanvas}>
 				Inicia sesión
 			</Nav.Link>
 		</>

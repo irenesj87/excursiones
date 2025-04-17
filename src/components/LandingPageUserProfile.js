@@ -48,7 +48,7 @@ function LandingPageUserProfile(props) {
 	return (
 		<>
 			<Nav.Link
-				className={`${styles.profileLink} me-3`}
+				className={`${styles.profileLink} me-2`}
 				as={Link}
 				to="/UserPage"
 				onClick={props.onClickCloseCollapsible}
