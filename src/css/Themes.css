@@ -7,7 +7,6 @@ body.light {
 	--toggle-button-bg: var(--text-dark);
 
 	/* --- Estilos para la barra de navegación --- */
-
 	.customNavbar {
 		background-color: var(--bg-light-primary);
 		z-index: 1030;
@@ -30,8 +29,6 @@ body.light {
 	}
 
 	/* --- Estilos para el login, el cuerpo de la tabla y el texto de formularios --- */
-	.dropdown-menu,
-	.dropdown-item,
 	#registerForm,
 	tbody,
 	.formText {
@@ -39,21 +36,20 @@ body.light {
 		color: var(--text-light);
 	}
 
-	/* --- Estilos para el Modal --- */
-	.modal-content {
+	/* Estilos para el Offcanvas */
+	.offcanvas-header,
+	.offcanvas-body {
 		background-color: var(--bg-light-primary);
 		color: var(--text-light);
-		border: 1px solid var(--bg-light-primary);
 	}
 
-	/* Cabecera del modal */
-	.modal-header {
-		/* Hereda background y color de .modal-content */
-		background-color: var(--bg-light-secondary);
-		border-bottom-color: var(
-			--bg-light-secondary
-		); /* Color del borde inferior */
+	/* --- Estilos para links dentro del Offcanvas --- */
+	.offcanvas-body .nav-link {
+		color: var(--text-light);
+		padding-top: 0.5rem;
+		padding-bottom: 0.5rem;
 	}
+
 }
 
 /* ======================================== */
@@ -101,8 +97,6 @@ body.dark {
 	}
 
 	/* --- Estilos del login, el cuerpo y el texto de los formularios --- */
-	.dropdown-menu,
-	.dropdown-item,
 	#registerForm,
 	tbody,
 	.formText {
@@ -110,31 +104,21 @@ body.dark {
 		color: var(--text-dark);
 	}
 
-	.dropdown-menu {
-		border-color: rgb(201, 201, 201);
-	}
-
-	/* --- Estilos para el modal --- */
-	.modal-content {
-		background-color: var(
-			--bg-dark-primary
-		); /* Usa tu variable o un fallback */
+	/* Estilos para Offcanvas */
+	.offcanvas-header,
+	.offcanvas-body {
+		background-color: var(--bg-dark-primary);
 		color: var(--text-dark);
-		border: 1px solid var(--bg-dark-secondary);
 	}
 
-	/* Cabecera del modal */
-	.modal-header {
-		/* Hereda background y color de .modal-content */
-		background-color: var(--bg-dark-secondary);
-		border-bottom-color: var(
-			--bg-dark-secondary
-		); /* Color del borde inferior */
-	}
-
-	/* Botón de cerrar */
-	.modal-header .btn-close {
+	.offcanvas-header .btn-close {
 		filter: invert(1) grayscale(100%) brightness(200%);
+	}
+
+	.offcanvas-body .nav-link {
+		color: var(--text-dark); 
+		padding-top: 0.5rem;
+		padding-bottom: 0.5rem;
 	}
 
 	/* --- Estilos para las Card del perfil del usuario --- */
@@ -176,6 +160,6 @@ body.dark {
 
 	/* Estilo específico para plaintext readOnly */
 	.form-control-plaintext[readonly] {
-		color: var(--text-dark); /* White text */
+		color: var(--text-dark);
 	}
 }

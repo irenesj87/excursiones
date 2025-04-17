@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Nav, Navbar, Container, Button } from "react-bootstrap";
+import { Nav, Navbar, Container, Button, Offcanvas } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
-import Login from "./Login";
 import LandingPageUserProfile from "./LandingPageUserProfile";
 import { toggleMode, setMode } from "../slicers/themeSlice";
 import { RiMoonClearFill, RiSunFill } from "react-icons/ri";
@@ -13,10 +12,12 @@ import styles from "../css/NavigationBar.module.css";
 import "../css/Themes.css";
 
 function NavigationBar(props) {
-	// useState for the collapsible menu
-	const [navExpanded, setNavExpanded] = useState(false);
-	// Function to close the collapsible menu
-	const handleNavCollapse = () => setNavExpanded(false);
+	// State for Offcanvas visibility
+	const [showOffcanvas, setShowOffcanvas] = useState(false);
+	// Function to close the Offcanvas
+	const handleCloseOffcanvas = () => setShowOffcanvas(false);
+	// Function to open the Offcanvas
+	const handleShowOffcanvas = () => setShowOffcanvas(true);
 
 	const prefersDarkMode =
 		window.matchMedia &&
@@ -70,67 +71,107 @@ function NavigationBar(props) {
 				className="me-3"
 				as={Link}
 				to="/register"
-				onClick={handleNavCollapse}
+				onClick={handleCloseOffcanvas}
 			>
 				Regístrate
 			</Nav.Link>
-			<Login onClickCloseCollapsibleLogin={handleNavCollapse} />
+			<Nav.Link
+				className="ms-lg-2"
+				as={Link}
+				to="/loginPage"
+				onClick={handleCloseOffcanvas}
+			>
+				Inicia sesión
+			</Nav.Link>
 		</>
 	);
 
 	// Items that are displayed in the nav bar when an user is logged
 	const LoggedItems = (
 		<LandingPageUserProfile
-			name={user && user.name}
-			onClickCloseCollapsible={handleNavCollapse}
+			name={user?.name}
+			onClickCloseCollapsible={handleCloseOffcanvas}
 		/>
 	);
 
 	return (
-		<Navbar
-			collapseOnSelect
-			expand="lg"
-			className="customNavbar"
-			variant={mode}
-			sticky="top"
-			expanded={navExpanded}
-			onToggle={setNavExpanded}
-		>
+		<Navbar expand="lg" className="customNavbar" variant={mode} sticky="top">
 			<Container fluid>
 				{/* Grouped with d-flex to be together */}
-				<div className="d-flex align-items-center">
-					<Navbar.Brand as={Link} to="/" onClick={handleNavCollapse}>
+				<div className="d-flex flex-wrap align-items-center">
+					<Navbar.Brand as={Link} to="/" onClick={handleCloseOffcanvas}>
 						<Logo />
 					</Navbar.Brand>
 				</div>
 
-				<div className="d-flex align-items-center ms-auto">
+				{/* Search Bar - Centered on large screens */}
+				<div className="d-none d-md-flex justify-content-center flex-grow-1 px-md-3 px-lg-5 order-md-2 order-lg-2 me-md-3">
+					<div style={{ maxWidth: "900px", width: "100%" }}>
+						<SearchBar
+							setExcursions={props.setExcursions}
+							id="searchBar-md-lg"
+						/>
+					</div>
+				</div>
+
+				{/* --- Right side container --- */}
+				{/* Use ms-auto to push this whole group to the right */}
+				{/* Use order-lg-3 to place it correctly on large screens */}
+				<div className="d-flex align-items-center ms-auto ms-md-0 order-md-3 order-lg-3">
+					{/* Theme Toggle Button - Always visible */}
 					<Button
-						className={`${styles.themeToggleBtn} me-1`}
+						className={`${styles.themeToggleBtn} me-2`} // Spacing between theme and toggle/nav items
 						variant="outline-secondary"
 						id="toggleButton"
 						onClick={toggleTheme}
 					>
 						{icon}
 					</Button>
-					{/* Hamburguer button (appears in xs, sm and md breakpoints) */}
-					<Navbar.Toggle aria-controls="basic-navbar-nav" />
-				</div>
 
-				<Navbar.Collapse id="basic-navbar-nav">
-					<Nav className="w-100">
-						{/* me-auto empuja hacia la izquierda, ms-auto empuja hacia la derecha */}
-						{/* d-flex y justify-content-center to center the search bar */}
-						<div className="d-flex justify-content-center flex-grow-1 my-3 my-lg-0 px-lg-5">
-							<div style={{ maxWidth: "900px", width: "100%" }}>
-								<SearchBar setExcursions={props.setExcursions} />
-							</div>
-						</div>
-						<Nav className="ms-auto d-flex flex-row align-items-center">
-							{!isLoggedIn ? NoLoggedItems : LoggedItems}
-						</Nav>
+					{/* Inline Nav items for large screens (lg and up) */}
+					{/* Hidden on small screens (d-none), shown on large (d-lg-flex) */}
+					{/* Placed before the toggle for visual order on large screens */}
+					<Nav className="d-none d-lg-flex flex-row align-items-center">
+						{isLoggedIn ? LoggedItems : NoLoggedItems}
 					</Nav>
-				</Navbar.Collapse>
+
+					{/* Offcanvas Toggle (Hamburger) */}
+					{/* Visible only on smaller screens (default Bootstrap behavior) */}
+					{/* Needs ms-lg-2 if LoggedItems are present to add space */}
+					<Navbar.Toggle
+						aria-controls="offcanvasNavbar"
+						onClick={handleShowOffcanvas}
+						className="d-lg-none"
+					/>
+				</div>
+				{/* Search Bar (Small Screens Only - Full Width Below) */}
+				{/* order-last ensures it's visually last in the flex container */}
+				{/* w-100 makes it full width */}
+				{/* mt-2 adds margin top */}
+				<div className="d-md-none w-100 mt-2 order-last">
+					<SearchBar setExcursions={props.setExcursions} id="searchBar-sm" />
+				</div>
+				{/* --- End Right side container --- */}
+
+				{/* --- Offcanvas Component --- */}
+				<Offcanvas
+					show={showOffcanvas}
+					onHide={handleCloseOffcanvas}
+					placement="end"
+					id="offcanvasNavbar"
+					scroll={true}
+					backdrop={true}
+				>
+					<Offcanvas.Header closeButton>
+						<Offcanvas.Title>Menú</Offcanvas.Title>
+					</Offcanvas.Header>
+					<Offcanvas.Body>
+						{/* Navigation links */}
+						<Nav className="d-flex flex-column">
+							{isLoggedIn ? LoggedItems : NoLoggedItems}
+						</Nav>
+					</Offcanvas.Body>
+				</Offcanvas>
 			</Container>
 		</Navbar>
 	);

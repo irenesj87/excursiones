@@ -5,6 +5,7 @@ import { login, logout } from "../../slicers/loginSlice";
 import { Routes, Route } from "react-router-dom";
 import NavigationBar from "../NavigationBar";
 import Register from "../Register";
+import LoginPage from "../LoginPage";
 import Filters from "../Filters";
 import Excursions from "../Excursions";
 import UserPage from "../UserPage";
@@ -84,6 +85,7 @@ const Layout = () => {
 						/>
 						{/* It defines the routes for the Register and UserPage components */}
 						<Route path="register" element={<Register />} />
+						<Route path="loginPage" element={<LoginPage />} />
 						<Route path="userPage" element={<UserPage />} />
 					</Routes>
 				</Row>

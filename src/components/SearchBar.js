@@ -40,10 +40,10 @@ function SearchBar(props) {
 	return (
 		<>
 			<input
-				id="searchBar"
+				id={props.id}
 				className="form-control"
 				type="search"
-				placeholder="Buscar"
+				placeholder="Busca excursiones..."
 				onChange={introKeyPressed}
 			/>
 		</>

@@ -9,9 +9,13 @@ import { userLogin } from "../helpers/helpers.js";
 import styles from "../css/LoginForm.module.css";
 
 // Component that validates the input info and disables the "Enviar" button until that info is correct
-export function LoginForm(props) {
+export function LoginForm() {
 	const loginDispatch = useDispatch();
 	const navigate = useNavigate();
+
+	const [mail, setMail] = useState("");
+	const [password, setPassword] = useState("");
+
 	// Variable that saves if the login button is disabled or not
 	const [disabled, setDisabled] = useState(true);
 
@@ -20,7 +24,7 @@ export function LoginForm(props) {
 	const submit = async (e) => {
 		e.preventDefault();
 		try {
-			const data = await userLogin(props.mail, props.password);
+			const data = await userLogin(mail, password);
 			// The user logs in and we save his info and his token in the store...
 			loginDispatch(
 				login({
@@ -32,12 +36,7 @@ export function LoginForm(props) {
 			window.sessionStorage["token"] = data.token;
 
 			// When the user logs in we send him to his user page
-			navigate("UserPage");
-
-			// Notifies to the parent component that the login was successful
-			if (props.onLoginSuccess) {
-				props.onLoginSuccess();
-			}
+			navigate("/UserPage");
 		} catch (error) {
 			console.error("Login failed:", error);
 			alert("Error al iniciar sesión.");
@@ -46,12 +45,12 @@ export function LoginForm(props) {
 
 	// useEffect that disables the button "Enviar" until the user writes the correct info in the inputs
 	useEffect(() => {
-		if (validateMail(props.mail) && validatePassword(props.password)) {
+		if (validateMail(mail) && validatePassword(password)) {
 			setDisabled(false);
 		} else {
 			setDisabled(true);
 		}
-	}, [props.mail, props.password]);
+	}, [mail, password]);
 
 	return (
 		<Form
@@ -64,9 +63,9 @@ export function LoginForm(props) {
 				id="formLoginEmail"
 				name="Correo electrónico"
 				inputType="email"
-				inputToChange={props.setMail}
+				inputToChange={setMail}
 				validationFunction={validateMail}
-				value={props.mail}
+				value={mail}
 				message={false}
 				autocomplete="email"
 			/>
@@ -74,9 +73,9 @@ export function LoginForm(props) {
 				id="formLoginPassword"
 				inputType="password"
 				name="Contraseña"
-				inputToChange={props.setPassword}
+				inputToChange={setPassword}
 				validationFunction={validatePassword}
-				value={props.password}
+				value={password}
 				message={false}
 				autocomplete="current-password"
 			/>

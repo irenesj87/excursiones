@@ -1,5 +1,5 @@
 import React from "react";
-import { Nav, Button } from "react-bootstrap";
+import { Nav } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../slicers/loginSlice";
@@ -56,12 +56,11 @@ function LandingPageUserProfile(props) {
 				<FaCircleUser />
 				Perfil
 			</Nav.Link>
-			<Button
-				variant="outline-secondary"
+			<Nav.Link
 				onClick={logOut}
 			>
 				Cerrar sesión
-			</Button>
+			</Nav.Link>
 		</>
 	);
 }
