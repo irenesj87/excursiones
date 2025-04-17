@@ -106,7 +106,7 @@ function NavigationBar(props) {
 
 				<div className="d-flex align-items-center ms-auto">
 					<Button
-						className={`${styles.themeToggleBtn} me-2`}
+						className={`${styles.themeToggleBtn} me-1`}
 						variant="outline-secondary"
 						id="toggleButton"
 						onClick={toggleTheme}

@@ -12,8 +12,8 @@ body.light {
 		background-color: var(--bg-light-primary);
 		z-index: 1030;
 		color: var(--text-light);
-		padding-top: 2.5rem;
-		padding-bottom: 4rem;
+		padding-top: 1.2rem;
+		padding-bottom: 1.2rem;
 		width: 100%;
 	}
 
@@ -69,8 +69,8 @@ body.dark {
 		background-color: var(--bg-dark-primary);
 		z-index: 1030;
 		color: var(--text-dark);
-		padding-top: 2.5rem;
-		padding-bottom: 4rem;
+		padding-top: 1.2rem;
+		padding-bottom: 1.2rem;
 		width: 100%;
 	}
 
@@ -132,13 +132,12 @@ body.dark {
 		); /* Color del borde inferior */
 	}
 
-	/* Botón de cerrar (la 'X') */
+	/* Botón de cerrar */
 	.modal-header .btn-close {
-		/* Bootstrap 5 usa un filtro para cambiar el color del SVG a blanco en modo oscuro */
 		filter: invert(1) grayscale(100%) brightness(200%);
 	}
 
-	/* --- Estilos para las Card --- */
+	/* --- Estilos para las Card del perfil del usuario --- */
 	.card,
 	.card-body {
 		background-color: var(--bg-dark-primary);

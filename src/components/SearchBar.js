@@ -43,7 +43,7 @@ function SearchBar(props) {
 				id="searchBar"
 				className="form-control"
 				type="search"
-				placeholder="Búsqueda"
+				placeholder="Buscar"
 				onChange={introKeyPressed}
 			/>
 		</>
