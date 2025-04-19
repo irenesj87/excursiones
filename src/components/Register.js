@@ -73,7 +73,7 @@ function Register() {
 			</Row>
 			<Row className="justify-content-center align-items-center">
 				{/* Adjust column sizing for responsiveness */}
-				<Col xs={11} sm={10} md={8} lg={6} xl={5}>
+				<Col xs={11} sm={10} md={8} lg={7} xl={5}>
 					<Card className={styles.registerCard}>
 						{/* Add a class for specific card styling */}
 						<Card.Body>
@@ -165,8 +165,7 @@ function Register() {
 										autocomplete="new-password"
 									/>
 								</Row>
-								{/* Keep password requirements visible */}
-								<ul className={`${styles.list} mb-3`}>
+								<ul className={`${styles.infoMessages} mb-3`}>
 									<li>
 										Tu contraseña debe tener al menos 8 caracteres, una letra y
 										un número.
@@ -175,13 +174,11 @@ function Register() {
 										Debes registrarte para poder apuntarte a las excursiones.
 									</li>
 								</ul>
-								{/* Center the button */}
 								<div className="text-center mt-3">
 									<Button
 										variant={disabled ? "secondary" : "success"}
 										type="submit"
 										disabled={disabled}
-										className={styles.btn} // Apply custom button styles if needed
 									>
 										Enviar
 									</Button>

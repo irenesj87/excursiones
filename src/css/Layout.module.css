@@ -9,7 +9,7 @@
 	--green-secondary: #709056;
 	--excursion-border-bottom: var(--bg-dark-primary);
 	font-size: 16px;
-	--minheight: calc(100vh - 280.2px);
+	--minheight: calc(100vh - 280.1px);
 }
 
 .layout {

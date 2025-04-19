@@ -17,3 +17,7 @@
 	padding-bottom: 2rem;
 	border-radius: 0.5rem;
 }
+
+.infoMessages {
+	font-style: italic;
+}
