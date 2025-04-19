@@ -102,8 +102,8 @@ body.dark {
 	thead {
 		color: var(--text-dark);
 	}
-	
-	tbody{
+
+	tbody {
 		background-color: var(--bg-dark-secondary);
 		color: var(--text-dark);
 	}
@@ -172,5 +172,11 @@ body.dark {
 	/* Estilo específico para plaintext readOnly */
 	.form-control-plaintext[readonly] {
 		color: var(--text-dark);
+	}
+
+	/* Estilos para las Alert */
+	.alert.alert-danger p{
+		background-color: inherit;
+		color: inherit;
 	}
 }

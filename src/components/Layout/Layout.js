@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { login, logout } from "../../slicers/loginSlice";
 import { Routes, Route } from "react-router-dom";
 import NavigationBar from "../NavigationBar";
-import Register from "../Register";
+import RegisterPage from "../RegisterPage";
 import LoginPage from "../LoginPage";
 import Filters from "../Filters";
 import Excursions from "../Excursions";
@@ -87,7 +87,7 @@ const Layout = () => {
 							}
 						/>
 						{/* Define las rutas para los componentes Register, LoginPage y UserPage */}
-						<Route path="register" element={<Register />} />
+						<Route path="registerPage" element={<RegisterPage />} />
 						<Route path="loginPage" element={<LoginPage />} />
 						<Route path="userPage" element={<UserPage />} />
 					</Routes>

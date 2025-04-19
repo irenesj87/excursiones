@@ -71,7 +71,7 @@ function NavigationBar(props) {
 			<Nav.Link
 				className="me-2"
 				as={Link}
-				to="/register"
+				to="/registerPage"
 				onClick={handleCloseOffcanvas}
 			>
 				Regístrate
@@ -162,7 +162,6 @@ function NavigationBar(props) {
 						<Offcanvas.Title>Menú</Offcanvas.Title>
 					</Offcanvas.Header>
 					<Offcanvas.Body>
-						{/* Navigation links */}
 						<Nav className="d-flex flex-column">
 							{isLoggedIn ? LoggedItems : NoLoggedItems}
 						</Nav>
