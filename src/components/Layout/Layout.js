@@ -13,52 +13,55 @@ import Footer from "../Footer";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../../css/Layout.module.css";
 
-//This is the layout, here goes the web structure.
+// Este es Layout. Aquí va la estructura de la página
 const Layout = () => {
-	// Variable we need to be able to use dispatchers
+	// Variable que necesitamos para utilizar dispatchers
 	const loginDispatch = useDispatch();
 
-	// Array of excursions that are needed in that moment which are the list of all the excursions and the search (for both the search bar and the filters)
+	/* Array de excursiones que se necesita en cada momento, ya sea para mostrar todas las excursiones, 
+	las de los filtros o la búsqueda */
 	const [excursionArray, setExcursionArray] = useState([]);
 
-	// This useEffect controls the token in the sessionStorage. The token is saved in the sessionStorage for the user to be able to stay logged in
+	/* useEffect que controla el token en sessionStorage. El token se guarda en sessionStorage para que el usuario pueda 
+	 quedarse logueado */
 	useEffect(() => {
-		// This function saves the current token and logs the user again in case that the webpage is refreshed. With this the user won´t lose his session
+		/* Esta función guarda el token actual y loguea al usuario de nuevo en caso de que se refresque la página. 
+		Con esto el usuario no perderá su sesión */
 		const loadToken = async () => {
-			// Gets the token from browser´s sessionStorage
+			// Coge el token de la sessionStorage del navegador
 			const sessionToken = sessionStorage["token"];
-			// Variable that has the url that is needed for the fetch
+			// Variable que tiene la url para hacer el fetch
 			const url = `http://localhost:3001/token/${sessionToken}`;
-			// Variable that saves the options that the fetch needs
+			// Variable que guarda las opciones que se necesitan para el fetch
 			const options = {
 				method: "GET",
 				mode: "cors",
 				headers: { "Content-Type": "application/json" },
 			};
 
-			// If there´s a token
+			// Si hay token
 			if (sessionToken) {
 				try {
-					// We wait for the server to respond
+					// Esperamos a la respuesta del servidor
 					const response = await fetch(url, options);
 					if (response.status === 404) {
 						throw new Error("Token not found or invalid");
 					}
-					// Turns the server response into a JavaScript object
+					// Pasa la respuesta en JSON del servidor a un objeto JavaScript
 					const data = await response.json();
-					// Updates the Redux store state to put the user as logged in
+					// Actualiza el estado de la Redux store poniendo al usuario como logueado
 					loginDispatch(
 						login({
 							user: data.user,
 							token: data.token,
 						})
 					);
-					// If there is an error
+					// Si hay un error
 				} catch (error) {
 					console.error("Token validation error:", error);
-					// We log out...
+					// Se desloguea al usuario...
 					loginDispatch(logout());
-					// ...and remove the token from the sessionStorage
+					// ...y se elimina el token de la sessionStorage
 					sessionStorage.removeItem("token");
 				}
 			}
@@ -73,7 +76,7 @@ const Layout = () => {
 			<main>
 				<Row>
 					<Routes>
-						{/* It defines the default route */}
+						{/* Define la ruta por defecto */}
 						<Route
 							path="/"
 							element={
@@ -83,7 +86,7 @@ const Layout = () => {
 								</>
 							}
 						/>
-						{/* It defines the routes for the Register and UserPage components */}
+						{/* Define las rutas para los componentes Register, LoginPage y UserPage */}
 						<Route path="register" element={<Register />} />
 						<Route path="loginPage" element={<LoginPage />} />
 						<Route path="userPage" element={<UserPage />} />
