@@ -6,6 +6,7 @@ import ValidatedFormGroup from "./ValidatedFormGroup";
 import { login } from "../slicers/loginSlice";
 import { useDispatch } from "react-redux";
 import { userLogin } from "../helpers/helpers.js";
+import ErrorMessagesAlert from "./ErrorMessagesAlert.js";
 import styles from "../css/LoginForm.module.css";
 
 // Component that validates the input info and disables the "Enviar" button until that info is correct
@@ -19,10 +20,16 @@ export function LoginForm() {
 	// Variable that saves if the login button is disabled or not
 	const [disabled, setDisabled] = useState(true);
 
+	const [loginError, setLoginError] = useState(null);
+	const [showErrorAlert, setShowErrorAlert] = useState(false);
+
 	/* Function that sends the login form info to the server. It saves the user in the store and the token in the store and 
 	in sessionStorage */
 	const submit = async (e) => {
 		e.preventDefault();
+		setLoginError(null);
+		setShowErrorAlert(false);
+
 		try {
 			const data = await userLogin(mail, password);
 			// The user logs in and we save his info and his token in the store...
@@ -39,7 +46,8 @@ export function LoginForm() {
 			navigate("/UserPage");
 		} catch (error) {
 			console.error("Login failed:", error);
-			alert("Error al iniciar sesión.");
+			setLoginError(error.message || "Error al iniciar sesión.");
+			setShowErrorAlert(true);
 		}
 	};
 
@@ -52,44 +60,58 @@ export function LoginForm() {
 		}
 	}, [mail, password]);
 
+	const handleCloseAlert = () => {
+		setShowErrorAlert(false);
+		setLoginError(null);
+	};
+
 	return (
-		<Form
-			id="loginForm"
-			noValidate
-			onSubmit={submit}
-			className={styles.formText}
-		>
-			<ValidatedFormGroup
-				id="formLoginEmail"
-				name="Correo electrónico"
-				inputType="email"
-				inputToChange={setMail}
-				validationFunction={validateMail}
-				value={mail}
-				message={false}
-				autocomplete="email"
-			/>
-			<ValidatedFormGroup
-				id="formLoginPassword"
-				inputType="password"
-				name="Contraseña"
-				inputToChange={setPassword}
-				validationFunction={validatePassword}
-				value={password}
-				message={false}
-				autocomplete="current-password"
-			/>
-			<div className="text-center">
-				<Button
-					className="mt-3"
-					variant={disabled ? "secondary" : "success"}
-					type="submit"
-					disabled={disabled}
-				>
-					Enviar
-				</Button>
-			</div>
-		</Form>
+		<>
+			{showErrorAlert && loginError && (
+				<ErrorMessagesAlert
+					show={showErrorAlert}
+					message={loginError}
+					onClose={handleCloseAlert}
+				/>
+			)}
+			<Form
+				id="loginForm"
+				noValidate
+				onSubmit={submit}
+				className={styles.formText}
+			>
+				<ValidatedFormGroup
+					id="formLoginEmail"
+					name="Correo electrónico"
+					inputType="email"
+					inputToChange={setMail}
+					validationFunction={validateMail}
+					value={mail}
+					message={false}
+					autocomplete="email"
+				/>
+				<ValidatedFormGroup
+					id="formLoginPassword"
+					inputType="password"
+					name="Contraseña"
+					inputToChange={setPassword}
+					validationFunction={validatePassword}
+					value={password}
+					message={false}
+					autocomplete="current-password"
+				/>
+				<div className="text-center">
+					<Button
+						className="mt-3"
+						variant={disabled ? "secondary" : "success"}
+						type="submit"
+						disabled={disabled}
+					>
+						Enviar
+					</Button>
+				</div>
+			</Form>
+		</>
 	);
 }
 
