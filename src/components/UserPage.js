@@ -244,7 +244,7 @@ function UserPage() {
 					</Card>
 					<Card className={styles.excursionsCard}>
 						<Card.Header className={styles.cardHeader}>
-							Tus excursiones
+							Excursiones a las que te has apuntado
 						</Card.Header>
 						<Card.Body className={styles.cardBody}>
 							{userExcursions.length > 0 ? (

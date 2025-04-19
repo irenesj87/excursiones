@@ -5,10 +5,11 @@
 	--bg-dark-primary: #222;
 	--bg-dark-secondary: #444;
 	--text-dark: #eee;
-	--green: #588133;
+	--green-primary: #588133;
+	--green-secondary: #709056;
 	--excursion-border-bottom: var(--bg-dark-primary);
 	font-size: 16px;
-	--minheight: calc(100vh - 276px);
+	--minheight: calc(100vh - 280.2px);
 }
 
 .layout {

@@ -28,8 +28,7 @@ body.light {
 		}
 	}
 
-	/* --- Estilos para el login, el cuerpo de la tabla y el texto de formularios --- */
-	#registerForm,
+	/* --- Estilos para la tabla y el texto de formularios --- */
 	tbody,
 	.formText {
 		background-color: var(--bg-light-primary);
@@ -37,7 +36,11 @@ body.light {
 	}
 
 	/* Estilos para el Offcanvas */
-	.offcanvas-header,
+	.offcanvas-header {
+		background-color: var(--bg-light-secondary);
+		color: var(--green-primary);
+		font-weight: bolder;
+	}
 	.offcanvas-body {
 		background-color: var(--bg-light-primary);
 		color: var(--text-light);
@@ -46,10 +49,9 @@ body.light {
 	/* --- Estilos para links dentro del Offcanvas --- */
 	.offcanvas-body .nav-link {
 		color: var(--text-light);
-		padding-top: 0.5rem;
-		padding-bottom: 0.5rem;
+		padding-top: 0.25rem;
+		padding-bottom: 0.25rem;
 	}
-
 }
 
 /* ======================================== */
@@ -96,18 +98,28 @@ body.dark {
 		border-bottom-left-radius: 0.25rem;
 	}
 
-	/* --- Estilos del login, el cuerpo y el texto de los formularios --- */
-	#registerForm,
-	tbody,
+	/* --- Estilos de la tabla y el texto de los formularios --- */
+	thead {
+		color: var(--text-dark);
+	}
+	
+	tbody{
+		background-color: var(--bg-dark-secondary);
+		color: var(--text-dark);
+	}
+
 	.formText {
 		background-color: var(--bg-dark-primary);
 		color: var(--text-dark);
 	}
 
 	/* Estilos para Offcanvas */
-	.offcanvas-header,
-	.offcanvas-body {
+	.offcanvas-header {
 		background-color: var(--bg-dark-primary);
+		color: var(--green-primary);
+	}
+	.offcanvas-body {
+		background-color: var(--bg-dark-secondary);
 		color: var(--text-dark);
 	}
 
@@ -116,9 +128,9 @@ body.dark {
 	}
 
 	.offcanvas-body .nav-link {
-		color: var(--text-dark); 
-		padding-top: 0.5rem;
-		padding-bottom: 0.5rem;
+		color: var(--text-dark);
+		padding-top: 0.25rem;
+		padding-bottom: 0.25rem;
 	}
 
 	/* --- Estilos para las Card del perfil del usuario --- */
@@ -132,7 +144,6 @@ body.dark {
 		border-color: var(--bg-dark-secondary);
 	}
 
-	.card-header,
 	.card-footer {
 		background-color: var(--bg-dark-secondary);
 		color: var(--text-dark);
@@ -153,7 +164,7 @@ body.dark {
 
 	.form-control:disabled,
 	.form-control[readonly] {
-		background-color: rgb(47, 46, 46);
+		background-color: var(--bg-dark-primary);
 		color: var(--text-dark);
 		border: 1px solid var(--text-dark);
 	}

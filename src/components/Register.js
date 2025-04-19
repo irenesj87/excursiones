@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Form, Button, Container } from "react-bootstrap";
+import { Row, Col, Form, Button, Container, Card } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../slicers/loginSlice";
@@ -17,165 +17,180 @@ import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Register.module.css";
 
 function Register() {
-	// Variable that we need to be able to use dispatchers
 	const loginDispatch = useDispatch();
-	// Variable that we need to be able to use navigate
 	const navigate = useNavigate();
-	// Variable that saves if the register button is disabled or not
 	const [disabled, setDisabled] = useState(true);
-	// Variable that receive and change the name that we received from the login form inputs
 	const [name, setName] = useState("");
-	// Variable that receive and change the surname that we received from the login form inputs
 	const [surname, setSurname] = useState("");
-	// Variable that receive and change the phone that we received from the login form inputs
 	const [phone, setPhone] = useState("");
-	// Variable that receive and change the mail that we received from the login form inputs
 	const [mail, setMail] = useState("");
-	// Variable that receive and change the password that we received from the login form inputs
 	const [password, setPassword] = useState("");
-	// Variable that receive and change the password that we received from the login form inputs
 	const [samePassword, setSamePassword] = useState("");
 
-	// Function that allows register an user sending a POST request
 	const submit = async (e) => {
-		// Prevenir el comportamiento por defecto del formulario
 		e.preventDefault();
 		try {
-			/* We use the function for register an user from the helpers. This function sends a POST request to your 
-			server to create a new user. In many cases, the server might not send back any meaningful data in the 
-			response body for a successful registration. It might just send back a status code (like 201 Created) to 
-			indicate success.*/
 			await registerUser(name, surname, phone, mail, password);
-			// Log in the user automatically after registration
 			const loginData = await userLogin(mail, password);
 
-			// Dispatch the login action to update the Redux store
 			loginDispatch(
 				login({
 					user: loginData.user,
 					token: loginData.token,
 				})
 			);
-			// Save the token in sessionStorage
 			window.sessionStorage["token"] = loginData.token;
-			// Navigate to the home page
 			navigate("/");
 		} catch (error) {
-			alert(error);
+			// Consider more specific error handling/user feedback
+			console.error("Registration or login failed:", error);
+			alert(
+				`Error durante el registro o inicio de sesión: ${
+					error.message || "Inténtalo de nuevo."
+				}`
+			);
 		}
 	};
 
-	// This useEffect disables the button to register until all the information in the register inputs is correct
 	useEffect(() => {
-		if (
+		const isValid =
 			validateName(name) &&
 			validateSurname(surname) &&
 			validatePhone(phone) &&
 			validateMail(mail) &&
 			validatePassword(password) &&
-			validSamePassword(password, samePassword)
-		) {
-			setDisabled(false);
-		} else {
-			setDisabled(true);
-		}
+			validSamePassword(password, samePassword);
+		setDisabled(!isValid);
 	}, [name, surname, phone, mail, password, samePassword]);
 
 	return (
-		<Container className={styles.container}>
+		// Use fluid container for full width or remove fluid for fixed width
+		<Container fluid className={styles.container}>
 			<Row>
 				<Col xs="12">
 					<h2 className={styles.title}>Bienvenido/a</h2>
 				</Col>
 			</Row>
-			<Col>
-				<Form id="registerForm" className={styles.form} onSubmit={submit}>
-					<Row className="mb-3">
-						<ValidatedFormGroup
-							id="formGridName"
-							name="Nombre"
-							inputToChange={setName}
-							validationFunction={validateName}
-							value={name}
-							message={true}
-						/>
-						<ValidatedFormGroup
-							id="formGridSurname"
-							name="Apellidos"
-							inputToChange={setSurname}
-							validationFunction={validateSurname}
-							value={surname}
-							message={true}
-						/>
-					</Row>
-					<Row className="mb-3">
-						<ValidatedFormGroup
-							id="formGridPhone"
-							name="Teléfono"
-							inputType="tel"
-							inputToChange={setPhone}
-							validationFunction={validatePhone}
-							value={phone}
-							message={true}
-						/>
-						<ValidatedFormGroup
-							id="formGridEmail"
-							name="Correo electrónico"
-							inputType="email"
-							inputToChange={setMail}
-							validationFunction={validateMail}
-							value={mail}
-							message={true}
-							autocomplete="email"
-						/>
-					</Row>
-					<Row>
-						<ValidatedFormGroup
-							id="password"
-							name="Contraseña"
-							inputType="password"
-							inputToChange={setPassword}
-							validationFunction={validatePassword}
-							value={password}
-							message={true}
-							autocomplete="new-password"
-						/>
-						<ValidatedFormGroup
-							id="confirm-password"
-							name="Repite la contraseña"
-							inputType="password"
-							inputToChange={setSamePassword}
-							validationFunction={validatePassword}
-							value={samePassword}
-							message={true}
-							autocomplete="new-password"
-						/>
-					</Row>
-					<Row>
-						<ul className={styles.list}>
-							<li>
-								Tu contraseña debe tener al menos 8 caracteres, una letra y un
-								número
-							</li>
-							<li>
-								Debes registrarte para poder apuntarte a las excursiones
-							</li>
-						</ul>
-					</Row>
-					<div className={styles.btn}>
-						{disabled && (
-							<Button variant="secondary" type="submit" disabled={disabled}>
-								Enviar
-							</Button>
-						)}
-						{!disabled && (
-							<Button variant="success" type="submit" disabled={disabled}>
-								Enviar
-							</Button>
-						)}
-					</div>
-				</Form>
-			</Col>
+			<Row className="justify-content-center align-items-center">
+				{/* Adjust column sizing for responsiveness */}
+				<Col xs={11} sm={10} md={8} lg={6} xl={5}>
+					<Card className={styles.registerCard}>
+						{/* Add a class for specific card styling */}
+						<Card.Body>
+							<Form id="registerForm" onSubmit={submit}>
+								{/* Use Rows inside Card.Body for form layout */}
+								<Row className="mb-3">
+									<ValidatedFormGroup
+										as={Col} // Pass Col props directly if needed
+										xs={12}
+										md={6}
+										id="formGridName"
+										name="Nombre"
+										inputToChange={setName}
+										validationFunction={validateName}
+										value={name}
+										message={true}
+										autocomplete="given-name" // More specific autocomplete
+									/>
+									<ValidatedFormGroup
+										as={Col}
+										xs={12}
+										md={6}
+										id="formGridSurname"
+										name="Apellidos"
+										inputToChange={setSurname}
+										validationFunction={validateSurname}
+										value={surname}
+										message={true}
+										autocomplete="family-name" // More specific autocomplete
+									/>
+								</Row>
+								<Row className="mb-3">
+									<ValidatedFormGroup
+										as={Col}
+										xs={12}
+										md={6}
+										id="formGridPhone"
+										name="Teléfono"
+										inputType="tel"
+										inputToChange={setPhone}
+										validationFunction={validatePhone}
+										value={phone}
+										message={true}
+										autocomplete="tel" // More specific autocomplete
+									/>
+									<ValidatedFormGroup
+										as={Col}
+										xs={12}
+										md={6}
+										id="formGridEmail"
+										name="Correo electrónico"
+										inputType="email"
+										inputToChange={setMail}
+										validationFunction={validateMail}
+										value={mail}
+										message={true}
+										autocomplete="email"
+									/>
+								</Row>
+								<Row className="mb-3">
+									<ValidatedFormGroup
+										as={Col}
+										xs={12}
+										md={6}
+										id="password"
+										name="Contraseña"
+										inputType="password"
+										inputToChange={setPassword}
+										validationFunction={validatePassword}
+										value={password}
+										message={true}
+										autocomplete="new-password"
+									/>
+									<ValidatedFormGroup
+										as={Col}
+										xs={12}
+										md={6}
+										id="confirm-password"
+										name="Repite la contraseña"
+										inputType="password"
+										inputToChange={setSamePassword}
+										// Use validSamePassword directly here if ValidatedFormGroup doesn't support comparing two fields
+										// Or adjust ValidatedFormGroup to handle this case
+										validationFunction={(value) =>
+											validSamePassword(password, value)
+										}
+										value={samePassword}
+										message={true}
+										autocomplete="new-password"
+									/>
+								</Row>
+								{/* Keep password requirements visible */}
+								<ul className={`${styles.list} mb-3`}>
+									<li>
+										Tu contraseña debe tener al menos 8 caracteres, una letra y
+										un número.
+									</li>
+									<li>
+										Debes registrarte para poder apuntarte a las excursiones.
+									</li>
+								</ul>
+								{/* Center the button */}
+								<div className="text-center mt-3">
+									<Button
+										variant={disabled ? "secondary" : "success"}
+										type="submit"
+										disabled={disabled}
+										className={styles.btn} // Apply custom button styles if needed
+									>
+										Enviar
+									</Button>
+								</div>
+							</Form>
+						</Card.Body>
+					</Card>
+				</Col>
+			</Row>
 		</Container>
 	);
 }

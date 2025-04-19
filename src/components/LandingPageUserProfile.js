@@ -3,7 +3,6 @@ import { Nav } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../slicers/loginSlice";
-import { FaCircleUser } from "react-icons/fa6";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/LandingPageUserProfile.module.css";
 
@@ -53,7 +52,6 @@ function LandingPageUserProfile(props) {
 				to="/UserPage"
 				onClick={props.onClickCloseCollapsible}
 			>
-				<FaCircleUser />
 				Perfil
 			</Nav.Link>
 			<Nav.Link

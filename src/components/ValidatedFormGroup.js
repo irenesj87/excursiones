@@ -3,34 +3,44 @@ import { Col, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/ValidatedFormGroup.module.css";
 
-function ValidatedFormGroup(props) {
+function ValidatedFormGroup({
+	id, // Use id for htmlFor and input id for better accessibility
+	name, // Keep name for the label text
+	inputType = "text", // Default inputType to text
+	inputToChange,
+	validationFunction,
+	value,
+	message,
+	autocomplete,
+	...colProps // Collect remaining props (like xs, md, lg)
+}) {
 	// Variable that saves if the information we receive is valid or not, (is not blank or in an incorrect format)
 	const [notValid, setNotValid] = useState(false);
 
 	// Function that receives the information and updates it
 	const nameChange = (event) => {
 		const value = event.target.value;
-		props.inputToChange(value);
-		setNotValid(!props.validationFunction(value));
+		inputToChange(value);
+		setNotValid(!validationFunction(value));
 	};
 
 	return (
-		<Form.Group as={Col} className="mb-3">
-			<Form.Label htmlFor={props.name}>{props.name}</Form.Label>
+		<Form.Group as={Col} {...colProps} className="mb-3">
+			<Form.Label htmlFor={id}>{name}</Form.Label>
 			<Form.Control
-				type={props.inputType}
+				type={inputType}
 				onChange={nameChange}
-				id={props.name}
-				name={props.name}
-				value={props.value}
-				autoComplete={props.autocomplete}
+				id={id}
+				name={name}
+				value={value}
+				autoComplete={autocomplete}
 			/>
-			{props.message && notValid && (
+			{message && notValid && (
 				<p className={styles.errorMessage}>
 					Recuerda, no puedes dejar un campo vacío o en un formato incorrecto
 				</p>
 			)}
-			{!props.message && notValid}
+			{message && notValid}
 		</Form.Group>
 	);
 }
