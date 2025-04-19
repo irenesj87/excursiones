@@ -2,21 +2,19 @@ import React from "react";
 import { Alert } from "react-bootstrap";
 
 function ErrorMessagesAlert(props) {
-	// Destructure props for cleaner access
 	const { show, message, onClose } = props;
 
-	// Render the Alert only if the 'show' prop is true
+	// Renderiza la alerta sólo si show es true
 	if (show) {
 		return (
 			<Alert variant="danger" onClose={onClose} dismissible>
 				<Alert.Heading>Error</Alert.Heading>
-				{/* Display the message passed via props */}
 				<p>{message}</p>
 			</Alert>
 		);
 	}
 
-	// If 'show' is false, render nothing
+	// Si show es false, no renderiza nada
 	return null;
 }
 

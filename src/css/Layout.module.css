@@ -9,7 +9,9 @@
 	--green-secondary: #709056;
 	--excursion-border-bottom: var(--bg-dark-primary);
 	font-size: 16px;
-	--minheight: calc(100vh - 280.1px);
+	--minheight: calc(100vh - 280.1px); 
+	/* Esto sirve para que el footer se coloque justo al final de la página y no deje ningún hueco. 
+	Lo que hace es que a la altura total vertical de la página le resta la altura del footer */
 }
 
 .layout {

@@ -2,9 +2,8 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Footer.module.css";
 
-// This is the webpage footer
 function Footer() {
-	// Function that returns the current year
+	// Función que retorna el año actual
 	const getCurrentYear = () => {
 		return new Date().getFullYear();
 	};

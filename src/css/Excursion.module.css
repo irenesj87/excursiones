@@ -1,6 +1,4 @@
 .excursion {
-	margin-top: 30px;
-	padding-bottom: 50px;
 	border-bottom: 1px solid var(--excursion-border-bottom);
 
 	&:last-child {
@@ -10,12 +8,11 @@
 
 .title {
 	font-size: 1.8rem;
-	padding-bottom: 30px;
 	text-transform: uppercase;
 }
 
 .bold {
 	display: inline-block;
-	font-size: large;
+	font-size: 1.2rem;
 	font-weight: bold;
 }

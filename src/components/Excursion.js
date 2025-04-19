@@ -6,49 +6,42 @@ import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Excursion.module.css";
 
 function Excursion(props) {
-	// This useSelector says if a user is logged in or not and it gives us the user info too
+	// useSelector que dice si el usuario está logueado o no. Además, nos da su información
 	const { login: isLoggedIn, user } = useSelector(
 		(state) => state.loginReducer
 	);
-	// Variable that we need to be able to use dispatchers
 	const loginDispatch = useDispatch();
-	// Variable that saves the mail of the current user
+	// Variable que guarda el correo del usuario que está logueado ahora mismo
 	const auxUserMail = user && user.mail;
-	// Variable that has the url that is needed for the fetch
 	const url = `http://localhost:3001/users/${auxUserMail}/excursions/${props.id}`;
 
-	// This function sign ups a logged user in the excursion he/she wants
+	// Esta función apunta a un usuario logueado a la excursión que él quiera
 	const joinExcursion = async () => {
-		// Variable that saves the options that the fetch needs
 		const options = {
 			method: "PUT",
 			mode: "cors",
 			headers: {
 				"Content-Type": "application/json",
-				// Authorization: It is the HTTP header standard name to send authentication credentials to the server.
-				/* Bearer: A string that represents the authentication schema in the OAuth 2.0 (RFC 6750) standard. 
-				It indicates that the credential is a 'bearer token'. This means that whoever 'bears' this token 
-				is authorized to access the resources or perform the actions associated with that token, 
-				without needing additional proof such as cryptographic signatures on each request (although the token itself is usually 
-				signed or encrypted to ensure its integrity and authenticity). 
-				The space after Bearer is part of the standard format. 
-				The Authorization: Bearer <token> header is used to demonstrate that you are already authenticated when you perform 
-				actions after having logged in. In contrast, the login process (in LoginForm.js, which calls userLogin in helpers.js) 
-				is the moment when you obtain that token for the first time. */
+				// Authorization: Es la cabecera HTTP estándar para mandar credenciales de autenticación al servidor.
+				/* Bearer: Un string que representa el esquema autenticación en el estándar the OAuth 2.0 (RFC 6750). 
+				Indica que la credencial es un 'bearer token'. Significa que quien tenga este token está autorizado
+				para acceder a recursos o llevar a cabo acciones relacionadas con ese associated token, sin necesidad de 
+				pruebas adicionales como firmas criptográficas. El espacio después de  Bearer es parte del formato estándar. 
+				La cabecera Authorization: Bearer <token> se usa para demostrar que el usuario ya está autenticado cuando 
+				realiza acciones. Al contrario, en el proceso de login es el momento donde se obtiene ese token por primera vez, 
+				por eso en el login no necesitamos esta cabecera */
 				Authorization: "Bearer " + window.sessionStorage["token"],
 			},
-			// body: It is a standard property within the fetch options. It defines the content to send in the body of the HTTP request.
+			/* body: Es la propiedad estándar en las opciones del fetch. Define el contenido que hay que mandar en el 
+			 cuerpo de la petición HTTP. */
 			body: JSON.stringify({ id: props.id }),
 		};
 
 		try {
-			// Variable that saves the response of the fetch. Waits for the server response
 			const response = await fetch(url, options);
-			// If there is an error
 			if (response.status === 401) {
 				throw new Error("No estás autorizado/a para hacer esta operación");
 			} else {
-				// This turns the JSON response to a JavaScript object
 				const data = await response.json();
 				loginDispatch(
 					updateUser({
@@ -61,7 +54,7 @@ function Excursion(props) {
 		}
 	};
 
-	// Variable that has the button that appears when the user isn´t still signed up in that excursion in concrete
+	// Variable que tiene el botón que aparece cuando el usuario todavía no está apuntado en la excursión 
 	const BtnJoiningNojoined = (
 		<>
 			<Button
@@ -74,7 +67,7 @@ function Excursion(props) {
 			</Button>
 		</>
 	);
-	// Variable that has the button that appears when the user is signed up in that excursion in concrete
+	// Variable que tiene el botón que aparece cuando el usuario se ha apuntado a esa excursión
 	const BtnAlreadyJoined = (
 		<>
 			<h5 className="mt-4 text-uppercase text-success w-100">
@@ -84,10 +77,10 @@ function Excursion(props) {
 	);
 
 	return (
-		<Container className={styles.excursion}>
+		<Container className={`${styles.excursion} mt-4 pb-5`}>
 			<Row>
 				<Col>
-					<div className={styles.title}>{props.name}</div>
+					<div className={`${styles.title} mb-5`}>{props.name}</div>
 				</Col>
 			</Row>
 			<Row>
