@@ -2,15 +2,14 @@
 /* --- ESTILOS PARA MODO CLARO --- */
 /* ======================================== */
 body.light {
-	background-color: var(--bg-light-primary);
-	color: var(--text-light);
-	--toggle-button-bg: var(--text-dark);
+	background-color: var(--background-color-light);
+	color: var(--text-color-light);
 
 	/* --- Estilos para la barra de navegación --- */
 	.customNavbar {
-		background-color: var(--bg-light-primary);
+		background-color: var(--background-color-light);
 		z-index: 1030;
-		color: var(--text-light);
+		color: var(--text-color-light);
 		padding-top: 1.2rem;
 		padding-bottom: 1.2rem;
 		width: 100%;
@@ -19,8 +18,8 @@ body.light {
 	/* --- Estilos para filtros --- */
 	.accordion-button,
 	.accordion-body {
-		background-color: var(--bg-light-primary);
-		color: var(--text-light);
+		background-color: var(--background-color-light);
+		color: var(--text-color-light);
 		transition: none;
 
 		&::after {
@@ -28,27 +27,16 @@ body.light {
 		}
 	}
 
-	/* --- Estilos para la tabla y el texto de formularios --- */
-	tbody,
-	.formText {
-		background-color: var(--bg-light-primary);
-		color: var(--text-light);
-	}
-
 	/* Estilos para el Offcanvas */
 	.offcanvas-header {
-		background-color: var(--bg-light-secondary);
-		color: var(--green-primary);
+		background-color: var(--background-color-light);
+		color: var(--primary-color);
 		font-weight: bolder;
-	}
-	.offcanvas-body {
-		background-color: var(--bg-light-primary);
-		color: var(--text-light);
 	}
 
 	/* --- Estilos para links dentro del Offcanvas --- */
 	.offcanvas-body .nav-link {
-		color: var(--text-light);
+		color: var(--text-color-light);
 		padding-top: 0.25rem;
 		padding-bottom: 0.25rem;
 	}
@@ -58,15 +46,13 @@ body.light {
 /* --- ESTILOS PARA MODO OSCURO --- */
 /* ======================================== */
 body.dark {
-	background-color: var(--bg-dark-primary);
-	color: var(--text-dark);
-	--excursion-border-bottom: var(--bg-light-secondary);
+	background-color: var(--background-color-dark);
+	color: var(--text-color-dark);
 
 	/* --- Estilos para la barra de navegación --- */
 	.customNavbar {
-		background-color: var(--bg-dark-primary);
-		z-index: 1030;
-		color: var(--text-dark);
+		background-color: var(--background-color-dark); /* Use surface color */
+		color: var(--text-color-dark);
 		padding-top: 1.2rem;
 		padding-bottom: 1.2rem;
 		width: 100%;
@@ -75,102 +61,91 @@ body.dark {
 	/* --- Estilos para los filtros --- */
 	.accordion-button,
 	.accordion-body {
-		background-color: var(--bg-dark-primary);
-		color: var(--text-dark);
+		background-color: var(--background-color-dark); /* Use surface color */
+		color: var(--text-color-dark);
 		transition: none;
-
 		&::after {
-			background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23eee'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
+			/* Update SVG fill color if needed */
+			background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23E5E7EB'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
 		}
 	}
 
 	.accordion-item {
-		border: none; /* Se eliminan todos los bordes */
-		border-bottom: 1px solid var(--text-light); /* Solo se añade el borde inferior en blanco */
-		background-color: var(
-			--bg-dark
-		); /* Nos aseguramos de que el color del fondo sea el mismo */
+		border-bottom: 1px solid var(--border-color-dark);
+		background-color: var(--background-color-dark);
 	}
 
-	/* Restablecer el radio del botón para el último item del acordeón en flush */
-	.accordion-flush .accordion-item:last-child {
-		border-bottom-right-radius: 0.25rem;
-		border-bottom-left-radius: 0.25rem;
-	}
-
-	/* --- Estilos de la tabla y el texto de los formularios --- */
-	thead {
-		color: var(--text-dark);
-	}
-
-	tbody {
-		background-color: var(--bg-dark-secondary);
-		color: var(--text-dark);
-	}
-
-	.formText {
-		background-color: var(--bg-dark-primary);
-		color: var(--text-dark);
-	}
-
-	/* Estilos para Offcanvas */
-	.offcanvas-header {
-		background-color: var(--bg-dark-primary);
-		color: var(--green-primary);
-	}
-	.offcanvas-body {
-		background-color: var(--bg-dark-secondary);
-		color: var(--text-dark);
-	}
-
-	.offcanvas-header .btn-close {
-		filter: invert(1) grayscale(100%) brightness(200%);
-	}
-
-	.offcanvas-body .nav-link {
-		color: var(--text-dark);
-		padding-top: 0.25rem;
-		padding-bottom: 0.25rem;
-	}
-
-	/* --- Estilos para las Card del perfil del usuario --- */
-	.card,
-	.card-body {
-		background-color: var(--bg-dark-primary);
-		color: var(--text-dark);
-	}
-
+	/* --- Estilos para las Card --- */
 	.card {
-		border-color: var(--bg-dark-secondary);
+		background-color: var(--surface-color-dark);
+		color: var(--text-color-dark);
+		border-color: var(--border-color-dark);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 	}
 
-	.card-footer {
-		background-color: var(--bg-dark-secondary);
-		color: var(--text-dark);
-		border-color: #555;
+	.card-header {
+		background-color: var(--primary-color); /* Or a slightly different shade */
+		border-bottom: 1px solid var(--border-color-dark);
 	}
 
-	.card-body p {
-		background-color: #6f6b6b;
-		color: var(--text-dark);
+	.card-body {
+		background-color: var(
+			--surface-color-dark
+		); /* Keep consistent or slightly different */
+		color: var(--text-color-dark);
+	}
+
+	.card-title,
+	.card-text {
+		color: var(--text-color-dark);
+	}
+
+	/* Style specific elements within cards */
+	.card .badge {
+		color: var(--text-color-light);
+	}
+
+	.card-body .no-excursions-text {
+		background-color: var(--secondary-accent-dark);
+		color: var(--text-color-dark);
 	}
 
 	/* --- Estilos para los Form.Control --- */
 	.form-control {
-		background-color: var(--bg-dark-secondary);
-		color: var(--text-dark);
-		border: 1px solid var(--text-dark);
+		background-color: var(--surface-color-dark);
+		color: var(--text-color-dark);
+		border: 1px solid var(--border-color-dark);
 	}
 
 	.form-control:disabled,
 	.form-control[readonly] {
-		background-color: var(--bg-dark-primary);
-		color: var(--text-dark);
-		border: 1px solid var(--text-dark);
+		background-color: var(--background-color-dark); /* Darker for disabled */
+		color: var(--subtle-text-color-dark); /* Muted text */
+		border: 1px solid var(--border-color-dark);
 	}
 
-	/* Estilo específico para plaintext readOnly */
 	.form-control-plaintext[readonly] {
-		color: var(--text-dark);
+		color: var(--text-color-dark);
+	}
+
+	/* Estilos para el Offcanvas */
+	.offcanvas-header {
+		background-color: var(--background-color-dark);
+		color: var(--primary-color);
+		font-weight: bolder;
+		.btn-close {
+			filter: invert(1) grayscale(100%) brightness(200%);
+		}
+	}
+
+	.offcanvas-body {
+		background-color: var(--surface-color-dark);
+	}
+
+	/* --- Estilos para links dentro del Offcanvas --- */
+	.offcanvas-body .nav-link {
+		color: var(--text-color-dark);
+		padding-top: 0.25rem;
+		padding-bottom: 0.25rem;
 	}
 }

@@ -1,18 +1,4 @@
-.excursion {
-	border-bottom: 1px solid var(--excursion-border-bottom);
-
-	&:last-child {
-		border-bottom: none;
-	}
-}
-
-.title {
-	font-size: 1.8rem;
-	text-transform: uppercase;
-}
-
-.bold {
-	display: inline-block;
-	font-size: 1.2rem;
-	font-weight: bold;
+.excursionContainer {
+	margin-bottom: 1.3rem;
+	padding: 0;
 }

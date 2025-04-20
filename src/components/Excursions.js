@@ -5,20 +5,19 @@ import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Excursions.module.css";
 
 function Excursions(props) {
-	/* Array that saves the excursions that have to be displayed, this can display the entire list of excursions we have on the server (if the user didn't search for anything
-	 * in the search bar or the filters) or the list of excursions that the search with the search bar or the filters gives us */
+	/* Array que guarda las excursiones que se deben mostrar, pueden ser toda la lista de excursiones o las que busque 
+	el usario con la barra de búsqueda o los filtros */
 	const excursions = props.excursionData.map((excursion) => (
-		/* The spread operator passes all the properties of the excursion object (name, area, difficulty...) as props for the 
-		Excursion component */
+		/* El spread operator pasa las propiedades del objeto (name, area, difficulty...) como props del componente Excursion */
 		<Excursion key={excursion.id} {...excursion} />
 	));
 
-	// Variable that saves if the user has search for an excursion we already had in the database or not
+	// Variable que guarda si el usuario ha buscado una excursión que ya teníamos en la base de datos o no
 	const found = excursions.length > 0;
 
-	// Variable that saves the message that has to be displayed if we don´t find the excursion the user wants
+	// Variable que guarda el mensaje que se debe mostrar si no se encuentra la excursión que el usuario busca
 	const notFound = (
-		<div className={styles.messageNotFound}>
+		<div className={`${styles.messageNotFound} text-center`}>
 			Lo sentimos, pero no tenemos ninguna excursión con esas características.
 		</div>
 	);

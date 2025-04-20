@@ -1,5 +1,5 @@
 .errorMessage {
 	font-weight: bold;
-	color: #ed4f39;
+	color: var(--accent-color);
 }
 

@@ -1,12 +1,13 @@
 import React from "react";
-import { Container, Button, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
+import ExcursionCard from "./ExcursionCard";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../slicers/loginSlice";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Excursion.module.css";
 
 function Excursion(props) {
-	// useSelector que dice si el usuario está logueado o no. Además, nos da su información
+	// useSelector que dice si el usuario está logueado o no. Además, nos da la información del usuario
 	const { login: isLoggedIn, user } = useSelector(
 		(state) => state.loginReducer
 	);
@@ -54,64 +55,24 @@ function Excursion(props) {
 		}
 	};
 
-	// Variable que tiene el botón que aparece cuando el usuario todavía no está apuntado en la excursión
-	const BtnJoiningNojoined = (
-		<>
-			<Button
-				className="mt-4 w-100"
-				variant="success"
-				type="button"
-				onClick={joinExcursion}
-			>
-				Apuntarse
-			</Button>
-		</>
-	);
-	// Variable que tiene el botón que aparece cuando el usuario se ha apuntado a esa excursión
-	const BtnAlreadyJoined = (
-		<>
-			<h5 className="mt-4 text-uppercase text-success w-100">
-				<strong>Apuntado/a</strong>
-			</h5>
-		</>
-	);
+	/* Variable que comprueba si el usuario está logueado en la web y si está logueado en esa excursión.
+	También comprueba si existe el usuario y el array de excursiones de ese usuario */
+	const isJoined =
+		isLoggedIn && user && user.excursions && user.excursions.includes(props.id);
 
 	return (
-		<Container className={`${styles.excursion} mt-4 pb-5`}>
-			<Row>
-				<Col>
-					<div className={`${styles.title} mb-5`}>{props.name}</div>
-				</Col>
-			</Row>
-			<Row>
-				<Col>
-					<div className={styles.bold}>Zona:</div> {props.area}
-				</Col>
-			</Row>
-			<Row>
-				<Col>
-					<div className={styles.bold}>Dificultad:</div> {props.difficulty}
-				</Col>
-			</Row>
-			<Row>
-				<Col>
-					<div className={styles.bold}>Tiempo estimado:</div> {props.time}
-				</Col>
-			</Row>
-			<Row>
-				<Col>
-					<div className={styles.bold}>Descripción:</div> {props.description}
-				</Col>
-			</Row>
-			<Row className="justify-content-center">
-				<Col xs="12" md="5" lg="4" xl="2" className="text-center">
-					{isLoggedIn &&
-						user &&
-						(user.excursions.includes(props.id)
-							? BtnAlreadyJoined
-							: BtnJoiningNojoined)}
-				</Col>
-			</Row>
+		<Container className={`${styles.excursionContainer} py-3`}>
+			<ExcursionCard
+				id={props.id}
+				name={props.name}
+				area={props.area}
+				description={props.description}
+				difficulty={props.difficulty}
+				time={props.time}
+				isLoggedIn={isLoggedIn}
+				isJoined={isJoined}
+				onJoin={joinExcursion}
+			/>
 		</Container>
 	);
 }

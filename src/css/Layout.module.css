@@ -1,17 +1,22 @@
+/* ======================================== */
+/* --- ESTILOS GENERALES --- */
+/* ======================================== */
 :root {
-	--bg-light-primary: #f8f8f8;
-	--bg-light-secondary:#f0f1f3;
-	--text-light: #333;
-	--bg-dark-primary: #222;
-	--bg-dark-secondary: #444;
-	--text-dark: #eee;
-	--green-primary: #588133;
-	--green-secondary: #709056;
-	--excursion-border-bottom: var(--bg-dark-primary);
+	--primary-color: #3a5f40;
+	--secondary-color: #f5e8d3;
+	--accent-color: #e67e22;
+	--text-color-light: #333333;
+	--text-color-dark: #e0e0e0;
+	--surface-color-dark: #404040;
+	--primary-accent-dark: #3b82f6;
+	--secondary-accent-dark: #6c757d;
+	--background-color-light: #faf8f5;
+	--background-color-dark: #1e1e1e;
+	--success-color: #28a745; /* Keep Bootstrap's success or choose your own */
+	--danger-color: #dc3545; /* Keep Bootstrap's danger or choose your own */
 	font-size: 16px;
-	--minheight: calc(100vh - 280.1px); 
-	/* Esto sirve para que el footer se coloque justo al final de la página y no deje ningún hueco. 
-	Lo que hace es que a la altura total vertical de la página le resta la altura del footer */
+	--border-color-dark: #777777;
+	--minheight: calc(100vh - 280.1px);
 }
 
 .layout {

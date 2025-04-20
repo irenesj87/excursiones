@@ -13,7 +13,6 @@ function ErrorMessagesAlert(props) {
 			</Alert>
 		);
 	}
-
 	// Si 'show' es false, no renderiza nada
 	return null;
 }

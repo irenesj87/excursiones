@@ -1,0 +1,39 @@
+.excursionItemCard {
+	border: 1px solid #e0e0e0;
+	border-radius: 8px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+	height: 100%; /* Ensure cards in a row have the same height */
+	display: flex; /* Use flexbox for internal layout */
+	flex-direction: column; /* Stack card content vertically */
+}
+
+/* Ensure Card.Body takes remaining space if needed */
+.excursionItemCard .card-body {
+	flex-grow: 1; /* Allows body to expand */
+	display: flex;
+	flex-direction: column; /* Stack elements inside body */
+}
+
+.excursionTitle {
+	font-size: 1.4rem;
+	font-weight: 600;
+	color: #333;
+	margin-bottom: 0.5rem;
+}
+
+.excursionDescription {
+	font-size: 1rem;
+	color: #555;
+	line-height: 1.5;
+	margin-bottom: 1rem;
+	flex-grow: 1; /* Allow description to take available space */
+}
+
+.excursionDetails {
+	margin-top: auto; /* Push details and button to the bottom */
+	margin-bottom: 1rem;
+	display: flex;
+	flex-wrap: wrap; /* Allow badges to wrap */
+	gap: 0.5rem; /* Space between badges */
+}

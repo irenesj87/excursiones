@@ -3,7 +3,7 @@
 }
 
 .title {
-	color: var(--green-primary);
+	color: var(--primary-color);
 	margin-top: 40px;
 	margin-bottom: 2.5rem;
 	font-weight: 600;
@@ -11,44 +11,15 @@
 	text-transform: uppercase;
 }
 
-/* Card header */
 .cardHeader {
-	background-color: var(--green-secondary);
+	background-color: var(--primary-color);
 	color: white;
 	text-transform: uppercase;
 	font-weight: bold;
 	padding: 1rem 1.25rem;
-	border-bottom: 1px solid var(--green-secondary);
+	border-bottom: 1px solid var(--primary-color);
 }
 
-/* Body header */
-.cardBody {
-	padding: 1.5rem;
-}
-
-/* Card footer */
-.cardFooter {
-	background-color: #fff;
-	padding: 1rem 1.25rem;
-	border-top: 1px solid #f1f1f1;
-}
-
-/* Styles for the excursions table */
-.excursionsTable thead th {
-	vertical-align: middle;
-	font-weight: 600;
-	border-bottom-width: 2px;
-	text-align: left;
-	padding: 0.75rem;
-}
-
-/* Styles for the excursions table rows */
-.excursionsTable tbody td {
-	vertical-align: middle;
-	padding: 0.75rem;
-}
-
-/* Message when there are no excursions */
 .noExcursionsJoined {
 	text-align: center;
 	padding: 2rem;
