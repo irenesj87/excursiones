@@ -1,3 +1,7 @@
-.infoMessages {
+.formLabel {
+	font-weight: bold;
+}
+
+.infoMessage {
 	font-style: italic;
 }

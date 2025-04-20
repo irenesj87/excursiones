@@ -78,7 +78,7 @@ export function LoginForm() {
 				id="loginForm"
 				noValidate
 				onSubmit={submit}
-				className={styles.formText}
+				className={styles.formLabel}
 			>
 				<ValidatedFormGroup
 					id="formLoginEmail"
@@ -100,9 +100,8 @@ export function LoginForm() {
 					message={false}
 					autocomplete="current-password"
 				/>
-				<div className="text-center">
+				<div className="text-center mt-4">
 					<Button
-						className="mt-4"
 						variant={disabled ? "secondary" : "success"}
 						type="submit"
 						disabled={disabled}

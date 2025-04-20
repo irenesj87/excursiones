@@ -173,12 +173,12 @@ function UserInfoForm() {
 					</Col>
 				</Form.Group>
 				{!isEditing && (
-					<div className="d-flex justify-content-center mt-5">
+					<div className="d-flex justify-content-center mt-5 border-top pt-3">
 						<Button onClick={startEdit}>Editar</Button>
 					</div>
 				)}
 				{isEditing && (
-					<div className="d-flex justify-content-center mt-5 gap-2">
+					<div className="d-flex justify-content-center mt-5 gap-2 border-top pt-3">
 						<Button variant="danger" onClick={cancelEdit}>
 							Cancelar
 						</Button>

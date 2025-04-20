@@ -4,24 +4,24 @@
 
 /* Estilo para la cabecera del acordeón */
 .customAccordionHeader button {
-	font-weight: 450; /* Hacer el texto un poco más grueso */
-	font-size: 1.1rem; /* Ajustar tamaño si es necesario */
+	font-weight: 450;
+	font-size: 1.1rem;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 }
 
-/* Add margin to the right of the icon */
+/* Añade un margen a la derecha del icono */
 .customAccordionHeader button svg {
-	margin-right: 10px; /* Adjust this value as needed (e.g., 0.5rem) */
+	margin-right: 10px;
 } 
 
 /* Estilo para la cabecera cuando el item está abierto (activo) */
 .customAccordionHeader button:not(.collapsed) {
-	box-shadow: none; /* Quitar sombra interna al estar activo */
+	box-shadow: none;
 }
 
 /* Estilo para el cuerpo del acordeón */
 .customAccordionBody {
-	padding: 1rem 1.25rem; /* Ajustar padding si es necesario */
+	padding: 1rem 1.25rem;
 }

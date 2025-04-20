@@ -27,10 +27,10 @@ function ExcursionCard({
 						{description}
 					</Card.Text>
 					<div className={styles.excursionDetails}>
-						<span className="badge bg-info me-2 mb-2">
+						<span className="badge bg-warning me-2 mb-2">
 							Dificultad: {difficulty}
 						</span>
-						<span className="badge bg-warning mb-2">
+						<span className="badge bg-info mb-2">
 							Tiempo estimado: {time}
 						</span>
 					</div>

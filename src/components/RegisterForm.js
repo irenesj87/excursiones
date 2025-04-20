@@ -79,7 +79,7 @@ function RegisterForm() {
 				/>
 			)}
 			<Form id="registerForm" onSubmit={submit}>
-				<Row className="mb-3">
+				<Row className={`${styles.formLabel} mb-3`}>
 					<ValidatedFormGroup
 						as={Col}
 						xs={12}
@@ -105,7 +105,7 @@ function RegisterForm() {
 						autocomplete="family-name"
 					/>
 				</Row>
-				<Row className="mb-3">
+				<Row className={`${styles.formLabel} mb-3`}>
 					<ValidatedFormGroup
 						as={Col}
 						xs={12}
@@ -117,7 +117,7 @@ function RegisterForm() {
 						validationFunction={validatePhone}
 						value={phone}
 						message={true}
-						autocomplete="tel" // More specific autocomplete
+						autocomplete="tel"
 					/>
 					<ValidatedFormGroup
 						as={Col}
@@ -133,7 +133,7 @@ function RegisterForm() {
 						autocomplete="email"
 					/>
 				</Row>
-				<Row className="mb-3">
+				<Row className={`${styles.formLabel} mb-3`}>
 					<ValidatedFormGroup
 						as={Col}
 						xs={12}
@@ -163,13 +163,13 @@ function RegisterForm() {
 						autocomplete="new-password"
 					/>
 				</Row>
-				<ul className={`${styles.infoMessages} mb-3`}>
+				<ul className={`${styles.infoMessage} mb-3`}>
 					<li>
 						Tu contraseña debe tener al menos 8 caracteres, una letra y un
 						número.
 					</li>
 				</ul>
-				<div className="text-center mt-5">
+				<div className="text-center mt-5 pt-3 border-top">
 					<Button
 						variant={disabled ? "secondary" : "success"}
 						type="submit"

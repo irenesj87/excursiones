@@ -4,16 +4,14 @@ import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/FiltersList.module.css";
 
 function FiltersList(props) {
-	// This useState saves the filters info that is stored in the test server
+	// useState que guarda la info de los filtros que está en el servidor
 	const [arrayFilters, setArrayFilters] = useState([]);
 
-	// This useEffect brings the filters from the database with the fetch
+	// useEffect que saca los filtros del servidor
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				// Variable that has the url that is needed for the fetch
 				const url = `http://localhost:3001/filters?type=${props.filterName}`;
-				// Variable that saves the options that the fetch needs
 				const options = {
 					method: "GET",
 					mode: "cors",
