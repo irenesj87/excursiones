@@ -9,7 +9,7 @@ function ErrorMessagesAlert(props) {
 		return (
 			<Alert variant="danger" onClose={onClose} dismissible>
 				<Alert.Heading>Error</Alert.Heading>
-				<p>{message}</p>
+				{message}
 			</Alert>
 		);
 	}

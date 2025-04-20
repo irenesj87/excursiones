@@ -173,10 +173,4 @@ body.dark {
 	.form-control-plaintext[readonly] {
 		color: var(--text-dark);
 	}
-
-	/* Estilos para las Alert */
-	.alert.alert-danger p{
-		background-color: inherit;
-		color: inherit;
-	}
 }

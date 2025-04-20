@@ -102,7 +102,7 @@ export function LoginForm() {
 				/>
 				<div className="text-center">
 					<Button
-						className="mt-3"
+						className="mt-4"
 						variant={disabled ? "secondary" : "success"}
 						type="submit"
 						disabled={disabled}

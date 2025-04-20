@@ -6,7 +6,7 @@ import {
 	Container,
 	Table,
 	Card,
-	Form
+	Form,
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { Navigate } from "react-router";
@@ -55,7 +55,7 @@ function UserPage() {
 			"Content-Type": "application/json",
 			Authorization: "Bearer " + window.sessionStorage["token"],
 		},
-		// body: It is a standard property within the fetch options. It defines the content to send in the body of the HTTP request. 
+		// body: It is a standard property within the fetch options. It defines the content to send in the body of the HTTP request.
 		/* This is typically used with methods like POST or PUT where you need to send data to the server (in this case, to update user information)
 		JSON.stringify(...): This is a built-in JavaScript function. Its job is to take a JavaScript object (like the currentUser object) and convert it into a JSON string.
 		We have to convert it to a JSON string because web servers and APIs typically expect data sent in the request body to be in a standardized 
@@ -138,7 +138,7 @@ function UserPage() {
 				</Col>
 			</Row>
 			<Row className="mb-4 justify-content-center">
-				<Col xs="12" md="12" lg="9">
+				<Col xs="12" md="12" lg="8" xl="6">
 					<Card className={`${styles.profileCard} mb-4`}>
 						<Card.Header className={styles.cardHeader}>
 							Datos Personales
@@ -222,25 +222,24 @@ function UserPage() {
 									/>
 								</Col>
 							</Form.Group>
-						</Card.Body>
-						<Card.Footer className={`${styles.cardFooter} text-end`}>
-							{/* Lógica de botones */}
 							{!isEditing && (
-								<Button variant="secondary" onClick={startEdit}>
-									Editar Perfil
-								</Button>
+								<div className="d-flex justify-content-center mt-5">
+									<Button variant="secondary" onClick={startEdit}>
+										Editar
+									</Button>
+								</div>
 							)}
 							{isEditing && (
-								<div className="d-flex justify-content-end gap-2">
+								<div className="d-flex justify-content-center mt-5 gap-2">
 									<Button variant="danger" onClick={cancelEdit}>
 										Cancelar
 									</Button>
 									<Button variant="success" onClick={saveEdit}>
-										Guardar Cambios
+										Guardar
 									</Button>
 								</div>
 							)}
-						</Card.Footer>
+						</Card.Body>
 					</Card>
 					<Card className={styles.excursionsCard}>
 						<Card.Header className={styles.cardHeader}>

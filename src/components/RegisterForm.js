@@ -169,7 +169,7 @@ function RegisterForm() {
 						número.
 					</li>
 				</ul>
-				<div className="text-center mt-4">
+				<div className="text-center mt-5">
 					<Button
 						variant={disabled ? "secondary" : "success"}
 						type="submit"

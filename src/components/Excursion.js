@@ -54,7 +54,7 @@ function Excursion(props) {
 		}
 	};
 
-	// Variable que tiene el botón que aparece cuando el usuario todavía no está apuntado en la excursión 
+	// Variable que tiene el botón que aparece cuando el usuario todavía no está apuntado en la excursión
 	const BtnJoiningNojoined = (
 		<>
 			<Button
@@ -107,12 +107,9 @@ function Excursion(props) {
 				<Col xs="12" md="5" lg="4" xl="2" className="text-center">
 					{isLoggedIn &&
 						user &&
-						!user.excursions.includes(props.id) &&
-						BtnJoiningNojoined}
-					{isLoggedIn &&
-						user &&
-						user.excursions.includes(props.id) &&
-						BtnAlreadyJoined}
+						(user.excursions.includes(props.id)
+							? BtnAlreadyJoined
+							: BtnJoiningNojoined)}
 				</Col>
 			</Row>
 		</Container>

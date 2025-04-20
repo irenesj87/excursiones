@@ -15,7 +15,7 @@ function LoginPage() {
 				</Col>
 			</Row>
 			<Row className="justify-content-center align-items-center">
-				<Col xs={11} sm={8} md={6} lg={6} xl={3}>
+				<Col xs={11} sm={8} md={6} lg={7} xl={3}>
 					<Card className={styles.loginCard}>
 						<Card.Body>
 							<LoginForm />

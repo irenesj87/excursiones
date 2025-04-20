@@ -13,7 +13,7 @@ function RegisterPage() {
 				</Col>
 			</Row>
 			<Row className="justify-content-center align-items-center">
-				<Col xs={11} sm={8} md={7} lg={7} xl={4}>
+				<Col xs={11} sm={8} md={7} lg={8} xl={4}>
 					<Card className={styles.registerCard}>
 						<Card.Body>
 							<RegisterForm />
