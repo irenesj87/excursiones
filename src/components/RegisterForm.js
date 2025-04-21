@@ -13,7 +13,7 @@ import {
 	validSamePassword,
 } from "../validation/validations.js";
 import { userLogin, registerUser } from "../helpers/helpers.js";
-import ErrorMessagesAlert from "./ErrorMessagesAlert.js";
+import ErrorMessageAlert from "./ErrorMessageAlert.js";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/RegisterForm.module.css";
 
@@ -69,7 +69,7 @@ function RegisterForm() {
 	return (
 		<>
 			{showErrorAlert && registerError && (
-				<ErrorMessagesAlert
+				<ErrorMessageAlert
 					show={showErrorAlert}
 					message={registerError}
 					onClose={() => {
