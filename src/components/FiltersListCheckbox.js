@@ -3,18 +3,16 @@ import { useDispatch } from "react-redux";
 import { selectFilter, unselectFilter } from "../slicers/filterSlice";
 
 function FiltersListCheckbox(props) {
-	// Variable that saves if a checkbox is selected or not
+	// Variable para saber si un checkbos está seleccionado o no
 	const [selected, setSelected] = useState(false);
-
-	// Variable that we need to be able to use dispatchers
 	const filterDispatch = useDispatch();
 
-	// Function that changes the state of a checkbox, checked -> unchecked, unchecked -> checked
+	// Función que cambia el estado del checkbox
 	const selectedCheckbox = () => {
 		setSelected(!selected);
 
 		if (selected) {
-			// If the checkbox is selected, unselect it
+			// Si el checkbox está seleccionado, lo deselecciona
 			filterDispatch(
 				unselectFilter({
 					filterName: props.filterName,
@@ -22,7 +20,7 @@ function FiltersListCheckbox(props) {
 				})
 			);
 		} else {
-			// If it wasn't checked then select it
+			// Si no está seleccionado, lo selecciona
 			filterDispatch(
 				selectFilter({
 					filterName: props.filterName,

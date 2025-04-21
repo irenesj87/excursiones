@@ -3,10 +3,10 @@ import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { validateMail, validatePassword } from "../validation/validations.js";
 import ValidatedFormGroup from "./ValidatedFormGroup";
+import ErrorMessagesAlert from "./ErrorMessagesAlert.js";
 import { login } from "../slicers/loginSlice";
 import { useDispatch } from "react-redux";
 import { userLogin } from "../helpers/helpers.js";
-import ErrorMessagesAlert from "./ErrorMessagesAlert.js";
 import styles from "../css/LoginForm.module.css";
 
 // Component that validates the input info and disables the "Enviar" button until that info is correct
