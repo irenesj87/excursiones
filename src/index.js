@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 
 
-// react 17.0.2
+// react v19.1
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 
