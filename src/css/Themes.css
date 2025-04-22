@@ -21,12 +21,18 @@ body.light {
 			transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 			border-radius: 0.5rem;
 		}
-		
-		.nav-link:hover,
-		.nav-link:focus {
-			background-color: #f8f9fa;
+
+		.nav-link:hover {
+			background-color: #f9fafa;
 			color: var(--primary-color);
 			border-radius: 0.5rem;
+		}
+
+		.nav-link:focus {
+			background-color: transparent;
+			color: var(--text-color-light);
+			box-shadow: none;
+			outline: none;
 		}
 	}
 
@@ -64,16 +70,6 @@ body.light {
 		border-radius: 0;
 	}
 
-	.offcanvas .offcanvas-body .nav-link:hover {
-		background-color: #f8f9fa;
-		color: var(--primary-color);
-	}
-
-	.offcanvas .offcanvas-body .nav-link:focus {
-		background-color: #f8f9fa;
-		color: var(--primary-color);
-	}
-
 	.offcanvas-header .btn-close {
 		filter: none;
 	}
@@ -101,11 +97,17 @@ body.dark {
 			transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 			border-radius: 0.5rem;
 		}
-		.nav-link:hover,
-		.nav-link:focus {
+		.nav-link:hover {
 			background-color: rgba(255, 255, 255, 0.1);
 			color: var(--primary-accent-dark);
 			border-radius: 0.5rem;
+		}
+
+		.nav-link:focus {
+			background-color: transparent;
+			color: var(--text-color-dark);
+			box-shadow: none;
+			outline: none;
 		}
 	}
 
@@ -166,10 +168,14 @@ body.dark {
 		border: 1px solid var(--border-color-dark);
 	}
 
+	.form-control::placeholder {
+		color: var(--subtle-text-color-dark);
+	}
+
 	.form-control:disabled,
 	.form-control[readonly] {
-		background-color: var(--background-color-dark); /* Darker for disabled */
-		color: var(--subtle-text-color-dark); /* Muted text */
+		background-color: var(--background-color-dark);
+		color: var(--subtle-text-color-dark);
 		border: 1px solid var(--border-color-dark);
 	}
 
@@ -203,15 +209,5 @@ body.dark {
 		text-decoration: none;
 		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 		border-radius: 0;
-	}
-
-	.offcanvas-body .nav-link:hover {
-		background-color: rgba(255, 255, 255, 0.1);
-		color: var(--primary-accent-dark);
-	}
-	
-	.offcanvas-body .nav-link:focus {
-		background-color: rgba(255, 255, 255, 0.1);
-		color: var(--primary-accent-dark);
 	}
 }

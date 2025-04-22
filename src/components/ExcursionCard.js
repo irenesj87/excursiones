@@ -22,7 +22,7 @@ function ExcursionCard({
 				<div>
 					{/* Wrapper for main content */}
 					<Card.Title className={styles.excursionTitle}>{name}</Card.Title>
-					<Card.Subtitle className="mb-2 text-muted">{area}</Card.Subtitle>
+					<Card.Subtitle className="mb-2">{area}</Card.Subtitle>
 					<Card.Text className={styles.excursionDescription}>
 						{description}
 					</Card.Text>

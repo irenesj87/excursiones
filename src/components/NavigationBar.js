@@ -18,14 +18,12 @@ function NavigationBar(props) {
 	const handleCloseOffcanvas = () => setShowOffcanvas(false);
 	// Función para abrir el Offcanvas
 	const handleShowOffcanvas = () => setShowOffcanvas(true);
-
+	// Variable que guarda si el usuario prefiere el modo oscuro, tanto en su sistema operativo como en su navegador
 	const prefersDarkMode =
 		window.matchMedia &&
 		window.matchMedia("(prefers-color-scheme: dark)").matches;
-
 	const mode = useSelector((state) => state.themeReducer.mode);
 	const dispatch = useDispatch();
-
 	// Variable que dice si hay un usuario logueado o no
 	const { login: isLoggedIn, user } = useSelector(
 		(state) => state.loginReducer
@@ -33,9 +31,11 @@ function NavigationBar(props) {
 
 	// Código para el modo oscuro
 	useEffect(() => {
-		//Removes classes 'light' and 'dark' to ensure there is no conflict
+		// .classList: Es una propiedad de HTML que da acceso a las clases aplicadas a un elemento (en este caso body)
+		/* Lo que hace esta línea es asegurarse de que la etiqueta <body> no tiene las clases 'light' y 'dark' aplicadas
+		 antes que el código añada la correcta basada en 'mode' */
 		document.body.classList.remove("light", "dark");
-		//Add the class 'mode' to the <body> element
+		// Añade la clase 'mode' a <body>
 		document.body.classList.add(mode);
 	}, [mode]);
 
@@ -55,17 +55,17 @@ function NavigationBar(props) {
 	}, [dispatch, prefersDarkMode]);
 
 	useEffect(() => {
-		localStorage.setItem("themeMode", mode); // It updates the mode variable in localStorage
-	}, [mode]); // This useEffect will re-run everytime the mode variable changes
+		localStorage.setItem("themeMode", mode); // Actualiza la variable 'mode' en localStorage
+	}, [mode]); // Este useEffect se ejecutará cada vez que la variable 'mode' cambie
 
 	const toggleTheme = () => {
-		dispatch(toggleMode()); // Dispatch the toggleMode action for the button
+		dispatch(toggleMode());
 	};
 
-	// Conditional rendering for the icon
+	// Renderizado condicional para el icono
 	const icon = mode === "light" ? <RiMoonClearFill /> : <RiSunFill />;
 
-	// Items that are displayed in the nav bar when no user is logged
+	// Items que están en la barra de navegación cuando el usuario no está logueado
 	const NoLoggedItems = (
 		<>
 			<Nav.Link
@@ -82,7 +82,7 @@ function NavigationBar(props) {
 		</>
 	);
 
-	// Items that are displayed in the nav bar when an user is logged
+	// Items que están en la barra de navegación cuando el usuario está logueado
 	const LoggedItems = (
 		<LandingPageUserProfile
 			name={user?.name}
@@ -93,14 +93,12 @@ function NavigationBar(props) {
 	return (
 		<Navbar expand="lg" className="customNavbar" variant={mode} sticky="top">
 			<Container fluid>
-				{/* Grouped with d-flex to be together */}
+				{/* Agrupados con d-flex */}
 				<div className="d-flex flex-wrap align-items-center">
 					<Navbar.Brand as={Link} to="/" onClick={handleCloseOffcanvas}>
 						<Logo />
 					</Navbar.Brand>
 				</div>
-
-				{/* Search Bar - Centered on large screens */}
 				<div className="d-none d-md-flex justify-content-center flex-grow-1 px-md-3 px-lg-5 order-md-2 order-lg-2 me-md-3">
 					<div style={{ maxWidth: "900px", width: "100%" }}>
 						<SearchBar
@@ -109,54 +107,47 @@ function NavigationBar(props) {
 						/>
 					</div>
 				</div>
-
-				{/* --- Right side container --- */}
-				{/* Use ms-auto to push this whole group to the right */}
-				{/* Use order-lg-3 to place it correctly on large screens */}
+				{/* ms-auto: Cuando se utiliza dentro de un flex-container le dice al navegador que calcule el margen 
+				a la izquierda de ese elemento. Así que lo que hace, es poner ese elemento y lo que le siga lo más a la derecha
+				que pueda dentro de ese container. ms-md-0 dice que deje de hacerlo a partir de breakpoints medianos */}
+				{/* order-lg-3: para posicionarlo correctamente en breakpoints grandes */}
 				<div className="d-flex align-items-center ms-auto ms-md-0 order-md-3 order-lg-3">
-					{/* Theme Toggle Button - Always visible */}
 					<Button
-						className={`${styles.themeToggleBtn} me-2`} // Spacing between theme and toggle/nav items
+						className={`${styles.themeToggleBtn} me-2`}
 						variant="outline-secondary"
 						id="toggleButton"
 						onClick={toggleTheme}
 					>
 						{icon}
 					</Button>
-
-					{/* Inline Nav items for large screens (lg and up) */}
-					{/* Hidden on small screens (d-none), shown on large (d-lg-flex) */}
-					{/* Placed before the toggle for visual order on large screens */}
+					{/* Inline items para breakpoints grandes */}
+					{/* No visible en breakpoints pequeños (d-none), visible en grandes (d-lg-flex) */}
+					{/* Posicionado antes del toggle para mantener el orden en breakpoints grandes */}
 					<Nav className="d-none d-lg-flex flex-row align-items-center">
 						{isLoggedIn ? LoggedItems : NoLoggedItems}
 					</Nav>
-
-					{/* Offcanvas Toggle (Hamburger) */}
-					{/* Visible only on smaller screens (default Bootstrap behavior) */}
-					{/* Needs ms-lg-2 if LoggedItems are present to add space */}
+					{/* Toggle Offcanvas (Hamburguesa) */}
 					<Navbar.Toggle
 						aria-controls="offcanvasNavbar"
 						onClick={handleShowOffcanvas}
 						className="d-lg-none"
 					/>
 				</div>
-				{/* Search Bar (Small Screens Only - Full Width Below) */}
-				{/* order-last ensures it's visually last in the flex container */}
-				{/* w-100 makes it full width */}
-				{/* mt-2 adds margin top */}
+				{/* Barra de búsqueda (En breakpoints pequeños ocupa toda la anchura) */}
+				{/* order-last: Asegura que esté al final del contenedor */}
 				<div className="d-md-none w-100 mt-2 order-last">
 					<SearchBar setExcursions={props.setExcursions} id="searchBar-sm" />
 				</div>
-				{/* --- End Right side container --- */}
+				{/* --- Final de contenedor de la derecha --- */}
 
-				{/* --- Offcanvas Component --- */}
+				{/* --- Componente Offcanvas --- */}
 				<Offcanvas
 					show={showOffcanvas}
 					onHide={handleCloseOffcanvas}
 					placement="end"
 					id="offcanvasNavbar"
 					scroll={true}
-					backdrop={false}
+					backdrop={true}
 				>
 					<Offcanvas.Header closeButton>
 						<Offcanvas.Title>Menú</Offcanvas.Title>
