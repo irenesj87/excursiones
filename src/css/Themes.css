@@ -19,13 +19,14 @@ body.light {
 			padding: 0.7rem 1.2rem;
 			text-decoration: none;
 			transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-			border-radius: 0.25rem; /* Added a slight radius */
+			border-radius: 0.5rem;
 		}
-		/* Hover/Focus for links DIRECTLY inside the navbar */
+		
 		.nav-link:hover,
 		.nav-link:focus {
 			background-color: #f8f9fa;
 			color: var(--primary-color);
+			border-radius: 0.5rem;
 		}
 	}
 
@@ -64,9 +65,10 @@ body.light {
 	}
 
 	.offcanvas .offcanvas-body .nav-link:hover {
-		background-color: #f8f9fa !important;
-		color: var(--primary-color) !important;
+		background-color: #f8f9fa;
+		color: var(--primary-color);
 	}
+
 	.offcanvas .offcanvas-body .nav-link:focus {
 		background-color: #f8f9fa;
 		color: var(--primary-color);
@@ -97,12 +99,13 @@ body.dark {
 			padding: 0.7rem 1.2rem;
 			text-decoration: none;
 			transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-			border-radius: 0;
+			border-radius: 0.5rem;
 		}
 		.nav-link:hover,
 		.nav-link:focus {
 			background-color: rgba(255, 255, 255, 0.1);
 			color: var(--primary-accent-dark);
+			border-radius: 0.5rem;
 		}
 	}
 
@@ -206,6 +209,7 @@ body.dark {
 		background-color: rgba(255, 255, 255, 0.1);
 		color: var(--primary-accent-dark);
 	}
+	
 	.offcanvas-body .nav-link:focus {
 		background-color: rgba(255, 255, 255, 0.1);
 		color: var(--primary-accent-dark);

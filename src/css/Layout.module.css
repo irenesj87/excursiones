@@ -12,10 +12,10 @@
 	--secondary-accent-dark: #6c757d;
 	--background-color-light: #faf8f5;
 	--background-color-dark: #1e1e1e;
-	--success-color: #28a745; /* Keep Bootstrap's success or choose your own */
-	--danger-color: #dc3545; /* Keep Bootstrap's danger or choose your own */
-	font-size: 16px;
 	--border-color-dark: #777777;
+	--success-color: #28a745;
+	--danger-color: #dc3545;
+	font-size: 16px;
 	--minheight: calc(100vh - 280.1px);
 }
 

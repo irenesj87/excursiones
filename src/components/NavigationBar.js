@@ -156,7 +156,7 @@ function NavigationBar(props) {
 					placement="end"
 					id="offcanvasNavbar"
 					scroll={true}
-					backdrop={true}
+					backdrop={false}
 				>
 					<Offcanvas.Header closeButton>
 						<Offcanvas.Title>Menú</Offcanvas.Title>

@@ -1,14 +1,12 @@
-// src/pages/LoginPage.js (Create this new file)
 import React from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import LoginForm from "../components/LoginForm"; // Adjust the path if necessary
-import styles from "../css/LoginPage.module.css"; // Create this CSS file too
+import LoginForm from "../components/LoginForm";
+import "bootstrap/dist/css/bootstrap.css";
+import styles from "../css/LoginPage.module.css";
 
 function LoginPage() {
 	return (
-		// Use Container fluid for full width, or regular Container for fixed width
 		<Container className={styles.containerLoginForm} fluid >
-			{/* Center the content vertically and horizontally */}
 			<Row>
 				<Col xs="12">
 					<h2 className={styles.title}>Inicia sesión</h2>

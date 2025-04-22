@@ -7,6 +7,7 @@ import ErrorMessageAlert from "./ErrorMessageAlert.js";
 import { login } from "../slicers/loginSlice";
 import { useDispatch } from "react-redux";
 import { userLogin } from "../helpers/helpers.js";
+import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/LoginForm.module.css";
 
 /* Componente que valida la info de los inputs y deshabilita el botón "Enviar" hasta que lo que escribe el usuario 
