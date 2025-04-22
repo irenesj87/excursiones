@@ -13,6 +13,20 @@ body.light {
 		padding-top: 1.2rem;
 		padding-bottom: 1.2rem;
 		width: 100%;
+
+		.nav-link {
+			color: var(--text-color-light);
+			padding: 0.7rem 1.2rem;
+			text-decoration: none;
+			transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+			border-radius: 0.25rem; /* Added a slight radius */
+		}
+		/* Hover/Focus for links DIRECTLY inside the navbar */
+		.nav-link:hover,
+		.nav-link:focus {
+			background-color: #f8f9fa;
+			color: var(--primary-color);
+		}
 	}
 
 	/* --- Estilos para filtros --- */
@@ -27,18 +41,39 @@ body.light {
 		}
 	}
 
-	/* Estilos para el Offcanvas */
+	/* --- Estilos para el Offcanvas --- */
 	.offcanvas-header {
 		background-color: var(--background-color-light);
 		color: var(--primary-color);
 		font-weight: bolder;
+		padding: 1rem 1.25rem;
+		border-bottom: 1px solid #dee2e6;
 	}
 
-	/* --- Estilos para links dentro del Offcanvas --- */
-	.offcanvas-body .nav-link {
+	.offcanvas-body {
+		padding: 1rem 0;
+	}
+
+	.offcanvas .offcanvas-body .nav-link {
 		color: var(--text-color-light);
-		padding-top: 0.25rem;
-		padding-bottom: 0.25rem;
+		padding: 0.75rem 1.25rem;
+		display: block;
+		text-decoration: none;
+		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+		border-radius: 0;
+	}
+
+	.offcanvas .offcanvas-body .nav-link:hover {
+		background-color: #f8f9fa !important;
+		color: var(--primary-color) !important;
+	}
+	.offcanvas .offcanvas-body .nav-link:focus {
+		background-color: #f8f9fa;
+		color: var(--primary-color);
+	}
+
+	.offcanvas-header .btn-close {
+		filter: none;
 	}
 }
 
@@ -51,21 +86,33 @@ body.dark {
 
 	/* --- Estilos para la barra de navegación --- */
 	.customNavbar {
-		background-color: var(--background-color-dark); /* Use surface color */
+		background-color: var(--background-color-dark);
 		color: var(--text-color-dark);
 		padding-top: 1.2rem;
 		padding-bottom: 1.2rem;
 		width: 100%;
+
+		.nav-link {
+			color: var(--text-color-dark);
+			padding: 0.7rem 1.2rem;
+			text-decoration: none;
+			transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+			border-radius: 0;
+		}
+		.nav-link:hover,
+		.nav-link:focus {
+			background-color: rgba(255, 255, 255, 0.1);
+			color: var(--primary-accent-dark);
+		}
 	}
 
 	/* --- Estilos para los filtros --- */
 	.accordion-button,
 	.accordion-body {
-		background-color: var(--background-color-dark); /* Use surface color */
+		background-color: var(--background-color-dark);
 		color: var(--text-color-dark);
 		transition: none;
 		&::after {
-			/* Update SVG fill color if needed */
 			background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23E5E7EB'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
 		}
 	}
@@ -79,20 +126,20 @@ body.dark {
 	.card {
 		background-color: var(--surface-color-dark);
 		color: var(--text-color-dark);
-		border-color: var(--border-color-dark);
+		border-color: var(--surface-color-dark);
+		border-radius: 0.5rem;
 		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 	}
 
 	.card-header {
-		background-color: var(--primary-color); /* Or a slightly different shade */
+		background-color: var(--primary-color);
 		border-bottom: 1px solid var(--border-color-dark);
 	}
 
 	.card-body {
-		background-color: var(
-			--surface-color-dark
-		); /* Keep consistent or slightly different */
+		background-color: var(--surface-color-dark);
 		color: var(--text-color-dark);
+		border-radius: 0.5rem;
 	}
 
 	.card-title,
@@ -100,7 +147,6 @@ body.dark {
 		color: var(--text-color-dark);
 	}
 
-	/* Style specific elements within cards */
 	.card .badge {
 		color: var(--text-color-light);
 	}
@@ -128,24 +174,40 @@ body.dark {
 		color: var(--text-color-dark);
 	}
 
-	/* Estilos para el Offcanvas */
+	/* --- Estilos para el Offcanvas --- */
 	.offcanvas-header {
 		background-color: var(--background-color-dark);
 		color: var(--primary-color);
 		font-weight: bolder;
+		padding: 1rem 1.25rem;
+		border-bottom: 1px solid var(--border-color-dark);
+
 		.btn-close {
-			filter: invert(1) grayscale(100%) brightness(200%);
+			filter: invert(1) grayscale(100%) brightness(200%); /* Keep the white close button */
 		}
 	}
 
 	.offcanvas-body {
 		background-color: var(--surface-color-dark);
+		padding: 1rem 0;
 	}
 
 	/* --- Estilos para links dentro del Offcanvas --- */
 	.offcanvas-body .nav-link {
 		color: var(--text-color-dark);
-		padding-top: 0.25rem;
-		padding-bottom: 0.25rem;
+		padding: 0.75rem 1.25rem;
+		display: block; /* Ensure links take full width */
+		text-decoration: none;
+		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+		border-radius: 0;
+	}
+
+	.offcanvas-body .nav-link:hover {
+		background-color: rgba(255, 255, 255, 0.1);
+		color: var(--primary-accent-dark);
+	}
+	.offcanvas-body .nav-link:focus {
+		background-color: rgba(255, 255, 255, 0.1);
+		color: var(--primary-accent-dark);
 	}
 }
