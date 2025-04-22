@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
@@ -10,7 +10,7 @@ import reportWebVitals from './reportWebVitals';
 
 // react 17.0.2
 
-ReactDOM.render(
+ReactDOM.createRoot(document.getElementById('root')).render(
 
   <React.StrictMode>
     <Provider store={Store}>
@@ -18,8 +18,7 @@ ReactDOM.render(
           <App />
         </BrowserRouter>
     </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 
 );
   

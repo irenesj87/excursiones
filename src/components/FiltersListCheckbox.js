@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { selectFilter, unselectFilter } from "../slicers/filterSlice";
 
 function FiltersListCheckbox(props) {
-	// Variable para saber si un checkbos está seleccionado o no
+	// Variable para saber si un checkbox está seleccionado o no
 	const [selected, setSelected] = useState(false);
 	const filterDispatch = useDispatch();
 
@@ -31,7 +31,7 @@ function FiltersListCheckbox(props) {
 	};
 
 	return (
-		<li key={props.index}>
+		<li>
 			<input type="checkbox" id={props.filter} onChange={selectedCheckbox} />{" "}
 			{props.filter}
 		</li>

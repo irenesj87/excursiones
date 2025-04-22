@@ -19,11 +19,11 @@ function FiltersList(props) {
 				};
 
 				const response = await fetch(url, options);
-
 				if (!response.ok) {
 					throw new Error("HTTP error " + response.status);
 				}
 				const data = await response.json();
+				console.log(`Fetched filters for ${props.filterName}:`, data);
 				setArrayFilters(data);
 			} catch (error) {
 				console.log(error);
@@ -36,9 +36,9 @@ function FiltersList(props) {
 
 	return (
 		<ul className={styles.listInfo}>
-			{arrayFilters.map((i, index) => (
+			{arrayFilters.map((i) => (
 				<FiltersListCheckbox
-					key={index}
+					key={i}
 					filterName={props.filterName}
 					filter={i}
 				/>
