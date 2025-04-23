@@ -22,8 +22,13 @@
 	margin-bottom: 0.5rem;
 }
 
+.excursionArea {
+	font-size: 1.1rem;
+	font-style: italic;
+}
+
 .excursionDescription {
-	font-size: 1rem;
+	font-size: 1.2rem;
 	color: #555;
 	line-height: 1.5;
 	margin-bottom: 1rem;
@@ -33,7 +38,8 @@
 .excursionDetails {
 	margin-top: auto; /* Push details and button to the bottom */
 	margin-bottom: 1rem;
+	font-size: 1.1rem;
 	display: flex;
-	flex-wrap: wrap; /* Allow badges to wrap */
-	gap: 0.5rem; /* Space between badges */
+	flex-wrap: wrap;
+	gap: 0.5rem;
 }

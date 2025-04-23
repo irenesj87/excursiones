@@ -22,16 +22,16 @@ function ExcursionCard({
 				<div>
 					{/* Wrapper for main content */}
 					<Card.Title className={styles.excursionTitle}>{name}</Card.Title>
-					<Card.Subtitle className="mb-2">{area}</Card.Subtitle>
+					<Card.Subtitle className={`${styles.excursionArea} mb-4`}>{area}</Card.Subtitle>
 					<Card.Text className={styles.excursionDescription}>
 						{description}
 					</Card.Text>
 					<div className={styles.excursionDetails}>
-						<span className="badge bg-warning me-2 mb-2">
-							Dificultad: {difficulty}
+						<span className="me-2 mb-2">
+							<span className="fw-bold">Dificultad:</span> {difficulty}
 						</span>
-						<span className="badge bg-info mb-2">
-							Tiempo estimado: {time}
+						<span className="mb-2">
+							<span className="fw-bold">Tiempo estimado:</span> {time}
 						</span>
 					</div>
 				</div>

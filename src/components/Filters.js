@@ -17,6 +17,7 @@ function Filters() {
 						Zona
 					</Accordion.Header>
 					<Accordion.Body className={styles.customAccordionBody}>
+						{/* Pone todos los filtros que hay en el servidor de tipo 'area' */}
 						<FiltersList filterName="area" />
 					</Accordion.Body>
 				</Accordion.Item>
@@ -26,6 +27,7 @@ function Filters() {
 						Dificultad
 					</Accordion.Header>
 					<Accordion.Body className={styles.customAccordionBody}>
+						{/* Pone todos los filtros que hay en el servidor de tipo 'difficulty' */}
 						<FiltersList filterName="difficulty" />
 					</Accordion.Body>
 				</Accordion.Item>
@@ -35,6 +37,7 @@ function Filters() {
 						Tiempo estimado
 					</Accordion.Header>
 					<Accordion.Body className={styles.customAccordionBody}>
+						{/* Pone todos los filtros que hay en el servidor de tipo 'time' */}
 						<FiltersList filterName="time" />
 					</Accordion.Body>
 				</Accordion.Item>

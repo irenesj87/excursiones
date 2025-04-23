@@ -4,10 +4,10 @@ import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/FiltersList.module.css";
 
 function FiltersList(props) {
-	// useState que guarda la info de los filtros que está en el servidor
+	// useState que guarda la info de los filtros que están en el servidor
 	const [arrayFilters, setArrayFilters] = useState([]);
 
-	// useEffect que saca los filtros del servidor
+	// useEffect que saca los filtros del servidor según el tipo de filtro
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -23,7 +23,6 @@ function FiltersList(props) {
 					throw new Error("HTTP error " + response.status);
 				}
 				const data = await response.json();
-				console.log(`Fetched filters for ${props.filterName}:`, data);
 				setArrayFilters(data);
 			} catch (error) {
 				console.log(error);
