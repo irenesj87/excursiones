@@ -44,7 +44,7 @@ function ExcursionCard({
 						<span className={`badge ${getDifficultyBadgeClass(difficulty)} me-2 mb-2`}>
 							<span>Dificultad:</span> {difficulty}
 						</span>
-						<span className={`badge bg-info mb-2`}>
+						<span className={`badge bg-info text-dark mb-2`}>
 							<span>Tiempo estimado:</span> {time}
 						</span>
 					</div>
