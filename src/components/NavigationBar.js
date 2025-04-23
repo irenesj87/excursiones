@@ -19,9 +19,6 @@ function NavigationBar(props) {
 	// Función para abrir el Offcanvas
 	const handleShowOffcanvas = () => setShowOffcanvas(true);
 	// Variable que guarda si el usuario prefiere el modo oscuro, tanto en su sistema operativo como en su navegador
-	const prefersDarkMode =
-		window.matchMedia &&
-		window.matchMedia("(prefers-color-scheme: dark)").matches;
 	const mode = useSelector((state) => state.themeReducer.mode);
 	const dispatch = useDispatch();
 	// Variable que dice si hay un usuario logueado o no
@@ -29,33 +26,43 @@ function NavigationBar(props) {
 		(state) => state.loginReducer
 	);
 
-	// Código para el modo oscuro
-	useEffect(() => {
-		// .classList: Es una propiedad de HTML que da acceso a las clases aplicadas a un elemento (en este caso body)
-		/* Lo que hace esta línea es asegurarse de que la etiqueta <body> no tiene las clases 'light' y 'dark' aplicadas
-		 antes que el código añada la correcta basada en 'mode' */
-		document.body.classList.remove("light", "dark");
-		// Añade la clase 'mode' a <body>
-		document.body.classList.add(mode);
-	}, [mode]);
-
-	// Funciones para el localStorage
 	useEffect(() => {
 		const savedMode = localStorage.getItem("themeMode");
-		if (prefersDarkMode) {
-			// Si el usuario quiere el modo oscuro
-			dispatch(setMode("dark"));
-		} else if (!prefersDarkMode) {
-			// Si el usuario prefiere el modo claro
-			dispatch(setMode("light"));
-		} else if (savedMode) {
-			// Actualiza el modo según las preferencias del usuario
-			dispatch(setMode(savedMode));
+		// It's often safer to read media query inside the effect if only needed once
+		const prefersDark =
+			window.matchMedia &&
+			window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+		let initialMode;
+
+		// 1. Check for a valid saved mode in localStorage
+		if (savedMode === "light" || savedMode === "dark") {
+			initialMode = savedMode;
+		} else {
+			// 2. If no valid saved mode, use system preference
+			initialMode = prefersDark ? "dark" : "light";
 		}
-	}, [dispatch, prefersDarkMode]);
+		dispatch(setMode(initialMode));
+
+		// Run this effect only once when the component mounts
+	}, [dispatch]); // dispatch is stable, so this effectively runs once
+
+	// Código para el modo oscuro
+	useEffect(() => {
+		if (mode === "light" || mode === "dark") {
+			// .classList: Es una propiedad de HTML que da acceso a las clases aplicadas a un elemento (en este caso body)
+			/* Lo que hace esta línea es asegurarse de que la etiqueta <body> no tiene las clases 'light' y 'dark' aplicadas
+		 antes que el código añada la correcta basada en 'mode' */
+			document.body.classList.remove("light", "dark");
+			// Añade la clase 'mode' a <body>
+			document.body.classList.add(mode);
+		}
+	}, [mode]);
 
 	useEffect(() => {
-		localStorage.setItem("themeMode", mode); // Actualiza la variable 'mode' en localStorage
+		if (mode === "light" || mode === "dark") {
+			localStorage.setItem("themeMode", mode);
+		} // Actualiza la variable 'mode' en localStorage
 	}, [mode]); // Este useEffect se ejecutará cada vez que la variable 'mode' cambie
 
 	const toggleTheme = () => {

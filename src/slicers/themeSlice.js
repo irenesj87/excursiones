@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-	mode: "light", // Initial mode (can be 'light' or 'dark')
+	mode: localStorage.getItem("themeMode") || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"), // Initial mode (can be 'light' or 'dark')
 };
 
 export const themeSlice = createSlice({

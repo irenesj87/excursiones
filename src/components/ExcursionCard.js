@@ -3,6 +3,20 @@ import { Card, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/ExcursionCard.module.css";
 
+// Helper function to get badge color based on difficulty
+const getDifficultyBadgeClass = (difficulty) => {
+	switch (difficulty?.toLowerCase()) { // Use optional chaining and lowercase for robustness
+		case "baja":
+			return "bg-success"; // Green for easy
+		case "media":
+			return "bg-warning text-dark"; // Yellow for medium (add text-dark for contrast)
+		case "difícil":
+			return "bg-danger"; // Red for hard
+		default:
+			return "bg-secondary"; // Default grey
+	}
+}
+
 // Destructure props for easier access, including the new ones for button logic
 function ExcursionCard({
 	id,
@@ -27,11 +41,11 @@ function ExcursionCard({
 						{description}
 					</Card.Text>
 					<div className={styles.excursionDetails}>
-						<span className="me-2 mb-2">
-							<span className="fw-bold">Dificultad:</span> {difficulty}
+						<span className={`badge ${getDifficultyBadgeClass(difficulty)} me-2 mb-2`}>
+							<span>Dificultad:</span> {difficulty}
 						</span>
-						<span className="mb-2">
-							<span className="fw-bold">Tiempo estimado:</span> {time}
+						<span className={`badge bg-info mb-2`}>
+							<span>Tiempo estimado:</span> {time}
 						</span>
 					</div>
 				</div>
