@@ -7,6 +7,8 @@
 	font-weight: 450;
 	font-size: 1.1rem;
 	display: flex;
+	/* Poner esto permite utilizar las propiedades flexbox para controlar el posicionamiento de sus hijos
+	con 'align-items' y 'justify-content' */
 	align-items: center;
 	justify-content: space-between;
 }
@@ -14,7 +16,7 @@
 /* Añade un margen a la derecha del icono */
 .customAccordionHeader button svg {
 	margin-right: 10px;
-} 
+}
 
 /* Estilo para la cabecera cuando el item está abierto (activo) */
 .customAccordionHeader button:not(.collapsed) {

@@ -4,10 +4,10 @@ import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/FiltersList.module.css";
 
 function FiltersList(props) {
-	// useState que guarda la info de los filtros que están en el servidor
+	// useState que controla el array de filtros
 	const [arrayFilters, setArrayFilters] = useState([]);
 
-	// useEffect que saca los filtros del servidor según el tipo de filtro
+	// useEffect que saca los filtros del servidor según el tipo de filtro (area, difficulty, time)
 	useEffect(() => {
 		const fetchData = async () => {
 			try {

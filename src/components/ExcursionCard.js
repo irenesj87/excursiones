@@ -10,7 +10,7 @@ const getDifficultyBadgeClass = (difficulty) => {
 			return "bg-success"; // Green for easy
 		case "media":
 			return "bg-warning text-dark"; // Yellow for medium (add text-dark for contrast)
-		case "difícil":
+		case "alta":
 			return "bg-danger"; // Red for hard
 		default:
 			return "bg-secondary"; // Default grey

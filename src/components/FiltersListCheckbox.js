@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { selectFilter, unselectFilter } from "../slicers/filterSlice";
 
+// Componente que controla la selección y deselección de los checkbox
 function FiltersListCheckbox(props) {
 	// Variable para saber si un checkbox está seleccionado o no
 	const [selected, setSelected] = useState(false);
