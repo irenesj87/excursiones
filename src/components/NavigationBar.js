@@ -76,14 +76,14 @@ function NavigationBar(props) {
 	const NoLoggedItems = (
 		<>
 			<Nav.Link
-				className="me-2"
+				className={`${styles.registerLink} me-3`}
 				as={Link}
 				to="/registerPage"
 				onClick={handleCloseOffcanvas}
 			>
 				Regístrate
 			</Nav.Link>
-			<Nav.Link as={Link} to="/loginPage" onClick={handleCloseOffcanvas}>
+			<Nav.Link className={styles.loginLink} as={Link} to="/loginPage" onClick={handleCloseOffcanvas}>
 				Inicia sesión
 			</Nav.Link>
 		</>
