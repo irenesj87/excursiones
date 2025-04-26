@@ -9,12 +9,14 @@
 	--text-color-dark: #e0e0e0;
 	--surface-color-dark: #404040;
 	--primary-accent-dark: #3b82f6;
-	--secondary-accent-dark: #a2a8ae;
+	--secondary-accent-dark: #85888a;
 	--background-color-light: #faf8f5;
 	--background-color-dark: #1e1e1e;
 	--border-color-dark: #777777;
 	--success-color: #28a745;
 	--danger-color: #dc3545;
+	--logout-bg-color: rgb(80, 73, 73); /* Variable for logout bg */
+	--logout-bg-color-hover: rgb(100, 93, 93); /* Lighter shade for hover */
 	font-size: 16px;
 	--minheight: calc(100vh - 280.1px);
 }

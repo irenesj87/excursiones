@@ -61,13 +61,13 @@ body.light {
 		border-radius: 0.375rem;
 	}
 
-	.offcanvas-body .nav-link[class*="loginLink"] {
-		color: var(--text-color-dark);
+	.offcanvas-body .nav-link {
+		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out; /* Ensure transition is here */
 	}
 
-
-	.offcanvas-header .btn-close {
-		filter: none;
+	.offcanvas-body .nav-link[class*="loginLink"],
+	.offcanvas-body .nav-link[class*="logoutLink"] {
+		color: var(--text-color-dark);
 	}
 }
 
@@ -87,6 +87,12 @@ body.dark {
 		padding-top: 1.2rem;
 		padding-bottom: 1.2rem;
 		width: 100%;
+	}
+
+	.customNavbar .nav-link[class*="registerLink"]:hover {
+		background-color: rgb(255, 255, 255, 0.1);
+		color: var(--register-link-color);
+		border-color: var(--register-link-border-color);
 	}
 
 	/* --- Estilos para los filtros --- */
@@ -196,10 +202,5 @@ body.dark {
 		text-decoration: none;
 		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 		border-radius: 0.375rem;
-	}
-
-	.offcanvas-body .nav-link[class*="logoutLink"] {
-		color: var(--text-color-light);
-	
 	}
 }

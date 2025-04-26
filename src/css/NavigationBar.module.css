@@ -29,7 +29,21 @@
 	background-color: transparent;
 	border: 1px solid var(--register-link-border-color);
 	color: var(--register-link-color);
-	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+		border-color 0.15s ease-in-out;
+}
+
+.registerLink:hover,
+.registerLink:focus {
+	/* Keep original text color, change background slightly */
+	color: var(--register-link-color);
+	background-color: rgba(0, 0, 0, 0.05); /* Subtle background */
+	/* Or use a theme variable if more appropriate, e.g., var(--secondary-color) in light mode */
+	border-color: var(
+		--register-link-border-color
+	); /* Keep border color consistent */
+	outline: none; /* Remove default focus outline if needed */
+	box-shadow: none;
 }
 
 .loginLink {
@@ -47,10 +61,13 @@
 	color: var(--text-color-dark);
 	border-color: var(--primary-color);
 	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
-
 }
 
 .loginLink:hover,
 .loginLink:focus {
-	color: var(--text-color-dark);
+	background-color: #2e4c34; 
+	border-color: #2e4c34; 
+	color: var(--text-color-dark); 
+	outline: none;
+	box-shadow: none;
 }
