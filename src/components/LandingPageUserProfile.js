@@ -45,14 +45,16 @@ function LandingPageUserProfile(props) {
 	return (
 		<>
 			<Nav.Link
-				className={`${styles.profileLink} me-2`}
+				className={`${styles.profileLink} me-3`}
 				as={Link}
 				to="/UserPage"
 				onClick={props.onClickCloseCollapsible}
 			>
 				Perfil
 			</Nav.Link>
-			<Nav.Link onClick={logOut}>Cerrar sesión</Nav.Link>
+			<Nav.Link className={styles.logoutLink} onClick={logOut}>
+				Cerrar sesión
+			</Nav.Link>
 		</>
 	);
 }
