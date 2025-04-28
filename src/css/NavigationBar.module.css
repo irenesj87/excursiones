@@ -33,8 +33,7 @@
 		border-color 0.15s ease-in-out;
 }
 
-.registerLink:hover,
-.registerLink:focus {
+.registerLink:hover {
 	/* Keep original text color, change background slightly */
 	color: var(--register-link-color);
 	background-color: rgba(0, 0, 0, 0.05); /* Subtle background */
@@ -63,8 +62,7 @@
 	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
 }
 
-.loginLink:hover,
-.loginLink:focus {
+.loginLink:hover{
 	background-color: #2e4c34; 
 	border-color: #2e4c34; 
 	color: var(--text-color-dark); 

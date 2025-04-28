@@ -78,8 +78,8 @@ function RegisterForm() {
 					}}
 				/>
 			)}
-			<Form id="registerForm" onSubmit={submit}>
-				<Row className={`${styles.formLabel} mb-3`}>
+			<Form id="registerForm" className={`${styles.formLabel} mb-3 fw-bold`} onSubmit={submit}>
+				<Row>
 					<ValidatedFormGroup
 						as={Col}
 						xs={12}
@@ -105,7 +105,7 @@ function RegisterForm() {
 						autocomplete="family-name"
 					/>
 				</Row>
-				<Row className={`${styles.formLabel} mb-3`}>
+				<Row>
 					<ValidatedFormGroup
 						as={Col}
 						xs={12}
@@ -133,7 +133,7 @@ function RegisterForm() {
 						autocomplete="email"
 					/>
 				</Row>
-				<Row className={`${styles.formLabel} mb-3`}>
+				<Row>
 					<ValidatedFormGroup
 						as={Col}
 						xs={12}

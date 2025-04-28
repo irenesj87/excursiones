@@ -81,7 +81,7 @@ export function LoginForm() {
 				id="loginForm"
 				noValidate
 				onSubmit={submit}
-				className={styles.formLabel}
+				className={`${styles.formLabel} fw-bold`}
 			>
 				<ValidatedFormGroup
 					id="formLoginEmail"

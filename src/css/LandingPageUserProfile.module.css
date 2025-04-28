@@ -1,9 +1,31 @@
 .profileLink {
+	display: inline-block;
+	padding: 0.375rem 0.75rem;
+	font-weight: 400;
+	line-height: 1.5;
+	text-align: center;
 	text-decoration: none;
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	font-size: 1.1rem;
+	vertical-align: middle;
+	cursor: pointer;
+	user-select: none;
+	border-radius: 0.375rem;
+	background-color: transparent;
+	border: 1px solid var(--register-link-border-color);
+	color: var(--register-link-color);
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+
+}
+
+.profileLink:hover {
+	/* Keep original text color, change background slightly */
+	color: var(--register-link-color);
+	background-color: rgba(0, 0, 0, 0.05); /* Subtle background */
+	/* Or use a theme variable if more appropriate, e.g., var(--secondary-color) in light mode */
+	border-color: var(
+		--register-link-border-color
+	); /* Keep border color consistent */
+	outline: none; /* Remove default focus outline if needed */
+	box-shadow: none;
 }
 
 .logoutLink {
@@ -23,8 +45,7 @@
 	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
 
-.logoutLink:hover,
-.logoutLink:focus {
+.logoutLink:hover {
 	background-color: rgb(100, 93, 93); 
 	border-color: rgb(100, 93, 93); 
 	color: var(--text-color-dark); 
