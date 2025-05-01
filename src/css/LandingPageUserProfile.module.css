@@ -12,18 +12,16 @@
 	background-color: transparent;
 	border: 1px solid var(--register-link-border-color);
 	color: var(--register-link-color);
-	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+	transition: none;
 
 }
 
 .profileLink:hover {
-	/* Keep original text color, change background slightly */
 	color: var(--register-link-color);
-	background-color: rgba(0, 0, 0, 0.05); /* Subtle background */
-	/* Or use a theme variable if more appropriate, e.g., var(--secondary-color) in light mode */
+	background-color: rgba(0, 0, 0, 0.05);
 	border-color: var(
 		--register-link-border-color
-	); /* Keep border color consistent */
+	);
 	outline: none; /* Remove default focus outline if needed */
 	box-shadow: none;
 }
