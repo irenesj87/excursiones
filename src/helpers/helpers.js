@@ -50,7 +50,7 @@ const registerUser = (name, surname, phone, mail, password) => {
 
 	return fetch(url, options).then((response) => {
 		if (response.status === 409) {
-			throw new Error("No puedes registrarte con ese correo");
+			throw new Error("Ya hay un usuario registrado con ese correo. Elige otro.");
 		} else {
 			return response.json();
 		}
