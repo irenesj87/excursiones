@@ -35,9 +35,7 @@
 .registerLink:hover {
 	color: var(--register-link-color);
 	background-color: rgba(0, 0, 0, 0.05);
-	border-color: var(
-		--register-link-border-color
-	);
+	border-color: var(--register-link-border-color);
 	outline: none; /* Remove default focus outline if needed */
 	box-shadow: none;
 }
@@ -65,4 +63,8 @@
 	color: var(--text-color-dark);
 	outline: none;
 	box-shadow: none;
+}
+
+.loginLink:focus {
+	color: var(--text-color-dark);
 }

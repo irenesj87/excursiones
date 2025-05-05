@@ -17,6 +17,10 @@ body.light {
 		width: 100%;
 	}
 
+	.form-control {
+		transition: none;
+	}
+
 	/* --- Estilos para filtros --- */
 	.accordion-button,
 	.accordion-body {
@@ -150,6 +154,7 @@ body.dark {
 		background-color: var(--surface-color-dark);
 		color: var(--text-color-dark);
 		border: 1px solid var(--border-color-dark);
+		transition: none;
 	}
 
 	.form-control::placeholder {
