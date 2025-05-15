@@ -1,5 +1,4 @@
 import React from "react";
-import { Col } from "react-bootstrap";
 import Excursion from "./Excursion";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Excursions.module.css";
@@ -23,11 +22,12 @@ function Excursions(props) {
 	);
 
 	return (
-		<Col className={styles.container} xs="12" md="8" lg="8">
+		// Removed the outer Col. The parent component (Layout.js) provides the Col.
+		<div className={styles.container}> {/* Apply the container styles to a div */}
 			<h2 className={styles.title}>Próximas excursiones</h2>
 			{found && excursions}
 			{!found && notFound}
-		</Col>
+		</div>
 	);
 }
 

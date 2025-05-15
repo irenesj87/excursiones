@@ -11,7 +11,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/NavigationBar.module.css";
 import "../css/Themes.css";
 
-function NavigationBar(props) {
+function NavigationBar({ setExcursions, onExcursionsFetchStart, onExcursionsFetchEnd }) {
 	// Estado de la visibilidad del Offcanvas
 	const [showOffcanvas, setShowOffcanvas] = useState(false);
 	// Función para cerrar el Offcanvas
@@ -105,8 +105,10 @@ function NavigationBar(props) {
 				<div className="d-none d-md-flex justify-content-center flex-grow-1 px-md-3 px-lg-5 order-md-2 order-lg-2 me-md-3">
 					<div style={{ maxWidth: "900px", width: "100%" }}>
 						<SearchBar
-							setExcursions={props.setExcursions}
+							setExcursions={setExcursions}
 							id="searchBar-md-lg"
+							onFetchStart={onExcursionsFetchStart}
+							onFetchEnd={onExcursionsFetchEnd}
 						/>
 					</div>
 				</div>
@@ -139,7 +141,12 @@ function NavigationBar(props) {
 				{/* Barra de búsqueda (En breakpoints pequeños ocupa toda la anchura) */}
 				{/* order-last: Asegura que esté al final del contenedor */}
 				<div className="d-md-none w-100 mt-2 order-last">
-					<SearchBar setExcursions={props.setExcursions} id="searchBar-sm" />
+					<SearchBar
+						setExcursions={setExcursions}
+						id="searchBar-sm"
+						onFetchStart={onExcursionsFetchStart}
+						onFetchEnd={onExcursionsFetchEnd}
+					/>
 				</div>
 				{/* --- Final de contenedor de la derecha --- */}
 

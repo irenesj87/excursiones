@@ -9,19 +9,29 @@
 	--text-color-dark: #e0e0e0;
 	--surface-color-dark: #404040;
 	--primary-accent-dark: #3b82f6;
-	--secondary-accent-dark: #85888a;
+	--secondary-accent-dark: #4A3B33; /* Marrón oscuro para el acento secundario */
 	--background-color-light: #faf8f5;
 	--background-color-dark: #1e1e1e;
+	--border-color-light: #e0e0e0;
 	--border-color-dark: #777777;
 	--success-color: #28a745;
 	--danger-color: #dc3545;
-	--logout-bg-color: rgb(80, 73, 73); /* Variable for logout bg */
-	--logout-bg-color-hover: rgb(100, 93, 93); /* Lighter shade for hover */
+	--logout-bg-color: rgb(80, 73, 73);
+	--logout-bg-color-hover: rgb(100, 93, 93);
 	font-size: 16px;
-	--minheight: calc(100vh - 280.1px);
 }
 
 .layout {
 	font-family: Arial, Helvetica, sans-serif;
+	display: flex;
+	flex-direction: column; 
+	min-height: 100%; /* Cambiado de 100vh para heredar la altura del #root que es 100% del viewport */
+	box-sizing: border-box; /* ¡Esto es clave! Incluye padding y border en la altura */
 }
-  
+
+.mainContent { /* Esta nueva clase se usará para envolver el contenido principal de tus páginas */
+	flex-grow: 1; /* Permite que esta sección se expanda y empuje el footer hacia abajo */
+	display: flex;
+	flex-direction: column; /* Para el layout interno de mainContent */
+	flex-basis: 0; /* Ayuda a que flex-grow sea más efectivo para ocupar el espacio vertical */ /* Ya lo habíamos añadido */
+}

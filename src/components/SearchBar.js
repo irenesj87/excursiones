@@ -15,32 +15,49 @@ function SearchBar(props) {
 		setSearch(currentSearch);
 	};
 	// We need this variable in order to avoid a warning in the navigator
-	const { setExcursions } = props;
+	// Destructure all relevant props for clarity and use in dependency array
+	const { setExcursions, onFetchStart, onFetchEnd, id } = props;
 
-	// This useEffect helps with the searching of an excursion
+	// This useEffect handles debouncing the search input
 	useEffect(() => {
 		const fetchData = async () => {
+			// Only call onFetchStart if it's a genuine new fetch operation,
+			// not just the initial load where search might be empty.
+			// Or, let the parent (Layout.js) handle initial loading state separately.
+			// For now, we assume onFetchStart is okay to call.
+			onFetchStart?.();
 			try {
 				// Variable that has the url that is needed for the fetch
 				const url = `http://localhost:3001/excursions?q=${search}&area=${area}&difficulty=${difficulty}&time=${time}`;
 				const response = await fetch(url);
 				if (!response.ok) {
-					throw new Error("HTTP error " + response.status);
+					throw new Error(
+						`Error HTTP ${response.status} al buscar excursiones.`
+					);
 				}
 				const data = await response.json();
 				setExcursions(data);
+				onFetchEnd?.(null); // Signal fetching ended successfully
 			} catch (error) {
-				console.log("Fetch error: ", error);
+				console.error("Fetch error in SearchBar: ", error);
+				setExcursions([]); // Optionally clear excursions on error or let parent decide
+				onFetchEnd?.(error); // Signal fetching ended with an error
 			}
 		};
 
-		fetchData();
-	}, [search, area, difficulty, time, setExcursions]);
+		// Set a timer to delay the fetch operation
+		const timerId = setTimeout(() => {
+			fetchData();
+		}, 1000);
+
+		// Cleanup function to clear the timer if dependencies change before it fires
+		return () => clearTimeout(timerId);
+	}, [search, area, difficulty, time, setExcursions, onFetchStart, onFetchEnd]);
 
 	return (
 		<>
 			<input
-				id={props.id}
+				id={id}
 				className="form-control"
 				type="search"
 				placeholder="Busca excursiones..."

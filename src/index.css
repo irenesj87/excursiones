@@ -1,5 +1,10 @@
+html, body, #root { /* Apunta también a #root si tu app React se monta ahí */
+  height: 100%;
+  margin: 0; /* Asegúrate de que no haya márgenes por defecto en html y body */
+  padding: 0; /* Asegúrate de que no haya paddings por defecto */
+}
+
 body {
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;

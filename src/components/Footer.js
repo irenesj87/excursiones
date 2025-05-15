@@ -1,4 +1,5 @@
 import React from "react";
+import { FiMail } from "react-icons/fi";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Footer.module.css";
 
@@ -11,7 +12,7 @@ function Footer() {
 	return (
 		<footer className={styles.footer} role="contentinfo">
 			<p>
-				<a href="mailto:excursionesjuntos@gmail.com">Contáctanos</a>
+				<a href="mailto:excursionesjuntos@gmail.com"><FiMail/></a>
 			</p>
 			<p>
 				© Excursiones Juntos 2021 - {getCurrentYear()}. Todos los derechos reservados.
