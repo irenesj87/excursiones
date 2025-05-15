@@ -47,22 +47,18 @@ function NavigationBar(props) {
 		// Run this effect only once when the component mounts
 	}, [dispatch]); // dispatch is stable, so this effectively runs once
 
-	// Código para el modo oscuro
+	// Efecto para aplicar la clase del tema al HTML y guardar en localStorage
 	useEffect(() => {
 		if (mode === "light" || mode === "dark") {
-			// .classList: Es una propiedad de HTML que da acceso a las clases aplicadas a un elemento (en este caso body)
-			/* Lo que hace esta línea es asegurarse de que la etiqueta <body> no tiene las clases 'light' y 'dark' aplicadas
-		 antes que el código añada la correcta basada en 'mode' */
-			document.body.classList.remove("light", "dark");
-			// Añade la clase 'mode' a <body>
-			document.body.classList.add(mode);
-		}
-	}, [mode]);
-
-	useEffect(() => {
-		if (mode === "light" || mode === "dark") {
+			const root = document.documentElement; // Seleccionar la etiqueta <html>
+			// Asegurarse de que la etiqueta <html> no tiene las clases 'light' y 'dark' aplicadas
+			// antes que el código añada la correcta basada en 'mode'
+			root.classList.remove("light", "dark");
+			// Añade la clase 'mode' ('light' o 'dark') a <html>
+			root.classList.add(mode);
+			// Actualiza la variable 'mode' en localStorage
 			localStorage.setItem("themeMode", mode);
-		} // Actualiza la variable 'mode' en localStorage
+		}
 	}, [mode]); // Este useEffect se ejecutará cada vez que la variable 'mode' cambie
 
 	const toggleTheme = () => {

@@ -1,7 +1,7 @@
 /* ======================================== */
 /* --- ESTILOS PARA MODO CLARO --- */
 /* ======================================== */
-body.light {
+html.light body {
 	background-color: var(--background-color-light);
 	color: var(--text-color-light);
 	--register-link-color: var(--text-color-light);
@@ -78,7 +78,7 @@ body.light {
 /* ======================================== */
 /* --- ESTILOS PARA MODO OSCURO --- */
 /* ======================================== */
-body.dark {
+html.dark body {
 	background-color: var(--background-color-dark);
 	color: var(--text-color-dark);
 	--register-link-color: var(--text-color-dark);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
@@ -25,6 +25,30 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Excursiones Juntos</title>
+    <!-- SCRIPT PARA EL MODO OSCURO (ANTI-FOUC) -->
+    <script>
+        (function() {
+            // Función autoejecutable para evitar contaminar el scope global
+            // Este script se ejecuta antes de que React se cargue para evitar FOUC.
+            try {
+                const themeStored = localStorage.getItem('themeMode');
+                const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                let effectiveTheme;
+
+                if (themeStored === 'dark' || themeStored === 'light') {
+                    effectiveTheme = themeStored;
+                } else {
+                    effectiveTheme = prefersDark ? 'dark' : 'light';
+                }
+
+                document.documentElement.classList.remove('light', 'dark'); // Limpiar clases previas
+                document.documentElement.classList.add(effectiveTheme); // Aplicar la clase correcta a <html>
+            } catch (e) {
+                console.error("Error applying dark mode preference:", e);
+            }
+        })();
+    </script>
+    <!-- FIN SCRIPT MODO OSCURO -->
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
