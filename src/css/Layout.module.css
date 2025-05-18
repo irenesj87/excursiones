@@ -17,6 +17,8 @@
 	--success-color: #28a745;
 	--danger-color: #dc3545;
 	--logout-bg-color: rgb(80, 73, 73);
+	--nav-height: 103.59px; /* <-- MEASURE AND REPLACE WITH ACTUAL NAV HEIGHT */
+	--footer-height: 168.81px; /* <-- MEASURE AND REPLACE WITH ACTUAL FOOTER HEIGHT */
 	--logout-bg-color-hover: rgb(100, 93, 93);
 	font-size: 16px;
 }
@@ -24,14 +26,33 @@
 .layout {
 	font-family: Arial, Helvetica, sans-serif;
 	display: flex;
-	flex-direction: column; 
-	min-height: 100%; /* Cambiado de 100vh para heredar la altura del #root que es 100% del viewport */
+	flex-direction: column;
+	min-height: 100dvh; /* Usa dynamic viewport height para mejor compatibilidad en móviles/tablets */
 	box-sizing: border-box; /* ¡Esto es clave! Incluye padding y border en la altura */
+}
+
+.mainContentWrapper {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	min-height: 0; /* Ayuda a que los hijos flex-grow se comporten de manera predecible */
+	/* min-height: calc(100dvh - var(--nav-height) - var(--footer-height)); */ /* Movido a .mainContent */
 }
 
 .mainContent { /* Esta nueva clase se usará para envolver el contenido principal de tus páginas */
 	flex-grow: 1; /* Permite que esta sección se expanda y empuje el footer hacia abajo */
 	display: flex;
 	flex-direction: column; /* Para el layout interno de mainContent */
-	flex-basis: 0; /* Ayuda a que flex-grow sea más efectivo para ocupar el espacio vertical */ /* Ya lo habíamos añadido */
+	/* Calculate min-height based on viewport height minus Nav and Footer heights */
+	min-height: calc(100dvh - var(--nav-height) - var(--footer-height));
+	box-sizing: border-box; /* Incluye padding y border en el cálculo del ancho total si se añaden */
+}
+
+.centeredContent {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
 }

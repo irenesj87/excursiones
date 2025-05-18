@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Container, Row, Col, Spinner, Alert } from "react-bootstrap"; // Importar Col, Spinner y Alert
+import { Container, Row, Col, Spinner, Alert } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { login, logout } from "../../slicers/loginSlice";
 import { Routes, Route } from "react-router-dom";
@@ -13,7 +13,7 @@ import Footer from "../Footer";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../../css/Layout.module.css";
 
-// Este es Layout. Aquí va la estructura de la página
+// Este es el Layout. Aquí va la estructura de la página
 const Layout = () => {
 	// Variable que necesitamos para utilizar dispatchers
 	const loginDispatch = useDispatch();
@@ -88,73 +88,106 @@ const Layout = () => {
 	}, []);
 
 	return (
-		<Container className={styles.layout} fluid>
+		<div className={styles.layout}>
 			<NavigationBar
 				setExcursions={setExcursionArray}
 				onExcursionsFetchStart={handleExcursionsFetchStart}
 				onExcursionsFetchEnd={handleExcursionsFetchEnd}
 			/>
-			{/* 4. `styles.mainContent` debe tener `flex-grow: 1` desde Layout.module.css */}
-			<main className={styles.mainContent}>
-				{/* La Row interna no necesita propiedades especiales para el sticky footer,
+			<Container className={styles.mainContentWrapper} fluid>
+				{/* 4. `styles.mainContent` debe tener `flex-grow: 1` desde Layout.module.css */}
+				<main className={styles.mainContent}>
+					{/* La Row interna no necesita propiedades especiales para el sticky footer,
 				    pero sí para el layout de su propio contenido. */}
-				<Row className="flex-grow-1"> {/* Esta Row ahora crecerá para llenar la altura de mainContent */}
-					{/* Intentamos que la Row ocupe la altura de mainContent para el centrado del spinner */}
-					{/* Routes for grid-based content */}
-					<Routes>
-						{/* Define la ruta por defecto */}
-						<Route
-							path="/"
-							element={
-								// The element prop should return a single element or fragment
-								<>
-									<Filters />
-									{/* Assuming Filters component renders its own Col */}
-									<Col // Esta Col contiene el spinner o las excursiones
-										xs={12}
-										md={8}
-										lg={8}
-										// Hacemos que la Col sea un contenedor flex para centrar su contenido (spinner/alerta)
-										className="d-flex flex-column"
-									>
-										{isLoadingExcursions ? (
-											// 5. Para centrar el spinner/alerta verticalmente dentro de la Col,
-											//    este div debe crecer y usar utilidades flex.
-											<div className="d-flex flex-column justify-content-center align-items-center text-center flex-grow-1">
-												<Spinner animation="border" role="status">
-													<span className="visually-hidden">
-														Cargando excursiones...
-													</span>
-												</Spinner>
-												<p className="mt-2">Cargando excursiones...</p>
-											</div>
-										) : fetchExcursionsError ? (
-											// Similar para la alerta
-											<div className="d-flex flex-column justify-content-center align-items-center text-center flex-grow-1">
-												<Alert variant="danger">
-													{/* El componente Alert envuelve el mensaje */}
-													{fetchExcursionsError}
-												</Alert>
-											</div>
-										) : (
-											// Excursions se renderizará aquí. Si excursionArray está vacío,
-											// Excursions.js mostrará su propio mensaje de "no encontrado".
-											<Excursions excursionData={excursionArray} />
-										)}
+					{/* Hacemos la Row un contenedor flex para que sus Cols se estiren verticalmente */}
+					<Row className="flex-grow-1 d-flex">
+						{/* Esta Row ahora crecerá para llenar la altura de mainContent */}
+						{/* Intentamos que la Row ocupe la altura de mainContent para el centrado del spinner */}
+						<Routes>
+							{/* Define la ruta por defecto */}
+							<Route
+								path="/"
+								element={
+									// The element prop should return a single element or fragment
+									<>
+										{/* Columna para los filtros con fondo temporal */}
+										<Col
+											xs={12}
+											md={4}
+											lg={3}
+											xl={2}
+										>
+											<Filters />
+										</Col>
+										{/* Columna para las excursiones o el spinner/alerta con fondo temporal */}
+										<Col
+											xs={12}
+											md={8} 
+											lg={9}
+											xl={10}
+											// Hacemos que la Col sea un contenedor flex para centrar su contenido (spinner/alerta)
+											className="d-flex flex-column"
+										>
+											{isLoadingExcursions ? (
+												// Usamos la clase del módulo CSS para centrar y expandir el spinner.
+												<div className={styles.centeredContent}>
+													<Spinner animation="border" role="status">
+														<span className="visually-hidden">
+															Cargando excursiones...
+														</span>
+													</Spinner>
+													<p className="mt-2">Cargando excursiones...</p> {/* Bootstrap class for margin */}
+												</div>
+											) : fetchExcursionsError ? (
+												// Usamos la clase del módulo CSS para centrar y expandir la alerta.
+												<div className={styles.centeredContent}>
+													<Alert variant="danger">
+														{/* El componente Alert envuelve el mensaje */}
+														{fetchExcursionsError}
+													</Alert>
+												</div>
+											) : (
+												// Excursions se renderizará aquí. Si excursionArray está vacío,
+												// Excursions.js mostrará su propio mensaje de "no encontrado".
+												<Excursions excursionData={excursionArray} />
+											)}
+										</Col>
+									</>
+								}
+							/>
+							{/* Define las rutas para los componentes Register, LoginPage y UserPage */}
+							{/* Estas páginas deben ocupar todo el ancho de la Row */}
+							<Route
+								path="registerPage"
+								element={
+									<Col xs={12}>
+										<RegisterPage />
 									</Col>
-								</>
-							}
-						/>
-						{/* Define las rutas para los componentes Register, LoginPage y UserPage */}
-						<Route path="registerPage" element={<RegisterPage />} />
-						<Route path="loginPage" element={<LoginPage />} />
-						<Route path="userPage" element={<UserPage />} />
-					</Routes>
-				</Row>
-			</main>
-			{/* 6. El Footer es un hijo directo del contenedor flex (styles.layout) y se posicionará al final. */}
+								}
+							/>
+							<Route
+								path="loginPage"
+								element={
+									<Col xs={12}>
+										<LoginPage />
+									</Col>
+								}
+							/>
+							<Route
+								path="userPage"
+								element={
+									<Col xs={12}>
+										<UserPage />
+									</Col>
+								}
+							/>
+						</Routes>
+					</Row>
+				</main>
+				{/* 6. El Footer es un hijo directo del contenedor flex (styles.layout) y se posicionará al final. */}
+			</Container>
 			<Footer />
-		</Container>
+		</div>
 	);
 };
 

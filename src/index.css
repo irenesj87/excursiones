@@ -1,7 +1,20 @@
-html, body, #root { /* Apunta también a #root si tu app React se monta ahí */
+html {
+  box-sizing: border-box; /* Establece la base para la herencia */
   height: 100%;
-  margin: 0; /* Asegúrate de que no haya márgenes por defecto en html y body */
-  padding: 0; /* Asegúrate de que no haya paddings por defecto */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+*, *::before, *::after { /* Hace que todos los elementos hereden box-sizing de html */
+  box-sizing: inherit;
+}
+
+body, #root { /* #root y body heredarán box-sizing: border-box; de html */
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
