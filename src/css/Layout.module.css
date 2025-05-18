@@ -9,7 +9,7 @@
 	--text-color-dark: #e0e0e0;
 	--surface-color-dark: #404040;
 	--primary-accent-dark: #3b82f6;
-	--secondary-accent-dark: #4A3B33; /* Marrón oscuro para el acento secundario */
+	--secondary-accent-dark: #4a3b33; /* Marrón oscuro para el acento secundario */
 	--background-color-light: #faf8f5;
 	--background-color-dark: #1e1e1e;
 	--border-color-light: #e0e0e0;
@@ -17,10 +17,25 @@
 	--success-color: #28a745;
 	--danger-color: #dc3545;
 	--logout-bg-color: rgb(80, 73, 73);
-	--nav-height: 103.59px; /* <-- MEASURE AND REPLACE WITH ACTUAL NAV HEIGHT */
-	--footer-height: 168.81px; /* <-- MEASURE AND REPLACE WITH ACTUAL FOOTER HEIGHT */
+	--nav-height: 103.59px;
+	--footer-height: 168.81px;
 	--logout-bg-color-hover: rgb(100, 93, 93);
 	font-size: 16px;
+}
+
+/* Ejemplo de Media Query para ajustar alturas en breakpoints pequeños */
+@media (max-width: 479px) {
+	:root {
+		--nav-height: 149.59px;
+		--footer-height: 192.81px;
+	}
+}
+
+@media (max-width: 767px) {
+	:root {
+		--nav-height: 149.59px;
+		--footer-height: 168.81px;
+	}
 }
 
 .layout {
@@ -39,7 +54,8 @@
 	/* min-height: calc(100dvh - var(--nav-height) - var(--footer-height)); */ /* Movido a .mainContent */
 }
 
-.mainContent { /* Esta nueva clase se usará para envolver el contenido principal de tus páginas */
+.mainContent {
+	/* Esta nueva clase se usará para envolver el contenido principal de tus páginas */
 	flex-grow: 1; /* Permite que esta sección se expanda y empuje el footer hacia abajo */
 	display: flex;
 	flex-direction: column; /* Para el layout interno de mainContent */

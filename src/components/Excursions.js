@@ -22,8 +22,7 @@ function Excursions(props) {
 	);
 
 	return (
-		// Removed the outer Col. The parent component (Layout.js) provides the Col.
-		<div className={styles.container}> {/* Apply the container styles to a div */}
+		<div className={styles.container}>
 			<h2 className={styles.title}>Próximas excursiones</h2>
 			{found && excursions}
 			{!found && notFound}

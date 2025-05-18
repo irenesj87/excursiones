@@ -48,12 +48,12 @@ function UserPage() {
 				</Col>
 			</Row>
 			<Row className="mb-4 justify-content-center">
-				<Col xs="12" md="12" lg="9" xl="6">
+				<Col xs="12" md="12" lg="9" xl="10">
 					<UserInfoForm />
 				</Col>
 			</Row>
 			<Row className="mb-4 justify-content-center">
-				<Col xs="12" md="12" lg="9" xl="6">
+				<Col xs="12" md="12" lg="9" xl="10">
 					<Card className={styles.excursionsCard}>
 						<Card.Header className={styles.cardHeader}>
 							Excursiones a las que te has apuntado

@@ -108,9 +108,7 @@ const Layout = () => {
 							<Route
 								path="/"
 								element={
-									// The element prop should return a single element or fragment
 									<>
-										{/* Columna para los filtros con fondo temporal */}
 										<Col
 											xs={12}
 											md={4}
@@ -119,12 +117,11 @@ const Layout = () => {
 										>
 											<Filters />
 										</Col>
-										{/* Columna para las excursiones o el spinner/alerta con fondo temporal */}
 										<Col
 											xs={12}
 											md={8} 
 											lg={9}
-											xl={10}
+											xl={8}
 											// Hacemos que la Col sea un contenedor flex para centrar su contenido (spinner/alerta)
 											className="d-flex flex-column"
 										>
