@@ -23,19 +23,8 @@
 	font-size: 16px;
 }
 
-/* Ejemplo de Media Query para ajustar alturas en breakpoints pequeños */
-@media (max-width: 479px) {
-	:root {
-		--nav-height: 149.59px;
-		--footer-height: 192.81px;
-	}
-}
-
-@media (max-width: 767px) {
-	:root {
-		--nav-height: 149.59px;
-		--footer-height: 168.81px;
-	}
+.contentMinHeight {
+	min-height: 972.02px;
 }
 
 .layout {

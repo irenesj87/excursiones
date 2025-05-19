@@ -93,10 +93,7 @@ const Layout = () => {
 				onExcursionsFetchEnd={handleExcursionsFetchEnd}
 			/>
 			<Container className={styles.mainContentWrapper} fluid>
-				{/* 4. `styles.mainContent` debe tener `flex-grow: 1` desde Layout.module.css */}
 				<main className={styles.mainContent}>
-					{/* La Row interna no necesita propiedades especiales para el sticky footer,
-				    pero sí para el layout de su propio contenido. */}
 					{/* Hacemos la Row un contenedor flex para que sus Cols se estiren verticalmente */}
 					<Row className="flex-grow-1 d-flex align-content-stretch">
 						{/* Esta Row ahora crecerá para llenar la altura de mainContent */}
@@ -107,24 +104,17 @@ const Layout = () => {
 								path="/"
 								element={
 									<>
-										<Col
-											xs={12}
-											md={4}
-											lg={3}
-											xl={2}
-										>
+										<Col xs={12} md={4} lg={3} xl={2}>
 											<Filters />
 										</Col>
 										<Col
 											xs={12}
-											md={8} 
+											md={8}
 											lg={9}
 											xl={9}
-											// Hacemos que la Col sea un contenedor flex para centrar su contenido (spinner/alerta)
-											className="d-flex flex-column"
+											className={`d-flex flex-column ${styles.contentMinHeight}`}
 										>
 											{isLoadingExcursions ? (
-												// Usamos la clase del módulo CSS para centrar y expandir el spinner.
 												<div className={styles.centeredContent}>
 													<Spinner animation="border" role="status">
 														<span className="visually-hidden">
