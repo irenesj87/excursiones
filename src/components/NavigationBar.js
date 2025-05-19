@@ -79,7 +79,7 @@ function NavigationBar({ setExcursions, onExcursionsFetchStart, onExcursionsFetc
 			>
 				Regístrate
 			</Nav.Link>
-			<Nav.Link className={styles.loginLink} as={Link} to="/loginPage" onClick={handleCloseOffcanvas}>
+			<Nav.Link className={`${styles.loginLink} me-3`}  as={Link} to="/loginPage" onClick={handleCloseOffcanvas}>
 				Inicia sesión
 			</Nav.Link>
 		</>

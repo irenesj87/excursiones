@@ -69,7 +69,6 @@ const Layout = () => {
 				}
 			}
 		};
-
 		loadToken();
 	}, [loginDispatch]);
 
@@ -82,7 +81,6 @@ const Layout = () => {
 	const handleExcursionsFetchEnd = useCallback((error) => {
 		if (error) {
 			setFetchExcursionsError(error.message || "Error al cargar excursiones.");
-			// setExcursionArray([]); // SearchBar ya limpia los datos en caso de error
 		}
 		setIsLoadingExcursions(false);
 	}, []);
@@ -100,7 +98,7 @@ const Layout = () => {
 					{/* La Row interna no necesita propiedades especiales para el sticky footer,
 				    pero sí para el layout de su propio contenido. */}
 					{/* Hacemos la Row un contenedor flex para que sus Cols se estiren verticalmente */}
-					<Row className="flex-grow-1 d-flex">
+					<Row className="flex-grow-1 d-flex align-content-stretch">
 						{/* Esta Row ahora crecerá para llenar la altura de mainContent */}
 						{/* Intentamos que la Row ocupe la altura de mainContent para el centrado del spinner */}
 						<Routes>
@@ -121,7 +119,7 @@ const Layout = () => {
 											xs={12}
 											md={8} 
 											lg={9}
-											xl={8}
+											xl={9}
 											// Hacemos que la Col sea un contenedor flex para centrar su contenido (spinner/alerta)
 											className="d-flex flex-column"
 										>
@@ -133,7 +131,7 @@ const Layout = () => {
 															Cargando excursiones...
 														</span>
 													</Spinner>
-													<p className="mt-2">Cargando excursiones...</p> {/* Bootstrap class for margin */}
+													<p className="mt-2">Cargando excursiones...</p>
 												</div>
 											) : fetchExcursionsError ? (
 												// Usamos la clase del módulo CSS para centrar y expandir la alerta.
