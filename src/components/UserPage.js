@@ -41,7 +41,7 @@ function UserPage() {
 	}, [isLoggedIn, user, excursionsUrl]);
 
 	return (
-		<Container className={styles.userPage}>
+		<Container>
 			<Row className="mb-4 justify-content-center">
 				<Col>
 					<h2 className={styles.title}>Tu perfil</h2>

@@ -94,10 +94,7 @@ const Layout = () => {
 			/>
 			<Container className={styles.mainContentWrapper} fluid>
 				<main className={styles.mainContent}>
-					{/* Hacemos la Row un contenedor flex para que sus Cols se estiren verticalmente */}
-					<Row className="flex-grow-1 d-flex align-content-stretch">
-						{/* Esta Row ahora crecerá para llenar la altura de mainContent */}
-						{/* Intentamos que la Row ocupe la altura de mainContent para el centrado del spinner */}
+					<Row className="flex-grow-1 d-flex">
 						<Routes>
 							{/* Define la ruta por defecto */}
 							<Route
@@ -124,16 +121,10 @@ const Layout = () => {
 													<p className="mt-2">Cargando excursiones...</p>
 												</div>
 											) : fetchExcursionsError ? (
-												// Usamos la clase del módulo CSS para centrar y expandir la alerta.
 												<div className={styles.centeredContent}>
-													<Alert variant="danger">
-														{/* El componente Alert envuelve el mensaje */}
-														{fetchExcursionsError}
-													</Alert>
+													<Alert variant="danger">{fetchExcursionsError}</Alert>
 												</div>
 											) : (
-												// Excursions se renderizará aquí. Si excursionArray está vacío,
-												// Excursions.js mostrará su propio mensaje de "no encontrado".
 												<Excursions excursionData={excursionArray} />
 											)}
 										</Col>
@@ -141,7 +132,6 @@ const Layout = () => {
 								}
 							/>
 							{/* Define las rutas para los componentes Register, LoginPage y UserPage */}
-							{/* Estas páginas deben ocupar todo el ancho de la Row */}
 							<Route
 								path="registerPage"
 								element={
@@ -169,7 +159,6 @@ const Layout = () => {
 						</Routes>
 					</Row>
 				</main>
-				{/* 6. El Footer es un hijo directo del contenedor flex (styles.layout) y se posicionará al final. */}
 			</Container>
 			<Footer />
 		</div>

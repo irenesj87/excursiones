@@ -1,7 +1,3 @@
-.userPage {
-	min-height: var(--minheight);
-}
-
 .title {
 	color: var(--primary-color);
 	margin-top: 40px;

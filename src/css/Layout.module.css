@@ -17,22 +17,20 @@
 	--success-color: #28a745;
 	--danger-color: #dc3545;
 	--logout-bg-color: rgb(80, 73, 73);
-	--nav-height: 103.59px;
-	--footer-height: 168.81px;
 	--logout-bg-color-hover: rgb(100, 93, 93);
 	font-size: 16px;
 }
 
 .contentMinHeight {
-	min-height: 972.02px;
+	min-height: 1020.76px;
 }
 
 .layout {
 	font-family: Arial, Helvetica, sans-serif;
 	display: flex;
 	flex-direction: column;
-	min-height: 100dvh; /* Usa dynamic viewport height para mejor compatibilidad en móviles/tablets */
-	box-sizing: border-box; /* ¡Esto es clave! Incluye padding y border en la altura */
+	min-height: 100dvh;
+	box-sizing: border-box;
 }
 
 .mainContentWrapper {
@@ -40,16 +38,12 @@
 	display: flex;
 	flex-direction: column;
 	min-height: 0; /* Ayuda a que los hijos flex-grow se comporten de manera predecible */
-	/* min-height: calc(100dvh - var(--nav-height) - var(--footer-height)); */ /* Movido a .mainContent */
 }
 
 .mainContent {
-	/* Esta nueva clase se usará para envolver el contenido principal de tus páginas */
 	flex-grow: 1; /* Permite que esta sección se expanda y empuje el footer hacia abajo */
 	display: flex;
 	flex-direction: column; /* Para el layout interno de mainContent */
-	/* Calculate min-height based on viewport height minus Nav and Footer heights */
-	min-height: calc(100dvh - var(--nav-height) - var(--footer-height));
 	box-sizing: border-box; /* Incluye padding y border en el cálculo del ancho total si se añaden */
 }
 
