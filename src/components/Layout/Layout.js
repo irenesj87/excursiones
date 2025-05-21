@@ -15,9 +15,7 @@ import styles from "../../css/Layout.module.css";
 
 // Este es el Layout. Aquí va la estructura de la página
 const Layout = () => {
-	// Variable que necesitamos para utilizar dispatchers
 	const loginDispatch = useDispatch();
-
 	/* Array de excursiones que se necesita en cada momento, ya sea para mostrar todas las excursiones, 
 	las de los filtros o la búsqueda */
 	const [excursionArray, setExcursionArray] = useState([]);
@@ -73,11 +71,16 @@ const Layout = () => {
 	}, [loginDispatch]);
 
 	// Callbacks para SearchBar
+	// Se ejecuta cuendo comienza la búsqueda de excursiones.
+	// Establece el estado de carga a verdadero y reinicia cualquier error previo.
 	const handleExcursionsFetchStart = useCallback(() => {
 		setIsLoadingExcursions(true);
 		setFetchExcursionsError(null);
 	}, []);
 
+	// Se ejecuta cuando finaliza la búsqueda de excursiones.
+	// Si hubo un error, establece el mensaje de error
+	// En cualquier caso, establece el estado de carga a falso.
 	const handleExcursionsFetchEnd = useCallback((error) => {
 		if (error) {
 			setFetchExcursionsError(error.message || "Error al cargar excursiones.");
