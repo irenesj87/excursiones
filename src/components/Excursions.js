@@ -1,12 +1,12 @@
-import React from "react";
 import Excursion from "./Excursion";
+import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Excursions.module.css";
 
-function Excursions(props) {
+function Excursions({ excursionData }) {
 	/* Array que guarda las excursiones que se deben mostrar, pueden ser toda la lista de excursiones o las que busque 
 	el usario con la barra de búsqueda o los filtros */
-	const excursions = props.excursionData.map((excursion) => (
+	const excursions = excursionData.map((excursion) => (
 		/* El spread operator pasa las propiedades del objeto (name, area, difficulty...) como props del componente Excursion */
 		<Excursion key={excursion.id} {...excursion} />
 	));
@@ -29,5 +29,9 @@ function Excursions(props) {
 		</div>
 	);
 }
+
+Excursions.propTypes = {
+	excursionData: PropTypes.array.isRequired,
+};
 
 export default Excursions;

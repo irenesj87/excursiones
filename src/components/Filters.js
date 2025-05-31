@@ -1,4 +1,3 @@
-import React from "react";
 import { Accordion } from "react-bootstrap";
 import FiltersList from "./FiltersList";
 import { FaMountainSun } from "react-icons/fa6";

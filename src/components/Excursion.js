@@ -63,7 +63,6 @@ function Excursion({id, name, area, description, difficulty, time}) {
 	return (
 		<Container className={`${styles.excursionContainer} py-3`}>
 			<ExcursionCard
-				id={id}
 				name={name}
 				area={area}
 				description={description}

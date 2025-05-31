@@ -21,6 +21,8 @@ const Layout = () => {
 	const [excursionArray, setExcursionArray] = useState([]);
 	// Estados para manejar la carga de las excursiones
 	const [isLoadingExcursions, setIsLoadingExcursions] = useState(true); // Inicia en true para la carga inicial
+	// Estado para saber si la comprobación inicial de autenticación ha terminado
+	const [isAuthCheckComplete, setIsAuthCheckComplete] = useState(false);
 	const [fetchExcursionsError, setFetchExcursionsError] = useState(null);
 
 	/* useEffect que controla el token en sessionStorage. El token se guarda en sessionStorage para que el usuario pueda 
@@ -28,7 +30,8 @@ const Layout = () => {
 	useEffect(() => {
 		/* Esta función guarda el token actual y loguea al usuario de nuevo en caso de que se refresque la página. 
 		Con esto el usuario no perderá su sesión */
-		const loadToken = async () => {
+		const verifyAuthStatus = async () => {
+			setIsAuthCheckComplete(false); // Iniciar la comprobación
 			// Coge el token de la sessionStorage del navegador
 			const sessionToken = sessionStorage["token"];
 			// Variable que tiene la url para hacer el fetch
@@ -64,10 +67,14 @@ const Layout = () => {
 					loginDispatch(logout());
 					// ...y se elimina el token de la sessionStorage
 					sessionStorage.removeItem("token");
+				} finally {
+					setIsAuthCheckComplete(true); // Marcar como completa independientemente del resultado
 				}
+			} else {
+				setIsAuthCheckComplete(true); // Marcar como completa si no hay token
 			}
 		};
-		loadToken();
+		verifyAuthStatus();
 	}, [loginDispatch]);
 
 	// Callbacks para SearchBar
@@ -118,6 +125,7 @@ const Layout = () => {
 				setExcursions={setExcursionArray}
 				onExcursionsFetchStart={handleExcursionsFetchStart}
 				onExcursionsFetchEnd={handleExcursionsFetchEnd}
+				isAuthCheckComplete={isAuthCheckComplete}
 			/>
 			<Container className={styles.mainContentWrapper} fluid>
 				<main className={styles.mainContent}>

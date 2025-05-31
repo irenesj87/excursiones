@@ -173,18 +173,35 @@ function UserInfoForm() {
 					</Col>
 				</Form.Group>
 				{!isEditing && (
-					<div className="d-flex justify-content-center mt-5 border-top pt-3">
-						<Button onClick={startEdit}>Editar</Button>
+					// Usamos Row y Col para el botón Editar para un control de ancho más robusto.
+					// El div externo ya no necesita ser d-flex; Row y Col se encargarán.
+					<div className="mt-5 border-top pt-3">
+						<Row className="justify-content-center gx-0"> {/* gx-0 para eliminar gutters si no son necesarios */}
+							<Col xs={12} sm="auto"> {/* xs={12} para ancho completo en pequeño, sm="auto" para ancho de contenido en sm+ */}
+								<Button onClick={startEdit} className="w-100"> {/* w-100 para que el botón llene la Col */}
+									Editar
+								</Button>
+							</Col>
+						</Row>
 					</div>
 				)}
 				{isEditing && (
-					<div className="d-flex justify-content-center mt-5 gap-2 border-top pt-3">
-						<Button variant="danger" onClick={cancelEdit}>
-							Cancelar
-						</Button>
-						<Button variant="success" onClick={saveEdit}>
-							Guardar
-						</Button>
+					// Contenedor para margen superior y borde.
+					// El layout de los botones se maneja con Row y Col.
+					<div className="mt-5 border-top pt-3">
+						<Row className="justify-content-center gx-2"> {/* gx-2 para espaciado horizontal entre columnas */}
+							{/* Cada botón ocupa la mitad del ancho en xs, y ancho automático en sm+ */}
+							<Col xs={6} sm="auto">
+								<Button variant="danger" onClick={cancelEdit} className="w-100"> {/* w-100 para llenar la Col */}
+									Cancelar
+								</Button>
+							</Col>
+							<Col xs={6} sm="auto">
+								<Button variant="success" onClick={saveEdit} className="w-100"> {/* w-100 para llenar la Col */}
+									Guardar
+								</Button>
+							</Col>
+						</Row>
 					</div>
 				)}
 			</Card.Body>

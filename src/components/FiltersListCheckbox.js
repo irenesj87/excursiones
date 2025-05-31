@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { selectFilter, unselectFilter } from "../slicers/filterSlice";
 
 // Componente que controla la selección y deselección de los checkbox
-function FiltersListCheckbox(props) {
+function FiltersListCheckbox({filterName, filter}) {
 	// Variable para saber si un checkbox está seleccionado o no
 	const [selected, setSelected] = useState(false);
 	const filterDispatch = useDispatch();
@@ -16,16 +17,16 @@ function FiltersListCheckbox(props) {
 			// Si el checkbox está seleccionado, lo deselecciona
 			filterDispatch(
 				unselectFilter({
-					filterName: props.filterName,
-					filter: props.filter,
+					filterName: filterName,
+					filter: filter,
 				})
 			);
 		} else {
 			// Si no está seleccionado, lo selecciona
 			filterDispatch(
 				selectFilter({
-					filterName: props.filterName,
-					filter: props.filter,
+					filterName: filterName,
+					filter: filter,
 				})
 			);
 		}
@@ -33,10 +34,15 @@ function FiltersListCheckbox(props) {
 
 	return (
 		<li>
-			<input type="checkbox" id={props.filter} onChange={selectedCheckbox} />{" "}
-			{props.filter}
+			<input type="checkbox" id={filter} onChange={selectedCheckbox} />{" "}
+			{filter}
 		</li>
 	);
 }
+
+FiltersListCheckbox.propTypes = {
+	filterName: PropTypes.string.isRequired,
+	filter: PropTypes.string.isRequired,
+};
 
 export default FiltersListCheckbox;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Nav, Navbar, Container, Button, Offcanvas } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,12 +6,18 @@ import Logo from "./Logo";
 import SearchBar from "./SearchBar";
 import LandingPageUserProfile from "./LandingPageUserProfile";
 import { toggleMode, setMode } from "../slicers/themeSlice";
+import PropTypes from "prop-types";
 import { RiMoonClearFill, RiSunFill } from "react-icons/ri";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/NavigationBar.module.css";
 import "../css/Themes.css";
 
-function NavigationBar({ setExcursions, onExcursionsFetchStart, onExcursionsFetchEnd }) {
+function NavigationBar({
+	setExcursions,
+	onExcursionsFetchStart,
+	onExcursionsFetchEnd,
+	isAuthCheckComplete,
+}) {
 	// Estado de la visibilidad del Offcanvas
 	const [showOffcanvas, setShowOffcanvas] = useState(false);
 	// Función para cerrar el Offcanvas
@@ -66,7 +72,12 @@ function NavigationBar({ setExcursions, onExcursionsFetchStart, onExcursionsFetc
 	};
 
 	// Renderizado condicional para el icono
-	const icon = mode === "light" ? <RiMoonClearFill /> : <RiSunFill />;
+	const icon =
+		mode === "light" ? (
+			<RiMoonClearFill className={styles.themeIcon} />
+		) : (
+			<RiSunFill className={styles.themeIcon} />
+		);
 
 	// Items que están en la barra de navegación cuando el usuario no está logueado
 	const NoLoggedItems = (
@@ -79,7 +90,12 @@ function NavigationBar({ setExcursions, onExcursionsFetchStart, onExcursionsFetc
 			>
 				Regístrate
 			</Nav.Link>
-			<Nav.Link className={`${styles.loginLink} me-3`}  as={Link} to="/loginPage" onClick={handleCloseOffcanvas}>
+			<Nav.Link
+				className={`${styles.loginLink} me-3`}
+				as={Link}
+				to="/loginPage"
+				onClick={handleCloseOffcanvas}
+			>
 				Inicia sesión
 			</Nav.Link>
 		</>
@@ -92,6 +108,17 @@ function NavigationBar({ setExcursions, onExcursionsFetchStart, onExcursionsFetc
 			onClickCloseCollapsible={handleCloseOffcanvas}
 		/>
 	);
+
+	// Determinar el contenido de navegación de autenticación
+	// Esto extrae la lógica del ternario anidado para mayor claridad
+	let authNavContent = null; // Por defecto, no mostrar nada si la comprobación de autenticación no está completa
+	if (isAuthCheckComplete) {
+		if (isLoggedIn) {
+			authNavContent = LoggedItems;
+		} else {
+			authNavContent = NoLoggedItems;
+		}
+	}
 
 	return (
 		<Navbar expand="lg" className="customNavbar" variant={mode} sticky="top">
@@ -114,9 +141,9 @@ function NavigationBar({ setExcursions, onExcursionsFetchStart, onExcursionsFetc
 				</div>
 				{/* ms-auto: Cuando se utiliza dentro de un flex-container le dice al navegador que calcule el margen 
 				a la izquierda de ese elemento. Así que lo que hace, es poner ese elemento y lo que le siga lo más a la derecha
-				que pueda dentro de ese container. ms-md-0 dice que deje de hacerlo a partir de breakpoints medianos */}
+				que pueda dentro de ese container. ms-md-0 dice que deje de hacerlo a partir de breakpoints medianos. justify-content-end alinea los items hijos al final del contenedor. */}
 				{/* order-lg-3: para posicionarlo correctamente en breakpoints grandes */}
-				<div className="d-flex align-items-center ms-auto ms-md-0 order-md-3 order-lg-3">
+				<div className="d-flex align-items-center justify-content-end ms-auto ms-md-0 order-md-3 order-lg-3">
 					<Button
 						className={`${styles.themeToggleBtn} me-2`}
 						variant="outline-secondary"
@@ -128,8 +155,10 @@ function NavigationBar({ setExcursions, onExcursionsFetchStart, onExcursionsFetc
 					{/* Inline items para breakpoints grandes */}
 					{/* No visible en breakpoints pequeños (d-none), visible en grandes (d-lg-flex) */}
 					{/* Posicionado antes del toggle para mantener el orden en breakpoints grandes */}
-					<Nav className="d-none d-lg-flex flex-row align-items-center">
-						{isLoggedIn ? LoggedItems : NoLoggedItems}
+					<Nav
+						className={`${styles.authNavItems} d-none d-lg-flex flex-row align-items-center`}
+					>
+						{authNavContent}
 					</Nav>
 					{/* Toggle Offcanvas (Hamburguesa) */}
 					<Navbar.Toggle
@@ -163,14 +192,19 @@ function NavigationBar({ setExcursions, onExcursionsFetchStart, onExcursionsFetc
 						<Offcanvas.Title>Menú</Offcanvas.Title>
 					</Offcanvas.Header>
 					<Offcanvas.Body>
-						<Nav className="d-flex flex-column">
-							{isLoggedIn ? LoggedItems : NoLoggedItems}
-						</Nav>
+						<Nav className="d-flex flex-column">{authNavContent}</Nav>
 					</Offcanvas.Body>
 				</Offcanvas>
 			</Container>
 		</Navbar>
 	);
 }
+
+NavigationBar.propTypes = {
+	setExcursions: PropTypes.func.isRequired,
+	onExcursionsFetchStart: PropTypes.func.isRequired,
+	onExcursionsFetchEnd: PropTypes.func.isRequired,
+	isAuthCheckComplete: PropTypes.bool.isRequired,
+};
 
 export default NavigationBar;

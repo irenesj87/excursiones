@@ -64,7 +64,6 @@ function UserPage() {
 									{userExcursions.map((excursion) => (
 										<Col key={excursion.id}>
 											<ExcursionCard
-												id={excursion.id}
 												name={excursion.name}
 												area={excursion.area}
 												description={excursion.description}

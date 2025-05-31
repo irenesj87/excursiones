@@ -15,6 +15,12 @@
 	}
 }
 
+.themeIcon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
 .registerLink {
 	display: inline-block;
 	padding: 0.375rem 0.75rem;
@@ -67,4 +73,10 @@
 
 .loginLink:focus {
 	color: var(--text-color-dark);
+}
+
+.authNavItems {
+	min-height: 40px;
+	min-width: 227.86px;
+	justify-content: flex-start;
 }
