@@ -1,20 +1,20 @@
-import React from "react";
 import { Container } from "react-bootstrap";
 import ExcursionCard from "./ExcursionCard";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../slicers/loginSlice";
+import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Excursion.module.css";
 
-function Excursion(props) {
+function Excursion({id, name, area, description, difficulty, time}) {
 	// useSelector que dice si el usuario está logueado o no. Además, nos da la información del usuario
 	const { login: isLoggedIn, user } = useSelector(
 		(state) => state.loginReducer
 	);
 	const loginDispatch = useDispatch();
 	// Variable que guarda el correo del usuario que está logueado ahora mismo
-	const auxUserMail = user && user.mail;
-	const url = `http://localhost:3001/users/${auxUserMail}/excursions/${props.id}`;
+	const auxUserMail = user?.mail;
+	const url = `http://localhost:3001/users/${auxUserMail}/excursions/${id}`;
 
 	// Esta función apunta a un usuario logueado a la excursión que él quiera
 	const joinExcursion = async () => {
@@ -35,7 +35,7 @@ function Excursion(props) {
 			},
 			/* body: Es la propiedad estándar en las opciones del fetch. Define el contenido que hay que mandar en el 
 			 cuerpo de la petición HTTP. */
-			body: JSON.stringify({ id: props.id }),
+			body: JSON.stringify({ id: id }),
 		};
 
 		try {
@@ -58,17 +58,17 @@ function Excursion(props) {
 	/* Variable que comprueba si el usuario está logueado en la web y si está logueado en esa excursión.
 	También comprueba si existe el usuario y el array de excursiones de ese usuario */
 	const isJoined =
-		isLoggedIn && user && user.excursions && user.excursions.includes(props.id);
+		isLoggedIn && user?.excursions?.includes(id);
 
 	return (
 		<Container className={`${styles.excursionContainer} py-3`}>
 			<ExcursionCard
-				id={props.id}
-				name={props.name}
-				area={props.area}
-				description={props.description}
-				difficulty={props.difficulty}
-				time={props.time}
+				id={id}
+				name={name}
+				area={area}
+				description={description}
+				difficulty={difficulty}
+				time={time}
 				isLoggedIn={isLoggedIn}
 				isJoined={isJoined}
 				onJoin={joinExcursion}
@@ -76,5 +76,14 @@ function Excursion(props) {
 		</Container>
 	);
 }
+
+Excursion.propTypes = {
+	id: PropTypes.number.isRequired,
+	name: PropTypes.string.isRequired,
+	area: PropTypes.string.isRequired,
+	description: PropTypes.string.isRequired,
+	difficulty: PropTypes.string.isRequired,
+	time: PropTypes.string.isRequired,
+};
 
 export default Excursion;

@@ -88,6 +88,30 @@ const Layout = () => {
 		setIsLoadingExcursions(false);
 	}, []);
 
+	// Determina el contenido a renderizar para la sección de excursiones
+	let excursionsContent;
+	if (isLoadingExcursions) {
+		excursionsContent = (
+			// Si está cargando las excursiones muestra el spinner
+			<div className={styles.centeredContent}>
+				<Spinner as="output" animation="border">
+					<span className="visually-hidden">Cargando excursiones...</span>
+				</Spinner>
+				<p className="mt-2">Cargando excursiones...</p>
+			</div>
+		);
+	// Si hay un error a la hora de mostrar las excursiones muestra una alerta
+	} else if (fetchExcursionsError) {
+		excursionsContent = (
+			<div className={styles.centeredContent}>
+				<Alert variant="danger">{fetchExcursionsError}</Alert>
+			</div>
+		);
+	} else {
+		// Si no está cargando y no hay error, muestra las excursiones
+		excursionsContent = <Excursions excursionData={excursionArray} />;
+	}
+
 	return (
 		<div className={styles.layout}>
 			<NavigationBar
@@ -114,22 +138,7 @@ const Layout = () => {
 											xl={9}
 											className={`d-flex flex-column ${styles.contentMinHeight}`}
 										>
-											{isLoadingExcursions ? (
-												<div className={styles.centeredContent}>
-													<Spinner animation="border" role="status">
-														<span className="visually-hidden">
-															Cargando excursiones...
-														</span>
-													</Spinner>
-													<p className="mt-2">Cargando excursiones...</p>
-												</div>
-											) : fetchExcursionsError ? (
-												<div className={styles.centeredContent}>
-													<Alert variant="danger">{fetchExcursionsError}</Alert>
-												</div>
-											) : (
-												<Excursions excursionData={excursionArray} />
-											)}
+											{excursionsContent}
 										</Col>
 									</>
 								}

@@ -1,5 +1,5 @@
-import React from "react";
 import { Card, Button } from "react-bootstrap";
+import PropTypes from "prop-types"; // Importar PropTypes
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/ExcursionCard.module.css";
 
@@ -68,5 +68,18 @@ function ExcursionCard({
 		</Card>
 	);
 }
+
+// Definición de PropTypes para el componente ExcursionCard
+ExcursionCard.propTypes = {
+	id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+	name: PropTypes.string.isRequired,
+	area: PropTypes.string.isRequired,
+	description: PropTypes.string.isRequired,
+	difficulty: PropTypes.string.isRequired,
+	time: PropTypes.string.isRequired,
+	isLoggedIn: PropTypes.bool, // Puede ser opcional si la lógica lo permite o .isRequired si siempre debe estar
+	isJoined: PropTypes.bool,   // Puede ser opcional o .isRequired
+	onJoin: PropTypes.func,     // Puede ser opcional o .isRequired si el botón siempre debe tener una acción
+};
 
 export default ExcursionCard;
