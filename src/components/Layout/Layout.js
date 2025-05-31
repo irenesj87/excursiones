@@ -143,7 +143,7 @@ const Layout = () => {
 											xs={12}
 											md={8}
 											lg={9}
-											xl={9}
+											xl={10}
 											className={`d-flex flex-column ${styles.contentMinHeight}`}
 										>
 											{excursionsContent}
