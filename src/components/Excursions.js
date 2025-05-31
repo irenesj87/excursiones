@@ -1,3 +1,4 @@
+import { Row, Col } from "react-bootstrap";
 import Excursion from "./Excursion";
 import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.css";
@@ -23,9 +24,17 @@ function Excursions({ excursionData }) {
 
 	return (
 		<div className={styles.container}>
-			<h2 className={styles.title}>Próximas excursiones</h2>
-			{found && excursions}
-			{!found && notFound}
+			<Row>
+				<Col xs={12} xl={10}>
+					<h2 className={styles.title}>Próximas excursiones</h2>
+				</Col>
+			</Row>
+			<Row>
+				<Col xs={12} xl={10}>
+					{found && excursions}
+					{!found && notFound}
+				</Col>
+			</Row>
 		</div>
 	);
 }

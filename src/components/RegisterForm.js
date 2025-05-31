@@ -169,14 +169,24 @@ function RegisterForm() {
 						número.
 					</li>
 				</ul>
-				<div className="text-center mt-5 pt-3 border-top">
-					<Button
-						variant={disabled ? "secondary" : "success"}
-						type="submit"
-						disabled={disabled}
-					>
-						Enviar
-					</Button>
+				{/* Modificamos el contenedor del botón para usar Row y Col */}
+				{/* mt-5 pt-3 border-top se mantiene para los estilos visuales */}
+				<div className="mt-5 pt-3 border-top">
+					{/* justify-content-center centrará la Col en breakpoints sm y mayores */}
+					<Row className="justify-content-center">
+						{/* xs={12} hace que la Col ocupe el ancho en pantallas extra pequeñas */}
+						{/* sm="auto" hace que la Col se ajuste al contenido en pantallas sm y mayores */}
+						<Col xs={12} sm="auto">
+							<Button
+								variant={disabled ? "secondary" : "success"}
+								type="submit"
+								disabled={disabled}
+								className="w-100" // w-100 hace que el botón ocupe el ancho de su Col padre
+							>
+								Enviar
+							</Button>
+						</Col>
+					</Row>
 				</div>
 			</Form>
 		</>

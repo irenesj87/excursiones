@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Row, Col, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { validateMail, validatePassword } from "../validation/validations.js";
 import ValidatedFormGroup from "./ValidatedFormGroup";
@@ -103,14 +103,22 @@ export function LoginForm() {
 					message={false}
 					autocomplete="current-password"
 				/>
-				<div className="text-center mt-4">
-					<Button
-						variant={disabled ? "secondary" : "success"}
-						type="submit"
-						disabled={disabled}
-					>
-						Enviar
-					</Button>
+				<div className="mt-5 pt-3 border-top">
+					{/* justify-content-center centrará la Col en breakpoints sm y mayores */}
+					<Row className="justify-content-center">
+						{/* xs={12} hace que la Col ocupe el ancho en pantallas extra pequeñas */}
+						{/* sm="auto" hace que la Col se ajuste al contenido en pantallas sm y mayores */}
+						<Col xs={12} sm="auto">
+							<Button
+								variant={disabled ? "secondary" : "success"}
+								type="submit"
+								disabled={disabled}
+								className="w-100" // w-100 hace que el botón ocupe el ancho de su Col padre
+							>
+								Enviar
+							</Button>
+						</Col>
+					</Row>
 				</div>
 			</Form>
 		</>

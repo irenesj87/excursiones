@@ -1,4 +1,3 @@
-import { Container } from "react-bootstrap";
 import ExcursionCard from "./ExcursionCard";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../slicers/loginSlice";
@@ -61,7 +60,10 @@ function Excursion({id, name, area, description, difficulty, time}) {
 		isLoggedIn && user?.excursions?.includes(id);
 
 	return (
-		<Container className={`${styles.excursionContainer} py-3`}>
+		// Reemplazamos el Container de Bootstrap por un div simple.
+		// El Container de Bootstrap (no fluid) se centra por defecto, lo que podría causar el desplazamiento.
+		// Un div simple ocupará el ancho disponible o el ancho de su contenido, alineándose a la izquierda.
+		<div className={`${styles.excursionContainer} py-3`}>
 			<ExcursionCard
 				name={name}
 				area={area}
@@ -72,7 +74,7 @@ function Excursion({id, name, area, description, difficulty, time}) {
 				isJoined={isJoined}
 				onJoin={joinExcursion}
 			/>
-		</Container>
+		</div>
 	);
 }
 

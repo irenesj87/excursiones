@@ -107,7 +107,7 @@ const Layout = () => {
 				<p className="mt-2">Cargando excursiones...</p>
 			</div>
 		);
-	// Si hay un error a la hora de mostrar las excursiones muestra una alerta
+		// Si hay un error a la hora de mostrar las excursiones muestra una alerta
 	} else if (fetchExcursionsError) {
 		excursionsContent = (
 			<div className={styles.centeredContent}>
@@ -129,7 +129,15 @@ const Layout = () => {
 			/>
 			<Container className={styles.mainContentWrapper} fluid>
 				<main className={styles.mainContent}>
-					<Row className="flex-grow-1 d-flex">
+					{/*
+					  Añadimos 'justify-content-center' a esta Row.
+					  Si el contenido de una ruta (las Cols) no ocupa las 12 unidades de la rejilla
+					  (por ejemplo, si la suma de columnas es 10 en lugar de 12),
+					  esto ayudará a centrar ese contenido horizontalmente.
+					  Si las Cols suman 12 (como en la página principal: xl={2} + xl={10} = 12),
+					  'justify-content-center' no tendrá un efecto visible en su posicionamiento, lo cual es correcto.
+					*/}
+					<Row className="flex-grow-1 d-flex justify-content-center">
 						<Routes>
 							{/* Define la ruta por defecto */}
 							<Route
@@ -140,10 +148,6 @@ const Layout = () => {
 											<Filters />
 										</Col>
 										<Col
-											xs={12}
-											md={8}
-											lg={9}
-											xl={10}
 											className={`d-flex flex-column ${styles.contentMinHeight}`}
 										>
 											{excursionsContent}
