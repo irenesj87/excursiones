@@ -1,7 +1,6 @@
 import ExcursionCard from "./ExcursionCard";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../slicers/loginSlice";
-import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Excursion.module.css";
 
@@ -77,14 +76,5 @@ function Excursion({id, name, area, description, difficulty, time}) {
 		</div>
 	);
 }
-
-Excursion.propTypes = {
-	id: PropTypes.number.isRequired,
-	name: PropTypes.string.isRequired,
-	area: PropTypes.string.isRequired,
-	description: PropTypes.string.isRequired,
-	difficulty: PropTypes.string.isRequired,
-	time: PropTypes.string.isRequired,
-};
 
 export default Excursion;

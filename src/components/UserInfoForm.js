@@ -15,17 +15,17 @@ function UserInfoForm() {
 		(state) => state.loginReducer
 	);
 	// Variable that receive and change the name that we received from the edit inputs
-	const [name, setName] = useState(user && user.name);
+	const [name, setName] = useState(user?.name);
 	// Variable that receive and change the surname that we received from the edit inputs
-	const [surname, setSurname] = useState(user && user.surname);
+	const [surname, setSurname] = useState(user?.surname);
 	// Variable that receive and change the phone that we received from the edit inputs
-	const [phone, setPhone] = useState(user && user.phone);
+	const [phone, setPhone] = useState(user?.phone);
 	// Variable that saves the original name in case the user cancels the editing
-	const [originalName, setOriginalName] = useState(user && user.name);
+	const [originalName, setOriginalName] = useState(user?.name);
 	// Variable that saves the original surname in case the user cancels the editing
-	const [originalSurname, setOriginalSurname] = useState(user && user.surname);
+	const [originalSurname, setOriginalSurname] = useState(user?.surname);
 	// Variable that saves the original phone in case the user cancels the editing
-	const [originalPhone, setOriginalPhone] = useState(user && user.phone);
+	const [originalPhone, setOriginalPhone] = useState(user?.phone);
 	// Variable that sets the information for the current user
 	// This variable says if the user is editing information or not
 	const [isEditing, setIsEditing] = useState(false);
@@ -33,7 +33,7 @@ function UserInfoForm() {
 	const currentUser = {
 		name: name,
 		surname: surname,
-		mail: user && user.mail,
+		mail: user?.mail,
 		phone: phone,
 	};
 	// Variable that has the url that is needed for the current user fetch
@@ -47,9 +47,9 @@ function UserInfoForm() {
 		},
 		// body: It is a standard property within the fetch options. It defines the content to send in the body of the HTTP request.
 		/* This is typically used with methods like POST or PUT where you need to send data to the server (in this case, to update user information)
-    JSON.stringify(...): This is a built-in JavaScript function. Its job is to take a JavaScript object (like the currentUser object) and convert it into a JSON string.
-    We have to convert it to a JSON string because web servers and APIs typically expect data sent in the request body to be in a standardized 
-    text format. JSON is the most common format for exchanging data between web clients and servers.*/
+    	JSON.stringify(...): This is a built-in JavaScript function. Its job is to take a JavaScript object (like the currentUser object) and convert it into a JSON string.
+    	We have to convert it to a JSON string because web servers and APIs typically expect data sent in the request body to be in a standardized 
+    	text format. JSON is the most common format for exchanging data between web clients and servers.*/
 		body: JSON.stringify(currentUser),
 	};
 
@@ -176,9 +176,15 @@ function UserInfoForm() {
 					// Usamos Row y Col para el botón Editar para un control de ancho más robusto.
 					// El div externo ya no necesita ser d-flex; Row y Col se encargarán.
 					<div className="mt-5 border-top pt-3">
-						<Row className="justify-content-center gx-0"> {/* gx-0 para eliminar gutters si no son necesarios */}
-							<Col xs={12} sm="auto"> {/* xs={12} para ancho completo en pequeño, sm="auto" para ancho de contenido en sm+ */}
-								<Button onClick={startEdit} className="w-100"> {/* w-100 para que el botón llene la Col */}
+						<Row className="justify-content-center gx-0">
+							{" "}
+							{/* gx-0 para eliminar gutters si no son necesarios */}
+							<Col xs={12} sm="auto">
+								{" "}
+								{/* xs={12} para ancho completo en pequeño, sm="auto" para ancho de contenido en sm+ */}
+								<Button onClick={startEdit} className="w-100">
+									{" "}
+									{/* w-100 para que el botón llene la Col */}
 									Editar
 								</Button>
 							</Col>
@@ -189,15 +195,21 @@ function UserInfoForm() {
 					// Contenedor para margen superior y borde.
 					// El layout de los botones se maneja con Row y Col.
 					<div className="mt-5 border-top pt-3">
-						<Row className="justify-content-center gx-2"> {/* gx-2 para espaciado horizontal entre columnas */}
+						<Row className="justify-content-center gx-2">
+							{" "}
+							{/* gx-2 para espaciado horizontal entre columnas */}
 							{/* Cada botón ocupa la mitad del ancho en xs, y ancho automático en sm+ */}
 							<Col xs={6} sm="auto">
-								<Button variant="danger" onClick={cancelEdit} className="w-100"> {/* w-100 para llenar la Col */}
+								<Button variant="danger" onClick={cancelEdit} className="w-100">
+									{" "}
+									{/* w-100 para llenar la Col */}
 									Cancelar
 								</Button>
 							</Col>
 							<Col xs={6} sm="auto">
-								<Button variant="success" onClick={saveEdit} className="w-100"> {/* w-100 para llenar la Col */}
+								<Button variant="success" onClick={saveEdit} className="w-100">
+									{" "}
+									{/* w-100 para llenar la Col */}
 									Guardar
 								</Button>
 							</Col>

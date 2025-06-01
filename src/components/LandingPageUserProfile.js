@@ -1,4 +1,3 @@
-import React from "react";
 import { Nav } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -6,7 +5,7 @@ import { logout } from "../slicers/loginSlice";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/LandingPageUserProfile.module.css";
 
-function LandingPageUserProfile(props) {
+function LandingPageUserProfile({ onClickCloseCollapsible }) {
 	const logoutDispatch = useDispatch();
 	// Variable que tiene el token guardado en la store
 	const { token } = useSelector((state) => state.loginReducer);
@@ -25,8 +24,8 @@ function LandingPageUserProfile(props) {
 	a mandar ningún dato importante en el cuerpo de una petición DELETE exitosa. Puede que mande un código de status 
 	(como 204 No Content) para indicar el éxito. */
 	const logOut = async () => {
-		if (props.onClickCloseCollapsible) {
-			props.onClickCloseCollapsible();
+		if (onClickCloseCollapsible) {
+			onClickCloseCollapsible();
 		}
 		try {
 			const response = await fetch(url, options);
@@ -48,7 +47,7 @@ function LandingPageUserProfile(props) {
 				className={`${styles.profileLink} me-3`}
 				as={Link}
 				to="/UserPage"
-				onClick={props.onClickCloseCollapsible}
+				onClick={onClickCloseCollapsible}
 			>
 				Perfil
 			</Nav.Link>

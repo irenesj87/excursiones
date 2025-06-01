@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Col, Row, Container, Card } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import ExcursionCard from "./ExcursionCard";

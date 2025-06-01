@@ -1,5 +1,4 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { selectFilter, unselectFilter } from "../slicers/filterSlice";
 
@@ -39,10 +38,5 @@ function FiltersListCheckbox({filterName, filter}) {
 		</li>
 	);
 }
-
-FiltersListCheckbox.propTypes = {
-	filterName: PropTypes.string.isRequired,
-	filter: PropTypes.string.isRequired,
-};
 
 export default FiltersListCheckbox;

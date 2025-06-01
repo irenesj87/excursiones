@@ -32,7 +32,7 @@ function ExcursionCard({
 	// useState que dice si una descripción está expandida o no
 	const [isExpanded, setIsExpanded] = useState(false);
 	// Límite de caracteres para la descripción truncada
-	const MAX_LENGTH = 150; 
+	const MAX_LENGTH = 200; 
 
 	const toggleReadMore = (e) => {
 		e.preventDefault(); // Prevenir cualquier comportamiento por defecto si es un enlace
@@ -60,7 +60,7 @@ function ExcursionCard({
 							<Button
 								variant="link"
 								onClick={toggleReadMore}
-								className={`${styles.readMoreLink} p-0 mt-1 d-inline-flex align-items-center`} // Clases para alinear icono y texto
+								className={`${styles.readMoreLink} p-0 mt-1 d-flex align-items-center`} // Cambiado a d-flex para que ocupe su propia línea
 							>
 								{isExpanded ? (
 									<>Leer menos <FiChevronUp className="ms-1" /></>

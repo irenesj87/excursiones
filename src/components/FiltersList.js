@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import FiltersListCheckbox from "./FiltersListCheckbox";
-import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/FiltersList.module.css";
 
@@ -46,9 +45,5 @@ function FiltersList({filterName}) {
 		</ul>
 	);
 }
-
-FiltersList.propTypes = {
-	filterName: PropTypes.string.isRequired,
-};
 
 export default FiltersList;

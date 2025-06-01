@@ -55,15 +55,13 @@ function SearchBar(props) {
 	}, [search, area, difficulty, time, setExcursions, onFetchStart, onFetchEnd]);
 
 	return (
-		<>
-			<input
-				id={id}
-				className="form-control"
-				type="search"
-				placeholder="Busca excursiones..."
-				onChange={introKeyPressed}
-			/>
-		</>
+		<input
+			id={id}
+			className="form-control"
+			type="search"
+			placeholder="Busca excursiones..."
+			onChange={introKeyPressed}
+		/>
 	);
 }
 

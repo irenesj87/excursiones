@@ -11,7 +11,7 @@
 	padding-bottom: 30px;
 	color: var(--primary-color);
 	font-weight: bold;
-	text-align: center; /* Centrado por defecto para breakpoints más pequeños */
+	text-align: center;
 	text-transform: uppercase;
 }
 

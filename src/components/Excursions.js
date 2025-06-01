@@ -1,6 +1,5 @@
 import { Row, Col } from "react-bootstrap";
 import Excursion from "./Excursion";
-import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Excursions.module.css";
 
@@ -38,9 +37,5 @@ function Excursions({ excursionData }) {
 		</div>
 	);
 }
-
-Excursions.propTypes = {
-	excursionData: PropTypes.array.isRequired,
-};
 
 export default Excursions;

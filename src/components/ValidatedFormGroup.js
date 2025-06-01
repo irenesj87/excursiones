@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Col, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/ValidatedFormGroup.module.css";
 
 function ValidatedFormGroup({
-	id, // Use id for htmlFor and input id for better accessibility
-	name, // Keep name for the label text
+	id, 
+	name,
 	inputType = "text", // Default inputType to text
 	inputToChange,
 	validationFunction,

@@ -1,21 +1,20 @@
-import React from "react";
 import { Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/UserPageInputEdit.module.css";
 
 // This component controls the user page edit inputs
-function UserPageInputEdit(props) {
+function UserPageInputEdit({id, value, inputToChange, isEditing}) {
 	return (
 		<Form.Control
 			className={styles.userInput}
-			id={props.id}
+			id={id}
 			type="text"
-			value={props.value}
+			value={value}
 			onChange={(e) => {
 				const value = e.target.value;
-				props.inputToChange(value);
+				inputToChange(value);
 			}}
-			disabled={!props.isEditing}
+			disabled={!isEditing}
 		/>
 	);
 }
