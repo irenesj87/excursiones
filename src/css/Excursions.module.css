@@ -20,3 +20,10 @@
 	text-align: center;
 	color: var(--accent-color);
 }
+
+.centeredStatus {
+	display: flex;
+	flex-direction: column;
+	align-items: center; /* Centra horizontalmente */
+	justify-content: center; /* Centra verticalmente */
+}

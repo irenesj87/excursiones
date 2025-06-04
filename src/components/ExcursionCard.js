@@ -1,7 +1,6 @@
-import React, { useState } from "react"; // Importar useState
+import { useState } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi"; // Importamos los iconos
-import PropTypes from "prop-types";
+import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/ExcursionCard.module.css";
 
@@ -32,13 +31,14 @@ function ExcursionCard({
 	// useState que dice si una descripción está expandida o no
 	const [isExpanded, setIsExpanded] = useState(false);
 	// Límite de caracteres para la descripción truncada
-	const MAX_LENGTH = 200; 
+	const MAX_LENGTH = 150; 
 
 	const toggleReadMore = (e) => {
 		e.preventDefault(); // Prevenir cualquier comportamiento por defecto si es un enlace
 		setIsExpanded(!isExpanded);
 	};
 
+	// Constante que muestra la descripción entera si hay menos de 150 caracteres o la muestra truncada si hay más
 	const displayDescription =
 		description && description.length > MAX_LENGTH && !isExpanded
 			? `${description.substring(0, MAX_LENGTH)}...`
@@ -110,17 +110,5 @@ function ExcursionCard({
 		</Card>
 	);
 }
-
-// Definición de PropTypes para el componente ExcursionCard
-ExcursionCard.propTypes = {
-	name: PropTypes.string.isRequired,
-	area: PropTypes.string.isRequired,
-	description: PropTypes.string.isRequired,
-	difficulty: PropTypes.string.isRequired,
-	time: PropTypes.string.isRequired,
-	isLoggedIn: PropTypes.bool,
-	isJoined: PropTypes.bool,
-	onJoin: PropTypes.func,
-};
 
 export default ExcursionCard;

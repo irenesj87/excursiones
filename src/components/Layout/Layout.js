@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { Container, Row, Col, Spinner, Alert } from "react-bootstrap";
+import { useState, useEffect, useCallback } from "react";
+import { Container, Row, Col } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { login, logout } from "../../slicers/loginSlice";
 import { Routes, Route } from "react-router-dom";
@@ -19,11 +19,11 @@ const Layout = () => {
 	/* Array de excursiones que se necesita en cada momento, ya sea para mostrar todas las excursiones, 
 	las de los filtros o la búsqueda */
 	const [excursionArray, setExcursionArray] = useState([]);
-	// Estados para manejar la carga de las excursiones
+	// Estado para saber si la comprobación inicial de autenticación ha terminado
 	const [isLoadingExcursions, setIsLoadingExcursions] = useState(true); // Inicia en true para la carga inicial
+	const [fetchExcursionsError, setFetchExcursionsError] = useState(null);
 	// Estado para saber si la comprobación inicial de autenticación ha terminado
 	const [isAuthCheckComplete, setIsAuthCheckComplete] = useState(false);
-	const [fetchExcursionsError, setFetchExcursionsError] = useState(null);
 
 	/* useEffect que controla el token en sessionStorage. El token se guarda en sessionStorage para que el usuario pueda 
 	 quedarse logueado */
@@ -77,47 +77,27 @@ const Layout = () => {
 		verifyAuthStatus();
 	}, [loginDispatch]);
 
-	// Callbacks para SearchBar
-	// Se ejecuta cuendo comienza la búsqueda de excursiones.
-	// Establece el estado de carga a verdadero y reinicia cualquier error previo.
+	// Callbacks para SearchBar y carga inicial de excursiones
 	const handleExcursionsFetchStart = useCallback(() => {
 		setIsLoadingExcursions(true);
 		setFetchExcursionsError(null);
 	}, []);
 
-	// Se ejecuta cuando finaliza la búsqueda de excursiones.
-	// Si hubo un error, establece el mensaje de error
-	// En cualquier caso, establece el estado de carga a falso.
 	const handleExcursionsFetchEnd = useCallback((error) => {
 		if (error) {
-			setFetchExcursionsError(error.message || "Error al cargar excursiones.");
+			setFetchExcursionsError(error); // Asume que 'error' es un objeto de error o un mensaje
 		}
 		setIsLoadingExcursions(false);
 	}, []);
 
-	// Determina el contenido a renderizar para la sección de excursiones
-	let excursionsContent;
-	if (isLoadingExcursions) {
-		excursionsContent = (
-			// Si está cargando las excursiones muestra el spinner
-			<div className={styles.centeredContent}>
-				<Spinner as="output" animation="border">
-					<span className="visually-hidden">Cargando excursiones...</span>
-				</Spinner>
-				<p className="mt-2">Cargando excursiones...</p>
-			</div>
-		);
-		// Si hay un error a la hora de mostrar las excursiones muestra una alerta
-	} else if (fetchExcursionsError) {
-		excursionsContent = (
-			<div className={styles.centeredContent}>
-				<Alert variant="danger">{fetchExcursionsError}</Alert>
-			</div>
-		);
-	} else {
-		// Si no está cargando y no hay error, muestra las excursiones
-		excursionsContent = <Excursions excursionData={excursionArray} />;
-	}
+	// El componente Excursions ahora recibirá isLoading y error para manejar su propia UI.
+	const excursionsContent = (
+		<Excursions
+			excursionData={excursionArray}
+			isLoading={isLoadingExcursions}
+			error={fetchExcursionsError}
+		/>
+	);
 
 	return (
 		<div className={styles.layout}>
@@ -129,14 +109,6 @@ const Layout = () => {
 			/>
 			<Container className={styles.mainContentWrapper} fluid>
 				<main className={styles.mainContent}>
-					{/*
-					  Añadimos 'justify-content-center' a esta Row.
-					  Si el contenido de una ruta (las Cols) no ocupa las 12 unidades de la rejilla
-					  (por ejemplo, si la suma de columnas es 10 en lugar de 12),
-					  esto ayudará a centrar ese contenido horizontalmente.
-					  Si las Cols suman 12 (como en la página principal: xl={2} + xl={10} = 12),
-					  'justify-content-center' no tendrá un efecto visible en su posicionamiento, lo cual es correcto.
-					*/}
 					<Row className="flex-grow-1 d-flex justify-content-center">
 						<Routes>
 							{/* Define la ruta por defecto */}

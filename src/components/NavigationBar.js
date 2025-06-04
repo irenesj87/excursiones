@@ -6,7 +6,6 @@ import Logo from "./Logo";
 import SearchBar from "./SearchBar";
 import LandingPageUserProfile from "./LandingPageUserProfile";
 import { toggleMode, setMode } from "../slicers/themeSlice";
-import PropTypes from "prop-types";
 import { RiMoonClearFill, RiSunFill } from "react-icons/ri";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/NavigationBar.module.css";
@@ -14,9 +13,9 @@ import "../css/Themes.css";
 
 function NavigationBar({
 	setExcursions,
+	isAuthCheckComplete,
 	onExcursionsFetchStart,
 	onExcursionsFetchEnd,
-	isAuthCheckComplete,
 }) {
 	// Estado de la visibilidad del Offcanvas
 	const [showOffcanvas, setShowOffcanvas] = useState(false);
@@ -134,8 +133,8 @@ function NavigationBar({
 						<SearchBar
 							setExcursions={setExcursions}
 							id="searchBar-md-lg"
-							onFetchStart={onExcursionsFetchStart}
-							onFetchEnd={onExcursionsFetchEnd}
+							onFetchStart={onExcursionsFetchStart} // <--- Pasar prop
+							onFetchEnd={onExcursionsFetchEnd} // <--- Pasar prop
 						/>
 					</div>
 				</div>
@@ -173,8 +172,8 @@ function NavigationBar({
 					<SearchBar
 						setExcursions={setExcursions}
 						id="searchBar-sm"
-						onFetchStart={onExcursionsFetchStart}
-						onFetchEnd={onExcursionsFetchEnd}
+						onFetchStart={onExcursionsFetchStart} // <--- Pasar prop
+						onFetchEnd={onExcursionsFetchEnd} // <--- Pasar prop
 					/>
 				</div>
 				{/* --- Final de contenedor de la derecha --- */}
@@ -199,12 +198,5 @@ function NavigationBar({
 		</Navbar>
 	);
 }
-
-NavigationBar.propTypes = {
-	setExcursions: PropTypes.func.isRequired,
-	onExcursionsFetchStart: PropTypes.func.isRequired,
-	onExcursionsFetchEnd: PropTypes.func.isRequired,
-	isAuthCheckComplete: PropTypes.bool.isRequired,
-};
 
 export default NavigationBar;
