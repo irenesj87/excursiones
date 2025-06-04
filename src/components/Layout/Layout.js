@@ -16,11 +16,11 @@ import styles from "../../css/Layout.module.css";
 // Este es el Layout. Aquí va la estructura de la página
 const Layout = () => {
 	const loginDispatch = useDispatch();
-	/* Array de excursiones que se necesita en cada momento, ya sea para mostrar todas las excursiones, 
-	las de los filtros o la búsqueda */
+	/* Array de excursiones que se necesita en cada momento, ya sea para mostrar todas las excursiones, las de los filtros o 
+	la búsqueda */
 	const [excursionArray, setExcursionArray] = useState([]);
 	// Estado para saber si la comprobación inicial de autenticación ha terminado
-	const [isLoadingExcursions, setIsLoadingExcursions] = useState(true); // Inicia en true para la carga inicial
+	const [isLoadingExcursions, setIsLoadingExcursions] = useState(true);
 	const [fetchExcursionsError, setFetchExcursionsError] = useState(null);
 	// Estado para saber si la comprobación inicial de autenticación ha terminado
 	const [isAuthCheckComplete, setIsAuthCheckComplete] = useState(false);
