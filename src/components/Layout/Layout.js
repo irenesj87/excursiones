@@ -9,13 +9,17 @@ import Excursions from "../Excursions";
 import OriginalFooter from "../Footer"; // Se renombra la importación original para que no haya conflictos
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../../css/Layout.module.css";
-// Carga lazy para componentes de ruta
+/**
+ * Lazy loading para componentes de ruta. El lazy loading permite que los componentes se carguen sólo cuando el usuario lo
+ * necesita, así se mejoran los tiempos iniciales de carga de la página y se mejora la experiencia de usuario. Se utiliza
+ * React.lazy y Suspense
+ */
 const RegisterPage = lazy(() => import("../RegisterPage"));
 const LoginPage = lazy(() => import("../LoginPage"));
 const UserPage = lazy(() => import("../UserPage"));
 /**
- * Versión memoizada del Footer para que no se re-renderice si Layout se actualiza. Esto se puede hacer cuando un componente
- * recibe props que no cambian con frecuencia o incluso un componente que no recibe props
+ * Versión memoizada del Footercon React.memo. La memoización es una técnica de optimización donde se cachean los resultados para que no 
+ * se tenga que re-renderizar una función o un componente. Así se mejoran los tiempos de ejecución de la página.
  */
 const Footer = memo(OriginalFooter);
 
@@ -135,7 +139,11 @@ const Layout = () => {
 			<Container className={styles.mainContentWrapper} fluid>
 				<main className={styles.mainContent}>
 					<Suspense
-						fallback={<div className="text-center p-5">Cargando página...</div>}
+						fallback={
+							<div className="d-flex justify-content-center align-items-center fw-bold p-5 flex-grow-1">
+								Cargando página...
+							</div>
+						}
 					>
 						<Row className="flex-grow-1 d-flex justify-content-center">
 							<Routes>
