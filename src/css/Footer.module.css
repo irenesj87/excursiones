@@ -15,9 +15,3 @@
 		}
 	}
 }
-
-@media (min-width: 1024px) {
-	.footer {
-		padding-left: 5rem;
-	}
-}

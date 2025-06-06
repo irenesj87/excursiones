@@ -1,17 +1,23 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, lazy, Suspense, memo } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { login, logout } from "../../slicers/loginSlice";
 import { Routes, Route } from "react-router-dom";
 import NavigationBar from "../NavigationBar";
-import RegisterPage from "../RegisterPage";
-import LoginPage from "../LoginPage";
 import Filters from "../Filters";
 import Excursions from "../Excursions";
-import UserPage from "../UserPage";
-import Footer from "../Footer";
+import OriginalFooter from "../Footer"; // Se renombra la importación original para que no haya conflictos
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../../css/Layout.module.css";
+// Carga lazy para componentes de ruta
+const RegisterPage = lazy(() => import("../RegisterPage"));
+const LoginPage = lazy(() => import("../LoginPage"));
+const UserPage = lazy(() => import("../UserPage"));
+/**
+ * Versión memoizada del Footer para que no se re-renderice si Layout se actualiza. Esto se puede hacer cuando un componente
+ * recibe props que no cambian con frecuencia o incluso un componente que no recibe props
+ */
+const Footer = memo(OriginalFooter);
 
 // Este es el Layout. Aquí va la estructura de la página
 const Layout = () => {
@@ -19,21 +25,19 @@ const Layout = () => {
 	/* Array de excursiones que se necesita en cada momento, ya sea para mostrar todas las excursiones, las de los filtros o 
 	la búsqueda */
 	const [excursionArray, setExcursionArray] = useState([]);
-	// Estado para saber si la comprobación inicial de autenticación ha terminado
+	// Estado para saber si la carga de excursiones ha terminado
 	const [isLoadingExcursions, setIsLoadingExcursions] = useState(true);
+	// Estado que dice si ha habido algún problema al cargar las excursiones
 	const [fetchExcursionsError, setFetchExcursionsError] = useState(null);
-	// Estado para saber si la comprobación inicial de autenticación ha terminado
+	// Estado para saber si la comprobación inicial de autenticación del usuario ha terminado
 	const [isAuthCheckComplete, setIsAuthCheckComplete] = useState(false);
 
-	/* useEffect que controla el token en sessionStorage. El token se guarda en sessionStorage para que el usuario pueda 
-	 quedarse logueado */
+	/* useEffect que controla el token en sessionStorage. Se guarda el token actual en sessionStorage y se loguea al usuario 
+	de nuevo en caso de que se refresque la página. Con esto el usuario no perderá su sesión, es decir, se queda logueado */
 	useEffect(() => {
-		/* Esta función guarda el token actual y loguea al usuario de nuevo en caso de que se refresque la página. 
-		Con esto el usuario no perderá su sesión */
 		const verifyAuthStatus = async () => {
-			setIsAuthCheckComplete(false); // Iniciar la comprobación
 			// Coge el token de la sessionStorage del navegador
-			const sessionToken = sessionStorage["token"];
+			const sessionToken = sessionStorage.getItem("token");
 			// Variable que tiene la url para hacer el fetch
 			const url = `http://localhost:3001/token/${sessionToken}`;
 			// Variable que guarda las opciones que se necesitan para el fetch
@@ -43,13 +47,23 @@ const Layout = () => {
 				headers: { "Content-Type": "application/json" },
 			};
 
-			// Si hay token
-			if (sessionToken) {
-				try {
+			try {
+				// Si hay token
+				if (sessionToken) {
 					// Esperamos a la respuesta del servidor
 					const response = await fetch(url, options);
-					if (response.status === 404) {
-						throw new Error("Token not found or invalid");
+					if (!response.ok) {
+						let errorMessage = `Error de validación del token: ${response.status}`;
+						try {
+							const errorData = await response.json();
+							errorMessage = errorData.message || errorMessage;
+						} catch (e) {
+							// Si la respuesta no es JSON, usar el statusText o el mensaje por defecto
+							errorMessage = response.statusText || errorMessage;
+							console.log(e);
+						}
+						console.log(errorMessage);
+						throw new Error(errorMessage);
 					}
 					// Pasa la respuesta en JSON del servidor a un objeto JavaScript
 					const data = await response.json();
@@ -60,29 +74,40 @@ const Layout = () => {
 							token: data.token,
 						})
 					);
-					// Si hay un error
-				} catch (error) {
-					console.error("Token validation error:", error);
+				}
+				// Si no hay token, el usuario permanece en el estado inicial (deslogueado por defecto en Redux)
+			} catch (error) {
+				console.error(
+					"Error en la verificación del estado de autenticación:",
+					error.message
+				);
+				if (sessionToken) {
+					// Solo desloguear y limpiar si se intentó validar un token
 					// Se desloguea al usuario...
 					loginDispatch(logout());
 					// ...y se elimina el token de la sessionStorage
 					sessionStorage.removeItem("token");
-				} finally {
-					setIsAuthCheckComplete(true); // Marcar como completa independientemente del resultado
 				}
-			} else {
-				setIsAuthCheckComplete(true); // Marcar como completa si no hay token
+			} finally {
+				setIsAuthCheckComplete(true); // Marcar autenticación del usuario como completa independientemente del resultado
 			}
 		};
 		verifyAuthStatus();
 	}, [loginDispatch]);
 
-	// Callbacks para SearchBar y carga inicial de excursiones
+	/**
+	 * Callback para indicar el inicio de una operación de fetch de excursiones.
+	 * Establece isLoadingExcursions a true y resetea fetchExcursionsError.
+	 */
 	const handleExcursionsFetchStart = useCallback(() => {
 		setIsLoadingExcursions(true);
 		setFetchExcursionsError(null);
 	}, []);
 
+	/**
+	 * Callback para indicar el fin de una operación de fetch de excursiones.
+	 * Establece isLoadingExcursions a false y guarda el error si lo hay.
+	 */
 	const handleExcursionsFetchEnd = useCallback((error) => {
 		if (error) {
 			setFetchExcursionsError(error); // Asume que 'error' es un objeto de error o un mensaje
@@ -90,7 +115,7 @@ const Layout = () => {
 		setIsLoadingExcursions(false);
 	}, []);
 
-	// El componente Excursions ahora recibirá isLoading y error para manejar su propia UI.
+	// El componente Excursions recibirá isLoading y error para manejar su propia UI.
 	const excursionsContent = (
 		<Excursions
 			excursionData={excursionArray}
@@ -109,51 +134,55 @@ const Layout = () => {
 			/>
 			<Container className={styles.mainContentWrapper} fluid>
 				<main className={styles.mainContent}>
-					<Row className="flex-grow-1 d-flex justify-content-center">
-						<Routes>
-							{/* Define la ruta por defecto */}
-							<Route
-								path="/"
-								element={
-									<>
-										<Col xs={12} md={4} lg={3} xl={2}>
-											<Filters />
+					<Suspense
+						fallback={<div className="text-center p-5">Cargando página...</div>}
+					>
+						<Row className="flex-grow-1 d-flex justify-content-center">
+							<Routes>
+								{/* Define la ruta por defecto */}
+								<Route
+									path="/"
+									element={
+										<>
+											<Col xs={12} md={4} lg={3} xl={2}>
+												<Filters />
+											</Col>
+											<Col
+												className={`d-flex flex-column ${styles.contentMinHeight}`}
+											>
+												{excursionsContent}
+											</Col>
+										</>
+									}
+								/>
+								{/* Define las rutas para los componentes Register, LoginPage y UserPage */}
+								<Route
+									path="registerPage"
+									element={
+										<Col xs={12}>
+											<RegisterPage />
 										</Col>
-										<Col
-											className={`d-flex flex-column ${styles.contentMinHeight}`}
-										>
-											{excursionsContent}
+									}
+								/>
+								<Route
+									path="loginPage"
+									element={
+										<Col xs={12}>
+											<LoginPage />
 										</Col>
-									</>
-								}
-							/>
-							{/* Define las rutas para los componentes Register, LoginPage y UserPage */}
-							<Route
-								path="registerPage"
-								element={
-									<Col xs={12}>
-										<RegisterPage />
-									</Col>
-								}
-							/>
-							<Route
-								path="loginPage"
-								element={
-									<Col xs={12}>
-										<LoginPage />
-									</Col>
-								}
-							/>
-							<Route
-								path="userPage"
-								element={
-									<Col xs={12}>
-										<UserPage />
-									</Col>
-								}
-							/>
-						</Routes>
-					</Row>
+									}
+								/>
+								<Route
+									path="userPage"
+									element={
+										<Col xs={12}>
+											<UserPage />
+										</Col>
+									}
+								/>
+							</Routes>
+						</Row>
+					</Suspense>
 				</main>
 			</Container>
 			<Footer />
