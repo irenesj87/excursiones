@@ -13,7 +13,6 @@ function UserPage() {
 	);
 	// State for saving the user's excursions info
 	const [userExcursions, setUserExcursions] = useState([]);
-	//
 	const excursionsUrl = `http://localhost:3001/excursions`;
 
 	// Fetch the user's excursions data

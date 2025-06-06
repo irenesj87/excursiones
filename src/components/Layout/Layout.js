@@ -1,12 +1,11 @@
 import { useState, useEffect, useCallback, lazy, Suspense, memo } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login, logout } from "../../slicers/loginSlice";
-import { Routes, Route } from "react-router-dom";
 import NavigationBar from "../NavigationBar";
 import Filters from "../Filters";
 import Excursions from "../Excursions";
-//import UserPage from "../UserPage";
 import OriginalFooter from "../Footer"; // Se renombra la importación original para que no haya conflictos
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../../css/Layout.module.css";
