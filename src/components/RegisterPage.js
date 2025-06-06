@@ -1,4 +1,3 @@
-import React from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import RegisterForm from "./RegisterForm";
 import "bootstrap/dist/css/bootstrap.css";

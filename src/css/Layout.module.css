@@ -18,11 +18,12 @@
 	--danger-color: #dc3545;
 	--logout-bg-color: rgb(80, 73, 73);
 	--logout-bg-color-hover: rgb(100, 93, 93);
+	--minHeight: 1020.76px;
 	font-size: 16px;
 }
 
 .contentMinHeight {
-	min-height: 1020.76px;
+	min-height: var(--minHeight);
 }
 
 .layout {

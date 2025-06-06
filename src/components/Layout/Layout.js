@@ -6,28 +6,30 @@ import { Routes, Route } from "react-router-dom";
 import NavigationBar from "../NavigationBar";
 import Filters from "../Filters";
 import Excursions from "../Excursions";
+//import UserPage from "../UserPage";
 import OriginalFooter from "../Footer"; // Se renombra la importación original para que no haya conflictos
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../../css/Layout.module.css";
 /**
  * Lazy loading para componentes de ruta. El lazy loading permite que los componentes se carguen sólo cuando el usuario lo
- * necesita, así se mejoran los tiempos iniciales de carga de la página y se mejora la experiencia de usuario. Se utiliza
- * React.lazy y Suspense
+ * necesita, así se mejoran los tiempos iniciales de carga de la página y se mejora la experiencia de usuario.
  */
 const RegisterPage = lazy(() => import("../RegisterPage"));
 const LoginPage = lazy(() => import("../LoginPage"));
 const UserPage = lazy(() => import("../UserPage"));
 /**
- * Versión memoizada del Footercon React.memo. La memoización es una técnica de optimización donde se cachean los resultados para que no 
- * se tenga que re-renderizar una función o un componente. Así se mejoran los tiempos de ejecución de la página.
+ * La memoización es una técnica de optimización donde se cachean los resultados para que no se tenga que re-renderizar una
+ * función o un componente. Así se mejoran los tiempos de ejecución de la página.
  */
 const Footer = memo(OriginalFooter);
 
 // Este es el Layout. Aquí va la estructura de la página
 const Layout = () => {
 	const loginDispatch = useDispatch();
-	/* Array de excursiones que se necesita en cada momento, ya sea para mostrar todas las excursiones, las de los filtros o 
-	la búsqueda */
+	/**
+	 * Array de excursiones que se necesita en cada momento, ya sea para mostrar todas las excursiones, las de los filtros o
+	 * la búsqueda
+	 */
 	const [excursionArray, setExcursionArray] = useState([]);
 	// Estado para saber si la carga de excursiones ha terminado
 	const [isLoadingExcursions, setIsLoadingExcursions] = useState(true);
@@ -36,8 +38,9 @@ const Layout = () => {
 	// Estado para saber si la comprobación inicial de autenticación del usuario ha terminado
 	const [isAuthCheckComplete, setIsAuthCheckComplete] = useState(false);
 
-	/* useEffect que controla el token en sessionStorage. Se guarda el token actual en sessionStorage y se loguea al usuario 
-	de nuevo en caso de que se refresque la página. Con esto el usuario no perderá su sesión, es decir, se queda logueado */
+	/** useEffect que controla el token en sessionStorage. Se guarda el token actual en sessionStorage y se loguea al usuario
+	 * de nuevo en caso de que se refresque la página. Con esto el usuario no perderá su sesión, es decir, se queda logueado
+	 */
 	useEffect(() => {
 		const verifyAuthStatus = async () => {
 			// Coge el token de la sessionStorage del navegador
@@ -140,7 +143,9 @@ const Layout = () => {
 				<main className={styles.mainContent}>
 					<Suspense
 						fallback={
-							<div className="d-flex justify-content-center align-items-center fw-bold p-5 flex-grow-1">
+							<div
+								className={`${styles.contentMinHeight} d-flex justify-content-center align-items-center fw-bold p-5 flex-grow-1`}
+							>
 								Cargando página...
 							</div>
 						}
