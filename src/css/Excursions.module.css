@@ -8,11 +8,21 @@
 
 .title {
 	margin-top: 40px;
+	padding-left: 30px;
 	padding-bottom: 30px;
 	color: var(--primary-color);
 	font-weight: bold;
 	text-align: center;
 	text-transform: uppercase;
+}
+
+/* Aplicar el desplazamiento del título solo en breakpoints grandes (lg y superiores) */
+@media (min-width: 1231px) {
+	.title {
+		/* Para mover visualmente el título un poco más a la izquierda
+		   desde su posición actual. */
+		transform: translateX(-50px);
+	}
 }
 
 .messageNotFound {
