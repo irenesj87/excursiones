@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo, useMemo } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import "bootstrap/dist/css/bootstrap.css";
@@ -18,7 +18,7 @@ const getDifficultyBadgeClass = (difficulty) => {
 	}
 };
 
-function ExcursionCard({
+const ExcursionCard = memo(function ExcursionCard({
 	name,
 	area,
 	description,
@@ -31,7 +31,7 @@ function ExcursionCard({
 	// useState que dice si una descripción está expandida o no
 	const [isExpanded, setIsExpanded] = useState(false);
 	// Límite de caracteres para la descripción truncada
-	const MAX_LENGTH = 150; 
+	const MAX_LENGTH = 150;
 
 	const toggleReadMore = (e) => {
 		e.preventDefault(); // Prevenir cualquier comportamiento por defecto si es un enlace
@@ -39,10 +39,12 @@ function ExcursionCard({
 	};
 
 	// Constante que muestra la descripción entera si hay menos de 150 caracteres o la muestra truncada si hay más
-	const displayDescription =
-		description && description.length > MAX_LENGTH && !isExpanded
+	const displayDescription = useMemo(() => {
+		if (!description) return "";
+		return description.length > MAX_LENGTH && !isExpanded
 			? `${description.substring(0, MAX_LENGTH)}...`
 			: description;
+	}, [description, isExpanded, MAX_LENGTH]);
 
 	return (
 		<Card className={styles.excursionItemCard}>
@@ -63,9 +65,13 @@ function ExcursionCard({
 								className={`${styles.readMoreLink} p-0 mt-1 d-flex align-items-center`} // Cambiado a d-flex para que ocupe su propia línea
 							>
 								{isExpanded ? (
-									<>Leer menos <FiChevronUp className="ms-1" /></>
+									<>
+										Leer menos <FiChevronUp className="ms-1" />
+									</>
 								) : (
-									<>Leer más <FiChevronDown className="ms-1" /></>
+									<>
+										Leer más <FiChevronDown className="ms-1" />
+									</>
 								)}
 							</Button>
 						)}
@@ -109,6 +115,6 @@ function ExcursionCard({
 			</Card.Body>
 		</Card>
 	);
-}
+});
 
 export default ExcursionCard;

@@ -7,6 +7,7 @@ import NavigationBar from "../NavigationBar";
 import Filters from "../Filters";
 import Excursions from "../Excursions";
 import OriginalFooter from "../Footer"; // Se renombra la importación original para que no haya conflictos
+import DelayedFallback from "../DelayedFallback";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../../css/Layout.module.css";
 /**
@@ -58,13 +59,18 @@ const Layout = () => {
 				if (sessionToken) {
 					// Esperamos a la respuesta del servidor
 					const response = await fetch(url, options);
+					// Si ha habido un error
 					if (!response.ok) {
 						let errorMessage = `Error de validación del token: ${response.status}`;
 						try {
+							/**
+							 * Se intenta obtener un mensaje de error más descriptivo (algunos servidores retornan
+							 * una respuesta en JSON que contiene datos adicionales del error)
+							 */
 							const errorData = await response.json();
 							errorMessage = errorData.message || errorMessage;
 						} catch (e) {
-							// Si la respuesta no es JSON, usar el statusText o el mensaje por defecto
+							// Si la respuesta no es JSON o no se envía, usar el statusText o el mensaje por defecto
 							errorMessage = response.statusText || errorMessage;
 							console.log(e);
 						}
@@ -141,12 +147,16 @@ const Layout = () => {
 			<Container className={styles.mainContentWrapper} fluid>
 				<main className={styles.mainContent}>
 					<Suspense
+						// Usar DelayedFallback para el mensaje de "Cargando página..."
 						fallback={
-							<div
+							<DelayedFallback
+								delay={500} // Ajusta el delay según sea necesario
+								// Estas clases se aplican al div raíz de DelayedFallback, asegurando que ocupe espacio.
 								className={`${styles.contentMinHeight} d-flex justify-content-center align-items-center fw-bold p-5 flex-grow-1`}
 							>
+								{/* Este es el contenido que se mostrará dentro del div de DelayedFallback después del retraso */}
 								Cargando página...
-							</div>
+							</DelayedFallback>
 						}
 					>
 						<Row className="flex-grow-1 d-flex justify-content-center">
