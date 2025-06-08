@@ -2,6 +2,7 @@
 /* --- ESTILOS PARA MODO CLARO --- */
 /* ======================================== */
 html.light body {
+	transition: none;
 	background-color: var(--background-color-light);
 	color: var(--text-color-light);
 	--register-link-color: var(--text-color-light);
@@ -73,12 +74,18 @@ html.light body {
 	.offcanvas-body .nav-link[class*="logoutLink"] {
 		color: var(--text-color-dark);
 	}
+
+	/* --- Estilos para Paginación (Enlaces) --- */
+	.page-link {
+		transition: none; /* Eliminar transición para los enlaces de paginación */
+	}
 }
 
 /* ======================================== */
 /* --- ESTILOS PARA MODO OSCURO --- */
 /* ======================================== */
 html.dark body {
+	transition: none; /* Eliminar transición para el body en cambio de tema */
 	background-color: var(--background-color-dark);
 	color: var(--text-color-dark);
 	--register-link-color: var(--text-color-dark);
@@ -170,6 +177,33 @@ html.dark body {
 
 	.form-control-plaintext[readonly] {
 		color: var(--text-color-dark);
+	}
+
+	/* --- Estilos para Paginación --- */
+	.pagination {
+		--bs-pagination-color: var(--text-color-dark);
+		--bs-pagination-bg: var(--surface-color-dark);
+		--bs-pagination-border-color: var(--border-color-dark);
+		--bs-pagination-hover-color: var(--text-color-dark);
+		/* Un fondo ligeramente diferente para el hover */
+		--bs-pagination-hover-bg: #2a2a2a;
+		--bs-pagination-hover-border-color: var(--border-color-dark);
+		--bs-pagination-focus-color: var(--text-color-dark);
+		--bs-pagination-focus-bg: #333333; /* Un poco más oscuro para el foco */
+		/* Sombra de foco genérica, ya que --primary-color-rgb no está definido */
+		--bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(130, 138, 145, 0.25);
+
+		--bs-pagination-active-color: #fff; /* Texto blanco para el elemento activo */
+
+		--bs-pagination-disabled-color: var(--subtle-text-color-dark);
+		/* Mismo fondo que el normal para deshabilitados, pero con texto atenuado */
+		--bs-pagination-disabled-bg: var(--surface-color-dark);
+		--bs-pagination-disabled-border-color: var(--border-color-dark);
+	}
+
+	/* --- Estilos para Paginación (Enlaces) --- */
+	.page-link {
+		transition: none; /* Eliminar transición para los enlaces de paginación */
 	}
 
 	/* --- Estilos para el Offcanvas --- */

@@ -94,7 +94,6 @@ function UserPage() {
 						</Card.Header>
 						<Card.Body
 							className={`${styles.cardBody} d-flex flex-column flex-grow-1`}
-							style={{ minHeight: "35vh" }}
 						>
 							{/* Contenedor para la lista o los mensajes, para que ocupe el espacio disponible antes de la paginación */}
 							<div className="flex-grow-1">

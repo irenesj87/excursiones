@@ -92,15 +92,15 @@ const ExcursionCard = memo(function ExcursionCard({
 				{isLoggedIn && (
 					<div className="mt-auto pt-3 border-top">
 						{isJoined ? (
-							// Centramos el texto "Apuntado/a"
-							<div className={styles.joinedText}>
+							// Alineamos el texto "Apuntado/a" a la derecha en pantallas sm y mayores
+							<div className="text-center text-sm-end">
 								<span className="text-success text-uppercase fw-bold">
 									Apuntado/a
 								</span>
 							</div>
 						) : (
-							// justify-content-center en la Row centrará la Col de ancho automático en breakpoints 'sm' y mayores.
-							<Row className="justify-content-center gx-0">
+							// justify-content-end en la Row alineará la Col a la derecha en breakpoints 'sm' y mayores.
+							<Row className="justify-content-sm-end gx-0">
 								<Col xs={12} sm="auto">
 									{/* xs={12} para ancho completo en pequeño, sm="auto" para ancho de contenido en sm+ */}
 									<Button onClick={onJoin} className="w-100">
