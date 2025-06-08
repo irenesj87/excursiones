@@ -93,7 +93,7 @@ const ExcursionCard = memo(function ExcursionCard({
 					<div className="mt-auto pt-3 border-top">
 						{isJoined ? (
 							// Centramos el texto "Apuntado/a"
-							<div className="text-center">
+							<div className={styles.joinedText}>
 								<span className="text-success text-uppercase fw-bold">
 									Apuntado/a
 								</span>

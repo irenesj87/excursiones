@@ -1,5 +1,13 @@
 import { useState, useEffect } from "react";
-import { Col, Row, Container, Card, Spinner, Alert, Pagination } from "react-bootstrap"; // Importar Pagination
+import {
+	Col,
+	Row,
+	Container,
+	Card,
+	Spinner,
+	Alert,
+	Pagination,
+} from "react-bootstrap"; // Importar Pagination
 import { useSelector } from "react-redux";
 import ExcursionCard from "./ExcursionCard";
 import "bootstrap/dist/css/bootstrap.css";
@@ -8,7 +16,7 @@ import UserInfoForm from "./UserInfoForm";
 
 function UserPage() {
 	// Constante para el número de excursiones por página
-	const ITEMS_PER_PAGE = 2; // Puedes ajustar este número (ej. 2 o 3)
+	const ITEMS_PER_PAGE = 2;
 
 	// This useSelector gives us the info if an user is logged or not
 	const { login: isLoggedIn, user } = useSelector(
@@ -78,22 +86,25 @@ function UserPage() {
 				{/* The Col should also be a flex column to allow its child (Card) to grow */}
 				<Col xs="12" md="12" lg="9" xl="10" className="d-flex flex-column">
 					{/* The Card should be a flex column and grow */}
-					<Card className={`${styles.excursionsCard} d-flex flex-column flex-grow-1`}>
+					<Card
+						className={`${styles.excursionsCard} d-flex flex-column flex-grow-1`}
+					>
 						<Card.Header className={styles.cardHeader}>
 							Excursiones a las que te has apuntado
 						</Card.Header>
-						{/* Aplicamos d-flex, flex-column, y flex-grow-1 para que el Card.Body se expanda.
-						    Añadimos style={{ minHeight: '40vh' }} para asegurar una altura mínima para esta sección.
-						    Ajusta '40vh' según sea necesario para que el contenido (cards + paginación) quepa y estabilice el footer.
-						*/}
-						<Card.Body className={`${styles.cardBody} d-flex flex-column flex-grow-1`} style={{ minHeight: '35vh' }}>
+						<Card.Body
+							className={`${styles.cardBody} d-flex flex-column flex-grow-1`}
+							style={{ minHeight: "35vh" }}
+						>
 							{/* Contenedor para la lista o los mensajes, para que ocupe el espacio disponible antes de la paginación */}
 							<div className="flex-grow-1">
 								{isLoading && (
 									// Este div se expandirá para llenar el espacio y centrará su contenido.
 									<div className="text-center d-flex flex-column justify-content-center align-items-center h-100">
 										<Spinner animation="border" role="status">
-											<span className="visually-hidden">Cargando excursiones...</span>
+											<span className="visually-hidden">
+												Cargando excursiones...
+											</span>
 										</Spinner>
 										<p>Cargando tus excursiones...</p>
 									</div>
@@ -109,8 +120,12 @@ function UserPage() {
 											(() => {
 												// Lógica de paginación
 												const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
-												const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
-												const currentItemsToDisplay = userExcursions.slice(indexOfFirstItem, indexOfLastItem);
+												const indexOfFirstItem =
+													indexOfLastItem - ITEMS_PER_PAGE;
+												const currentItemsToDisplay = userExcursions.slice(
+													indexOfFirstItem,
+													indexOfLastItem
+												);
 
 												// Ajusta el número de columnas en md según ITEMS_PER_PAGE
 												// Si ITEMS_PER_PAGE es 1, usa 1 columna. Si es 2, usa 2 columnas. Si es 3, usa 3 columnas (o 2 si el espacio es limitado).
@@ -137,7 +152,9 @@ function UserPage() {
 											})()
 										) : (
 											<div className="d-flex flex-column justify-content-center align-items-center h-100">
-												<p className={`${styles.noExcursionsJoined} no-excursions-text`}>
+												<p
+													className={`${styles.noExcursionsJoined} no-excursions-text`}
+												>
 													Aún no te has apuntado a ninguna excursión.
 												</p>
 											</div>
@@ -147,29 +164,49 @@ function UserPage() {
 							</div>
 
 							{/* Controles de Paginación: Se muestran solo si no está cargando, no hay error y hay más ítems que los que caben en una página */}
-							{!isLoading && !error && userExcursions.length > ITEMS_PER_PAGE && (
-								<div className="d-flex justify-content-center mt-4 pt-3 border-top"> {/* mt-auto para empujar al fondo, o mt-4 para espacio fijo */}
-									<Pagination>
-										<Pagination.Prev
-											onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-											disabled={currentPage === 1}
-										/>
-										{[...Array(Math.ceil(userExcursions.length / ITEMS_PER_PAGE)).keys()].map(number => (
-											<Pagination.Item
-												key={number + 1}
-												active={number + 1 === currentPage}
-												onClick={() => setCurrentPage(number + 1)}
-											>
-												{number + 1}
-											</Pagination.Item>
-										))}
-										<Pagination.Next
-											onClick={() => setCurrentPage(prev => Math.min(prev + 1, Math.ceil(userExcursions.length / ITEMS_PER_PAGE)))}
-											disabled={currentPage === Math.ceil(userExcursions.length / ITEMS_PER_PAGE)}
-										/>
-									</Pagination>
-								</div>
-							)}
+							{!isLoading &&
+								!error &&
+								userExcursions.length > ITEMS_PER_PAGE && (
+									<div className="d-flex justify-content-center mt-4 pt-3 border-top">
+										{" "}
+										{/* mt-auto para empujar al fondo, o mt-4 para espacio fijo */}
+										<Pagination>
+											<Pagination.Prev
+												onClick={() =>
+													setCurrentPage((prev) => Math.max(prev - 1, 1))
+												}
+												disabled={currentPage === 1}
+											/>
+											{[
+												...Array(
+													Math.ceil(userExcursions.length / ITEMS_PER_PAGE)
+												).keys(),
+											].map((number) => (
+												<Pagination.Item
+													key={number + 1}
+													active={number + 1 === currentPage}
+													onClick={() => setCurrentPage(number + 1)}
+												>
+													{number + 1}
+												</Pagination.Item>
+											))}
+											<Pagination.Next
+												onClick={() =>
+													setCurrentPage((prev) =>
+														Math.min(
+															prev + 1,
+															Math.ceil(userExcursions.length / ITEMS_PER_PAGE)
+														)
+													)
+												}
+												disabled={
+													currentPage ===
+													Math.ceil(userExcursions.length / ITEMS_PER_PAGE)
+												}
+											/>
+										</Pagination>
+									</div>
+								)}
 						</Card.Body>
 					</Card>
 				</Col>

@@ -55,3 +55,15 @@
 .readMoreLink:hover {
 	text-decoration: underline;
 }
+
+.joinedText {
+	display: flex;
+	justify-content: center;
+}
+
+@media (min-width: 1231px) {
+	.joinedText {
+		display: flex;
+		justify-content: flex-end;
+	}
+}

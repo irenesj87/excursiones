@@ -107,13 +107,13 @@ function UserInfoForm() {
 							plaintext
 							readOnly
 							/* The user?.mail part attempts to access the mail property of the user object.
-										The key is the ?. It checks if user is null or undefined before trying to access .mail.
-										If user is null or undefined, the expression short-circuits and evaluates to undefined immediately,
-										without throwing an error (which would happen with just user.mail).
-										If user exists, it proceeds to access the mail property.*/
+							The key is the ?. It checks if user is null or undefined before trying to access .mail.
+							If user is null or undefined, the expression short-circuits and evaluates to undefined immediately,
+							without throwing an error (which would happen with just user.mail).
+							If user exists, it proceeds to access the mail property.*/
 							/* The operator (??) provides a default value. It checks if the value on its left-hand side (user?.mail in this case) is either null or undefined.
-										If the left-hand side is null or undefined, it returns the value on the right-hand side (which is "", an empty string).
-										If the left-hand side has any other value (including an empty string "", 0, false, etc.), it returns that left-hand side value.*/
+							If the left-hand side is null or undefined, it returns the value on the right-hand side (which is "", an empty string).
+							If the left-hand side has any other value (including an empty string "", 0, false, etc.), it returns that left-hand side value.*/
 							defaultValue={user?.mail ?? ""}
 						/>
 					</Col>
@@ -176,15 +176,11 @@ function UserInfoForm() {
 					// Usamos Row y Col para el botón Editar para un control de ancho más robusto.
 					// El div externo ya no necesita ser d-flex; Row y Col se encargarán.
 					<div className="mt-5 border-top pt-3">
-						<Row className="justify-content-center gx-0">
-							{" "}
+						<Row className="justify-content-center justify-content-sm-end gx-0">
 							{/* gx-0 para eliminar gutters si no son necesarios */}
 							<Col xs={12} sm="auto">
-								{" "}
 								{/* xs={12} para ancho completo en pequeño, sm="auto" para ancho de contenido en sm+ */}
 								<Button onClick={startEdit} className="w-100">
-									{" "}
-									{/* w-100 para que el botón llene la Col */}
 									Editar
 								</Button>
 							</Col>
@@ -195,7 +191,7 @@ function UserInfoForm() {
 					// Contenedor para margen superior y borde.
 					// El layout de los botones se maneja con Row y Col.
 					<div className="mt-5 border-top pt-3">
-						<Row className="justify-content-center gx-2">
+						<Row className="justify-content-center justify-content-sm-end gx-2">
 							{" "}
 							{/* gx-2 para espaciado horizontal entre columnas */}
 							{/* Cada botón ocupa la mitad del ancho en xs, y ancho automático en sm+ */}
