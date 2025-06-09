@@ -13,6 +13,7 @@ import ExcursionCard from "./ExcursionCard";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/UserPage.module.css";
 import UserInfoForm from "./UserInfoForm";
+import DelayedFallback from "./DelayedFallback"; // Importar DelayedFallback
 
 function UserPage() {
 	// Constante para el número de excursiones por página
@@ -98,16 +99,18 @@ function UserPage() {
 							{/* Contenedor para la lista o los mensajes, para que ocupe el espacio disponible antes de la paginación */}
 							<div className="flex-grow-1">
 								{isLoading && (
-									// Este div se expandirá para llenar el espacio y centrará su contenido.
-									<div className="text-center d-flex flex-column justify-content-center align-items-center h-100">
+									<DelayedFallback
+										delay={300} // Retraso en milisegundos antes de mostrar el spinner
+										className="text-center d-flex flex-column justify-content-center align-items-center h-100"
+									>
 										<Spinner animation="border" role="status">
-											<span className="visually-hidden">
-												Cargando excursiones...
-											</span>
+											<span className="visually-hidden">Cargando...</span>
 										</Spinner>
-										<p>Cargando tus excursiones...</p>
-									</div>
+										<p className="mt-2">Cargando tus excursiones...</p>
+									</DelayedFallback>
 								)}
+								{/* El error se muestra si !isLoading Y hay error. */}
+								{/* Si isLoading es true, DelayedFallback (con el spinner) tiene prioridad o no se muestra nada si el delay no ha pasado. */}
 								{error && !isLoading && (
 									<div className="d-flex flex-column justify-content-center align-items-center h-100">
 										<Alert variant="danger">{error}</Alert>

@@ -104,8 +104,8 @@ export function LoginForm() {
 					autocomplete="current-password"
 				/>
 				<div className="mt-5 pt-3 border-top">
-					{/* justify-content-center centrará la Col en breakpoints sm y mayores */}
-					<Row className="justify-content-center">
+					{/* justify-content-sm-end alineará la Col a la derecha en breakpoints sm y mayores */}
+					<Row className="justify-content-sm-end">
 						{/* xs={12} hace que la Col ocupe el ancho en pantallas extra pequeñas */}
 						{/* sm="auto" hace que la Col se ajuste al contenido en pantallas sm y mayores */}
 						<Col xs={12} sm="auto">

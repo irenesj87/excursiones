@@ -20,7 +20,7 @@
 	.title {
 		/* Para mover visualmente el título un poco más a la izquierda
 		   desde su posición actual. */
-		transform: translateX(-45px);
+		transform: translateX(-40px);
 	}
 }
 

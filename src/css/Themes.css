@@ -60,14 +60,9 @@ html.light body {
 		margin-bottom: 0.6rem;
 		color: var(--text-color-light);
 		padding: 0.6rem 1rem;
-		display: block;
 		text-decoration: none;
 		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 		border-radius: 0.375rem;
-	}
-
-	.offcanvas-body .nav-link {
-		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out; /* Ensure transition is here */
 	}
 
 	.offcanvas-body .nav-link[class*="loginLink"],
@@ -90,6 +85,9 @@ html.dark body {
 	color: var(--text-color-dark);
 	--register-link-color: var(--text-color-dark);
 	--register-link-border-color: var(--text-color-dark);
+	/* Definimos el color para texto sutil/deshabilitado en modo oscuro */
+	/* Este color (blanco con 35% de opacidad) se usará para placeholders, controles deshabilitados y paginación deshabilitada */
+	--subtle-text-color-dark: rgba(255, 255, 255, 0.35);
 
 	/* --- Estilos para la barra de navegación --- */
 	.customNavbar {
@@ -199,6 +197,7 @@ html.dark body {
 		/* Mismo fondo que el normal para deshabilitados, pero con texto atenuado */
 		--bs-pagination-disabled-bg: var(--surface-color-dark);
 		--bs-pagination-disabled-border-color: var(--border-color-dark);
+		--bs-tertiary-bg-rgb: 58, 58, 58; /* Un gris oscuro para fondos terciarios */
 	}
 
 	/* --- Estilos para Paginación (Enlaces) --- */

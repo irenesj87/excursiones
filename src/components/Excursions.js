@@ -74,7 +74,6 @@ function Excursions({ excursionData, isLoading, error }) {
 					<Col xs={12} xl={10}>
 						<h2 className={styles.title}>Próximas excursiones</h2>
 						<div>
-							{" "}
 							{/* Contenedor para los excursionComponents */}
 							{excursionComponents}
 						</div>

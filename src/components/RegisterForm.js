@@ -171,9 +171,9 @@ function RegisterForm() {
 				</ul>
 				{/* Modificamos el contenedor del botón para usar Row y Col */}
 				{/* mt-5 pt-3 border-top se mantiene para los estilos visuales */}
-				<div className="mt-5 pt-3 border-top">
-					{/* justify-content-center centrará la Col en breakpoints sm y mayores */}
-					<Row className="justify-content-center">
+				<div className="mt-5 pt-3 border-top">					
+					{/* justify-content-sm-end alineará la Col a la derecha en breakpoints sm y mayores */}
+					<Row className="justify-content-sm-end">
 						{/* xs={12} hace que la Col ocupe el ancho en pantallas extra pequeñas */}
 						{/* sm="auto" hace que la Col se ajuste al contenido en pantallas sm y mayores */}
 						<Col xs={12} sm="auto">

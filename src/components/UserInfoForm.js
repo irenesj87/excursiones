@@ -192,19 +192,16 @@ function UserInfoForm() {
 					// El layout de los botones se maneja con Row y Col.
 					<div className="mt-5 border-top pt-3">
 						<Row className="justify-content-center justify-content-sm-end gx-2">
-							{" "}
 							{/* gx-2 para espaciado horizontal entre columnas */}
 							{/* Cada botón ocupa la mitad del ancho en xs, y ancho automático en sm+ */}
 							<Col xs={6} sm="auto">
 								<Button variant="danger" onClick={cancelEdit} className="w-100">
-									{" "}
 									{/* w-100 para llenar la Col */}
 									Cancelar
 								</Button>
 							</Col>
 							<Col xs={6} sm="auto">
 								<Button variant="success" onClick={saveEdit} className="w-100">
-									{" "}
 									{/* w-100 para llenar la Col */}
 									Guardar
 								</Button>
