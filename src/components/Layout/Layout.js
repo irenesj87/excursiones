@@ -144,22 +144,23 @@ const Layout = () => {
 				onExcursionsFetchEnd={handleExcursionsFetchEnd}
 				isAuthCheckComplete={isAuthCheckComplete}
 			/>
-			<Container className={styles.mainContentWrapper} fluid>
-				<main className={styles.mainContent}>
+			{/* Aseguramos que el wrapper y main sean flex containers que permitan crecer a sus hijos */}
+			<Container className={`${styles.mainContentWrapper} flex-grow-1 d-flex flex-column`} fluid>
+				<main className={`${styles.mainContent} flex-grow-1 d-flex flex-column`}>
 					<Suspense
 						// Usar DelayedFallback para el mensaje de "Cargando página..."
 						fallback={
 							<DelayedFallback
 								delay={500} // Ajusta el delay según sea necesario
-								// Estas clases se aplican al div raíz de DelayedFallback, asegurando que ocupe espacio.
-								className={`${styles.contentMinHeight} d-flex justify-content-center align-items-center fw-bold p-5 flex-grow-1`}
+								// Eliminamos styles.contentMinHeight. flex-grow-1 es suficiente.
+								className={`d-flex justify-content-center align-items-center fw-bold p-5 flex-grow-1`}
 							>
 								{/* Este es el contenido que se mostrará dentro del div de DelayedFallback después del retraso */}
 								Cargando página...
 							</DelayedFallback>
 						}
 					>
-						<Row className="flex-grow-1 d-flex justify-content-center">
+						<Row className="flex-grow-1 d-flex justify-content-center" style={{ minHeight: 0 }}>
 							<Routes>
 								{/* Define la ruta por defecto */}
 								<Route
@@ -181,7 +182,7 @@ const Layout = () => {
 								<Route
 									path="registerPage"
 									element={
-										<Col xs={12}>
+										<Col xs={12} className="d-flex flex-column">
 											<RegisterPage />
 										</Col>
 									}
@@ -189,7 +190,7 @@ const Layout = () => {
 								<Route
 									path="loginPage"
 									element={
-										<Col xs={12}>
+										<Col xs={12} className="d-flex flex-column">
 											<LoginPage />
 										</Col>
 									}
@@ -197,7 +198,7 @@ const Layout = () => {
 								<Route
 									path="userPage"
 									element={
-										<Col xs={12}>
+										<Col xs={12} className="d-flex flex-column" style={{ minHeight: 0 }}>
 											<UserPage />
 										</Col>
 									}

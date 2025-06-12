@@ -71,7 +71,7 @@ function UserPage() {
 
 	return (
 		// Make the main container of UserPage a flex column that can grow
-		<Container className={`${styles.container} d-flex flex-column flex-grow-1`}>
+		<Container className={`${styles.container} d-flex flex-column flex-grow-1`} style={{ minHeight: 0 }}>
 			<Row className="mb-4 justify-content-center">
 				<Col>
 					<h2 className={styles.title}>Tu perfil</h2>
@@ -101,7 +101,7 @@ function UserPage() {
 								{isLoading && (
 									<DelayedFallback
 										delay={300} // Retraso en milisegundos antes de mostrar el spinner
-										className="text-center d-flex flex-column justify-content-center align-items-center h-100"
+										className="text-center d-flex flex-column justify-content-center align-items-center flex-grow-1"
 									>
 										<Spinner animation="border" role="status">
 											<span className="visually-hidden">Cargando...</span>

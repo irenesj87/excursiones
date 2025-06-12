@@ -7,15 +7,11 @@ import styles from "../css/LoginPage.module.css";
 function LoginPage() {
 	return (
 		<Container className={styles.containerLoginForm} fluid >
-			<Row>
-				<Col xs="12">
-					<h2 className={styles.title}>Inicia sesión</h2>
-				</Col>
-			</Row>
 			<Row className="justify-content-center align-items-center">
 				<Col xs={12} md={9} lg={8} xl={3}>
 					<Card className={styles.loginCard}>
 						<Card.Body>
+							<Card.Title as="h2" className={styles.cardTitle}>Inicia sesión</Card.Title>
 							<LoginForm />
 						</Card.Body>
 					</Card>

@@ -1,5 +1,6 @@
 .container {
-	min-height: var(--minHeight);
+	/* min-height: var(--minHeight); Eliminado para depender de flex-grow */
+	min-height: 100vh;
 }
 .title {
 	color: var(--primary-color);
