@@ -1,5 +1,4 @@
 .containerLoginForm {
-	/*min-height: 100vh;  /* Eliminado para evitar problemas con el footer */
 	display: flex;
 	flex-direction: column; /* Apila los hijos (Rows) verticalmente */
 	flex-grow: 1; /* Permite que este contenedor crezca y ocupe el espacio vertical disponible en su padre flex */

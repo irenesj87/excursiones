@@ -1,7 +1,8 @@
 .container {
-	/* min-height: var(--minHeight); Eliminado para depender de flex-grow */
-	min-height: 100vh;
+	min-height: var(--minHeight); /* Usar la variable global para consistencia */
+	/* Esto asegura que UserPage tenga una altura mínima considerable */
 }
+
 .title {
 	color: var(--primary-color);
 	margin-top: 40px;

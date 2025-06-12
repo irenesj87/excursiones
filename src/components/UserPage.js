@@ -71,7 +71,7 @@ function UserPage() {
 
 	return (
 		// Make the main container of UserPage a flex column that can grow
-		<Container className={`${styles.container} d-flex flex-column flex-grow-1`} style={{ minHeight: 0 }}>
+		<Container className={`${styles.container} d-flex flex-column flex-grow-1`}>
 			<Row className="mb-4 justify-content-center">
 				<Col>
 					<h2 className={styles.title}>Tu perfil</h2>

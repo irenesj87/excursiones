@@ -1,4 +1,3 @@
-import React from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import LoginForm from "../components/LoginForm";
 import "bootstrap/dist/css/bootstrap.css";

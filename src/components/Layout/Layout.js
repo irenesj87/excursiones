@@ -12,7 +12,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import styles from "../../css/Layout.module.css";
 /**
  * Lazy loading para componentes de ruta. El lazy loading permite que los componentes se carguen sólo cuando el usuario lo
- * necesita, así se mejoran los tiempos iniciales de carga de la página y se mejora la experiencia de usuario.
+ * necesita, así se mejoran los tiempos iniciales de carga de la página.
  */
 const RegisterPage = lazy(() => import("../RegisterPage"));
 const LoginPage = lazy(() => import("../LoginPage"));
@@ -22,6 +22,11 @@ const UserPage = lazy(() => import("../UserPage"));
  * función o un componente. Así se mejoran los tiempos de ejecución de la página.
  */
 const Footer = memo(OriginalFooter);
+
+// Constantes para el fallback de Suspense
+const baseFallbackClassName = "d-flex justify-content-center align-items-center fw-bold p-5 flex-grow-1";
+const fallbackContent = "Cargando página...";
+const fallbackDelay = 500;
 
 // Este es el Layout. Aquí va la estructura de la página
 const Layout = () => {
@@ -145,70 +150,94 @@ const Layout = () => {
 				isAuthCheckComplete={isAuthCheckComplete}
 			/>
 			{/* Aseguramos que el wrapper y main sean flex containers que permitan crecer a sus hijos */}
-			<Container className={`${styles.mainContentWrapper} flex-grow-1 d-flex flex-column`} fluid>
+			<Container
+				className={`${styles.mainContentWrapper} flex-grow-1 d-flex flex-column`}
+				fluid
+			>
 				<main className={`${styles.mainContent} flex-grow-1 d-flex flex-column`}>
-					<Suspense
-						// Usar DelayedFallback para el mensaje de "Cargando página..."
-						fallback={
-							<DelayedFallback
-								delay={500} // Ajusta el delay según sea necesario
-								// Eliminamos styles.contentMinHeight. flex-grow-1 es suficiente.
-								className={`d-flex justify-content-center align-items-center fw-bold p-5 flex-grow-1`}
-							>
-								{/* Este es el contenido que se mostrará dentro del div de DelayedFallback después del retraso */}
-								Cargando página...
-							</DelayedFallback>
-						}
-					>
-						<Row className="flex-grow-1 d-flex justify-content-center" style={{ minHeight: 0 }}>
-							<Routes>
-								{/* Define la ruta por defecto */}
-								<Route
-									path="/"
-									element={
-										<>
-											<Col xs={12} md={4} lg={3} xl={2}>
-												<Filters />
-											</Col>
-											<Col
-												className={`d-flex flex-column ${styles.contentMinHeight}`}
-											>
-												{excursionsContent}
-											</Col>
-										</>
-									}
-								/>
-								{/* Define las rutas para los componentes Register, LoginPage y UserPage */}
-								<Route
-									path="registerPage"
-									element={
-										<Col xs={12} className="d-flex flex-column">
+					<Row className="flex-grow-1 d-flex justify-content-center">
+						<Routes>
+							{/* Define la ruta por defecto */}
+							<Route
+								path="/"
+								element={
+									<>
+										<Col xs={12} md={4} lg={3} xl={2}>
+											<Filters />
+										</Col>
+										<Col
+											className={`d-flex flex-column ${styles.contentMinHeight}`}
+										>
+											{excursionsContent}
+										</Col>
+									</>
+								}
+							/>
+							{/* Define las rutas para los componentes Register, LoginPage y UserPage */}
+							<Route
+								path="registerPage"
+								element={
+									<Col xs={12} className="d-flex flex-column">
+										<Suspense
+											fallback={
+												<DelayedFallback
+													delay={fallbackDelay}
+													className={baseFallbackClassName}
+												>
+													{fallbackContent}
+												</DelayedFallback>
+											}
+										>
 											<RegisterPage />
-										</Col>
-									}
-								/>
-								<Route
-									path="loginPage"
-									element={
-										<Col xs={12} className="d-flex flex-column">
+										</Suspense>
+									</Col>
+								}
+							/>
+							<Route
+								path="loginPage"
+								element={
+									<Col xs={12} className="d-flex flex-column">
+										<Suspense
+											fallback={
+												<DelayedFallback
+													delay={fallbackDelay}
+													className={baseFallbackClassName}
+												>
+													{fallbackContent}
+												</DelayedFallback>
+											}
+										>
 											<LoginPage />
-										</Col>
-									}
-								/>
-								<Route
-									path="userPage"
-									element={
-										<Col xs={12} className="d-flex flex-column" style={{ minHeight: 0 }}>
+										</Suspense>
+									</Col>
+								}
+							/>
+							<Route
+								path="userPage"
+								element={
+									<Col xs={12} className="d-flex flex-column">
+										<Suspense
+											fallback={
+												<DelayedFallback
+													delay={fallbackDelay}
+													className={`${baseFallbackClassName} ${styles.contentMinHeight}`}
+												>
+													{fallbackContent}
+												</DelayedFallback>
+											}
+										>
 											<UserPage />
-										</Col>
-									}
-								/>
-							</Routes>
-						</Row>
-					</Suspense>
+										</Suspense>
+									</Col>
+								}
+							/>
+						</Routes>
+					</Row>
 				</main>
+				<Row>
+					<Footer />
+				</Row>
 			</Container>
-			<Footer />
 		</div>
 	);
 };

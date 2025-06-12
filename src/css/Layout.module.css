@@ -23,15 +23,15 @@
 }
 
 .contentMinHeight {
-	/*min-height: var(--minHeight);
-	min-height: 100vh;*/
+	min-height: var(--minHeight); /* Aplicar esto condicionalmente en Layout.js */
+	/* Este valor (1100.620px) es bastante grande. Asegúrate de que sea adecuado para el contenido de las excursiones. */
 }
 
 .layout {
 	font-family: Arial, Helvetica, sans-serif;
 	display: flex;
 	flex-direction: column;
-	min-height: 100dvh;
+	min-height: 100vh;
 	box-sizing: border-box;
 }
 
@@ -39,13 +39,12 @@
 	flex-grow: 1;
 	display: flex;
 	flex-direction: column;
-	min-height: 0; /* Ayuda a que los hijos flex-grow se comporten de manera predecible */
+	overflow-y: auto;
 }
 
 .mainContent {
 	flex-grow: 1; /* Permite que esta sección se expanda y empuje el footer hacia abajo */
 	display: flex;
 	flex-direction: column; /* Para el layout interno de mainContent */
-	min-height: 0; /* Ayuda a que los hijos flex-grow se comporten de manera predecible */
 	box-sizing: border-box; /* Incluye padding y border en el cálculo del ancho total si se añaden */
 }
