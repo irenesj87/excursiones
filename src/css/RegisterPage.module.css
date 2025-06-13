@@ -12,7 +12,6 @@
 	font-weight: bold;
 	text-align: center;
 	text-transform: uppercase;
-	/* Estilos actualizados para coincidir con LoginPage */
 	font-size: 1.6rem; 
 	letter-spacing: 0.5px; 
 	padding-bottom: 0.75rem; 
@@ -27,7 +26,7 @@
 	border-radius: 0.5rem;
 }
 
-/* Media query para pantallas pequeñas (xs breakpoint de Bootstrap es <576px) */
+/* Media query para breakpoints pequeños (xs breakpoint de Bootstrap es <576px) */
 @media (max-width: 575.98px) {
   .container {
     padding-top: 1rem; /* Menos padding en el contenedor en pantallas pequeñas */
