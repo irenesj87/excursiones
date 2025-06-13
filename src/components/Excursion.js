@@ -17,11 +17,18 @@ function Excursion({ id, name, area, description, difficulty, time }) {
 
 	// Esta función apunta a un usuario logueado a la excursión que él quiera, ahora memoizada con useCallback
 	const joinExcursion = useCallback(async () => {
-		// Asegurarse de que sessionStorage se accede de forma segura
-		const token = window.sessionStorage ? window.sessionStorage["token"] : null;
+		if (!auxUserMail) {
+			console.error(
+				"Correo del usuario no disponible. No se puede unir a la excursión."
+			);
+			// Considerar mostrar un mensaje de error al usuario aquí si es necesario
+			return;
+		}
+
+		const token = window.sessionStorage?.getItem("token");
 		if (!token) {
 			console.error("Token no encontrado en sessionStorage.");
-			// Podrías manejar este caso, por ejemplo, redirigiendo al login o mostrando un error.
+			// Considerar mostrar un mensaje de error al usuario o redirigir al login
 			return;
 		}
 
@@ -54,9 +61,9 @@ function Excursion({ id, name, area, description, difficulty, time }) {
 		} catch (error) {
 			console.error("Error al unirse a la excursión:", error.message);
 		}
-	}, [url, id, loginDispatch]); // Dependencias de useCallback
+	}, [url, id, loginDispatch, auxUserMail]);
 
-	/* Variable que comprueba si el usuario está logueado en la web y si está logueado en esa excursión.
+	/* Variable que comprueba si el usuario está logueado en la web y si se ha apuntado a esa excursión.
 	También comprueba si existe el usuario y el array de excursiones de ese usuario */
 	const isJoined = isLoggedIn && user?.excursions?.includes(id);
 

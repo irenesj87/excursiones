@@ -70,7 +70,6 @@ function RegisterForm() {
 		<>
 			{showErrorAlert && registerError && (
 				<ErrorMessageAlert
-					show={showErrorAlert}
 					message={registerError}
 					onClose={() => {
 						setShowErrorAlert(false);

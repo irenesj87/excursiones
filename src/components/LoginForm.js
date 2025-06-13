@@ -72,7 +72,6 @@ export function LoginForm() {
 		<>
 			{showErrorAlert && loginError && (
 				<ErrorMessageAlert
-					show={showErrorAlert}
 					message={loginError}
 					onClose={handleCloseAlert}
 				/>
