@@ -143,104 +143,105 @@ html.dark body {
 	.card-title {
 		color: var(--primary-color);
 	}
-}
-.card-text {
-	color: var(--text-color-dark);
-}
 
-.card .badge {
-	color: var(--text-color-light);
-}
-
-.card-body .no-excursions-text {
-	background-color: var(--secondary-accent-dark);
-	color: var(--text-color-dark);
-}
-
-/* --- Estilos para los Form.Control --- */
-.form-control {
-	background-color: var(--surface-color-dark);
-	color: var(--text-color-dark);
-	border: 1px solid var(--border-color-dark);
-	transition: none;
-}
-
-.form-control::placeholder {
-	color: var(--subtle-text-color-dark);
-}
-
-.form-control:disabled,
-.form-control[readonly] {
-	background-color: var(--background-color-dark);
-	color: var(--subtle-text-color-dark);
-	border: 1px solid var(--border-color-dark);
-}
-
-.form-control-plaintext[readonly] {
-	color: var(--text-color-dark);
-}
-
-/* --- Estilos para Paginación --- */
-.pagination {
-	--bs-pagination-color: var(--text-color-dark);
-	--bs-pagination-bg: var(--surface-color-dark);
-	--bs-pagination-border-color: var(--border-color-dark);
-	--bs-pagination-hover-color: var(--text-color-dark);
-	/* Un fondo ligeramente diferente para el hover */
-	--bs-pagination-hover-bg: #2a2a2a;
-	--bs-pagination-hover-border-color: var(--border-color-dark);
-	--bs-pagination-focus-color: var(--text-color-dark);
-	--bs-pagination-focus-bg: #333333; /* Un poco más oscuro para el foco */
-	/* Sombra de foco genérica, ya que --primary-color-rgb no está definido */
-	--bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(130, 138, 145, 0.25);
-
-	--bs-pagination-active-color: #fff; /* Texto blanco para el elemento activo */
-
-	--bs-pagination-disabled-color: var(--subtle-text-color-dark);
-	/* Mismo fondo que el normal para deshabilitados, pero con texto atenuado */
-	--bs-pagination-disabled-bg: var(--surface-color-dark);
-	--bs-pagination-disabled-border-color: var(--border-color-dark);
-	--bs-tertiary-bg-rgb: 58, 58, 58; /* Un gris oscuro para fondos terciarios */
-}
-
-/* --- Estilos para Paginación (Enlaces) --- */
-.page-link {
-	transition: none; /* Eliminar transición para los enlaces de paginación */
-}
-
-/* --- Estilos para el Offcanvas --- */
-.offcanvas {
-	width: 60%;
-	max-width: 250px;
-}
-
-.offcanvas-header {
-	background-color: var(--background-color-dark);
-	color: var(--primary-color);
-	font-weight: bolder;
-	padding: 1rem 1.25rem;
-	border-bottom: 1px solid var(--border-color-dark);
-
-	.btn-close {
-		filter: invert(1) grayscale(100%) brightness(200%); /* Keep the white close button */
+	.card-text {
+		color: var(--text-color-dark);
 	}
-}
 
-.offcanvas-body {
-	background-color: var(--surface-color-dark);
-	padding: 1rem 0;
-}
+	.card .badge {
+		color: var(--text-color-light);
+	}
 
-/* --- Estilos para links dentro del Offcanvas --- */
-.offcanvas-body .nav-link {
-	display: block;
-	width: 95%;
-	margin-left: 2.5%;
-	text-align: center;
-	margin-bottom: 0.6rem;
-	color: var(--text-color-dark);
-	padding: 0.6rem 1rem;
-	text-decoration: none;
-	transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-	border-radius: 0.375rem;
+	.card-body .no-excursions-text {
+		background-color: var(--secondary-accent-dark);
+		color: var(--text-color-dark);
+	}
+
+	/* --- Estilos para los Form.Control --- */
+	.form-control {
+		background-color: var(--surface-color-dark);
+		color: var(--text-color-dark);
+		border: 1px solid var(--border-color-dark);
+		transition: none;
+	}
+
+	.form-control::placeholder {
+		color: var(--subtle-text-color-dark);
+	}
+
+	.form-control:disabled,
+	.form-control[readonly] {
+		background-color: var(--background-color-dark);
+		color: var(--subtle-text-color-dark);
+		border: 1px solid var(--border-color-dark);
+	}
+
+	.form-control-plaintext[readonly] {
+		color: var(--text-color-dark);
+	}
+
+	/* --- Estilos para Paginación --- */
+	.pagination {
+		--bs-pagination-color: var(--text-color-dark);
+		--bs-pagination-bg: var(--surface-color-dark);
+		--bs-pagination-border-color: var(--border-color-dark);
+		--bs-pagination-hover-color: var(--text-color-dark);
+		/* Un fondo ligeramente diferente para el hover */
+		--bs-pagination-hover-bg: #2a2a2a;
+		--bs-pagination-hover-border-color: var(--border-color-dark);
+		--bs-pagination-focus-color: var(--text-color-dark);
+		--bs-pagination-focus-bg: #333333; /* Un poco más oscuro para el foco */
+		/* Sombra de foco genérica, ya que --primary-color-rgb no está definido */
+		--bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(130, 138, 145, 0.25);
+
+		--bs-pagination-active-color: #fff; /* Texto blanco para el elemento activo */
+
+		--bs-pagination-disabled-color: var(--subtle-text-color-dark);
+		/* Mismo fondo que el normal para deshabilitados, pero con texto atenuado */
+		--bs-pagination-disabled-bg: var(--surface-color-dark);
+		--bs-pagination-disabled-border-color: var(--border-color-dark);
+		--bs-tertiary-bg-rgb: 58, 58, 58; /* Un gris oscuro para fondos terciarios */
+	}
+
+	/* --- Estilos para Paginación (Enlaces) --- */
+	.page-link {
+		transition: none; /* Eliminar transición para los enlaces de paginación */
+	}
+
+	/* --- Estilos para el Offcanvas --- */
+	.offcanvas {
+		width: 60%;
+		max-width: 250px;
+	}
+
+	.offcanvas-header {
+		background-color: var(--background-color-dark);
+		color: var(--primary-color);
+		font-weight: bolder;
+		padding: 1rem 1.25rem;
+		border-bottom: 1px solid var(--border-color-dark);
+
+		.btn-close {
+			filter: invert(1) grayscale(100%) brightness(200%); /* Keep the white close button */
+		}
+	}
+
+	.offcanvas-body {
+		background-color: var(--surface-color-dark);
+		padding: 1rem 0;
+	}
+
+	/* --- Estilos para links dentro del Offcanvas --- */
+	.offcanvas-body .nav-link {
+		display: block;
+		width: 95%;
+		margin-left: 2.5%;
+		text-align: center;
+		margin-bottom: 0.6rem;
+		color: var(--text-color-dark);
+		padding: 0.6rem 1rem;
+		text-decoration: none;
+		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+		border-radius: 0.375rem;
+	}
 }
