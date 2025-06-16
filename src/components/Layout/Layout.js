@@ -182,7 +182,7 @@ const Layout = () => {
 											fallback={
 												<DelayedFallback
 													delay={fallbackDelay}
-													className={baseFallbackClassName}
+													className={`${baseFallbackClassName} ${styles.fallbackMinHeight}`}
 												>
 													{fallbackContent}
 												</DelayedFallback>
@@ -201,7 +201,7 @@ const Layout = () => {
 											fallback={
 												<DelayedFallback
 													delay={fallbackDelay}
-													className={baseFallbackClassName}
+													className={`${baseFallbackClassName} ${styles.fallbackMinHeight}`}
 												>
 													{fallbackContent}
 												</DelayedFallback>
@@ -220,7 +220,7 @@ const Layout = () => {
 											fallback={
 												<DelayedFallback
 													delay={fallbackDelay}
-													className={`${baseFallbackClassName} ${styles.contentMinHeight}`}
+													className={`${baseFallbackClassName} ${styles.fallbackMinHeight}`}
 												>
 													{fallbackContent}
 												</DelayedFallback>

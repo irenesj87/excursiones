@@ -42,6 +42,22 @@ html {
 	min-height: var(--minHeight);
 }
 
+.fallbackMinHeight {
+	min-height: 250px;
+	/* Esta altura debería ser suficiente para el spinner y el texto "Cargando página..." */
+	/* baseFallbackClassName ya se encarga del centrado flex */
+}
+
+@media (max-width: 767.98px) {
+	.contentMinHeight {
+		min-height: 942.31px;
+	}
+
+	.fallbackMinHeight {
+		min-height: 60vh; /* Por ejemplo, 60% de la altura del viewport. */
+	}
+}
+
 .layout {
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
 		Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";

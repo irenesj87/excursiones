@@ -36,3 +36,10 @@
 	align-items: center; /* Centra horizontalmente */
 	justify-content: center; /* Centra verticalmente */
 }
+
+@media (max-width: 767.98px) {
+	.centeredStatus {
+		justify-content: flex-start;
+		padding-top: 60px;
+	}
+}
