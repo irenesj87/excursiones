@@ -54,7 +54,7 @@ html {
 	}
 
 	.fallbackMinHeight {
-		min-height: 60vh; /* Por ejemplo, 60% de la altura del viewport. */
+		min-height: 60vh;
 	}
 }
 

@@ -37,6 +37,13 @@
 	justify-content: center; /* Centra verticalmente */
 }
 
+@media (min-width: 1230px) {
+	.centeredStatus {
+		justify-content: center;
+		padding-right: 400px;
+	}
+}
+
 @media (max-width: 767.98px) {
 	.centeredStatus {
 		justify-content: flex-start;
