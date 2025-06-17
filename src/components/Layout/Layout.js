@@ -220,7 +220,7 @@ const Layout = () => {
 											fallback={
 												<DelayedFallback
 													delay={fallbackDelay}
-													className={`${baseFallbackClassName} ${styles.fallbackMinHeight}`}
+													className={`${baseFallbackClassName} ${styles.contentMinHeight}`}
 												>
 													{fallbackContent}
 												</DelayedFallback>

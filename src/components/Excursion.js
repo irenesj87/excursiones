@@ -8,16 +8,16 @@ import styles from "../css/Excursion.module.css";
 function Excursion({ id, name, area, description, difficulty, time }) {
 	// useSelector que dice si el usuario está logueado o no. Además, nos da la información del usuario
 	const { login: isLoggedIn, user } = useSelector(
-		(state) => state.loginReducer
+		(state) => state.loginReducer // Indica que queremos obtener el estado gestionado por loginReducer
 	);
 	const loginDispatch = useDispatch();
-	// Variable que guarda el correo del usuario que está logueado ahora mismo
-	const auxUserMail = user?.mail;
-	const url = `http://localhost:3001/users/${auxUserMail}/excursions/${id}`;
 
 	// Esta función apunta a un usuario logueado a la excursión que él quiera, ahora memoizada con useCallback
 	const joinExcursion = useCallback(async () => {
-		if (!auxUserMail) {
+		// Obtenemos el correo del usuario y el token dentro del callback para asegurar que usamos los valores más actuales
+		// en el momento de la ejecución, aunque user ya es una dependencia.
+		const currentUserMail = user?.mail;
+		if (!currentUserMail) {
 			console.error(
 				"Correo del usuario no disponible. No se puede unir a la excursión."
 			);
@@ -32,6 +32,7 @@ function Excursion({ id, name, area, description, difficulty, time }) {
 			return;
 		}
 
+		const currentUrl = `http://localhost:3001/users/${currentUserMail}/excursions/${id}`;
 		const options = {
 			method: "PUT",
 			mode: "cors",
@@ -43,7 +44,9 @@ function Excursion({ id, name, area, description, difficulty, time }) {
 		};
 
 		try {
-			const response = await fetch(url, options);
+			// Nota: Sería ideal tener un estado de carga local (ej. setLoadingJoin(true))
+			// para dar feedback visual en ExcursionCard mientras esta operación ocurre.
+			const response = await fetch(currentUrl, options);
 			if (!response.ok) {
 				// Chequeo más genérico de errores de respuesta
 				// Intentar parsear el error del cuerpo si es posible
@@ -60,8 +63,12 @@ function Excursion({ id, name, area, description, difficulty, time }) {
 			);
 		} catch (error) {
 			console.error("Error al unirse a la excursión:", error.message);
+			// Nota: Aquí se podría establecer un estado de error local para informar al usuario
+			// a través de ExcursionCard, si ExcursionCard tuviera la capacidad de mostrarlo.
+		} finally {
+			// setLoadingJoin(false); // Si se implementara un estado de carga.
 		}
-	}, [url, id, loginDispatch, auxUserMail]);
+	}, [id, user, loginDispatch]); // Dependencias actualizadas: id, user (para user.mail), loginDispatch
 
 	/* Variable que comprueba si el usuario está logueado en la web y si se ha apuntado a esa excursión.
 	También comprueba si existe el usuario y el array de excursiones de ese usuario */
