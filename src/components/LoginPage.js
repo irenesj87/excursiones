@@ -5,8 +5,10 @@ import styles from "../css/LoginPage.module.css";
 
 function LoginPage() {
 	return (
-		<Container className={styles.containerLoginForm} fluid >
-			<Row className="justify-content-center align-items-center">
+		// Aseguramos que el Container se expanda verticalmente
+		<Container className={`${styles.containerLoginForm} d-flex flex-column flex-grow-1`} fluid >
+			{/* La Row también debe crecer para que align-items-center funcione en toda la altura */}
+			<Row className="justify-content-center align-items-center flex-grow-1">
 				<Col xs={12} md={9} lg={8} xl={3}>
 					<Card className={styles.loginCard}>
 						<Card.Body>

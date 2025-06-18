@@ -24,9 +24,29 @@ const UserPage = lazy(() => import("../UserPage"));
 const Footer = memo(OriginalFooter);
 
 // Constantes para el fallback de Suspense
-const baseFallbackClassName = "d-flex justify-content-center align-items-center fw-bold p-5 flex-grow-1";
+const baseFallbackClassName =
+	"d-flex justify-content-center align-items-center fw-bold p-5 flex-grow-1";
 const fallbackContent = "Cargando página...";
 const fallbackDelay = 500;
+
+// Componente wrapper para simplificar la renderización de rutas lazy-loaded con Suspense y Col.
+// Accede a las constantes fallbackDelay, baseFallbackClassName y fallbackContent del scope de Layout.
+const LazyRouteWrapper = ({ PageComponent, extraFallbackClass = "" }) => (
+	<Col xs={12} className="d-flex flex-column flex-grow-1">
+		<Suspense
+			fallback={
+				<DelayedFallback
+					delay={fallbackDelay}
+					className={`${baseFallbackClassName} ${extraFallbackClass}`}
+				>
+					{fallbackContent}
+				</DelayedFallback>
+			}
+		>
+			<PageComponent />
+		</Suspense>
+	</Col>
+);
 
 // Este es el Layout. Aquí va la estructura de la página
 const Layout = () => {
@@ -74,12 +94,15 @@ const Layout = () => {
 							 */
 							const errorData = await response.json();
 							errorMessage = errorData.message || errorMessage;
-						} catch (e) {
-							// Si la respuesta no es JSON o no se envía, usar el statusText o el mensaje por defecto
+						} catch (parseError) {
+							// Si la respuesta no es JSON, se registra el error de parseo
+							// y se usa el statusText o el mensaje por defecto.
+							console.warn(
+								"Error al parsear la respuesta JSON del error:",
+								parseError
+							);
 							errorMessage = response.statusText || errorMessage;
-							console.log(e);
 						}
-						console.log(errorMessage);
 						throw new Error(errorMessage);
 					}
 					// Pasa la respuesta en JSON del servidor a un objeto JavaScript
@@ -154,7 +177,9 @@ const Layout = () => {
 				className={`${styles.mainContentWrapper} flex-grow-1 d-flex flex-column`}
 				fluid
 			>
-				<main className={`${styles.mainContent} flex-grow-1 d-flex flex-column`}>
+				<main
+					className={`${styles.mainContent} flex-grow-1 d-flex flex-column`}
+				>
 					<Row className="flex-grow-1 d-flex justify-content-center">
 						<Routes>
 							{/* Define la ruta por defecto */}
@@ -177,58 +202,28 @@ const Layout = () => {
 							<Route
 								path="registerPage"
 								element={
-									<Col xs={12} className="d-flex flex-column">
-										<Suspense
-											fallback={
-												<DelayedFallback
-													delay={fallbackDelay}
-													className={`${baseFallbackClassName} ${styles.fallbackMinHeight}`}
-												>
-													{fallbackContent}
-												</DelayedFallback>
-											}
-										>
-											<RegisterPage />
-										</Suspense>
-									</Col>
+									<LazyRouteWrapper
+										PageComponent={RegisterPage}
+										extraFallbackClass={styles.fallbackMinHeight}
+									/>
 								}
 							/>
 							<Route
 								path="loginPage"
 								element={
-									<Col xs={12} className="d-flex flex-column">
-										<Suspense
-											fallback={
-												<DelayedFallback
-													delay={fallbackDelay}
-													className={`${baseFallbackClassName} ${styles.fallbackMinHeight}`}
-												>
-													{fallbackContent}
-												</DelayedFallback>
-											}
-										>
-											<LoginPage />
-										</Suspense>
-									</Col>
+									<LazyRouteWrapper
+										PageComponent={LoginPage}
+										extraFallbackClass={styles.fallbackMinHeight}
+									/>
 								}
 							/>
 							<Route
 								path="userPage"
 								element={
-									<Col xs={12} className="d-flex flex-column">
-										<Suspense
-											fallback={
-												<DelayedFallback
-													delay={fallbackDelay}
-													className={`${baseFallbackClassName} ${styles.contentMinHeight}`}
-												>
-													{fallbackContent}
-												</DelayedFallback>
-											}
-										>
-											<UserPage />
-										</Suspense>
-									</Col>
+									<LazyRouteWrapper
+										PageComponent={UserPage}
+										extraFallbackClass={styles.fallbackMinHeight}
+									/>
 								}
 							/>
 						</Routes>
