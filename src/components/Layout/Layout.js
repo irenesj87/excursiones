@@ -18,8 +18,8 @@ const RegisterPage = lazy(() => import("../RegisterPage"));
 const LoginPage = lazy(() => import("../LoginPage"));
 const UserPage = lazy(() => import("../UserPage"));
 /**
- * La memoización es una técnica de optimización donde se cachean los resultados para que no se tenga que re-renderizar una
- * función o un componente. Así se mejoran los tiempos de ejecución de la página.
+ * La memoización es una técnica de optimización donde se cachean los resultados para que no se tenga que renderizar otra
+ * vez una función o un componente. Así se mejoran los tiempos de ejecución de la página.
  */
 const Footer = memo(OriginalFooter);
 
@@ -30,7 +30,6 @@ const fallbackContent = "Cargando página...";
 const fallbackDelay = 500;
 
 // Componente wrapper para simplificar la renderización de rutas lazy-loaded con Suspense y Col.
-// Accede a las constantes fallbackDelay, baseFallbackClassName y fallbackContent del scope de Layout.
 const LazyRouteWrapper = ({ PageComponent, extraFallbackClass = "" }) => (
 	<Col xs={12} className="d-flex flex-column flex-grow-1">
 		<Suspense
@@ -48,7 +47,10 @@ const LazyRouteWrapper = ({ PageComponent, extraFallbackClass = "" }) => (
 	</Col>
 );
 
-// Este es el Layout. Aquí va la estructura de la página
+/**
+ * Componente principal del layout de la aplicación.
+ * Gestiona el estado de las excursiones, la autenticación del usuario y la estructura general de la página.
+ */
 const Layout = () => {
 	const loginDispatch = useDispatch();
 	/**
@@ -60,7 +62,9 @@ const Layout = () => {
 	const [isLoadingExcursions, setIsLoadingExcursions] = useState(true);
 	// Estado que dice si ha habido algún problema al cargar las excursiones
 	const [fetchExcursionsError, setFetchExcursionsError] = useState(null);
-	// Estado para saber si la comprobación inicial de autenticación del usuario ha terminado
+	/** Estado para saber si la comprobación inicial de autenticación del usuario ha terminado. Se necesita para saber cuando
+	 * hay que mostrar los botones
+	 */
 	const [isAuthCheckComplete, setIsAuthCheckComplete] = useState(false);
 
 	/** useEffect que controla el token en sessionStorage. Se guarda el token actual en sessionStorage y se loguea al usuario
@@ -172,7 +176,6 @@ const Layout = () => {
 				onExcursionsFetchEnd={handleExcursionsFetchEnd}
 				isAuthCheckComplete={isAuthCheckComplete}
 			/>
-			{/* Aseguramos que el wrapper y main sean flex containers que permitan crecer a sus hijos */}
 			<Container
 				className={`${styles.mainContentWrapper} flex-grow-1 d-flex flex-column`}
 				fluid
