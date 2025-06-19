@@ -141,7 +141,7 @@ html.dark body {
 	}
 
 	.card-title {
-		color: var(--primary-color);
+		color: var(--text-color-dark);
 	}
 
 	.card-text {

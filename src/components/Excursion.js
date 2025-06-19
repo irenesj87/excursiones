@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Excursion.module.css";
 
 function Excursion({ id, name, area, description, difficulty, time }) {
-	// useSelector que dice si el usuario está logueado o no. Además, nos da la información del usuario
+	// useSelector que dice si el usuario está logueado o no. Además, da la información del usuario
 	const { login: isLoggedIn, user } = useSelector(
 		(state) => state.loginReducer // Indica que queremos obtener el estado gestionado por loginReducer
 	);
@@ -15,8 +15,9 @@ function Excursion({ id, name, area, description, difficulty, time }) {
 	// Esta función apunta a un usuario logueado a la excursión que él quiera, ahora memoizada con useCallback
 	const joinExcursion = useCallback(async () => {
 		// Obtenemos el correo del usuario y el token dentro del callback para asegurar que usamos los valores más actuales
-		// en el momento de la ejecución, aunque user ya es una dependencia.
+		// en el momento de la ejecución.
 		const currentUserMail = user?.mail;
+		// Se mira si tenemos el correo del usuario
 		if (!currentUserMail) {
 			console.error(
 				"Correo del usuario no disponible. No se puede unir a la excursión."
@@ -24,7 +25,7 @@ function Excursion({ id, name, area, description, difficulty, time }) {
 			// Considerar mostrar un mensaje de error al usuario aquí si es necesario
 			return;
 		}
-
+		// Se mira si tenemos el token
 		const token = window.sessionStorage?.getItem("token");
 		if (!token) {
 			console.error("Token no encontrado en sessionStorage.");
@@ -42,7 +43,7 @@ function Excursion({ id, name, area, description, difficulty, time }) {
 			},
 			body: JSON.stringify({ id: id }),
 		};
-
+		// Se intenta loguear al usuario en la excursión
 		try {
 			// Nota: Sería ideal tener un estado de carga local (ej. setLoadingJoin(true))
 			// para dar feedback visual en ExcursionCard mientras esta operación ocurre.
@@ -58,9 +59,11 @@ function Excursion({ id, name, area, description, difficulty, time }) {
 			const data = await response.json();
 			loginDispatch(
 				updateUser({
+					// Envía el objeto user actualizado (esto incluye la nueva excursión a la que se ha apuntado)
 					user: data,
 				})
 			);
+			// Si hay un problema, se muestra un error
 		} catch (error) {
 			console.error("Error al unirse a la excursión:", error.message);
 			// Nota: Aquí se podría establecer un estado de error local para informar al usuario
@@ -68,16 +71,14 @@ function Excursion({ id, name, area, description, difficulty, time }) {
 		} finally {
 			// setLoadingJoin(false); // Si se implementara un estado de carga.
 		}
-	}, [id, user, loginDispatch]); // Dependencias actualizadas: id, user (para user.mail), loginDispatch
+	}, [id, user, loginDispatch]);
 
-	/* Variable que comprueba si el usuario está logueado en la web y si se ha apuntado a esa excursión.
-	También comprueba si existe el usuario y el array de excursiones de ese usuario */
+	/** Variable que comprueba si el usuario está logueado en la web y si se ha apuntado a esa excursión (su lista de excursiones
+	 * contiene el id de esta excursión). También comprueba si existe el usuario y el array de excursiones de ese usuario
+	 */
 	const isJoined = isLoggedIn && user?.excursions?.includes(id);
 
 	return (
-		// Reemplazamos el Container de Bootstrap por un div simple.
-		// El Container de Bootstrap (no fluid) se centra por defecto, lo que podría causar el desplazamiento.
-		// Un div simple ocupará el ancho disponible o el ancho de su contenido, alineándose a la izquierda.
 		<div className={`${styles.excursionContainer} py-3`}>
 			<ExcursionCard
 				name={name}

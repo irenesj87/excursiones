@@ -225,7 +225,7 @@ const Layout = () => {
 								element={
 									<LazyRouteWrapper
 										PageComponent={UserPage}
-										extraFallbackClass={styles.fallbackMinHeight}
+										extraFallbackClass={styles.contentMinHeight}
 									/>
 								}
 							/>
