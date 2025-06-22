@@ -8,7 +8,7 @@ import styles from "../css/Excursions.module.css";
 /**
  * Componente que sirve para mostrar la lista de excursiones
  * @param {Array<Object>} excursionData - Array de objetos de excursiones a mostrar.
- * @param {boolean} isLoading - Indica si los datos de las excursiones están cargando.
+ * @param {boolean} isLoading - Indica si los datos de las excursiones se están cargando.
  * @param {Error | null} error - Objeto de error si ha ocurrido un problema al cargar las excursiones.
  */
 const Excursions = memo(function Excursions({
@@ -16,17 +16,14 @@ const Excursions = memo(function Excursions({
 	isLoading,
 	error,
 }) {
-	// Se memoizan las excursiones para que no se estén renderizando siempre
 	const excursionComponents = useMemo(
 		() =>
 			excursionData.map((excursion) => (
-				/** El spread operator pasa las propiedades del objeto (name, area, difficulty...) como props del componente
-				 * Excursion
-				 */
 				<Excursion key={excursion.id} {...excursion} />
 			)),
 		[excursionData]
 	);
+
 	// Si se están cargando los datos de las excursiones, mostrar el spinner
 	if (isLoading) {
 		return (
@@ -41,7 +38,8 @@ const Excursions = memo(function Excursions({
 			</DelayedFallback>
 		);
 	}
-	// Si hay un error, mostrar un mensaje de error
+
+	// Si hay un error, mostrar un mensaje
 	if (error) {
 		return (
 			<div className={`${styles.centeredStatus} py-5 flex-grow-1 w-100`}>
@@ -52,8 +50,9 @@ const Excursions = memo(function Excursions({
 			</div>
 		);
 	}
+
 	/** Si llegamos aquí, no se está mostrando el spinner ni hay un error. Si no hay excursiones para mostrar, se muestra
-	 * el mensaje "no encontrada".
+	 * el mensaje de "No encontrada"
 	 */
 	if (excursionComponents.length === 0) {
 		return (
