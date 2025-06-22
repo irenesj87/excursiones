@@ -1,3 +1,4 @@
+import { memo, useMemo } from "react";
 import { Row, Col, Spinner, Alert } from "react-bootstrap";
 import Excursion from "./Excursion";
 import DelayedFallback from "./DelayedFallback";
@@ -10,7 +11,22 @@ import styles from "../css/Excursions.module.css";
  * @param {boolean} isLoading - Indica si los datos de las excursiones están cargando.
  * @param {Error | null} error - Objeto de error si ha ocurrido un problema al cargar las excursiones.
  */
-function Excursions({ excursionData, isLoading, error }) {
+const Excursions = memo(function Excursions({
+	excursionData,
+	isLoading,
+	error,
+}) {
+	// Se memoizan las excursiones para que no se estén renderizando siempre
+	const excursionComponents = useMemo(
+		() =>
+			excursionData.map((excursion) => (
+				/** El spread operator pasa las propiedades del objeto (name, area, difficulty...) como props del componente
+				 * Excursion
+				 */
+				<Excursion key={excursion.id} {...excursion} />
+			)),
+		[excursionData]
+	);
 	// Si se están cargando los datos de las excursiones, mostrar el spinner
 	if (isLoading) {
 		return (
@@ -36,33 +52,10 @@ function Excursions({ excursionData, isLoading, error }) {
 			</div>
 		);
 	}
-
-	// Si llegamos aquí, no se está mostrando el spinner ni hay un error.
-	// Se intenta obtener la lista de excursiones o el mensaje de "no encontrada" solo si no estamos cargando y no hay error.
-	const excursionComponents = excursionData.map((excursion) => (
-		/** El spread operator pasa las propiedades del objeto (name, area, difficulty...) como props del componente
-		 * Excursion
-		 */
-		<Excursion key={excursion.id} {...excursion} />
-	));
-
-	// Se comprueba si hay alguna excursión para mostrar
-	const found = excursionComponents.length > 0;
-
-	// Si las hay, se muestran
-	if (found) {
-		return (
-			<div className={styles.container}>
-				<Row>
-					<Col xs={12} xl={10}>
-						<h2 className={styles.title}>Próximas excursiones</h2>
-						<div>{excursionComponents}</div>
-					</Col>
-				</Row>
-			</div>
-		);
-	} else {
-		// Y si no hay excursiones en excursionData y no estamos cargando, se muestra el mensaje "no encontrada".
+	/** Si llegamos aquí, no se está mostrando el spinner ni hay un error. Si no hay excursiones para mostrar, se muestra
+	 * el mensaje "no encontrada".
+	 */
+	if (excursionComponents.length === 0) {
 		return (
 			<div
 				className={`${styles.messageNotFound} ${styles.centeredStatus} text-center py-5 flex-grow-1 w-100`}
@@ -71,6 +64,18 @@ function Excursions({ excursionData, isLoading, error }) {
 			</div>
 		);
 	}
-}
+
+	// Si hay excursiones, se muestran.
+	return (
+		<div className={styles.container}>
+			<Row>
+				<Col xs={12} xl={10}>
+					<h2 className={styles.title}>Próximas excursiones</h2>
+					<div>{excursionComponents}</div>
+				</Col>
+			</Row>
+		</div>
+	);
+});
 
 export default Excursions;

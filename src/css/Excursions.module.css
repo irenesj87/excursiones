@@ -15,15 +15,6 @@
 	text-transform: uppercase;
 }
 
-/* Aplicar el desplazamiento del título solo en breakpoints grandes (lg y superiores) */
-@media (min-width: 1231px) {
-	.title {
-		/* Para mover visualmente el título un poco más a la izquierda
-		   desde su posición actual. */
-		transform: translateX(-40px);
-	}
-}
-
 .messageNotFound {
 	font-size: 1.6rem;
 	text-align: center;
@@ -37,16 +28,21 @@
 	justify-content: center; /* Centra verticalmente */
 }
 
-@media (min-width: 1230px) {
-	.centeredStatus {
-		justify-content: center;
-		padding-right: 400px;
-	}
-}
-
+/* --- Media Queries --- */
 @media (max-width: 767.98px) {
 	.centeredStatus {
 		justify-content: flex-start;
 		padding-top: 60px;
+	}
+}
+
+/* Breakpoints grandes (lg y superiores) */
+@media (min-width: 1230px) {
+	.title {
+		/* Mueve el título a la izquierda */
+		transform: translateX(-45px);
+	}
+	.centeredStatus {
+		padding-right: 400px;
 	}
 }
