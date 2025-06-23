@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { selectFilter, unselectFilter } from "../slicers/filterSlice";
 
 // Componente que controla la selección y deselección de los checkbox
-function FiltersListCheckbox({filterName, filter}) {
+function FiltersListCheckbox({ filterName, filter }) {
 	// Variable para saber si un checkbox está seleccionado o no
 	const [selected, setSelected] = useState(false);
 	const filterDispatch = useDispatch();
@@ -33,8 +33,10 @@ function FiltersListCheckbox({filterName, filter}) {
 
 	return (
 		<li>
-			<input type="checkbox" id={filter} onChange={selectedCheckbox} />{" "}
-			{filter}
+			<label htmlFor={filter}>
+				<input type="checkbox" id={filter} onChange={selectedCheckbox} />{" "}
+				{filter}
+			</label>
 		</li>
 	);
 }

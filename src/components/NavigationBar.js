@@ -120,7 +120,7 @@ function NavigationBar({
 	}
 
 	return (
-		<Navbar expand="lg" className="customNavbar" variant={mode} sticky="top">
+		<Navbar expand="lg" className={`customNavbar ${styles.navbarContainer}`} variant={mode} sticky="top">
 			<Container fluid>
 				{/* Agrupados con d-flex */}
 				<div className="d-flex flex-wrap align-items-center">
