@@ -3,8 +3,8 @@ import FiltersListCheckbox from "./FiltersListCheckbox";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/FiltersList.module.css";
 
-function FiltersList({filterName}) {
-	// useState que controla el array de filtros
+function FiltersList({ filterName }) {
+	// Estado que almacena la lista de filtros obtenidos del servidor.
 	const [arrayFilters, setArrayFilters] = useState([]);
 
 	// useEffect que saca los filtros del servidor según el tipo de filtro (area, difficulty, time)
@@ -30,17 +30,13 @@ function FiltersList({filterName}) {
 		};
 
 		fetchData();
-
 	}, [filterName]);
 
+	// Renderiza una lista de checkboxes para cada filtro.
 	return (
 		<ul className={styles.listInfo}>
 			{arrayFilters.map((i) => (
-				<FiltersListCheckbox
-					key={i}
-					filterName={filterName}
-					filter={i}
-				/>
+				<FiltersListCheckbox key={i} filterName={filterName} filter={i} />
 			))}
 		</ul>
 	);

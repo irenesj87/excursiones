@@ -11,19 +11,30 @@ import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/NavigationBar.module.css";
 import "../css/Themes.css";
 
+/**
+ * Componente de la barra de navegación. Aquí se muestran la barra de búsqueda y los botones para el usuario que dependen de
+ * si está logueado o no.
+ * @param {function} props.setExcursions - Función para actualizar el estado de la lista de excursiones mostradas.
+ * @param {boolean} props.isAuthCheckComplete - Booleano que indica si la comprobación inicial de autenticación ha finalizado.
+ * @param {function} props.onExcursionsFetchStart - Callback que se ejecuta cuando comienza la búsqueda de excursiones.
+ * @param {function} props.onExcursionsFetchEnd - Callback que se ejecuta cuando finaliza la búsqueda de excursiones.
+ */
 function NavigationBar({
 	setExcursions,
 	isAuthCheckComplete,
 	onExcursionsFetchStart,
 	onExcursionsFetchEnd,
 }) {
-	// Estado de la visibilidad del Offcanvas
+	// Estado de la visibilidad del Offcanvas (menú lateral).
 	const [showOffcanvas, setShowOffcanvas] = useState(false);
-	// Función para cerrar el Offcanvas
+	// Cierra el componente Offcanvas.
 	const handleCloseOffcanvas = () => setShowOffcanvas(false);
-	// Función para abrir el Offcanvas
+	// Abre el componente Offcanvas.
 	const handleShowOffcanvas = () => setShowOffcanvas(true);
-	// Variable que guarda si el usuario prefiere el modo oscuro, tanto en su sistema operativo como en su navegador
+	/**
+	 * Variable que guarda el modo de tema actual (claro u oscuro) del estado de Redux. Se inicializa con la preferencia del
+	 * sistema o un valor guardado en localStorage.
+	 */
 	const mode = useSelector((state) => state.themeReducer.mode);
 	const dispatch = useDispatch();
 	// Variable que dice si hay un usuario logueado o no
@@ -32,32 +43,36 @@ function NavigationBar({
 	);
 
 	useEffect(() => {
+		// Intenta obtener el modo de tema guardado previamente en el almacenamiento local del navegador.
 		const savedMode = localStorage.getItem("themeMode");
-		// It's often safer to read media query inside the effect if only needed once
+		// Comprueba si el sistema operativo del usuario prefiere el modo oscuro.
+		// window.matchMedia es una API que permite verificar si un documento coincide con una media query.
+		// "(prefers-color-scheme: dark)" es la media query que detecta la preferencia de tema oscuro del sistema.
 		const prefersDark =
 			window.matchMedia &&
 			window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-		let initialMode;
-
-		// 1. Check for a valid saved mode in localStorage
-		if (savedMode === "light" || savedMode === "dark") {
-			initialMode = savedMode;
-		} else {
-			// 2. If no valid saved mode, use system preference
-			initialMode = prefersDark ? "dark" : "light";
-		}
+		// Variable para almacenar el modo inicial que se aplicará.
+		const initialMode =
+			// Si hay un modo guardado válido ("light" o "dark"), úsalo.
+			savedMode === "light" || savedMode === "dark"
+				? savedMode
+				: // Si no hay un modo guardado o no es válido, usa la preferencia del sistema.
+				prefersDark
+				? "dark"
+				: "light";
+		// Despacha la acción para establecer el modo de tema en el estado de Redux.
 		dispatch(setMode(initialMode));
-
-		// Run this effect only once when the component mounts
-	}, [dispatch]); // dispatch is stable, so this effectively runs once
+	}, [dispatch]);
 
 	// Efecto para aplicar la clase del tema al HTML y guardar en localStorage
 	useEffect(() => {
 		if (mode === "light" || mode === "dark") {
 			const root = document.documentElement; // Seleccionar la etiqueta <html>
-			// Asegurarse de que la etiqueta <html> no tiene las clases 'light' y 'dark' aplicadas
-			// antes que el código añada la correcta basada en 'mode'
+			/**
+			 * Asegurarse de que la etiqueta <html> no tiene las clases 'light' y 'dark' aplicadas antes que el código añada
+			 * la correcta basada en 'mode'
+			 */
 			root.classList.remove("light", "dark");
 			// Añade la clase 'mode' ('light' o 'dark') a <html>
 			root.classList.add(mode);
@@ -66,6 +81,7 @@ function NavigationBar({
 		}
 	}, [mode]); // Este useEffect se ejecutará cada vez que la variable 'mode' cambie
 
+	// Alterna el modo de tema (claro/oscuro) despachando la acción `toggleMode`.
 	const toggleTheme = () => {
 		dispatch(toggleMode());
 	};
@@ -78,7 +94,9 @@ function NavigationBar({
 			<RiSunFill className={styles.themeIcon} />
 		);
 
-	// Items que están en la barra de navegación cuando el usuario no está logueado
+	/**
+	 * Componente que muestra los enlaces de navegación para usuarios no logueados (Registrarse, Iniciar sesión).
+	 */
 	const NoLoggedItems = (
 		<>
 			<Nav.Link
@@ -100,7 +118,9 @@ function NavigationBar({
 		</>
 	);
 
-	// Items que están en la barra de navegación cuando el usuario está logueado
+	/**
+	 * Componente que muestra los enlaces de navegación para usuarios logueados (Perfil, Cerrar sesión).
+	 */
 	const LoggedItems = (
 		<LandingPageUserProfile
 			name={user?.name}
@@ -120,7 +140,12 @@ function NavigationBar({
 	}
 
 	return (
-		<Navbar expand="lg" className={`customNavbar ${styles.navbarContainer}`} variant={mode} sticky="top">
+		<Navbar
+			expand="lg"
+			className={`customNavbar ${styles.navbarContainer}`}
+			variant={mode}
+			sticky="top"
+		>
 			<Container fluid>
 				{/* Agrupados con d-flex */}
 				<div className="d-flex flex-wrap align-items-center">

@@ -26,8 +26,10 @@ export function LoginForm() {
 	// Variable que dice cuando hay que mostrar la alerta de error
 	const [showErrorAlert, setShowErrorAlert] = useState(false);
 
-	/* Función que manda la info del formulario del login al servidor. Guarda al usuario y el token en la store y el token
-	en sessionStorage */
+	/**
+	 * Maneja el envío del formulario de inicio de sesión. Realiza una petición al servidor para autenticar al usuario y, si
+	 * es exitosa, guarda la información del usuario y el token en Redux y sessionStorage.
+	 */
 	const submit = async (e) => {
 		e.preventDefault();
 		setLoginError(null);
@@ -53,7 +55,10 @@ export function LoginForm() {
 		}
 	};
 
-	// useEffect que deshabilita el botón "Enviar" hasta que el usuario utiliza el formato correcto en los inputs
+	/**
+	 * Efecto que habilita o deshabilita el botón de envío del formulario.
+	 * El botón se habilita solo si el correo electrónico y la contraseña cumplen con las validaciones.
+	 */
 	useEffect(() => {
 		if (validateMail(mail) && validatePassword(password)) {
 			setDisabled(false);
@@ -62,7 +67,10 @@ export function LoginForm() {
 		}
 	}, [mail, password]);
 
-	// Función que cierra la Alert de error
+	/**
+	 * Cierra la alerta de mensaje de error y resetea el estado del error.
+	 * Se pasa como prop al componente ErrorMessageAlert.
+	 */
 	const handleCloseAlert = () => {
 		setShowErrorAlert(false);
 		setLoginError(null);
@@ -71,10 +79,7 @@ export function LoginForm() {
 	return (
 		<>
 			{showErrorAlert && loginError && (
-				<ErrorMessageAlert
-					message={loginError}
-					onClose={handleCloseAlert}
-				/>
+				<ErrorMessageAlert message={loginError} onClose={handleCloseAlert} />
 			)}
 			<Form
 				id="loginForm"
@@ -105,8 +110,7 @@ export function LoginForm() {
 				<div className="mt-5 pt-3 border-top">
 					{/* justify-content-sm-end alineará la Col a la derecha en breakpoints sm y mayores */}
 					<Row className="justify-content-sm-end">
-						{/* xs={12} hace que la Col ocupe el ancho en pantallas extra pequeñas */}
-						{/* sm="auto" hace que la Col se ajuste al contenido en pantallas sm y mayores */}
+						{/* sm="auto" hace que la Col se ajuste al contenido en breakpoints sm y mayores */}
 						<Col xs={12} sm="auto">
 							<Button
 								variant={disabled ? "secondary" : "success"}
