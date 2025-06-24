@@ -10,8 +10,11 @@
 		font-size: 2.2rem;
 		font-weight: bold;
 		text-decoration: none;
+		display: inline-block;
+		transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
 		&:hover {
 			color: var(--text-color-dark);
+			transform: scale(1.1); /* Transform escala un elemento sin cambiar el espacio que ocupa */
 		}
 	}
 }
