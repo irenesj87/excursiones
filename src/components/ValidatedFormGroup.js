@@ -40,7 +40,6 @@ function ValidatedFormGroup({
 					Recuerda, no puedes dejar un campo vacío o en un formato incorrecto
 				</p>
 			)}
-			{message && notValid}
 		</Form.Group>
 	);
 }

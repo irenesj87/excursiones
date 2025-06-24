@@ -3,6 +3,9 @@ import RegisterForm from "./RegisterForm";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/RegisterPage.module.css";
 
+/**
+ * Componente que representa la página de registro de usuarios.
+ */
 function RegisterPage() {
 	return (
 		// Aseguramos que el Container se expanda verticalmente

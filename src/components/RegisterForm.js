@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -17,44 +17,70 @@ import ErrorMessageAlert from "./ErrorMessageAlert.js";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/RegisterForm.module.css";
 
+// Componente que contiene la lógica del formulario de registro
 function RegisterForm() {
+	// Hook para despachar acciones de Redux.
 	const loginDispatch = useDispatch();
+	// Hook para la navegación programática.
 	const navigate = useNavigate();
+
+	// Estados locales para los campos del formulario y el control de la UI.
+	// Estado para controlar si el botón de envío está deshabilitado.
 	const [disabled, setDisabled] = useState(true);
+	// Estado para el nombre del usuario.
 	const [name, setName] = useState("");
+	// Estado para los apellidos del usuario.
 	const [surname, setSurname] = useState("");
+	// Estado para el teléfono del usuario.
 	const [phone, setPhone] = useState("");
+	// Estado para el correo electrónico del usuario.
 	const [mail, setMail] = useState("");
+	// Estado para la contraseña del usuario.
 	const [password, setPassword] = useState("");
+	// Estado para la confirmación de la contraseña.
 	const [samePassword, setSamePassword] = useState("");
+	// Estado para almacenar mensajes de error de registro.
 	const [registerError, setRegisterError] = useState(null);
+	// Estado para controlar la visibilidad de la alerta de error.
 	const [showErrorAlert, setShowErrorAlert] = useState(false);
 
+	/**
+	 * Maneja el envío del formulario de registro. Realiza el registro del usuario, lo loguea automáticamente y lo redirige a
+	 * la página principal.
+	 */
 	const submit = async (e) => {
 		e.preventDefault();
 		setRegisterError(null);
 		setShowErrorAlert(false);
 
 		try {
+			// Intenta registrar al nuevo usuario con los datos proporcionados.
 			await registerUser(name, surname, phone, mail, password);
+			// Si el registro es exitoso, intenta loguear al usuario automáticamente.
 			const loginData = await userLogin(mail, password);
 
+			// Despacha la acción de login para actualizar el estado de Redux con la información del usuario y el token.
 			loginDispatch(
 				login({
 					user: loginData.user,
 					token: loginData.token,
 				})
 			);
+			// Guarda el token en sessionStorage para persistencia de la sesión.
 			window.sessionStorage["token"] = loginData.token;
+			// Redirige al usuario a la página principal.
 			navigate("/");
 		} catch (error) {
-			// Consider more specific error handling/user feedback
 			console.error("Registration or login failed:", error);
 			setRegisterError(error.message || "Error al registrarse.");
 			setShowErrorAlert(true);
 		}
 	};
 
+	/**
+	 * Efecto que habilita o deshabilita el botón de envío del formulario.El botón se habilita solo si todos los campos del
+	 * formulario cumplen con las validaciones.
+	 */
 	useEffect(() => {
 		const isValid =
 			validateName(name) &&
@@ -68,6 +94,7 @@ function RegisterForm() {
 
 	return (
 		<>
+			{/* Muestra la alerta de error si showErrorAlert es true y hay un mensaje de error. */}
 			{showErrorAlert && registerError && (
 				<ErrorMessageAlert
 					message={registerError}
@@ -77,8 +104,14 @@ function RegisterForm() {
 					}}
 				/>
 			)}
-			<Form id="registerForm" className={`${styles.formLabel} mb-3 fw-bold`} onSubmit={submit}>
+			{/* Formulario de registro */}
+			<Form
+				id="registerForm"
+				className={`${styles.formLabel} mb-3 fw-bold`}
+				onSubmit={submit}
+			>
 				<Row>
+					{/* Campo para el nombre */}
 					<ValidatedFormGroup
 						as={Col}
 						xs={12}
@@ -91,6 +124,7 @@ function RegisterForm() {
 						message={true}
 						autocomplete="given-name"
 					/>
+					{/* Campo para los apellidos */}
 					<ValidatedFormGroup
 						as={Col}
 						xs={12}
@@ -105,6 +139,7 @@ function RegisterForm() {
 					/>
 				</Row>
 				<Row>
+					{/* Campo para el teléfono */}
 					<ValidatedFormGroup
 						as={Col}
 						xs={12}
@@ -118,6 +153,7 @@ function RegisterForm() {
 						message={true}
 						autocomplete="tel"
 					/>
+					{/* Campo para el correo electrónico */}
 					<ValidatedFormGroup
 						as={Col}
 						xs={12}
@@ -133,6 +169,7 @@ function RegisterForm() {
 					/>
 				</Row>
 				<Row>
+					{/* Campo para la contraseña */}
 					<ValidatedFormGroup
 						as={Col}
 						xs={12}
@@ -150,31 +187,28 @@ function RegisterForm() {
 						as={Col}
 						xs={12}
 						md={6}
-						id="confirm-password"
+						id="confirm-password" // ID para el campo de confirmación de contraseña.
 						name="Repite la contraseña"
 						inputType="password"
 						inputToChange={setSamePassword}
-						// Use validSamePassword directly here if ValidatedFormGroup doesn't support comparing two fields
-						// Or adjust ValidatedFormGroup to handle this case
 						validationFunction={(value) => validSamePassword(password, value)}
 						value={samePassword}
 						message={true}
 						autocomplete="new-password"
 					/>
 				</Row>
+				{/* Mensaje informativo sobre los requisitos de la contraseña. */}
 				<ul className={`${styles.infoMessage} mb-3`}>
 					<li>
 						Tu contraseña debe tener al menos 8 caracteres, una letra y un
 						número.
 					</li>
 				</ul>
-				{/* Modificamos el contenedor del botón para usar Row y Col */}
-				{/* mt-5 pt-3 border-top se mantiene para los estilos visuales */}
-				<div className="mt-5 pt-3 border-top">					
-					{/* justify-content-sm-end alineará la Col a la derecha en breakpoints sm y mayores */}
+
+				<div className="mt-5 pt-3 border-top">
+					{/* justify-content-sm-end alineará la Col a la derecha en breakpoints 'sm' y mayores */}
 					<Row className="justify-content-sm-end">
-						{/* xs={12} hace que la Col ocupe el ancho en pantallas extra pequeñas */}
-						{/* sm="auto" hace que la Col se ajuste al contenido en pantallas sm y mayores */}
+						{/* sm="auto" hace que la Col se ajuste al contenido en breakpoints 'sm' y mayores */}
 						<Col xs={12} sm="auto">
 							<Button
 								variant={disabled ? "secondary" : "success"}

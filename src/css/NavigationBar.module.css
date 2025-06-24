@@ -13,6 +13,7 @@
 	align-items: center;
 	justify-content: center;
 	line-height: 1;
+	/* Establece la altura de línea para el texto dentro del botón */
 
 	svg {
 		font-size: 1.2rem;
@@ -43,10 +44,8 @@
 }
 
 .registerLink:hover {
-	color: var(--register-link-color);
 	background-color: rgba(0, 0, 0, 0.05);
-	border-color: var(--register-link-border-color);
-	outline: none; /* Remove default focus outline if needed */
+	outline: none;
 	box-shadow: none;
 }
 
@@ -67,16 +66,15 @@
 	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
 }
 
+.loginLink:hover,
+.loginLink:focus {
+	color: var(--text-color-dark);
+}
+
 .loginLink:hover {
 	background-color: #2e4c34;
 	border-color: #2e4c34;
-	color: var(--text-color-dark);
-	outline: none;
 	box-shadow: none;
-}
-
-.loginLink:focus {
-	color: var(--text-color-dark);
 }
 
 .authNavItems {

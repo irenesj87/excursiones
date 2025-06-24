@@ -3,8 +3,8 @@
 	flex-direction: column; /* Apila los hijos (Rows) verticalmente */
 	flex-grow: 1; /* Permite que este contenedor crezca y ocupe el espacio vertical disponible en su padre flex */
 	justify-content: center; /* Centra los hijos (Rows) verticalmente en el contenedor */
-	padding-top: 2rem; /* Añade espacio general arriba */
-	padding-bottom: 2rem; /* Añade espacio general abajo */
+	padding-top: 2rem;
+	padding-bottom: 2rem; 
 }
 
 .cardTitle {
@@ -20,8 +20,8 @@
 }
 
 .registerCard {
-	margin-top: 2rem; /* Margen superior general para la tarjeta */
-	margin-bottom: 2rem; /* Margen inferior general para la tarjeta */
+	margin-top: 2rem; 
+	margin-bottom: 2rem; 
 	padding-bottom: 2rem;
 	border-radius: 0.5rem;
 }
@@ -29,11 +29,11 @@
 /* Media query para breakpoints pequeños (xs breakpoint de Bootstrap es <576px) */
 @media (max-width: 575.98px) {
   .container {
-    padding-top: 1rem; /* Menos padding en el contenedor en pantallas pequeñas */
+    padding-top: 1rem; 
     padding-bottom: 1rem;
   }
   .registerCard {
-    margin-top: 1rem; /* Margen superior más pequeño para la tarjeta en pantallas pequeñas */
-    margin-bottom: 1.5rem; /* Margen inferior más pequeño para la tarjeta */
+    margin-top: 1rem; 
+    margin-bottom: 1.5rem; 
   }
 }
