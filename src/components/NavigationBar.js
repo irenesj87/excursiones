@@ -209,6 +209,7 @@ function NavigationBar({
 					placement="end"
 					id="offcanvasNavbar"
 					scroll={true}
+					className={styles.offcanvasMenu}
 					backdrop={true}
 				>
 					<Offcanvas.Header closeButton>

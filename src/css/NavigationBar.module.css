@@ -82,3 +82,7 @@
 	min-width: 227.86px;
 	justify-content: flex-start;
 }
+
+.offcanvasMenu {
+	max-width: 300px;
+}
