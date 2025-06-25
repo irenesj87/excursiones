@@ -3,7 +3,6 @@
 /* ======================================== */
 html.light body {
 	transition: none;
-	/* Establece el color de fondo para el modo claro */
 	background-color: var(--background-color-light);
 	color: var(--text-color-light);
 	--register-link-color: var(--text-color-light);
@@ -11,7 +10,6 @@ html.light body {
 
 	/* --- Estilos para la barra de navegación --- */
 	.customNavbar {
-		/* Establece el color de fondo de la barra de navegación en modo claro */
 		background-color: var(--background-color-light);
 		z-index: 1030;
 		color: var(--text-color-light);
@@ -26,7 +24,6 @@ html.light body {
 	}
 
 	/* --- Estilos para filtros --- */
-	/* Establece el color de fondo y texto para los botones y cuerpos del acordeón en modo claro */
 	.accordion-button,
 	.accordion-body {
 		background-color: var(--background-color-light);
@@ -40,7 +37,6 @@ html.light body {
 	}
 
 	.offcanvas-header {
-		/* Establece el color de fondo, color de texto, peso de fuente, padding y borde inferior del encabezado del Offcanvas */
 		background-color: var(--background-color-light);
 		color: var(--primary-color);
 		font-weight: bolder;
@@ -48,12 +44,11 @@ html.light body {
 		border-bottom: 1px solid #dee2e6;
 	}
 
-	/* Establece el padding del cuerpo del Offcanvas */
 	.offcanvas-body {
 		padding: 1rem 0;
 	}
-	/* Estilos para los enlaces de navegación dentro del Offcanvas */
 
+	/* Estilos para los enlaces de navegación dentro del Offcanvas */
 	.offcanvas-body .nav-link {
 		display: block;
 		width: 95%;
@@ -84,18 +79,15 @@ html.light body {
 /* ======================================== */
 html.dark body {
 	transition: none; /* Eliminar transición para el body en cambio de tema */
-	/* Establece el color de fondo para el modo oscuro */
 	background-color: var(--background-color-dark);
 	color: var(--text-color-dark);
 	--register-link-color: var(--text-color-dark);
 	--register-link-border-color: var(--text-color-dark);
-	/* Definimos el color para texto sutil/deshabilitado en modo oscuro */
 	/* Este color (blanco con 35% de opacidad) se usará para placeholders, controles deshabilitados y paginación deshabilitada */
 	--subtle-text-color-dark: rgba(255, 255, 255, 0.35);
 
 	/* --- Estilos para la barra de navegación --- */
 	.customNavbar {
-		/* Establece el color de fondo y texto de la barra de navegación en modo oscuro */
 		background-color: var(--background-color-dark);
 		color: var(--text-color-dark);
 		padding-top: 1.2rem;
@@ -113,7 +105,6 @@ html.dark body {
 
 	/* --- Estilos para los filtros --- */
 	.accordion-button,
-	/* Establece el color de fondo y texto para los botones y cuerpos del acordeón en modo oscuro */
 	.accordion-body {
 		background-color: var(--background-color-dark);
 		color: var(--text-color-dark);
@@ -126,7 +117,6 @@ html.dark body {
 
 	.accordion-item {
 		border-bottom: 1px solid var(--border-color-dark);
-		/* Establece el color de fondo para los elementos del acordeón en modo oscuro */
 		background-color: var(--background-color-dark);
 	}
 
@@ -181,7 +171,6 @@ html.dark body {
 	}
 
 	.form-control::placeholder {
-		/* Establece el color del texto del placeholder */
 		color: var(--subtle-text-color-dark);
 	}
 
@@ -218,7 +207,7 @@ html.dark body {
 		/* Mismo fondo que el normal para deshabilitados, pero con texto atenuado */
 		--bs-pagination-disabled-bg: var(--surface-color-dark);
 		--bs-pagination-disabled-border-color: var(--border-color-dark);
-		--bs-tertiary-bg-rgb: 58, 58, 58; /* Un gris oscuro para fondos terciarios */
+		--bs-tertiary-bg-rgb: 58, 58, 58;
 	}
 
 	/* --- Estilos para Paginación (Enlaces) --- */

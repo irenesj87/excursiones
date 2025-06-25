@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Card, Col, Form, Row, Button } from "react-bootstrap";
 import UserPageInputEdit from "./UserPageInputEdit";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,37 +7,44 @@ import { Navigate } from "react-router";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/UserInfoForm.module.css";
 
+/**
+ * Componente que se encarga del menú de edición y muestra de los datos del usuario logueado en ese momento
+ */
 function UserInfoForm() {
-	// Variable that we need to be able to use dispatchers
+	// Variable que necesitamos para poder usar los dispatchers de Redux.
 	const loginDispatch = useDispatch();
-	// This useSelector gives us the info if an user is logged or not
+	// Este useSelector nos da la información de si un usuario está logueado o no, así como los datos del usuario actual.
 	const { login: isLoggedIn, user } = useSelector(
 		(state) => state.loginReducer
 	);
-	// Variable that receive and change the name that we received from the edit inputs
+	// Variable de estado para el nombre del usuario, inicializada con el nombre del usuario logueado. Se actualizará con los
+	// cambios en los inputs de edición.
 	const [name, setName] = useState(user?.name);
-	// Variable that receive and change the surname that we received from the edit inputs
+	// Variable de estado para los apellidos del usuario, inicializada con los apellidos del usuario logueado. Se actualizará
+	// con los cambios en los inputs de edición.
 	const [surname, setSurname] = useState(user?.surname);
-	// Variable that receive and change the phone that we received from the edit inputs
+	// Variable de estado para el teléfono del usuario, inicializada con el teléfono del usuario logueado. Se actualizará con
+	// los cambios en los inputs de edición.
 	const [phone, setPhone] = useState(user?.phone);
-	// Variable that saves the original name in case the user cancels the editing
+	// Variable de estado que guarda el nombre original en caso de que el usuario cancele la edición.
 	const [originalName, setOriginalName] = useState(user?.name);
-	// Variable that saves the original surname in case the user cancels the editing
+	// Variable de estado que guarda los apellidos originales en caso de que el usuario cancele la edición.
 	const [originalSurname, setOriginalSurname] = useState(user?.surname);
-	// Variable that saves the original phone in case the user cancels the editing
+	// Variable de estado que guarda el teléfono original en caso de que el usuario cancele la edición.
 	const [originalPhone, setOriginalPhone] = useState(user?.phone);
-	// Variable that sets the information for the current user
-	// This variable says if the user is editing information or not
+	// Variable de estado que indica si el usuario está editando su información o no.
 	const [isEditing, setIsEditing] = useState(false);
-	//
+
+	// Objeto que representa los datos del usuario actual, incluyendo los cambios potenciales de los inputs.
 	const currentUser = {
 		name: name,
 		surname: surname,
 		mail: user?.mail,
 		phone: phone,
 	};
-	// Variable that has the url that is needed for the current user fetch
+	// URL para la petición de actualización de los datos del usuario.
 	const url = `http://localhost:3001/users/${currentUser.mail}`;
+	// Opciones para la petición HTTP (PUT) para actualizar los datos del usuario.
 	const options = {
 		method: "PUT",
 		mode: "cors",
@@ -45,36 +52,44 @@ function UserInfoForm() {
 			"Content-Type": "application/json",
 			Authorization: "Bearer " + window.sessionStorage["token"],
 		},
-		// body: It is a standard property within the fetch options. It defines the content to send in the body of the HTTP request.
-		/* This is typically used with methods like POST or PUT where you need to send data to the server (in this case, to update user information)
-    	JSON.stringify(...): This is a built-in JavaScript function. Its job is to take a JavaScript object (like the currentUser object) and convert it into a JSON string.
-    	We have to convert it to a JSON string because web servers and APIs typically expect data sent in the request body to be in a standardized 
-    	text format. JSON is the most common format for exchanging data between web clients and servers.*/
+		/*
+		 * body: Es una propiedad estándar dentro de las opciones de fetch. Define el contenido a enviar en el cuerpo de la 
+		   petición HTTP.
+		 * Esto se usa típicamente con métodos como POST o PUT donde necesitas enviar datos al servidor (en este caso, para 
+		   actualizar la información del usuario).
+		 * JSON.stringify(...): Es una función de JavaScript. Su trabajo es tomar un objeto JavaScript (como el objeto 
+		   currentUser) y convertirlo en una cadena JSON. Tenemos que convertirlo a una cadena JSON porque los servidores web 
+		   y las APIs típicamente esperan que los datos enviados en el cuerpo de la petición estén en un formato de texto 
+		   estandarizado y JSON es el formato más común para intercambiar datos entre clientes web y servidores.
+		 */
 		body: JSON.stringify(currentUser),
 	};
 
-	// If the user is not logged in we send him/her to the home page
+	// Si el usuario no está logueado, lo redirigimos a la página de inicio.
 	if (!isLoggedIn) {
 		return <Navigate replace to="/" />;
 	}
 
-	// Function that gives an alert when the user starts editing. Then the inputs to edit the user's info appears
+	// Función para iniciar el modo de edición.
+	// Guarda los valores actuales como "originales" y muestra los inputs de edición.
 	const startEdit = () => {
 		setIsEditing(true);
-		//This variables store the original values when editing starts
+		// Estas variables almacenan los valores originales cuando comienza la edición.
 		setOriginalName(name);
 		setOriginalSurname(surname);
 		setOriginalPhone(phone);
 	};
-	// Function that gives an alert when the user cancels the editing. Then the inputs to edit the user's info disappears
+	// Función para cancelar el modo de edición.
+	// Restaura los valores originales y oculta los inputs de edición.
 	const cancelEdit = () => {
 		setIsEditing(false);
-		//Reset to the original values when the user cancels the editing
+		// Restablece los valores a los originales cuando el usuario cancela la edición.
 		setName(originalName);
 		setSurname(originalSurname);
 		setPhone(originalPhone);
 	};
-	// Function that saves the info the user has changed
+	// Función para guardar la información que el usuario ha cambiado.
+	// Realiza una petición PUT al servidor para actualizar los datos.
 	const saveEdit = async () => {
 		try {
 			const response = await fetch(url, options);
@@ -82,6 +97,7 @@ function UserInfoForm() {
 				throw new Error("No puedes hacer esta operación");
 			}
 			const data = await response.json();
+			// Actualiza el estado de Redux con los nuevos datos del usuario.
 			loginDispatch(
 				updateUser({
 					user: data,
@@ -98,6 +114,7 @@ function UserInfoForm() {
 		<Card className={`${styles.profileCard} mb-4`}>
 			<Card.Header className={styles.cardHeader}>Datos Personales</Card.Header>
 			<Card.Body className={styles.cardBody}>
+				{/* Campo de correo electrónico (solo lectura) */}
 				<Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
 					<Form.Label column sm="3" className="text-sm-end fw-bold">
 						Correo:
@@ -105,15 +122,19 @@ function UserInfoForm() {
 					<Col sm="9">
 						<Form.Control
 							plaintext
-							readOnly
-							/* The user?.mail part attempts to access the mail property of the user object.
-							The key is the ?. It checks if user is null or undefined before trying to access .mail.
-							If user is null or undefined, the expression short-circuits and evaluates to undefined immediately,
-							without throwing an error (which would happen with just user.mail).
-							If user exists, it proceeds to access the mail property.*/
-							/* The operator (??) provides a default value. It checks if the value on its left-hand side (user?.mail in this case) is either null or undefined.
-							If the left-hand side is null or undefined, it returns the value on the right-hand side (which is "", an empty string).
-							If the left-hand side has any other value (including an empty string "", 0, false, etc.), it returns that left-hand side value.*/
+							readOnly // El campo es de solo lectura
+							/*
+							 * user?.mail intenta acceder a la propiedad 'mail' del objeto 'user'.
+							 * El operador ?. (encadenamiento opcional) verifica si 'user' es null o undefined antes de
+							 * intentar acceder a '.mail'. Si 'user' es null o undefined, la expresión se evalúa a undefined
+							 * inmediatamente, sin lanzar un error. Si 'user' existe, procede a acceder a la propiedad 'mail'.
+							 *
+							 * El operador ?? (nullish coalescing) proporciona un valor por defecto.
+							 * Verifica si el valor de su lado izquierdo (user?.mail en este caso) es null o undefined.
+							 * Si es así, retorna el valor de su lado derecho (que es "", una cadena vacía).
+							 * Si el lado izquierdo tiene cualquier otro valor (incluyendo "", 0, false, etc.), retorna
+							 * ese valor.
+							 */
 							defaultValue={user?.mail ?? ""}
 						/>
 					</Col>
@@ -126,6 +147,7 @@ function UserInfoForm() {
 						htmlFor="formPlaintextName"
 					>
 						Nombre:
+						{/* Componente para editar el nombre */}
 					</Form.Label>
 					<Col sm="9">
 						<UserPageInputEdit
@@ -144,6 +166,7 @@ function UserInfoForm() {
 						htmlFor="formPlaintextSurname"
 					>
 						Apellidos:
+						{/* Componente para editar los apellidos */}
 					</Form.Label>
 					<Col sm="9">
 						<UserPageInputEdit
@@ -162,6 +185,7 @@ function UserInfoForm() {
 						htmlFor="formPlaintextPhone"
 					>
 						Teléfono:
+						{/* Componente para editar el teléfono */}
 					</Form.Label>
 					<Col sm="9">
 						<UserPageInputEdit
@@ -172,14 +196,12 @@ function UserInfoForm() {
 						/>
 					</Col>
 				</Form.Group>
+				{/* Botón "Editar" visible cuando no se está editando */}
 				{!isEditing && (
-					// Usamos Row y Col para el botón Editar para un control de ancho más robusto.
-					// El div externo ya no necesita ser d-flex; Row y Col se encargarán.
 					<div className="mt-5 border-top pt-3">
 						<Row className="justify-content-center justify-content-sm-end gx-0">
-							{/* gx-0 para eliminar gutters si no son necesarios */}
+							{/* gx-0 para eliminar los "gutters" (espacios entre columnas) si no son necesarios */}
 							<Col xs={12} sm="auto">
-								{/* xs={12} para ancho completo en pequeño, sm="auto" para ancho de contenido en sm+ */}
 								<Button onClick={startEdit} className="w-100">
 									Editar
 								</Button>
@@ -188,21 +210,18 @@ function UserInfoForm() {
 					</div>
 				)}
 				{isEditing && (
-					// Contenedor para margen superior y borde.
-					// El layout de los botones se maneja con Row y Col.
 					<div className="mt-5 border-top pt-3">
 						<Row className="justify-content-center justify-content-sm-end gx-2">
-							{/* gx-2 para espaciado horizontal entre columnas */}
-							{/* Cada botón ocupa la mitad del ancho en xs, y ancho automático en sm+ */}
+							{/* gx-2 para añadir espaciado horizontal entre columnas */}
+							{/* Cada botón ocupa la mitad del ancho en breakpoints extra pequeños (xs), y ancho automático en 
+							sm+ */}
 							<Col xs={6} sm="auto">
 								<Button variant="danger" onClick={cancelEdit} className="w-100">
-									{/* w-100 para llenar la Col */}
 									Cancelar
 								</Button>
 							</Col>
 							<Col xs={6} sm="auto">
 								<Button variant="success" onClick={saveEdit} className="w-100">
-									{/* w-100 para llenar la Col */}
 									Guardar
 								</Button>
 							</Col>
