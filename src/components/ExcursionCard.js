@@ -88,7 +88,7 @@ const ExcursionCard = memo(function ExcursionCard({
 							<span>Dificultad:</span> {difficulty}
 						</span>
 						<span className={`badge bg-info text-dark mt-3`}>
-							<span>Tiempo estimado:</span> {time}
+							<span>Tiempo:</span> {time}
 						</span>
 					</div>
 				</div>

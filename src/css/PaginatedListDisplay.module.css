@@ -21,6 +21,6 @@
 
 .noItemsMessage {
 	font-size: 1.2rem;
-	color: var(--text-color-secondary);
+	font-style: italic;
 	text-align: center;
 }

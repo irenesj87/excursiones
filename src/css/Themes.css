@@ -8,6 +8,12 @@ html.light body {
 	--register-link-color: var(--text-color-light);
 	--register-link-border-color: var(--text-color-light);
 
+	/* --- Variables para ExcursionCard --- */
+	--excursion-card-bg: #ffffff;
+	--excursion-card-border-color: #e0e0e0;
+	--excursion-card-title-color: #333;
+	--excursion-card-description-color: #555;
+
 	/* --- Estilos para la barra de navegación --- */
 	.customNavbar {
 		background-color: var(--background-color-light);
@@ -21,6 +27,16 @@ html.light body {
 	/* Elimina la transición para los controles de formulario en modo claro */
 	.form-control {
 		transition: none;
+	}
+
+	.excursionsContainer {
+		background-color: white;
+		border: 1px solid var(--border-color-light);
+		border-radius: 0.5rem;
+		margin-top: 2rem;
+		margin-bottom: 2rem;
+		padding-left: 1.5rem;
+		padding-right: 1.5rem;
 	}
 
 	/* --- Estilos para filtros --- */
@@ -72,6 +88,16 @@ html.light body {
 	.page-link {
 		transition: none; /* Elimina la transición para los enlaces de paginación */
 	}
+
+	.userPageContainer {
+		background-color: white;
+		border: 1px solid var(--border-color-light);
+		border-radius: 0.5rem;
+		margin-top: 2rem;
+		margin-bottom: 2rem;
+		padding-left: 1.5rem;
+		padding-right: 1.5rem;
+	}
 }
 
 /* ======================================== */
@@ -85,6 +111,12 @@ html.dark body {
 	--register-link-border-color: var(--text-color-dark);
 	/* Este color (blanco con 35% de opacidad) se usará para placeholders, controles deshabilitados y paginación deshabilitada */
 	--subtle-text-color-dark: rgba(255, 255, 255, 0.35);
+
+	/* --- Variables para ExcursionCard --- */
+	--excursion-card-bg: #2a2a2a; /* Un poco más claro que el fondo para que destaque */
+	--excursion-card-border-color: var(--border-color-dark);
+	--excursion-card-title-color: var(--text-color-dark);
+	--excursion-card-description-color: rgba(255, 255, 255, 0.85);
 
 	/* --- Estilos para la barra de navegación --- */
 	.customNavbar {
@@ -101,6 +133,16 @@ html.dark body {
 		background-color: rgb(255, 255, 255, 0.1);
 		color: var(--register-link-color);
 		border-color: var(--register-link-border-color);
+	}
+
+	.excursionsContainer {
+		background-color: var(--background-color-dark);
+		border: 1px solid var(--border-color-dark);
+		border-radius: 0.5rem;
+		margin-top: 2rem;
+		margin-bottom: 2rem;
+		padding-left: 1.5rem;
+		padding-right: 1.5rem;
 	}
 
 	/* --- Estilos para los filtros --- */
@@ -125,8 +167,8 @@ html.dark body {
 		background-color: var(--surface-color-dark);
 		color: var(--text-color-dark);
 		border-color: var(--surface-color-dark);
+		border: 1px solid var(--border-color-dark);
 		border-radius: 0.5rem;
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 	}
 
 	/* Establece el color de fondo y el borde inferior del encabezado de la tarjeta */
@@ -215,6 +257,16 @@ html.dark body {
 		transition: none; /* Elimina la transición para los enlaces de paginación */
 	}
 
+	.userPageContainer {
+		background-color: var(--background-color-dark);
+		border: 1px solid var(--border-color-dark);
+		border-radius: 0.5rem;
+		margin-top: 2rem;
+		margin-bottom: 2rem;
+		padding-left: 1.5rem;
+		padding-right: 1.5rem;
+	}
+
 	.offcanvas-header {
 		background-color: var(--background-color-dark);
 		color: var(--primary-color);
@@ -249,3 +301,50 @@ html.dark body {
 		border-radius: 0.375rem;
 	}
 }
+
+/* Estilos para secciones con fondo y borde en modo oscuro */
+/*html.dark body .themed-section-background {
+	border: 1px solid var(--border-color-dark);
+	border-radius: 0.5rem;
+	padding: 1.5rem;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+}
+
+@media (max-width: 767.98px) {
+	/* Para pantallas de hasta 767.98px de ancho */
+/*html.light body .themed-section-background {
+		padding: 1rem; /* Reduce el padding a 1rem */
+/*margin-top: 1rem; /* Reduce el margen superior a 1rem */
+/*margin-bottom: 1rem; /* Reduce el margen inferior a 1rem */
+/*padding-left: 1rem;
+		padding-right: 1rem;
+	}
+
+	html.dark body .themed-section-background {
+		padding: 1rem; /* Reduce el padding a 1rem */
+/*margin-top: 1rem; /* Reduce el margen superior a 1rem */
+/*margin-bottom: 1rem; /* Reduce el margen inferior a 1rem */
+/*padding-left: 1rem;
+		padding-right: 1rem;
+	}
+}
+
+@media (min-width: 992px) {
+	/* lg breakpoint and up */
+/*html.light body .themed-section-background,
+	html.dark body .themed-section-background {
+		padding-left: 4rem;
+		padding-right: 4rem;
+	}
+}
+@media (min-width: 1200px) {
+	/* xl breakpoint and up */
+/*html.light body .themed-section-background,
+	html.dark body .themed-section-background {
+		padding-left: 6rem;
+		padding-right: 6rem;
+	}
+}*/

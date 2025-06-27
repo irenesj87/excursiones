@@ -1,14 +1,17 @@
-.container {
-	min-height: var(--minHeight); /* Usar la variable global para consistencia */
-	/* Esto asegura que UserPage tenga una altura mínima considerable */
+.userPageContainerMinheight {
+	min-height: 1264px;
 }
 
 .title {
 	color: var(--primary-color);
 	margin-top: 40px;
 	margin-bottom: 0.4rem;
-	font-weight: 600;
+	border-bottom: 1px solid var(--border-color-light);
+	padding-bottom: 0.5rem;
+	font-size: 1.6rem;
+	font-weight: bold;
 	text-align: center;
+	text-align: left; 
 	text-transform: uppercase;
 }
 
@@ -23,6 +26,6 @@
 
 /* Estilos específicos para la tarjeta de excursiones en la página de usuario.*/
 .excursionsCard {
-	/* Ejemplo: Añadir un borde distintivo para la tarjeta contenedora de las excursiones */
-	border: 1px solid;
+	border: 1px solid var(--border-color-light);
+	border-radius: 0.5rem;
 }

@@ -30,8 +30,17 @@ const fallbackContent = "Cargando página...";
 const fallbackDelay = 500;
 
 // Componente wrapper para simplificar la renderización de rutas lazy-loaded con Suspense y Col.
-const LazyRouteWrapper = ({ PageComponent, extraFallbackClass = "" }) => (
-	<Col xs={12} className="d-flex flex-column flex-grow-1">
+const LazyRouteWrapper = ({
+	PageComponent,
+	extraFallbackClass = "",
+	useThemedBackground = true,
+}) => (
+	<Col
+		xs={12}
+		className={`d-flex flex-column flex-grow-1 ${
+			useThemedBackground ? "themed-section-background" : ""
+		}`}
+	>
 		<Suspense
 			fallback={
 				<DelayedFallback
@@ -183,7 +192,7 @@ const Layout = () => {
 				<main
 					className={`${styles.mainContent} flex-grow-1 d-flex flex-column`}
 				>
-					<Row className="flex-grow-1 d-flex justify-content-center">
+					<Row className="flex-grow-1 d-flex justify-content-start">
 						<Routes>
 							{/* Define la ruta por defecto */}
 							<Route
@@ -194,7 +203,11 @@ const Layout = () => {
 											<Filters />
 										</Col>
 										<Col
-											className={`d-flex flex-column ${styles.contentMinHeight}`}
+											xs={12}
+											md={8}
+											lg={9}
+											xl={10}
+											className="d-flex flex-column"
 										>
 											{excursionsContent}
 										</Col>

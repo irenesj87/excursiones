@@ -19,7 +19,9 @@ const Excursions = memo(function Excursions({
 	const excursionComponents = useMemo(
 		() =>
 			excursionData.map((excursion) => (
-				<Excursion key={excursion.id} {...excursion} />
+				<Col xs={12} md={6} lg={4} xl={3} key={excursion.id}>
+					<Excursion key={excursion.id} {...excursion} />
+				</Col>
 			)),
 		[excursionData]
 	);
@@ -66,12 +68,11 @@ const Excursions = memo(function Excursions({
 
 	// Si hay excursiones, se muestran.
 	return (
-		<div className={styles.container}>
-			<Row>
-				<Col xs={12} xl={10}>
-					<h2 className={styles.title}>Próximas excursiones</h2>
-					<div>{excursionComponents}</div>
-				</Col>
+		<div className="excursionsContainer">
+			<h2 className={styles.title}>Próximas excursiones</h2>
+			<Row className="g-4">
+				{/* g-4 for gutter spacing between cards */}
+				{excursionComponents}
 			</Row>
 		</div>
 	);

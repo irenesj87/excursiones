@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import UserInfoForm from "./UserInfoForm";
 import ExcursionCard from "./ExcursionCard";
@@ -72,48 +72,50 @@ function UserPage() {
 		/**
 		 * Contenedor principal de la página de usuario.
 		 */
-		<Container className={`${styles.container} d-flex flex-column flex-grow-1`}>
-			<Row className="mb-4 justify-content-center">
-				<Col>
-					<h2 className={styles.title}>Tu perfil</h2>
-				</Col>
-			</Row>
-			<Row className="mb-4 justify-content-center">
-				<Col xs="12" md="12" lg="9" xl="10">
-					<UserInfoForm />
-				</Col>
-			</Row>
-			{/* Esta fila debe crecer para ocupar el espacio vertical disponible */}
-			<Row className="mb-4 justify-content-center flex-grow-1">
-				{/* La columna también debe ser una columna flexible para permitir que su hijo (Card) crezca */}
-				<Col xs="12" md="12" lg="9" xl="10" className="d-flex flex-column">
-					<PaginatedListDisplay
-						data={userExcursions}
-						isLoading={isLoading}
-						error={error}
-						itemsPerPage={2} // Puedes hacer esto una constante o una prop si lo necesitas dinámico
-						renderItem={(excursion) => (
-							<ExcursionCard
-								name={excursion.name}
-								area={excursion.area}
-								description={excursion.description}
-								difficulty={excursion.difficulty}
-								time={excursion.time}
-								isLoggedIn={true}
-								isJoined={true}
+		<div className=" d-flex flex-column flex-grow-1">
+			<Row className="justify-content-center">
+				<Col xs={11} md={11} lg={11} xl={6} className="userPageContainer">
+					<Row className="mb-4">
+						<Col>
+							<h2 className={styles.title}>Tu perfil</h2>
+						</Col>
+					</Row>
+					<Row className="mb-2">
+						<Col>
+							<UserInfoForm />
+						</Col>
+					</Row>
+					<Row className="mb-4 flex-grow-1">
+						<Col className="d-flex flex-column">
+							<PaginatedListDisplay
+								data={userExcursions}
+								isLoading={isLoading}
+								error={error}
+								itemsPerPage={2} // Puedes hacer esto una constante o una prop si lo necesitas dinámico
+								renderItem={(excursion) => (
+									<ExcursionCard
+										name={excursion.name}
+										area={excursion.area}
+										description={excursion.description}
+										difficulty={excursion.difficulty}
+										time={excursion.time}
+										isLoggedIn={true}
+										isJoined={true}
+									/>
+								)}
+								itemKeyExtractor={(excursion) => excursion.id}
+								noItemsMessage="Aún no te has apuntado a ninguna excursión."
+								loadingMessage="Cargando tus excursiones..."
+								errorMessage="Error al cargar tus excursiones."
+								cardHeader="Excursiones a las que te has apuntado"
+								cardClassName={styles.excursionsCard} // Aplica estilos específicos de UserPage
+								colProps={{ xs: 12 }} // Asegura que cada tarjeta ocupe el ancho en breakpoints pequeños
 							/>
-						)}
-						itemKeyExtractor={(excursion) => excursion.id}
-						noItemsMessage="Aún no te has apuntado a ninguna excursión."
-						loadingMessage="Cargando tus excursiones..."
-						errorMessage="Error al cargar tus excursiones."
-						cardHeader="Excursiones a las que te has apuntado"
-						cardClassName={styles.excursionsCard} // Aplica estilos específicos de UserPage
-						colProps={{ xs: 12 }} // Asegura que cada tarjeta ocupe el ancho en breakpoints pequeños
-					/>
+						</Col>
+					</Row>
 				</Col>
 			</Row>
-		</Container>
+		</div>
 	);
 }
 export default UserPage;
