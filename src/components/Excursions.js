@@ -1,6 +1,8 @@
-import { memo, useMemo } from "react";
+import { memo, useMemo, useCallback } from "react";
 import { Row, Col, Spinner, Alert } from "react-bootstrap";
-import Excursion from "./Excursion";
+import { useSelector, useDispatch } from "react-redux";
+import { updateUser } from "../slicers/loginSlice";
+import ExcursionCard from "./ExcursionCard";
 import DelayedFallback from "./DelayedFallback";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Excursions.module.css";
@@ -16,14 +18,64 @@ const Excursions = memo(function Excursions({
 	isLoading,
 	error,
 }) {
+	const { login: isLoggedIn, user } = useSelector(
+		(state) => state.loginReducer
+	);
+	const loginDispatch = useDispatch();
+
+	const joinExcursion = useCallback(
+		async (excursionId) => {
+			const auxUserMail = user?.mail;
+			if (!auxUserMail) return;
+
+			const url = `http://localhost:3001/users/${auxUserMail}/excursions/${excursionId}`;
+			const options = {
+				method: "PUT",
+				mode: "cors",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + window.sessionStorage["token"],
+				},
+				body: JSON.stringify({ id: excursionId }),
+			};
+
+			try {
+				const response = await fetch(url, options);
+				if (!response.ok) {
+					throw new Error("No estás autorizado/a para hacer esta operación");
+				}
+				const data = await response.json();
+				loginDispatch(updateUser({ user: data }));
+			} catch (error) {
+				console.error("Error al unirse a la excursión:", error);
+			}
+		},
+		[user?.mail, loginDispatch]
+	);
+
 	const excursionComponents = useMemo(
 		() =>
-			excursionData.map((excursion) => (
-				<Col xs={12} md={6} lg={4} xl={3} key={excursion.id}>
-					<Excursion key={excursion.id} {...excursion} />
-				</Col>
-			)),
-		[excursionData]
+			excursionData.map((excursion) => {
+				const isJoined = isLoggedIn && user?.excursions?.includes(excursion.id);
+				return (
+					<Col
+						xs={12}
+						md={6}
+						lg={4}
+						xl={3}
+						key={excursion.id}
+						className="mb-4 mt-4"
+					>
+						<ExcursionCard
+							{...excursion}
+							isLoggedIn={isLoggedIn}
+							isJoined={isJoined}
+							onJoin={() => joinExcursion(excursion.id)}
+						/>
+					</Col>
+				);
+			}),
+		[excursionData, isLoggedIn, user?.excursions, joinExcursion]
 	);
 
 	// Si se están cargando los datos de las excursiones, mostrar el spinner
@@ -70,10 +122,7 @@ const Excursions = memo(function Excursions({
 	return (
 		<div className="excursionsContainer">
 			<h2 className={styles.title}>Próximas excursiones</h2>
-			<Row className="g-4">
-				{/* g-4 for gutter spacing between cards */}
-				{excursionComponents}
-			</Row>
+			<Row className="gx-4">{excursionComponents}</Row>
 		</div>
 	);
 });
