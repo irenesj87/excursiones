@@ -21,11 +21,8 @@
 	border-bottom: 1px solid var(--primary-color);
 }
 
-.noExcursionsJoined {
-	text-align: center;
-	padding: 2rem;
-	font-style: italic;
-	color: #6c757d;
-	background-color: #f8f9fa;
-	border-radius: 0.25rem;
+/* Estilos específicos para la tarjeta de excursiones en la página de usuario.*/
+.excursionsCard {
+	/* Ejemplo: Añadir un borde distintivo para la tarjeta contenedora de las excursiones */
+	border: 1px solid;
 }

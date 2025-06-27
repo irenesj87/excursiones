@@ -1,0 +1,26 @@
+.listCard {
+	border: 1px solid var(--border-color);
+	box-shadow: var(--box-shadow);
+	background-color: var(--card-bg);
+	color: var(--text-color);
+}
+
+.cardHeader {
+	background-color: var(--primary-color);
+	color: white;
+	text-transform: uppercase;
+	font-weight: bold;
+	padding: 1rem 1.25rem;
+	border-bottom: 1px solid var(--primary-color);
+}
+
+.cardBody {
+	padding: 1.5rem;
+	font-size: 1.1rem;
+}
+
+.noItemsMessage {
+	font-size: 1.2rem;
+	color: var(--text-color-secondary);
+	text-align: center;
+}
