@@ -73,8 +73,8 @@ function UserPage() {
 		 * Contenedor principal de la página de usuario.
 		 */
 		<div className=" d-flex flex-column flex-grow-1">
-			<Row className="justify-content-center">
-				<Col xs={11} md={11} lg={11} xl={6} className="userPageContainer">
+			<Row className="justify-content-center flex-grow-1 pt-4">
+				<Col xs={11} md={11} lg={11} xl={6} className="d-flex flex-column">
 					<Row className="mb-4">
 						<Col>
 							<h2 className={styles.title}>Tu perfil</h2>
@@ -85,6 +85,7 @@ function UserPage() {
 							<UserInfoForm />
 						</Col>
 					</Row>
+					{/* Este Row se expandirá para empujar el footer hacia abajo */}
 					<Row className="mb-4 flex-grow-1">
 						<Col className="d-flex flex-column">
 							<PaginatedListDisplay

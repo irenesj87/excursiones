@@ -7,7 +7,7 @@ import styles from "../css/LandingPageUserProfile.module.css";
 
 /**
  * Componente que muestra los enlaces de navegación para un usuario logueado (Perfil y Cerrar sesión).
- * @param {function} props.onClickCloseCollapsible - Función para cerrar el menú colapsable (Offcanvas) en breakpoints pequeños.
+ * @param {function} onClickCloseCollapsible - Función para cerrar el menú colapsable (Offcanvas) en breakpoints pequeños.
  */
 function LandingPageUserProfile({ onClickCloseCollapsible }) {
 	const logoutDispatch = useDispatch();

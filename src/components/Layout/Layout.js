@@ -31,7 +31,7 @@ const fallbackContent = "Cargando página...";
 // Tiempo de espera en milisegundos antes de mostrar el fallback
 const fallbackDelay = 500;
 
-// Componente wrapper para simplificar la renderización de rutas con carga perezosa con Suspense y Col.
+// Componente wrapper para simplificar la renderización de rutas con carga perezosa.
 // ({ PageComponent, extraFallbackClass = "" }): Esto es la desestructuración de las props que recibe el componente.
 // PageComponent: Es el componente de la página que queremos renderizar (por ejemplo, RegisterPage o LoginPage).
 // extraFallbackClass = "": Es una prop opcional. Permite pasar una clase CSS extra para el indicador de carga. Si no se le
@@ -159,24 +159,24 @@ const Layout = () => {
 	}, [loginDispatch]);
 
 	/**
-	 * useCallback: Memoriza una función. Esto significa que React guarda una versión de esa función y la reutiliza en los 
-	 * siguientes renderizados del componente, en lugar de crear una función completamente nueva cada vez. Solo volverá a 
+	 * useCallback: Memoriza una función. Esto significa que React guarda una versión de esa función y la reutiliza en los
+	 * siguientes renderizados del componente, en lugar de crear una función completamente nueva cada vez. Solo volverá a
 	 * crear la función si alguna de sus "dependencias" han cambiado.
-	 * 
-	 * 1. Evita re-renderizados innecesarios en componentes hijos: Si pasas una función como prop a un componente hijo que 
-	 * está optimizado con React.memo, ese componente hijo volverá a renderizarse cada vez que el padre lo haga, incluso si 
-	 * nada ha cambiado visualmente. Esto ocurre porque, sin useCallback, la función que pasas es técnicamente un "nuevo" 
-	 * objeto en cada renderizado. useCallback asegura que el componente hijo reciba exactamente la misma instancia de la 
+	 *
+	 * 1. Evita re-renderizados innecesarios en componentes hijos: Si pasas una función como prop a un componente hijo que
+	 * está optimizado con React.memo, ese componente hijo volverá a renderizarse cada vez que el padre lo haga, incluso si
+	 * nada ha cambiado visualmente. Esto ocurre porque, sin useCallback, la función que pasas es técnicamente un "nuevo"
+	 * objeto en cada renderizado. useCallback asegura que el componente hijo reciba exactamente la misma instancia de la
 	 * función, y React.memo puede entonces determinar correctamente que no necesita volver a renderizarse.
-	 * 
-	 * 2. Estabilizar dependencias en otros Hooks (como useEffect): Si usas una función dentro de un useEffect y la incluyes 
-	 * en su array de dependencias, el efecto se ejecutará en cada renderizado si la función no está envuelta en useCallback. 
+	 *
+	 * 2. Estabilizar dependencias en otros Hooks (como useEffect): Si usas una función dentro de un useEffect y la incluyes
+	 * en su array de dependencias, el efecto se ejecutará en cada renderizado si la función no está envuelta en useCallback.
 	 * Esto puede causar bucles infinitos o ejecuciones innecesarias de código costoso (como peticiones a una API).
-	 * 
+	 *
 	 * En resumen, se utiliza cuando se pasan funciones como props a componentes hijos optimizados (React.memo) o cuando
 	 * una función sea una dependencia de otro Hook como useEffect, useMemo o incluso otro useCallback.
-	 * 
-	 * Callback para indicar el inicio de una operación de fetch de excursiones. Establece isLoadingExcursions a true y 
+	 *
+	 * Callback para indicar el inicio de una operación de fetch de excursiones. Establece isLoadingExcursions a true y
 	 * resetea fetchExcursionsError.
 	 */
 	const handleExcursionsFetchStart = useCallback(() => {
@@ -216,9 +216,7 @@ const Layout = () => {
 				className={`${styles.mainContentWrapper} flex-grow-1 d-flex flex-column`}
 				fluid
 			>
-				<main
-					className="flex-grow-1 d-flex flex-column"
-				>
+				<main className="flex-grow-1 d-flex flex-column">
 					<Row className="flex-grow-1 d-flex justify-content-start">
 						<Routes>
 							{/* Define la ruta por defecto */}
@@ -265,7 +263,7 @@ const Layout = () => {
 								element={
 									<LazyRouteWrapper
 										PageComponent={UserPage}
-										extraFallbackClass={styles.contentMinHeight}
+										extraFallbackClass={styles.fallbackMinHeight}
 									/>
 								}
 							/>

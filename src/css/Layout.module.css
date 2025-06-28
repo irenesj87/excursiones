@@ -25,7 +25,7 @@
 	--logout-bg-color-hover: rgb(100, 93, 93);
 
 	/* --- Tamaños y Tipografías --- */
-	--minHeight: 1300px;
+	--minHeight: 1006px;
 	font-size: 16px;
 }
 
@@ -43,7 +43,7 @@ html {
 }
 
 .fallbackMinHeight {
-	min-height: 250px;
+	min-height: 1030px;
 	/* Esta altura debería ser suficiente para el spinner y el texto "Cargando página..." */
 	/* baseFallbackClassName ya se encarga del centrado flex */
 }
