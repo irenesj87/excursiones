@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { Nav, Navbar, Container, Button, Offcanvas } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -19,7 +19,7 @@ import "../css/Themes.css";
  * @param {function} props.onExcursionsFetchStart - Callback que se ejecuta cuando comienza la búsqueda de excursiones.
  * @param {function} props.onExcursionsFetchEnd - Callback que se ejecuta cuando finaliza la búsqueda de excursiones.
  */
-function NavigationBar({
+const NavigationBar = memo(function NavigationBar({
 	setExcursions,
 	isAuthCheckComplete,
 	onExcursionsFetchStart,
@@ -222,6 +222,6 @@ function NavigationBar({
 			</Container>
 		</Navbar>
 	);
-}
+});
 
 export default NavigationBar;

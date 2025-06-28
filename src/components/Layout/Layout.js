@@ -11,7 +11,7 @@ import DelayedFallback from "../DelayedFallback";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../../css/Layout.module.css";
 /**
- * Lazy loading para componentes de ruta. El lazy loading permite que los componentes se carguen sólo cuando el usuario lo
+ * Carga perezosa para componentes de ruta. El lazy loading permite que los componentes se carguen sólo cuando el usuario lo
  * necesita, así se mejoran los tiempos iniciales de carga de la página.
  */
 const RegisterPage = lazy(() => import("../RegisterPage"));
@@ -23,30 +23,39 @@ const UserPage = lazy(() => import("../UserPage"));
  */
 const Footer = memo(OriginalFooter);
 
-// Constantes para el fallback de Suspense
+// Constantes para configurar el indicador de carga (o fallback) de Suspense para los componentes que se cargan de forma perezosa
 const baseFallbackClassName =
-	"d-flex justify-content-center align-items-center fw-bold p-5 flex-grow-1";
+	"d-flex justify-content-center align-items-center fw-bold p-5 flex-grow-1"; // Se utiliza para dar estilo al contenedor mientras una página se carga
+// Mensaje de texto que se mostrará al usuario
 const fallbackContent = "Cargando página...";
+// Tiempo de espera en milisegundos antes de mostrar el fallback
 const fallbackDelay = 500;
 
-// Componente wrapper para simplificar la renderización de rutas lazy-loaded con Suspense y Col.
-const LazyRouteWrapper = ({
-	PageComponent,
-	extraFallbackClass = "",
-	useThemedBackground = true,
-}) => (
-	<Col
-		xs={12}
-		className={`d-flex flex-column flex-grow-1 ${
-			useThemedBackground ? "themed-section-background" : ""
-		}`}
-	>
+// Componente wrapper para simplificar la renderización de rutas con carga perezosa con Suspense y Col.
+// ({ PageComponent, extraFallbackClass = "" }): Esto es la desestructuración de las props que recibe el componente.
+// PageComponent: Es el componente de la página que queremos renderizar (por ejemplo, RegisterPage o LoginPage).
+// extraFallbackClass = "": Es una prop opcional. Permite pasar una clase CSS extra para el indicador de carga. Si no se le
+// pasa nada, por defecto será una cadena vacía.
+const LazyRouteWrapper = ({ PageComponent, extraFallbackClass = "" }) => (
+	<Col xs={12} className="d-flex flex-column flex-grow-1">
+		{/**
+		 * Suspense: Es un mecanismo que permite mostrar una interfaz de "carga" (un fallback) mientras espera que un
+		 * componente perezoso (lazy) termine de cargarse.
+		 */}
 		<Suspense
+			// La prop "fallback" dice que se debe renderizar durante esa espera
 			fallback={
+				/**
+				 * Se le pasa el retraso de 500ms que definimos en la constante. Esto evita que el mensaje "Cargando página..."
+				 * parpadee si la página carga muy rápido.
+				 */
 				<DelayedFallback
 					delay={fallbackDelay}
 					className={`${baseFallbackClassName} ${extraFallbackClass}`}
 				>
+					{/**
+					 * Es el contenido que mostrará DelayedFallback. En este caso, el texto "Cargando página..."
+					 */}
 					{fallbackContent}
 				</DelayedFallback>
 			}
@@ -63,20 +72,22 @@ const LazyRouteWrapper = ({
 const Layout = () => {
 	const loginDispatch = useDispatch();
 	/**
-	 * Array de excursiones que se necesita en cada momento, ya sea para mostrar todas las excursiones, las de los filtros o
-	 * la búsqueda
+	 * Array de excursiones que se necesita en cada momento, ya sea para mostrar todas las excursiones, las que el usuario
+	 * selecciona con los filtros o las que busca en la barra de búsqueda
 	 */
 	const [excursionArray, setExcursionArray] = useState([]);
 	// Estado para saber si la carga de excursiones ha terminado
 	const [isLoadingExcursions, setIsLoadingExcursions] = useState(true);
 	// Estado que dice si ha habido algún problema al cargar las excursiones
 	const [fetchExcursionsError, setFetchExcursionsError] = useState(null);
-	/** Estado para saber si la comprobación inicial de autenticación del usuario ha terminado. Se necesita para saber cuando
-	 * hay que mostrar los botones
+	/**
+	 * Estado para saber si la comprobación inicial de autenticación del usuario ha terminado. Esto evita que cuando el usuario
+	 * esté logueado vea un parpadeo de los botones que se utilizan cuando el usuario no está logueado
 	 */
 	const [isAuthCheckComplete, setIsAuthCheckComplete] = useState(false);
 
-	/** useEffect que controla el token en sessionStorage. Se guarda el token actual en sessionStorage y se loguea al usuario
+	/**
+	 * useEffect que controla el token en sessionStorage. Se guarda el token actual en sessionStorage y se loguea al usuario
 	 * de nuevo en caso de que se refresque la página. Con esto el usuario no perderá su sesión, es decir, se queda logueado
 	 */
 	useEffect(() => {
@@ -108,8 +119,7 @@ const Layout = () => {
 							const errorData = await response.json();
 							errorMessage = errorData.message || errorMessage;
 						} catch (parseError) {
-							// Si la respuesta no es JSON, se registra el error de parseo
-							// y se usa el statusText o el mensaje por defecto.
+							// Si la respuesta no es JSON, se registra el error de parseo y se usa el statusText o el mensaje por defecto.
 							console.warn(
 								"Error al parsear la respuesta JSON del error:",
 								parseError
@@ -149,8 +159,25 @@ const Layout = () => {
 	}, [loginDispatch]);
 
 	/**
-	 * Callback para indicar el inicio de una operación de fetch de excursiones.
-	 * Establece isLoadingExcursions a true y resetea fetchExcursionsError.
+	 * useCallback: Memoriza una función. Esto significa que React guarda una versión de esa función y la reutiliza en los 
+	 * siguientes renderizados del componente, en lugar de crear una función completamente nueva cada vez. Solo volverá a 
+	 * crear la función si alguna de sus "dependencias" han cambiado.
+	 * 
+	 * 1. Evita re-renderizados innecesarios en componentes hijos: Si pasas una función como prop a un componente hijo que 
+	 * está optimizado con React.memo, ese componente hijo volverá a renderizarse cada vez que el padre lo haga, incluso si 
+	 * nada ha cambiado visualmente. Esto ocurre porque, sin useCallback, la función que pasas es técnicamente un "nuevo" 
+	 * objeto en cada renderizado. useCallback asegura que el componente hijo reciba exactamente la misma instancia de la 
+	 * función, y React.memo puede entonces determinar correctamente que no necesita volver a renderizarse.
+	 * 
+	 * 2. Estabilizar dependencias en otros Hooks (como useEffect): Si usas una función dentro de un useEffect y la incluyes 
+	 * en su array de dependencias, el efecto se ejecutará en cada renderizado si la función no está envuelta en useCallback. 
+	 * Esto puede causar bucles infinitos o ejecuciones innecesarias de código costoso (como peticiones a una API).
+	 * 
+	 * En resumen, se utiliza cuando se pasan funciones como props a componentes hijos optimizados (React.memo) o cuando
+	 * una función sea una dependencia de otro Hook como useEffect, useMemo o incluso otro useCallback.
+	 * 
+	 * Callback para indicar el inicio de una operación de fetch de excursiones. Establece isLoadingExcursions a true y 
+	 * resetea fetchExcursionsError.
 	 */
 	const handleExcursionsFetchStart = useCallback(() => {
 		setIsLoadingExcursions(true);
@@ -158,8 +185,8 @@ const Layout = () => {
 	}, []);
 
 	/**
-	 * Callback para indicar el fin de una operación de fetch de excursiones.
-	 * Establece isLoadingExcursions a false y guarda el error si lo hay.
+	 * Callback para indicar el fin de una operación de fetch de excursiones. Establece isLoadingExcursions a false y guarda
+	 * el error si lo hay.
 	 */
 	const handleExcursionsFetchEnd = useCallback((error) => {
 		if (error) {
@@ -190,7 +217,7 @@ const Layout = () => {
 				fluid
 			>
 				<main
-					className={`${styles.mainContent} flex-grow-1 d-flex flex-column`}
+					className="flex-grow-1 d-flex flex-column"
 				>
 					<Row className="flex-grow-1 d-flex justify-content-start">
 						<Routes>
