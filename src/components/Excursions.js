@@ -7,18 +7,19 @@ import DelayedFallback from "./DelayedFallback";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Excursions.module.css";
 
+/** @typedef {import('types.js').RootState} RootState */
+/** @typedef {import('types.js').Excursion} Excursion */
+
 /**
- * Componente que sirve para mostrar la lista de excursiones
- * @param {Array<Object>} excursionData - Array de objetos de excursiones a mostrar.
- * @param {boolean} isLoading - Indica si los datos de las excursiones se están cargando.
- * @param {Error | null} error - Objeto de error si ha ocurrido un problema al cargar las excursiones.
+ * Componente que sirve para mostrar la lista de excursiones.
+ * @param {object} props - Las propiedades del componente.
+ * @param {Excursion[]} [props.excursionData=[]] - Array de objetos de excursiones a mostrar.
+ * @param {boolean} props.isLoading - Indica si los datos de las excursiones se están cargando.
+ * @param {Error | null} props.error - Objeto de error si ha ocurrido un problema al cargar las excursiones.
  */
-const Excursions = memo(function Excursions({
-	excursionData,
-	isLoading,
-	error,
-}) {
+function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	const { login: isLoggedIn, user } = useSelector(
+		/** @param {RootState} state */
 		(state) => state.loginReducer
 	);
 	const loginDispatch = useDispatch();
@@ -29,6 +30,7 @@ const Excursions = memo(function Excursions({
 			if (!auxUserMail) return;
 
 			const url = `http://localhost:3001/users/${auxUserMail}/excursions/${excursionId}`;
+			/** @type {RequestInit} */
 			const options = {
 				method: "PUT",
 				mode: "cors",
@@ -125,6 +127,7 @@ const Excursions = memo(function Excursions({
 			<Row className="gx-4">{excursionComponents}</Row>
 		</div>
 	);
-});
+}
 
+const Excursions = memo(ExcursionsComponent);
 export default Excursions;

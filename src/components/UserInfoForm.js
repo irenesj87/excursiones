@@ -7,6 +7,8 @@ import { Navigate } from "react-router";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/UserInfoForm.module.css";
 
+/** @typedef {import('types.js').RootState} RootState */
+
 /**
  * Componente que se encarga del menú de edición y muestra de los datos del usuario logueado en ese momento
  */
@@ -15,6 +17,7 @@ function UserInfoForm() {
 	const loginDispatch = useDispatch();
 	// Este useSelector nos da la información de si un usuario está logueado o no, así como los datos del usuario actual.
 	const { login: isLoggedIn, user } = useSelector(
+		/** @param {RootState} state */
 		(state) => state.loginReducer
 	);
 	// Variable de estado para el nombre del usuario, inicializada con el nombre del usuario logueado. Se actualizará con los
@@ -45,6 +48,7 @@ function UserInfoForm() {
 	// URL para la petición de actualización de los datos del usuario.
 	const url = `http://localhost:3001/users/${currentUser.mail}`;
 	// Opciones para la petición HTTP (PUT) para actualizar los datos del usuario.
+	/** @type {RequestInit} */
 	const options = {
 		method: "PUT",
 		mode: "cors",

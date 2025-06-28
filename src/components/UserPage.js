@@ -7,6 +7,8 @@ import PaginatedListDisplay from "./PaginatedListDisplay";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/UserPage.module.css";
 
+/** @typedef {import('types.js').RootState} RootState */
+
 /**
  * Componente que representa la página de perfil del usuario. Muestra la información personal del usuario y las excursiones
  * a las que se ha apuntado.
@@ -14,6 +16,7 @@ import styles from "../css/UserPage.module.css";
 function UserPage() {
 	// useSelector que dice si el usuario está logueado o no. Además, da la información del usuario
 	const { login: isLoggedIn, user } = useSelector(
+		/** @param {RootState} state */
 		(state) => state.loginReducer
 	);
 	// Estado para guardar la información de las excursiones del usuario
@@ -74,7 +77,7 @@ function UserPage() {
 		 */
 		<div className=" d-flex flex-column flex-grow-1">
 			<Row className="justify-content-center flex-grow-1 pt-4">
-				<Col xs={11} md={11} lg={11} xl={6} className="d-flex flex-column">
+				<Col xs={11} md={11} lg={11} xl={6} className="userPageContainer d-flex flex-column">
 					<Row className="mb-4">
 						<Col>
 							<h2 className={styles.title}>Tu perfil</h2>

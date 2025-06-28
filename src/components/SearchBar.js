@@ -2,12 +2,15 @@ import { useState, useEffect, useCallback } from "react";
 import { useSelector, shallowEqual } from "react-redux";
 import "bootstrap/dist/css/bootstrap.css";
 
+/** @typedef {import('types.js').RootState} RootState */
+
 // Componente que maneja la barra de búsqueda
 function SearchBar({ setExcursions, onFetchStart, onFetchEnd, id }) {
 	// Estado que almacena el texto de búsqueda introducido por el usuario.
 	const [search, setSearch] = useState("");
 	// Selector de Redux que obtiene los filtros de área, dificultad y tiempo del estado `filterReducer`.
 	const { area, difficulty, time } = useSelector(
+		/** @param {RootState} state */
 		(state) => state.filterReducer,
 		shallowEqual
 	);

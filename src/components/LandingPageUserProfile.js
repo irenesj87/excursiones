@@ -5,14 +5,21 @@ import { logout } from "../slicers/loginSlice";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/LandingPageUserProfile.module.css";
 
+/** @typedef {import('types.js').RootState} RootState */
+
 /**
- * Componente que muestra los enlaces de navegación para un usuario logueado (Perfil y Cerrar sesión).
- * @param {function} onClickCloseCollapsible - Función para cerrar el menú colapsable (Offcanvas) en breakpoints pequeños.
+ * Componente que muestra los enlaces de navegación para un usuario logueado.
+ * @param {object} props - Las propiedades del componente.
+ * @param {() => void} [props.onClickCloseCollapsible] - Función para cerrar el menú colapsable (Offcanvas) en breakpoints pequeños.
  */
 function LandingPageUserProfile({ onClickCloseCollapsible }) {
 	const logoutDispatch = useDispatch();
-	const { token } = useSelector((state) => state.loginReducer);
+	const { token } = useSelector(
+		/** @param {RootState} state */
+		(state) => state.loginReducer
+	);
 	const url = "http://localhost:3001/login";
+	/** @type {RequestInit} */
 	const options = {
 		method: "DELETE",
 		mode: "cors",

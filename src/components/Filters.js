@@ -6,6 +6,10 @@ import { MdAccessTimeFilled } from "react-icons/md";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Filters.module.css";
 
+/**
+ * Componente para renderizar los filtros de búsqueda (zona, dificultad, tiempo estimado)
+ * @returns {React.ReactElement} El componente para los filtros
+ */
 function Filters() {
 	return (
 		<Accordion flush className={styles.customAccordion}>

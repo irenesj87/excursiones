@@ -6,22 +6,21 @@ import styles from "../css/PaginatedListDisplay.module.css";
 
 /**
  * Componente genérico para mostrar listas con estados de carga, error y paginación.
- *
- * @param {Object} props - Propiedades del componente.
+ * @param {object} props - Propiedades del componente.
  * @param {Array<Object>} props.data - El array de elementos a mostrar.
  * @param {boolean} props.isLoading - Indica si los datos están cargando.
  * @param {string | null} props.error - Mensaje de error si ha ocurrido uno.
- * @param {function(Object): React.ReactNode} props.renderItem - Función que renderiza un elemento individual de la lista.
+ * @param {(item: Object) => React.ReactNode} props.renderItem - Función que renderiza un elemento individual de la lista.
  * @param {number} props.itemsPerPage - Número de elementos a mostrar por página.
  * @param {string} [props.noItemsMessage="No hay elementos para mostrar."] - Mensaje a mostrar cuando no hay elementos.
  * @param {string} [props.loadingMessage="Cargando..."] - Mensaje a mostrar durante la carga.
  * @param {string} [props.errorMessage="Ha ocurrido un error al cargar los datos."] - Mensaje por defecto para errores.
- * @param {function(Object): string | number} props.itemKeyExtractor - Función para extraer una clave única de cada elemento.
+ * @param {(item: Object) => string | number} props.itemKeyExtractor - Función para extraer una clave única de cada elemento.
  * @param {string} [props.cardClassName=""] - Clases CSS adicionales para la Card contenedora.
  * @param {string} [props.cardHeader=""] - Título del encabezado de la Card.
  * @param {Object} [props.colProps={}] - Propiedades adicionales para el componente Col que envuelve cada item.
  */
-const PaginatedListDisplay = memo(function PaginatedListDisplay({
+function PaginatedListDisplayComponent({
 	data,
 	isLoading,
 	error,
@@ -112,7 +111,7 @@ const PaginatedListDisplay = memo(function PaginatedListDisplay({
 								onClick={() => handlePageChange(currentPage - 1)}
 								disabled={currentPage === 1}
 							/>
-							{[...Array(totalPages).keys()].map((number) => (
+							{Array.from(Array(totalPages).keys()).map((number) => (
 								<Pagination.Item
 									key={number + 1}
 									active={number + 1 === currentPage}
@@ -131,6 +130,7 @@ const PaginatedListDisplay = memo(function PaginatedListDisplay({
 			</Card.Body>
 		</Card>
 	);
-});
+}
 
+const PaginatedListDisplay = memo(PaginatedListDisplayComponent);
 export default PaginatedListDisplay;

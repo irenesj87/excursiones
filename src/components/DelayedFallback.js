@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 
 /**
- * Componente que evita el parpadeo de los mensajes de carga cuando la carga de la página es muy rápida
- * @param {React.ReactNode} children: Es el contenido que se mostrará dentro del fallback (por ejemplo, el texto "Cargando página..." o un componente Spinner).
- * @param {number} delay: Tiempo en milisegundos que el componente esperará antes de mostrar "children"
- * @param {string} className: Permite pasar clases CSS al div principal del componente para darle estilo
+ * Componente que evita el parpadeo de los mensajes de carga cuando la carga es muy rápida.
+ * @param {object} props - Las propiedades del componente.
+ * @param {React.ReactNode} props.children - El contenido a mostrar dentro del fallback (ej. un Spinner).
+ * @param {number} [props.delay=300] - Tiempo en milisegundos que se esperará antes de mostrar `children`.
+ * @param {string} [props.className=""] - Clases CSS para el div contenedor.
+ * @returns {React.ReactElement | null} El componente que renderiza el contenido con retraso, o null.
  */
 const DelayedFallback = ({ children, delay = 300, className = "" }) => {
 	/**
@@ -47,7 +49,7 @@ const DelayedFallback = ({ children, delay = 300, className = "" }) => {
 	 * Si show es true (porque el temporizador ha terminado), se renderiza el children (el texto o el spinner).
 	 * Si show es false (porque el temporizador aún no ha terminado), se renderiza null, que en React significa "no renderizar nada aquí".
 	 */
-	return <div className={className}>{show ? children : null}</div>;
+	return show ? <div className={className}>{children}</div> : null;
 };
 
 export default DelayedFallback;

@@ -11,15 +11,17 @@ import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/NavigationBar.module.css";
 import "../css/Themes.css";
 
+/** @typedef {import('types.js').RootState} RootState */
+
 /**
- * Componente de la barra de navegación. Aquí se muestran la barra de búsqueda y los botones para el usuario que dependen de
- * si está logueado o no.
- * @param {function} props.setExcursions - Función para actualizar el estado de la lista de excursiones mostradas.
- * @param {boolean} props.isAuthCheckComplete - Booleano que indica si la comprobación inicial de autenticación ha finalizado.
- * @param {function} props.onExcursionsFetchStart - Callback que se ejecuta cuando comienza la búsqueda de excursiones.
- * @param {function} props.onExcursionsFetchEnd - Callback que se ejecuta cuando finaliza la búsqueda de excursiones.
+ * Componente de la barra de navegación.
+ * @param {object} props - Las propiedades del componente.
+ * @param {(excursions: any[]) => void} props.setExcursions - Función para actualizar el estado de la lista de excursiones.
+ * @param {boolean} props.isAuthCheckComplete - Indica si la comprobación de autenticación ha finalizado.
+ * @param {() => void} props.onExcursionsFetchStart - Callback que se ejecuta al iniciar la búsqueda de excursiones.
+ * @param {(error: Error | null) => void} props.onExcursionsFetchEnd - Callback que se ejecuta al finalizar la búsqueda de excursiones.
  */
-const NavigationBar = memo(function NavigationBar({
+function NavigationBarComponent({
 	setExcursions,
 	isAuthCheckComplete,
 	onExcursionsFetchStart,
@@ -35,10 +37,14 @@ const NavigationBar = memo(function NavigationBar({
 	 * Variable que guarda el modo de tema actual (claro u oscuro) del estado de Redux. Se inicializa con la preferencia del
 	 * sistema o un valor guardado en localStorage.
 	 */
-	const mode = useSelector((state) => state.themeReducer.mode);
+	const mode = useSelector(
+		/** @param {RootState} state */
+		(state) => state.themeReducer.mode
+	);
 	const dispatch = useDispatch();
 	// Variable que dice si hay un usuario logueado o no
 	const { login: isLoggedIn } = useSelector(
+		/** @param {RootState} state */
 		(state) => state.loginReducer
 	);
 
@@ -53,14 +59,14 @@ const NavigationBar = memo(function NavigationBar({
 			window.matchMedia("(prefers-color-scheme: dark)").matches;
 
 		// Variable para almacenar el modo inicial que se aplicará.
-		const initialMode =
-			// Si hay un modo guardado válido ("light" o "dark"), úsalo.
-			savedMode === "light" || savedMode === "dark"
-				? savedMode
-				: // Si no hay un modo guardado o no es válido, usa la preferencia del sistema.
-				prefersDark
-				? "dark"
-				: "light";
+		let initialMode;
+		if (savedMode === "light" || savedMode === "dark") {
+			initialMode = savedMode;
+		} else if (prefersDark) {
+			initialMode = "dark";
+		} else {
+			initialMode = "light";
+		}
 		// Despacha la acción para establecer el modo de tema en el estado de Redux.
 		dispatch(setMode(initialMode));
 	}, [dispatch]);
@@ -222,6 +228,7 @@ const NavigationBar = memo(function NavigationBar({
 			</Container>
 		</Navbar>
 	);
-});
+}
 
+const NavigationBar = memo(NavigationBarComponent);
 export default NavigationBar;

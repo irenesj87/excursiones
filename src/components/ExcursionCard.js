@@ -21,8 +21,19 @@ const getDifficultyBadgeClass = (difficulty) => {
 	}
 };
 
-// Componente memoizado para la tarjeta de excursión
-const ExcursionCard = memo(function ExcursionCard({
+/**
+ * Componente para la tarjeta de excursión.
+ * @param {object} props - Las propiedades del componente.
+ * @param {string} props.name - El nombre de la excursión.
+ * @param {string} props.area - La zona donde se realiza la excursión.
+ * @param {string} props.description - La descripción de la excursión.
+ * @param {string} props.difficulty - La dificultad de la excursión (ej. "Baja", "Media", "Alta").
+ * @param {string} props.time - El tiempo estimado de la excursión.
+ * @param {boolean} props.isLoggedIn - Indica si el usuario ha iniciado sesión.
+ * @param {boolean} props.isJoined - Indica si el usuario ya está apuntado a la excursión.
+ * @param {() => void} [props.onJoin] - Función que se ejecuta cuando el usuario se apunta a la excursión.
+ */
+function ExcursionCardComponent({
 	name,
 	area,
 	description,
@@ -114,6 +125,8 @@ const ExcursionCard = memo(function ExcursionCard({
 			</Card.Body>
 		</Card>
 	);
-});
+}
+
+const ExcursionCard = memo(ExcursionCardComponent);
 
 export default ExcursionCard;

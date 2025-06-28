@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, lazy, Suspense, memo } from "react";
+import React, { useState, useEffect, useCallback, lazy, Suspense, memo } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -31,11 +31,13 @@ const fallbackContent = "Cargando página...";
 // Tiempo de espera en milisegundos antes de mostrar el fallback
 const fallbackDelay = 500;
 
-// Componente wrapper para simplificar la renderización de rutas con carga perezosa.
-// ({ PageComponent, extraFallbackClass = "" }): Esto es la desestructuración de las props que recibe el componente.
-// PageComponent: Es el componente de la página que queremos renderizar (por ejemplo, RegisterPage o LoginPage).
-// extraFallbackClass = "": Es una prop opcional. Permite pasar una clase CSS extra para el indicador de carga. Si no se le
-// pasa nada, por defecto será una cadena vacía.
+/**
+ * Componente wrapper para simplificar la renderización de rutas con carga perezosa.
+ * @param {object} props - Las propiedades del componente.
+ * @param {React.ComponentType} props.PageComponent - El componente de la página a renderizar.
+ * @param {string} [props.extraFallbackClass=""] - Clases CSS adicionales para el contenedor del fallback.
+ * @returns {React.ReactElement} Componente para simplificar la carga perezosa
+ */
 const LazyRouteWrapper = ({ PageComponent, extraFallbackClass = "" }) => (
 	<Col xs={12} className="d-flex flex-column flex-grow-1">
 		{/**
@@ -68,6 +70,7 @@ const LazyRouteWrapper = ({ PageComponent, extraFallbackClass = "" }) => (
 /**
  * Componente principal del layout de la aplicación.
  * Gestiona el estado de las excursiones, la autenticación del usuario y la estructura general de la página.
+ * @returns {React.ReactElement} El componente Layout
  */
 const Layout = () => {
 	const loginDispatch = useDispatch();
@@ -97,6 +100,7 @@ const Layout = () => {
 			// Variable que tiene la url para hacer el fetch
 			const url = `http://localhost:3001/token/${sessionToken}`;
 			// Variable que guarda las opciones que se necesitan para el fetch
+			/** @type {RequestInit} */
 			const options = {
 				method: "GET",
 				mode: "cors",

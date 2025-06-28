@@ -12,6 +12,7 @@ function FiltersList({ filterName }) {
 		const fetchData = async () => {
 			try {
 				const url = `http://localhost:3001/filters?type=${filterName}`;
+				/** @type {RequestInit} */
 				const options = {
 					method: "GET",
 					mode: "cors",
