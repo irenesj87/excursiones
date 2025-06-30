@@ -48,34 +48,18 @@ html {
 	border-radius: 2px; /* Opcional: para que el contorno sea redondeado */
 }
 
-.contentMinHeight {
-	min-height: 62.875rem; /* 1006px / 16px */
-}
-
-.fallbackMinHeight {
-	min-height: 64.375rem; /* 1030px / 16px */
-	/* Esta altura debería ser suficiente para el spinner y el texto "Cargando página..." */
-	/* baseFallbackClassName ya se encarga del centrado flex */
-}
-
-@media (max-width: 767.98px) {
-	.contentMinHeight {
-		min-height: 58.9rem; /* Aproximadamente 942.31px / 16px */
-	}
-
-	.fallbackMinHeight {
-		min-height: 12.5rem; /* 200px / 16px */
-	}
-}
-
 .layout {
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
 		Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-	display: flex;
-	flex-direction: column; /* Apila NavigationBar, Container y Footer verticalmente */
+	display: grid;
+	/* Define 3 filas: header (auto), main (1fr, ocupa el resto), footer (auto) */
+	grid-template-rows: auto 1fr auto;
 	min-height: 100vh;
 }
 
 .mainContentWrapper {
 	overflow-y: auto;
+	/* Hacemos que el main sea un contenedor flex para que su contenido (Container > Row) pueda crecer */
+	display: flex;
+	flex-direction: column;
 }

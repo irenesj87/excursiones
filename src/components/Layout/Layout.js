@@ -44,11 +44,11 @@ const fallbackDelay = 500;
  * Componente wrapper para simplificar la renderización de rutas con carga perezosa.
  * @param {object} props - Las propiedades del componente.
  * @param {React.ComponentType} props.PageComponent - El componente de la página a renderizar.
- * @param {string} [props.extraFallbackClass=""] - Clases CSS adicionales para el contenedor del fallback.
- * @returns {React.ReactElement} Componente para simplificar la carga perezosa
+ * @returns {React.ReactElement} Componente para simplificar la carga perezosa.
  */
-const LazyRouteWrapper = ({ PageComponent, extraFallbackClass = "" }) => (
-	<Col xs={12} className="d-flex flex-column flex-grow-1">
+const LazyRouteWrapper = ({ PageComponent }) => (
+	// La Col se estirará porque su padre (Row) ahora tiene altura completa.
+	<Col xs={12} className="d-flex flex-column">
 		{/**
 		 * Suspense: Es un mecanismo que permite mostrar una interfaz de "carga" (un fallback) mientras espera que un
 		 * componente perezoso (lazy) termine de cargarse.
@@ -62,15 +62,9 @@ const LazyRouteWrapper = ({ PageComponent, extraFallbackClass = "" }) => (
 				 */
 				<DelayedFallback
 					delay={fallbackDelay}
-					className={`${baseFallbackClassName} ${extraFallbackClass}`}
+					className={baseFallbackClassName}
 				>
-					<output>
-						{/**
-						 * Es el contenido que mostrará DelayedFallback. En este caso, el texto "Cargando página..."
-						 * Se usa <output>, que tiene un 'role="status"' implícito, para que los lectores de pantalla lo anuncien.
-						 */}
-						{fallbackContent}
-					</output>
+					{fallbackContent}
 				</DelayedFallback>
 			}
 		>
@@ -89,19 +83,26 @@ const Layout = () => {
 
 	/**
 	 * useReducer: Es un hook de React, alternativa a useSate, que se usa cuando el estado es más complejo y tiene varias
-	 * cosas interrelacionadas entre sí, en este caso, los datos, el estado de carga y los errores
+	 * cosas interrelacionadas entre sí, en este caso, los datos, el estado de carga y los errores.
 	 */
-	// Estado para la gestión de datos de excursiones, usando un reducer para mayor claridad. Este es el objeto que define el
-	// estado inicial.
+	/**
+	 * Estado para la gestión de datos de excursiones, usando un reducer para mayor claridad. Este es el objeto que define el
+	 * estado inicial.
+	 */
 	const excursionsInitialState = {
 		data: [],
 		isLoading: true,
 		error: null,
 	};
 
-	// Función reductora. Recibe el estado actual (state) y un objeto (action) que describe qué ha sucedido y retorna un
-	// nuevo estado
-	const excursionsReducer = (state, action) => {
+	/**
+	 * Función reductora. Recibe el estado actual (state) y un objeto (action) que describe qué ha sucedido y retorna un
+	 * nuevo estado
+	 */
+	const excursionsReducer = (
+		/** @type {any} */ state,
+		/** @type {{ type: any; payload: any; }} */ action
+	) => {
 		switch (action.type) {
 			case "FETCH_START":
 				return { ...state, isLoading: true, error: null };
@@ -119,7 +120,7 @@ const Layout = () => {
 	 * excursionsReducer: Función que gestiona la lógica
 	 * excursionsState: Es el objeto que contiene el estado actual. En cualquier momento, se puede leer
 	 * excursionsState.data, excursionsState.isLoading o excursionsState.error para saber qué está pasando.
-	 * excursionsDispatch: Es una función que usas para "despachar" o enviar acciones al reducer. Por ejemplo, para iniciar 
+	 * excursionsDispatch: Es una función que usas para "despachar" o enviar acciones al reducer. Por ejemplo, para iniciar
 	 * la carga de datos, llama a excursionsDispatch({ type: "FETCH_START" }). Esto haría que el reducer ejecute el código
 	 * del case "FETCH_START"
 	 */
@@ -128,10 +129,15 @@ const Layout = () => {
 		excursionsInitialState
 	);
 
-	// Función para actualizar el array de excursiones, ahora despacha una acción.
-	const setExcursionArray = useCallback((excursions) => {
-		excursionsDispatch({ type: "FETCH_SUCCESS", payload: excursions });
-	}, []);
+	/**
+	 * Callback para manejar una carga exitosa de excursiones, actualizando el estado.
+	 */
+	const handleExcursionsFetchSuccess = useCallback(
+		(/** @type {any[]} */ excursions) => {
+			excursionsDispatch({ type: "FETCH_SUCCESS", payload: excursions });
+		},
+		[]
+	);
 
 	/**
 	 * Estado para saber si la comprobación inicial de autenticación del usuario ha terminado. Esto evita que cuando el usuario
@@ -146,13 +152,11 @@ const Layout = () => {
 	useEffect(() => {
 		const verifyAuthStatus = async () => {
 			const sessionToken = sessionStorage.getItem("token");
-
 			try {
 				// Usamos el servicio de autenticación. Este ya maneja el caso de que no haya token.
 				const data = await verifyToken(sessionToken);
-
+				// Si el servicio retorna datos, el token es válido.
 				if (data) {
-					// Si el servicio retorna datos, el token es válido.
 					// Actualiza el estado de la Redux store poniendo al usuario como logueado
 					loginDispatch(
 						login({
@@ -189,25 +193,25 @@ const Layout = () => {
 	 * objeto en cada renderizado. useCallback asegura que el componente hijo reciba exactamente la misma instancia de la
 	 * función, y React.memo puede entonces determinar correctamente que no necesita volver a renderizarse.
 	 *
-	 * 2. Estabilizar dependencias en otros Hooks (como useEffect): Si usas una función dentro de un useEffect y la incluyes
+	 * 2. Estabiliza dependencias en otros Hooks (como useEffect): Si usas una función dentro de un useEffect y la incluyes
 	 * en su array de dependencias, el efecto se ejecutará en cada renderizado si la función no está envuelta en useCallback.
 	 * Esto puede causar bucles infinitos o ejecuciones innecesarias de código costoso (como peticiones a una API).
 	 *
 	 * En resumen, se utiliza cuando se pasan funciones como props a componentes hijos optimizados (React.memo) o cuando
 	 * una función sea una dependencia de otro Hook como useEffect, useMemo o incluso otro useCallback.
 	 *
-	 * Callback para indicar el inicio de una operación de fetch de excursiones. Establece isLoadingExcursions a true y
-	 * resetea fetchExcursionsError.
+	 * Callback para indicar el inicio de una operación de fetch de excursiones. Establece isLoading a true y
+	 * resetea error.
 	 */
 	const handleExcursionsFetchStart = useCallback(() => {
 		excursionsDispatch({ type: "FETCH_START" });
 	}, []);
 
 	/**
-	 * Callback para indicar el fin de una operación de fetch de excursiones. Establece isLoadingExcursions a false y guarda
+	 * Callback para indicar el fin de una operación de fetch de excursiones. Establece isLoading a false y guarda
 	 * el error si lo hay.
 	 */
-	const handleExcursionsFetchEnd = useCallback((error) => {
+	const handleExcursionsFetchEnd = useCallback((/** @type {any} */ error) => {
 		if (error) {
 			excursionsDispatch({ type: "FETCH_ERROR", payload: error });
 		}
@@ -222,29 +226,36 @@ const Layout = () => {
 		/>
 	);
 
+	// El layout principal usa Flexbox (`styles.layout`) para asegurar que el footer se mantenga al final de la página,
+	// incluso si el contenido es corto.
 	return (
 		<div className={styles.layout}>
 			<NavigationBar
-				setExcursions={setExcursionArray}
+				onExcursionsFetchSuccess={handleExcursionsFetchSuccess}
 				onExcursionsFetchStart={handleExcursionsFetchStart}
 				onExcursionsFetchEnd={handleExcursionsFetchEnd}
 				isAuthCheckComplete={isAuthCheckComplete}
 			/>
-			<Container
-				className={`${styles.mainContentWrapper} flex-grow-1 d-flex flex-column`}
-				fluid
-			>
-				<main className="flex-grow-1 d-flex flex-column">
-					<Row className="flex-grow-1 d-flex justify-content-start">
+			{/* El elemento <main> es la segunda fila del grid y se expande automáticamente. */}
+			<main className={styles.mainContentWrapper}>
+				<Container fluid className="d-flex flex-column flex-grow-1">
+					<Row className="justify-content-start flex-grow-1">
 						<Routes>
 							{/* Define la ruta por defecto */}
 							<Route
 								path="/"
 								element={
 									<>
-										<Col xs={12} md={4} lg={3} xl={2}>
+										<Col
+											xs={12}
+											md={4}
+											lg={3}
+											xl={2}
+											className="mb-3 mb-md-0"
+										>
 											<Filters />
 										</Col>
+										{/* Esta columna también necesita ser un contenedor flex para que su contenido (Excursions) pueda crecer y evitar el salto del footer */}
 										<Col
 											xs={12}
 											md={8}
@@ -260,38 +271,21 @@ const Layout = () => {
 							{/* Define las rutas para los componentes Register, LoginPage y UserPage */}
 							<Route
 								path="registerPage"
-								element={
-									<LazyRouteWrapper
-										PageComponent={RegisterPage}
-										extraFallbackClass={styles.fallbackMinHeight}
-									/>
-								}
+								element={<LazyRouteWrapper PageComponent={RegisterPage} />}
 							/>
 							<Route
 								path="loginPage"
-								element={
-									<LazyRouteWrapper
-										PageComponent={LoginPage}
-										extraFallbackClass={styles.fallbackMinHeight}
-									/>
-								}
+								element={<LazyRouteWrapper PageComponent={LoginPage} />}
 							/>
 							<Route
 								path="userPage"
-								element={
-									<LazyRouteWrapper
-										PageComponent={UserPage}
-										extraFallbackClass={styles.fallbackMinHeight}
-									/>
-								}
+								element={<LazyRouteWrapper PageComponent={UserPage} />}
 							/>
 						</Routes>
 					</Row>
-				</main>
-				<Row>
-					<Footer />
-				</Row>
-			</Container>
+				</Container>
+			</main>
+			<Footer />
 		</div>
 	);
 };

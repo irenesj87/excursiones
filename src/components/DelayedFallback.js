@@ -34,7 +34,7 @@ const DelayedFallback = ({ children, delay = 300, className = "" }) => {
 		/**
 		 * Función de limpieza de useEffect: Se ejecuta si el componente desaparece (se desmonta) antes que el temporizador termine.
 		 * clearTimeout(timer): Cancela el temporizador pendiente.
-		 * Hacer esto es importante porque, poir ejemplo, si la carga termina en 200ms, que es más rápido que el delay de 300ms, el
+		 * Hacer esto es importante porque, por ejemplo, si la carga termina en 200ms, que es más rápido que el delay de 300ms, el
 		 * componente DelayedFallback será reemplzado por el contenido real. Sin esta línea, el temporizador seguiría activo e intentaría
 		 * actualizar el estado de un componente que ya no existe, lo que causaría un error en React.
 		 */
@@ -47,9 +47,14 @@ const DelayedFallback = ({ children, delay = 300, className = "" }) => {
 	 * parezca el contenido.
 	 * {show ? children : null}: Esta es una expresión ternaria.
 	 * Si show es true (porque el temporizador ha terminado), se renderiza el children (el texto o el spinner).
-	 * Si show es false (porque el temporizador aún no ha terminado), se renderiza null, que en React significa "no renderizar nada aquí".
+	 * Si show es false (porque el temporizador aún no ha terminado), se renderiza null dentro del div, por lo que el div
+	 * sigue ocupando su espacio en el layout.
+	 * ACTUALIZACIÓN: Renderizar `null` causa que el div, aunque esté en el DOM, tenga una altura de 0 si es un flex-item
+	 * con `flex-grow: 1` y sin contenido. Esto provoca un colapso del layout.
+	 * La solución es renderizar un espacio sin ruptura (`&nbsp;`) durante el retraso. Esto le da al div un contenido
+	 * mínimo, permitiéndole ocupar el espacio asignado por flexbox y evitando el "salto" del layout.
 	 */
-	return show ? <div className={className}>{children}</div> : null;
+	return <div className={className}>{show ? children : <>&nbsp;</>}</div>;
 };
 
 export default DelayedFallback;

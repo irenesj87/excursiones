@@ -16,13 +16,13 @@ import "../css/Themes.css";
 /**
  * Componente de la barra de navegación.
  * @param {object} props - Las propiedades del componente.
- * @param {(excursions: any[]) => void} props.setExcursions - Función para actualizar el estado de la lista de excursiones.
+ * @param {(excursions: any[]) => void} props.onExcursionsFetchSuccess - Función para actualizar el estado de la lista de excursiones.
  * @param {boolean} props.isAuthCheckComplete - Indica si la comprobación de autenticación ha finalizado.
  * @param {() => void} props.onExcursionsFetchStart - Callback que se ejecuta al iniciar la búsqueda de excursiones.
  * @param {(error: Error | null) => void} props.onExcursionsFetchEnd - Callback que se ejecuta al finalizar la búsqueda de excursiones.
  */
 function NavigationBarComponent({
-	setExcursions,
+	onExcursionsFetchSuccess,
 	isAuthCheckComplete,
 	onExcursionsFetchStart,
 	onExcursionsFetchEnd,
@@ -128,9 +128,7 @@ function NavigationBarComponent({
 	 * Componente que muestra los enlaces de navegación para usuarios logueados (Perfil, Cerrar sesión).
 	 */
 	const LoggedItems = (
-		<LandingPageUserProfile
-			onClickCloseCollapsible={handleCloseOffcanvas}
-		/>
+		<LandingPageUserProfile onClickCloseCollapsible={handleCloseOffcanvas} />
 	);
 
 	// Por defecto, no mostrar nada si la comprobación de autenticación no está completa. Sirve para evitar el FOUC
@@ -160,7 +158,7 @@ function NavigationBarComponent({
 				<div className="d-none d-md-flex justify-content-center flex-grow-1 px-md-3 px-lg-5 order-md-2 order-lg-2 me-md-3">
 					<div style={{ maxWidth: "900px", width: "100%" }}>
 						<SearchBar
-							setExcursions={setExcursions}
+							setExcursions={onExcursionsFetchSuccess}
 							id="searchBar-md-lg"
 							onFetchStart={onExcursionsFetchStart}
 							onFetchEnd={onExcursionsFetchEnd}
@@ -203,9 +201,9 @@ function NavigationBarComponent({
 				{/* order-last: Asegura que esté al final del contenedor */}
 				<div className="d-md-none w-100 mt-2 order-last">
 					<SearchBar
-						setExcursions={setExcursions}
+						setExcursions={onExcursionsFetchSuccess}
 						id="searchBar-sm"
-						onFetchStart={onExcursionsFetchStart} 
+						onFetchStart={onExcursionsFetchStart}
 						onFetchEnd={onExcursionsFetchEnd}
 					/>
 				</div>

@@ -19,6 +19,7 @@
 .centeredStatus {
 	display: flex;
 	flex-direction: column;
+	flex-grow: 1; /* Permite que el contenedor crezca */
 	align-items: center; /* Centra horizontalmente */
 	justify-content: center; /* Centra verticalmente */
 }

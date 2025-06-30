@@ -1,0 +1,7 @@
+.baseFallbackClassName {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1; /* Permite que el contenedor crezca */
+	justify-content: center; /* Centra el contenido verticalmente */
+	align-items: center; /* Centra el contenido horizontalmente */
+}
