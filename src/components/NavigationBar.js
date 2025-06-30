@@ -178,6 +178,9 @@ function NavigationBarComponent({
 						variant="outline-secondary"
 						id="toggleButton"
 						onClick={toggleTheme}
+						aria-label={
+							mode === "light" ? "Activar modo oscuro" : "Activar modo claro"
+						}
 					>
 						{icon}
 					</Button>

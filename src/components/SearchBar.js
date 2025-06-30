@@ -73,6 +73,7 @@ function SearchBar({ setExcursions, onFetchStart, onFetchEnd, id }) {
 			type="search"
 			placeholder="Busca excursiones..."
 			onChange={introKeyPressed}
+			aria-label="Buscar excursiones por texto"
 		/>
 	);
 }

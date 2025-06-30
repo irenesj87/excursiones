@@ -11,7 +11,10 @@ function Footer() {
 	return (
 		<footer className={styles.footer} role="contentinfo">
 			<p>
-				<a href="mailto:excursionesjuntos@gmail.com">
+				<a
+					href="mailto:excursionesjuntos@gmail.com"
+					aria-label="Enviar correo electrónico"
+				>
 					<MdMail />
 				</a>
 			</p>

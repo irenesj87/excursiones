@@ -93,6 +93,7 @@ function ExcursionCardComponent({
 								variant="link"
 								onClick={toggleReadMore}
 								className={`${styles.readMoreLink} p-0 mt-1 d-flex align-items-center`}
+								aria-expanded={isExpanded}
 							>
 								{isExpanded ? (
 									<>

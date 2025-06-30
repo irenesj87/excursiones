@@ -112,11 +112,11 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	 */
 	if (excursionComponents.length === 0) {
 		return (
-			<div
+			<output
 				className={`${styles.messageNotFound} ${styles.centeredStatus} text-center py-5 flex-grow-1 w-100`}
 			>
 				Lo sentimos, pero no tenemos ninguna excursión con esas características.
-			</div>
+			</output>
 		);
 	}
 

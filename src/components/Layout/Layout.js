@@ -64,10 +64,13 @@ const LazyRouteWrapper = ({ PageComponent, extraFallbackClass = "" }) => (
 					delay={fallbackDelay}
 					className={`${baseFallbackClassName} ${extraFallbackClass}`}
 				>
-					{/**
-					 * Es el contenido que mostrará DelayedFallback. En este caso, el texto "Cargando página..."
-					 */}
-					{fallbackContent}
+					<output>
+						{/**
+						 * Es el contenido que mostrará DelayedFallback. En este caso, el texto "Cargando página..."
+						 * Se usa <output>, que tiene un 'role="status"' implícito, para que los lectores de pantalla lo anuncien.
+						 */}
+						{fallbackContent}
+					</output>
 				</DelayedFallback>
 			}
 		>

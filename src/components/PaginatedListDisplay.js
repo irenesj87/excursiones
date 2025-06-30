@@ -110,12 +110,14 @@ function PaginatedListDisplayComponent({
 							<Pagination.Prev
 								onClick={() => handlePageChange(currentPage - 1)}
 								disabled={currentPage === 1}
+								aria-label="Ir a la página anterior"
 							/>
 							{Array.from(Array(totalPages).keys()).map((number) => (
 								<Pagination.Item
 									key={number + 1}
 									active={number + 1 === currentPage}
 									onClick={() => handlePageChange(number + 1)}
+									aria-label={`Ir a la página ${number + 1}`}
 								>
 									{number + 1}
 								</Pagination.Item>
@@ -123,6 +125,7 @@ function PaginatedListDisplayComponent({
 							<Pagination.Next
 								onClick={() => handlePageChange(currentPage + 1)}
 								disabled={currentPage === totalPages}
+								aria-label="Ir a la siguiente página"
 							/>
 						</Pagination>
 					</div>
