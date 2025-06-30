@@ -113,11 +113,11 @@ const Layout = () => {
 
 	// Aquí se utiliza el hook useReducer
 	/**
-	 * excursionsReducer es la función que gestiona la lógica
+	 * excursionsReducer: Función que gestiona la lógica
 	 * excursionsState: Es el objeto que contiene el estado actual. En cualquier momento, se puede leer
 	 * excursionsState.data, excursionsState.isLoading o excursionsState.error para saber qué está pasando.
 	 * excursionsDispatch: Es una función que usas para "despachar" o enviar acciones al reducer. Por ejemplo, para iniciar 
-	 * la carga de datos, llamarías a excursionsDispatch({ type: "FETCH_START" }). Esto haría que el reducer ejecute el código
+	 * la carga de datos, llama a excursionsDispatch({ type: "FETCH_START" }). Esto haría que el reducer ejecute el código
 	 * del case "FETCH_START"
 	 */
 	const [excursionsState, excursionsDispatch] = useReducer(
@@ -207,9 +207,6 @@ const Layout = () => {
 	const handleExcursionsFetchEnd = useCallback((error) => {
 		if (error) {
 			excursionsDispatch({ type: "FETCH_ERROR", payload: error });
-		} else {
-			// Si no hay error, el estado de carga ya se gestiona con FETCH_SUCCESS o FETCH_START
-			// y no es necesario hacer nada más aquí. La carga se detiene en FETCH_SUCCESS.
 		}
 	}, []);
 
