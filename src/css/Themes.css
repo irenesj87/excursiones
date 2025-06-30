@@ -81,7 +81,7 @@ html.light body {
 	/* Estilos específicos para los enlaces de login y logout dentro del Offcanvas */
 	.offcanvas-body .nav-link[class*="loginLink"],
 	.offcanvas-body .nav-link[class*="logoutLink"] {
-		color: var(--text-color-dark);
+		color: white; /* Asegura que el texto sea blanco sobre el fondo verde/gris oscuro */
 	}
 
 	/* --- Estilos para Paginación (Enlaces) --- */
@@ -110,7 +110,7 @@ html.dark body {
 	--register-link-color: var(--text-color-dark);
 	--register-link-border-color: var(--text-color-dark);
 	/* Este color (blanco con 35% de opacidad) se usará para placeholders, controles deshabilitados y paginación deshabilitada */
-	--subtle-text-color-dark: rgba(255, 255, 255, 0.35);
+	--subtle-text-color-dark: rgba(255, 255, 255, 0.6); /* Aumentada opacidad para cumplir contraste AA */
 
 	/* --- Variables para ExcursionCard --- */
 	--excursion-card-bg: #2a2a2a; /* Un poco más claro que el fondo para que destaque */
@@ -269,7 +269,7 @@ html.dark body {
 
 	.offcanvas-header {
 		background-color: var(--background-color-dark);
-		color: var(--primary-color);
+		color: var(--text-color-dark); /* Corregido: Texto blanco para contraste sobre fondo oscuro */
 		font-weight: bolder;
 		padding: 1rem 1.25rem;
 		border-bottom: 1px solid var(--border-color-dark);
@@ -299,6 +299,12 @@ html.dark body {
 		text-decoration: none;
 		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 		border-radius: 0.375rem;
+	}
+
+	/* Estilos específicos para los enlaces de login y logout dentro del Offcanvas */
+	.offcanvas-body .nav-link[class*="loginLink"],
+	.offcanvas-body .nav-link[class*="logoutLink"] {
+		color: white; /* Asegura que el texto sea blanco sobre el fondo verde/gris oscuro */
 	}
 }
 

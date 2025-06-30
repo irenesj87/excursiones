@@ -1,7 +1,16 @@
-import React, { useState, useEffect, useCallback, lazy, Suspense, memo } from "react";
+import React, {
+	useState,
+	useEffect,
+	useCallback,
+	lazy,
+	Suspense,
+	memo,
+	useReducer,
+} from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { verifyToken } from "../../services/authService";
 import { login, logout } from "../../slicers/loginSlice";
 import NavigationBar from "../NavigationBar";
 import Filters from "../Filters";
@@ -74,15 +83,53 @@ const LazyRouteWrapper = ({ PageComponent, extraFallbackClass = "" }) => (
  */
 const Layout = () => {
 	const loginDispatch = useDispatch();
+
 	/**
-	 * Array de excursiones que se necesita en cada momento, ya sea para mostrar todas las excursiones, las que el usuario
-	 * selecciona con los filtros o las que busca en la barra de búsqueda
+	 * useReducer: Es un hook de React, alternativa a useSate, que se usa cuando el estado es más complejo y tiene varias
+	 * cosas interrelacionadas entre sí, en este caso, los datos, el estado de carga y los errores
 	 */
-	const [excursionArray, setExcursionArray] = useState([]);
-	// Estado para saber si la carga de excursiones ha terminado
-	const [isLoadingExcursions, setIsLoadingExcursions] = useState(true);
-	// Estado que dice si ha habido algún problema al cargar las excursiones
-	const [fetchExcursionsError, setFetchExcursionsError] = useState(null);
+	// Estado para la gestión de datos de excursiones, usando un reducer para mayor claridad. Este es el objeto que define el
+	// estado inicial.
+	const excursionsInitialState = {
+		data: [],
+		isLoading: true,
+		error: null,
+	};
+
+	// Función reductora. Recibe el estado actual (state) y un objeto (action) que describe qué ha sucedido y retorna un
+	// nuevo estado
+	const excursionsReducer = (state, action) => {
+		switch (action.type) {
+			case "FETCH_START":
+				return { ...state, isLoading: true, error: null };
+			case "FETCH_SUCCESS":
+				return { ...state, isLoading: false, data: action.payload };
+			case "FETCH_ERROR":
+				return { ...state, isLoading: false, error: action.payload, data: [] }; // Limpiar datos en caso de error
+			default:
+				throw new Error(`Acción no soportada: ${action.type}`);
+		}
+	};
+
+	// Aquí se utiliza el hook useReducer
+	/**
+	 * excursionsReducer es la función que gestiona la lógica
+	 * excursionsState: Es el objeto que contiene el estado actual. En cualquier momento, se puede leer
+	 * excursionsState.data, excursionsState.isLoading o excursionsState.error para saber qué está pasando.
+	 * excursionsDispatch: Es una función que usas para "despachar" o enviar acciones al reducer. Por ejemplo, para iniciar 
+	 * la carga de datos, llamarías a excursionsDispatch({ type: "FETCH_START" }). Esto haría que el reducer ejecute el código
+	 * del case "FETCH_START"
+	 */
+	const [excursionsState, excursionsDispatch] = useReducer(
+		excursionsReducer,
+		excursionsInitialState
+	);
+
+	// Función para actualizar el array de excursiones, ahora despacha una acción.
+	const setExcursionArray = useCallback((excursions) => {
+		excursionsDispatch({ type: "FETCH_SUCCESS", payload: excursions });
+	}, []);
+
 	/**
 	 * Estado para saber si la comprobación inicial de autenticación del usuario ha terminado. Esto evita que cuando el usuario
 	 * esté logueado vea un parpadeo de los botones que se utilizan cuando el usuario no está logueado
@@ -95,45 +142,14 @@ const Layout = () => {
 	 */
 	useEffect(() => {
 		const verifyAuthStatus = async () => {
-			// Coge el token de la sessionStorage del navegador
 			const sessionToken = sessionStorage.getItem("token");
-			// Variable que tiene la url para hacer el fetch
-			const url = `http://localhost:3001/token/${sessionToken}`;
-			// Variable que guarda las opciones que se necesitan para el fetch
-			/** @type {RequestInit} */
-			const options = {
-				method: "GET",
-				mode: "cors",
-				headers: { "Content-Type": "application/json" },
-			};
 
 			try {
-				// Si hay token
-				if (sessionToken) {
-					// Esperamos a la respuesta del servidor
-					const response = await fetch(url, options);
-					// Si ha habido un error
-					if (!response.ok) {
-						let errorMessage = `Error de validación del token: ${response.status}`;
-						try {
-							/**
-							 * Se intenta obtener un mensaje de error más descriptivo (algunos servidores retornan
-							 * una respuesta en JSON que contiene datos adicionales del error)
-							 */
-							const errorData = await response.json();
-							errorMessage = errorData.message || errorMessage;
-						} catch (parseError) {
-							// Si la respuesta no es JSON, se registra el error de parseo y se usa el statusText o el mensaje por defecto.
-							console.warn(
-								"Error al parsear la respuesta JSON del error:",
-								parseError
-							);
-							errorMessage = response.statusText || errorMessage;
-						}
-						throw new Error(errorMessage);
-					}
-					// Pasa la respuesta en JSON del servidor a un objeto JavaScript
-					const data = await response.json();
+				// Usamos el servicio de autenticación. Este ya maneja el caso de que no haya token.
+				const data = await verifyToken(sessionToken);
+
+				if (data) {
+					// Si el servicio retorna datos, el token es válido.
 					// Actualiza el estado de la Redux store poniendo al usuario como logueado
 					loginDispatch(
 						login({
@@ -142,19 +158,16 @@ const Layout = () => {
 						})
 					);
 				}
-				// Si no hay token, el usuario permanece en el estado inicial (deslogueado por defecto en Redux)
+				// Si 'data' es null (porque no había token), no se hace nada y el usuario
+				// permanece en el estado inicial (deslogueado).
 			} catch (error) {
 				console.error(
 					"Error en la verificación del estado de autenticación:",
 					error.message
 				);
-				if (sessionToken) {
-					// Solo desloguear y limpiar si se intentó validar un token
-					// Se desloguea al usuario...
-					loginDispatch(logout());
-					// ...y se elimina el token de la sessionStorage
-					sessionStorage.removeItem("token");
-				}
+				// Si hubo un error (ej. token inválido), deslogueamos al usuario.
+				loginDispatch(logout());
+				sessionStorage.removeItem("token");
 			} finally {
 				setIsAuthCheckComplete(true); // Marcar autenticación del usuario como completa independientemente del resultado
 			}
@@ -184,8 +197,7 @@ const Layout = () => {
 	 * resetea fetchExcursionsError.
 	 */
 	const handleExcursionsFetchStart = useCallback(() => {
-		setIsLoadingExcursions(true);
-		setFetchExcursionsError(null);
+		excursionsDispatch({ type: "FETCH_START" });
 	}, []);
 
 	/**
@@ -194,17 +206,19 @@ const Layout = () => {
 	 */
 	const handleExcursionsFetchEnd = useCallback((error) => {
 		if (error) {
-			setFetchExcursionsError(error); // Asume que 'error' es un objeto de error o un mensaje
+			excursionsDispatch({ type: "FETCH_ERROR", payload: error });
+		} else {
+			// Si no hay error, el estado de carga ya se gestiona con FETCH_SUCCESS o FETCH_START
+			// y no es necesario hacer nada más aquí. La carga se detiene en FETCH_SUCCESS.
 		}
-		setIsLoadingExcursions(false);
 	}, []);
 
 	// El componente Excursions recibirá isLoading y error para manejar su propia UI.
 	const excursionsContent = (
 		<Excursions
-			excursionData={excursionArray}
-			isLoading={isLoadingExcursions}
-			error={fetchExcursionsError}
+			excursionData={excursionsState.data}
+			isLoading={excursionsState.isLoading}
+			error={excursionsState.error}
 		/>
 	);
 

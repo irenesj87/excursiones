@@ -23,9 +23,11 @@
 	--border-color-dark: #777777;
 	--logout-bg-color: rgb(80, 73, 73);
 	--logout-bg-color-hover: rgb(100, 93, 93);
-
+	
+	/* --- Accesibilidad --- */
+	--focus-outline-color: var(--accent-color);
+	
 	/* --- Tamaños y Tipografías --- */
-	--minHeight: 1006px;
 	font-size: 16px;
 }
 
@@ -38,23 +40,32 @@ html {
 	box-sizing: inherit;
 }
 
+/* --- Estilos de Foco para Accesibilidad --- */
+/* Se usa :focus-visible para mostrar el contorno solo a los usuarios de teclado, 
+   mejorando la experiencia sin molestar a los usuarios de ratón. */
+*:focus-visible {
+	outline: 3px solid var(--focus-outline-color);
+	outline-offset: 2px;
+	border-radius: 2px; /* Opcional: para que el contorno sea redondeado */
+}
+
 .contentMinHeight {
-	min-height: var(--minHeight);
+	min-height: 62.875rem; /* 1006px / 16px */
 }
 
 .fallbackMinHeight {
-	min-height: 1030px;
+	min-height: 64.375rem; /* 1030px / 16px */
 	/* Esta altura debería ser suficiente para el spinner y el texto "Cargando página..." */
 	/* baseFallbackClassName ya se encarga del centrado flex */
 }
 
 @media (max-width: 767.98px) {
 	.contentMinHeight {
-		min-height: 942.31px;
+		min-height: 58.9rem; /* Aproximadamente 942.31px / 16px */
 	}
 
 	.fallbackMinHeight {
-		min-height: 200px;
+		min-height: 12.5rem; /* 200px / 16px */
 	}
 }
 
