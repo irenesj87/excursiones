@@ -107,10 +107,14 @@ html.dark body {
 	transition: none; /* Eliminar transición para el body en cambio de tema */
 	background-color: var(--background-color-dark);
 	color: var(--text-color-dark);
+	--heading-color: #a7c957; /* Verde claro y accesible para títulos y logo */
+	--accent-color: #f39c12; /* Naranja más brillante y accesible */
 	--register-link-color: var(--text-color-dark);
 	--register-link-border-color: var(--text-color-dark);
+	--border-color-light: var(--border-color-dark); /* Redefinimos la variable para que los bordes se adapten */
 	/* Este color (blanco con 35% de opacidad) se usará para placeholders, controles deshabilitados y paginación deshabilitada */
-	--subtle-text-color-dark: rgba(255, 255, 255, 0.6); /* Aumentada opacidad para cumplir contraste AA */
+	/* Aumentada opacidad para cumplir contraste AA (ratio > 4.5:1) */
+	--subtle-text-color-dark: rgba(255, 255, 255, 0.75);
 
 	/* --- Variables para ExcursionCard --- */
 	--excursion-card-bg: #2a2a2a; /* Un poco más claro que el fondo para que destaque */
@@ -183,9 +187,9 @@ html.dark body {
 		border-radius: 0.5rem;
 	}
 
-	/* Establece el color de texto del título de la tarjeta */
-	.card-title {
-		color: var(--text-color-dark);
+	/* Cambia el color del borde superior dentro de las tarjetas para que coincida con el tema oscuro */
+	.card-body .border-top {
+		border-top-color: var(--border-color-dark) !important;
 	}
 
 	/* Establece el color de texto del texto de la tarjeta */
@@ -249,7 +253,6 @@ html.dark body {
 		/* Mismo fondo que el normal para deshabilitados, pero con texto atenuado */
 		--bs-pagination-disabled-bg: var(--surface-color-dark);
 		--bs-pagination-disabled-border-color: var(--border-color-dark);
-		--bs-tertiary-bg-rgb: 58, 58, 58;
 	}
 
 	/* --- Estilos para Paginación (Enlaces) --- */
@@ -307,50 +310,3 @@ html.dark body {
 		color: white; /* Asegura que el texto sea blanco sobre el fondo verde/gris oscuro */
 	}
 }
-
-/* Estilos para secciones con fondo y borde en modo oscuro */
-/*html.dark body .themed-section-background {
-	border: 1px solid var(--border-color-dark);
-	border-radius: 0.5rem;
-	padding: 1.5rem;
-	margin-top: 2rem;
-	margin-bottom: 2rem;
-	padding-left: 1.5rem;
-	padding-right: 1.5rem;
-}
-
-@media (max-width: 767.98px) {
-	/* Para pantallas de hasta 767.98px de ancho */
-/*html.light body .themed-section-background {
-		padding: 1rem; /* Reduce el padding a 1rem */
-/*margin-top: 1rem; /* Reduce el margen superior a 1rem */
-/*margin-bottom: 1rem; /* Reduce el margen inferior a 1rem */
-/*padding-left: 1rem;
-		padding-right: 1rem;
-	}
-
-	html.dark body .themed-section-background {
-		padding: 1rem; /* Reduce el padding a 1rem */
-/*margin-top: 1rem; /* Reduce el margen superior a 1rem */
-/*margin-bottom: 1rem; /* Reduce el margen inferior a 1rem */
-/*padding-left: 1rem;
-		padding-right: 1rem;
-	}
-}
-
-@media (min-width: 992px) {
-	/* lg breakpoint and up */
-/*html.light body .themed-section-background,
-	html.dark body .themed-section-background {
-		padding-left: 4rem;
-		padding-right: 4rem;
-	}
-}
-@media (min-width: 1200px) {
-	/* xl breakpoint and up */
-/*html.light body .themed-section-background,
-	html.dark body .themed-section-background {
-		padding-left: 6rem;
-		padding-right: 6rem;
-	}
-}*/

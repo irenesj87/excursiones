@@ -38,7 +38,7 @@
 	user-select: none;
 	border-radius: 0.375rem;
 	background-color: var(--logout-bg-color);
-	color: var(--text-color-dark);
+	color: white;
 	border-color:  var(--logout-bg-color);
 	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }

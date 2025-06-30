@@ -1,4 +1,4 @@
-import { useState, memo, useMemo } from "react";
+import { useState, memo, useMemo, useCallback } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import "bootstrap/dist/css/bootstrap.css";
@@ -24,6 +24,7 @@ const getDifficultyBadgeClass = (difficulty) => {
 /**
  * Componente para la tarjeta de excursión.
  * @param {object} props - Las propiedades del componente.
+ * @param {string | number} props.id - El ID de la excursión.
  * @param {string} props.name - El nombre de la excursión.
  * @param {string} props.area - La zona donde se realiza la excursión.
  * @param {string} props.description - La descripción de la excursión.
@@ -31,9 +32,10 @@ const getDifficultyBadgeClass = (difficulty) => {
  * @param {string} props.time - El tiempo estimado de la excursión.
  * @param {boolean} props.isLoggedIn - Indica si el usuario ha iniciado sesión.
  * @param {boolean} props.isJoined - Indica si el usuario ya está apuntado a la excursión.
- * @param {() => void} [props.onJoin] - Función que se ejecuta cuando el usuario se apunta a la excursión.
+ * @param {(id: string | number) => void} [props.onJoin] - Función que se ejecuta cuando el usuario se apunta a la excursión. Recibe el ID de la excursión.
  */
 function ExcursionCardComponent({
+	id,
 	name,
 	area,
 	description,
@@ -63,6 +65,16 @@ function ExcursionCardComponent({
 	const difficultyBadgeClass = useMemo(() => {
 		return getDifficultyBadgeClass(difficulty);
 	}, [difficulty]);
+
+	/**
+	 * Crea un 'handler' para el evento 'click' que llama a la función `onJoin` con el ID de la excursión.
+	 * Se usa `useCallback` para asegurar que la función no se recree innecesariamente,
+	 * lo que es beneficioso para la optimización del rendimiento, especialmente porque `ExcursionCard` está memoizado.
+	 */
+	const handleJoin = useCallback(() => {
+		// Llama a la función onJoin (si existe) pasándole el id de la excursión.
+		onJoin?.(id);
+	}, [id, onJoin]);
 
 	return (
 		<Card className={styles.excursionItemCard}>
@@ -114,7 +126,7 @@ function ExcursionCardComponent({
 						) : (
 							<Row className="justify-content-sm-end gx-0">
 								<Col xs={12} sm="auto">
-									<Button onClick={onJoin} className="w-100">
+									<Button onClick={handleJoin} className="w-100">
 										Apuntarse
 									</Button>
 								</Col>

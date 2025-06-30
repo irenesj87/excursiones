@@ -4,8 +4,8 @@
 :root {
 	/* --- Paleta principal ---*/
 	--primary-color: #3a5f40;
-	--secondary-color: #f5e8d3;
 	--accent-color: #e67e22;
+	--heading-color: var(--primary-color);
 
 	/* --- Colores de texto ---*/
 	--text-color-light: #333333;
@@ -13,7 +13,6 @@
 
 	/* --- Colores de Fondo y Superficie --- */
 	--surface-color-dark: #404040;
-	--primary-accent-dark: #3b82f6;
 	--secondary-accent-dark: #4a3b33;
 	--background-color-light: #faf8f5;
 	--background-color-dark: #1e1e1e;

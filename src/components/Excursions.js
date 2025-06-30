@@ -72,7 +72,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 							{...excursion}
 							isLoggedIn={isLoggedIn}
 							isJoined={isJoined}
-							onJoin={() => joinExcursion(excursion.id)}
+							onJoin={joinExcursion}
 						/>
 					</Col>
 				);

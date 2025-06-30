@@ -1,12 +1,11 @@
 .title {
-	color: var(--primary-color);
+	color: var(--heading-color);
 	margin-top: 40px;
 	margin-bottom: 0.4rem;
 	border-bottom: 1px solid var(--border-color-light);
 	padding-bottom: 0.5rem;
 	font-size: 1.6rem;
 	font-weight: bold;
-	text-align: center;
 	text-align: left;
 	text-transform: uppercase;
 }
