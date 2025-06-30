@@ -32,7 +32,8 @@ const UserPage = lazy(() => import("../UserPage"));
  */
 const Footer = memo(OriginalFooter);
 
-// Constantes para configurar el indicador de carga (o fallback) de Suspense para los componentes que se cargan de forma perezosa
+// Constantes para configurar el indicador de carga (o fallback) de Suspense para los componentes que se cargan de forma 
+// perezosa
 const baseFallbackClassName =
 	"d-flex justify-content-center align-items-center fw-bold p-5 flex-grow-1"; // Se utiliza para dar estilo al contenedor mientras una página se carga
 // Mensaje de texto que se mostrará al usuario
