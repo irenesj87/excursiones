@@ -48,8 +48,7 @@ const fallbackDelay = 500;
  * @returns {React.ReactElement} Componente para simplificar la carga perezosa.
  */
 const LazyRouteWrapper = ({ PageComponent }) => (
-	// La Col se estirará porque su padre (Row) ahora tiene altura completa.
-	<Col xs={12} className="d-flex flex-column">
+	<Col xs={12}>
 		{/**
 		 * Suspense: Es un mecanismo que permite mostrar una interfaz de "carga" (un fallback) mientras espera que un
 		 * componente perezoso (lazy) termine de cargarse.
@@ -239,8 +238,8 @@ const Layout = () => {
 			/>
 			{/* El elemento <main> es la segunda fila del grid y se expande automáticamente. */}
 			<main className={styles.mainContentWrapper}>
-				<Container fluid className="d-flex flex-column flex-grow-1">
-					<Row className="justify-content-start flex-grow-1">
+				<Container fluid className="h-100">
+					<Row className="justify-content-start h-100">
 						<Routes>
 							{/* Define la ruta por defecto */}
 							<Route
@@ -256,14 +255,7 @@ const Layout = () => {
 										>
 											<Filters />
 										</Col>
-										{/* Esta columna también necesita ser un contenedor flex para que su contenido (Excursions) pueda crecer y evitar el salto del footer */}
-										<Col
-											xs={12}
-											md={8}
-											lg={9}
-											xl={10}
-											className="d-flex flex-column"
-										>
+										<Col xs={12} md={8} lg={9} xl={10} className="d-flex flex-column">
 											{excursionsContent}
 										</Col>
 									</>

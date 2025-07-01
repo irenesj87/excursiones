@@ -83,10 +83,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	// Si se están cargando los datos de las excursiones, mostrar el spinner
 	if (isLoading) {
 		return (
-			<DelayedFallback
-				delay={300}
-				className={`${styles.centeredStatus} flex-grow-1`}
-			>
+			<DelayedFallback delay={300} className={styles.centeredStatus}>
 				<Spinner as="output" animation="border">
 					<span className="visually-hidden">Cargando excursiones...</span>
 				</Spinner>
@@ -98,7 +95,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	// Si hay un error, mostrar un mensaje
 	if (error) {
 		return (
-			<div className={`${styles.centeredStatus} py-5 flex-grow-1 w-100`}>
+			<div className={`${styles.centeredStatus} py-5 w-100`}>
 				<Alert variant="danger">
 					{error.message ||
 						"Lo sentimos, ha ocurrido un error al cargar las excursiones."}
@@ -113,7 +110,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	if (excursionComponents.length === 0) {
 		return (
 			<output
-				className={`${styles.messageNotFound} ${styles.centeredStatus} text-center py-5 flex-grow-1 w-100`}
+				className={`${styles.messageNotFound} ${styles.centeredStatus} text-center py-5 w-100`}
 			>
 				Lo sentimos, pero no tenemos ninguna excursión con esas características.
 			</output>
@@ -122,7 +119,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 
 	// Si hay excursiones, se muestran.
 	return (
-		<div className="excursionsContainer d-flex flex-column flex-grow-1">
+		<div className="excursionsContainer">
 			<h2 className={styles.title}>Próximas excursiones</h2>
 			<Row className="gx-4">{excursionComponents}</Row>
 		</div>

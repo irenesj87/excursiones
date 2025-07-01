@@ -19,7 +19,7 @@
 	border-bottom: 1px solid var(--primary-color);
 }
 
-/* Estilos específicos para la tarjeta de excursiones en la página de usuario.*/
+/* Estilos específicos para la tarjeta de excursiones en la página de usuario. */
 .excursionsCard {
 	border: 1px solid var(--border-color-light);
 	border-radius: 0.5rem;

@@ -75,51 +75,50 @@ function UserPage() {
 		/**
 		 * Contenedor principal de la página de usuario.
 		 */
-		<div className=" d-flex flex-column flex-grow-1">
-			<Row className="justify-content-center flex-grow-1 pt-4">
-				<Col xs={11} md={11} lg={11} xl={6} className="userPageContainer d-flex flex-column">
-					<Row className="mb-4">
-						<Col>
-							<h2 className={styles.title}>Tu perfil</h2>
-						</Col>
-					</Row>
-					<Row className="mb-2">
-						<Col>
-							<UserInfoForm />
-						</Col>
-					</Row>
-					{/* Este Row se expandirá para empujar el footer hacia abajo */}
-					<Row className="mb-4 flex-grow-1">
-						<Col className="d-flex flex-column">
-							<PaginatedListDisplay
-								data={userExcursions}
-								isLoading={isLoading}
-								error={error}
-								itemsPerPage={2} // Puedes hacer esto una constante o una prop si lo necesitas dinámico
-								renderItem={(excursion) => (
-									<ExcursionCard
-										name={excursion.name}
-										area={excursion.area}
-										description={excursion.description}
-										difficulty={excursion.difficulty}
-										time={excursion.time}
-										isLoggedIn={true}
-										isJoined={true}
-									/>
-								)}
-								itemKeyExtractor={(excursion) => excursion.id}
-								noItemsMessage="Aún no te has apuntado a ninguna excursión."
-								loadingMessage="Cargando tus excursiones..."
-								errorMessage="Error al cargar tus excursiones."
-								cardHeader="Excursiones a las que te has apuntado"
-								cardClassName={styles.excursionsCard} // Aplica estilos específicos de UserPage
-								colProps={{ xs: 12 }} // Asegura que cada tarjeta ocupe el ancho en breakpoints pequeños
-							/>
-						</Col>
-					</Row>
-				</Col>
-			</Row>
-		</div>
+		<Row className="justify-content-center pt-2">
+			<Col xs={11} md={11} lg={11} xl={6} className="userPageContainer">
+				<Row className="mb-4">
+					<Col>
+						<h2 className={styles.title}>Tu perfil</h2>
+					</Col>
+				</Row>
+				<Row className="mb-2">
+					<Col>
+						<UserInfoForm />
+					</Col>
+				</Row>
+
+				<Row className="mb-4">
+					<Col>
+						<PaginatedListDisplay
+							data={userExcursions}
+							isLoading={isLoading}
+							error={error}
+							itemsPerPage={2} // Puedes hacer esto una constante o una prop si lo necesitas dinámico
+							renderItem={(excursion) => (
+								<ExcursionCard
+									id={excursion.id}
+									name={excursion.name}
+									area={excursion.area}
+									description={excursion.description}
+									difficulty={excursion.difficulty}
+									time={excursion.time}
+									isLoggedIn={true}
+									isJoined={true}
+								/>
+							)}
+							itemKeyExtractor={(excursion) => excursion.id}
+							noItemsMessage="Aún no te has apuntado a ninguna excursión."
+							loadingMessage="Cargando tus excursiones..."
+							errorMessage="Error al cargar tus excursiones."
+							cardHeader="Excursiones a las que te has apuntado"
+							cardClassName={styles.excursionsCard} // Aplica estilos específicos de UserPage
+							colProps={{ xs: 12 }} // Asegura que cada tarjeta ocupe el ancho en breakpoints pequeños
+						/>
+					</Col>
+				</Row>
+			</Col>
+		</Row>
 	);
 }
 export default UserPage;

@@ -47,14 +47,9 @@ const DelayedFallback = ({ children, delay = 300, className = "" }) => {
 	 * parezca el contenido.
 	 * {show ? children : null}: Esta es una expresión ternaria.
 	 * Si show es true (porque el temporizador ha terminado), se renderiza el children (el texto o el spinner).
-	 * Si show es false (porque el temporizador aún no ha terminado), se renderiza null dentro del div, por lo que el div
-	 * sigue ocupando su espacio en el layout.
-	 * ACTUALIZACIÓN: Renderizar `null` causa que el div, aunque esté en el DOM, tenga una altura de 0 si es un flex-item
-	 * con `flex-grow: 1` y sin contenido. Esto provoca un colapso del layout.
-	 * La solución es renderizar un espacio sin ruptura (`&nbsp;`) durante el retraso. Esto le da al div un contenido
-	 * mínimo, permitiéndole ocupar el espacio asignado por flexbox y evitando el "salto" del layout.
+	 * Si show es false (porque el temporizador aún no ha terminado), se renderiza null.
 	 */
-	return <div className={className}>{show ? children : <>&nbsp;</>}</div>;
+	return <div className={className}>{show ? children : null}</div>;
 };
 
 export default DelayedFallback;
