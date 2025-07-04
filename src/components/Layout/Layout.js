@@ -32,7 +32,7 @@ const UserPage = lazy(() => import("../UserPage"));
  */
 const Footer = memo(OriginalFooter);
 
-// Constantes para configurar el indicador de carga (o fallback) de Suspense para los componentes que se cargan de forma 
+// Constantes para configurar el indicador de carga (o fallback) de Suspense para los componentes que se cargan de forma
 // perezosa
 const baseFallbackClassName =
 	"d-flex justify-content-center align-items-center fw-bold p-5 flex-grow-1"; // Se utiliza para dar estilo al contenedor mientras una página se carga
@@ -246,22 +246,22 @@ const Layout = () => {
 								path="/"
 								element={
 									<>
-										<Col
-											xs={12}
-											md={4}
-											lg={3}
-											xl={2}
-											className="mb-3 mb-md-0"
-										>
+										<Col xs={12} md={4} lg={3} xl={2} className="mb-3 mb-md-0">
 											<Filters />
 										</Col>
-										<Col xs={12} md={8} lg={9} xl={10} className="d-flex flex-column">
+										<Col
+											xs={12}
+											md={8}
+											lg={9}
+											xl={10}
+											className="d-flex flex-column"
+										>
 											{excursionsContent}
 										</Col>
 									</>
 								}
 							/>
-							{/* Define las rutas para los componentes Register, LoginPage y UserPage */}
+							{/* Define las rutas para los componentes RegisterPage, LoginPage y UserPage */}
 							<Route
 								path="registerPage"
 								element={<LazyRouteWrapper PageComponent={RegisterPage} />}
