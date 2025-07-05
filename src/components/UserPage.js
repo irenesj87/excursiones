@@ -76,7 +76,7 @@ function UserPage() {
 		 * Contenedor principal de la página de usuario.
 		 */
 		<Row className="justify-content-center pt-2">
-			<Col xs={11} md={11} lg={11} xl={6} className="userPageContainer">
+			<Col xs={11} md={11} lg={11} xl={6} className="contentPane">
 				<Row className="mb-4">
 					<Col>
 						<h2 className={styles.title}>Tu perfil</h2>

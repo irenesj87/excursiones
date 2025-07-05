@@ -27,7 +27,7 @@
 	--focus-outline-color: var(--accent-color);
 
 	/* --- Tamaños y Tipografías --- */
-	--min-height-layout: 1200px;
+	--min-height-layout: 1190px;
 	font-size: 16px;
 }
 

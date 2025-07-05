@@ -29,7 +29,7 @@ html.light body {
 		transition: none;
 	}
 
-	.excursionsContainer {
+	.contentPane {
 		background-color: white;
 		border: 1px solid var(--border-color-light);
 		border-radius: 0.5rem;
@@ -89,15 +89,6 @@ html.light body {
 		transition: none; /* Elimina la transición para los enlaces de paginación */
 	}
 
-	.userPageContainer {
-		background-color: white;
-		border: 1px solid var(--border-color-light);
-		border-radius: 0.5rem;
-		margin-top: 2rem;
-		margin-bottom: 2rem;
-		padding-left: 1.5rem;
-		padding-right: 1.5rem;
-	}
 }
 
 /* ======================================== */
@@ -139,7 +130,7 @@ html.dark body {
 		border-color: var(--register-link-border-color);
 	}
 
-	.excursionsContainer {
+	.contentPane {
 		background-color: var(--background-color-dark);
 		border: 1px solid var(--border-color-dark);
 		border-radius: 0.5rem;
@@ -258,16 +249,6 @@ html.dark body {
 	/* --- Estilos para Paginación (Enlaces) --- */
 	.page-link {
 		transition: none; /* Elimina la transición para los enlaces de paginación */
-	}
-
-	.userPageContainer {
-		background-color: var(--background-color-dark);
-		border: 1px solid var(--border-color-dark);
-		border-radius: 0.5rem;
-		margin-top: 2rem;
-		margin-bottom: 2rem;
-		padding-left: 1.5rem;
-		padding-right: 1.5rem;
 	}
 
 	.offcanvas-header {

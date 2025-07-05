@@ -119,7 +119,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 
 	// Si hay excursiones, se muestran.
 	return (
-		<div className="excursionsContainer">
+		<div className="contentPane">
 			<h2 className={styles.title}>Próximas excursiones</h2>
 			<Row className="gx-4">{excursionComponents}</Row>
 		</div>
