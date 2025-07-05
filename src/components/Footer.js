@@ -10,15 +10,13 @@ function Footer() {
 
 	return (
 		<footer className={styles.footer} role="contentinfo">
-			<p>
-				<a
-					href="mailto:excursionesjuntos@gmail.com"
-					className={styles.mailIconLink}
-					aria-label="Enviar correo electrónico"
-				>
-					<MdMail />
-				</a>
-			</p>
+			<a
+				href="mailto:excursionesjuntos@gmail.com"
+				className={styles.mailIconLink}
+				aria-label="Enviar correo electrónico"
+			>
+				<MdMail />
+			</a>
 			<p>
 				© Excursiones Juntos 2021 - {getCurrentYear()}. Todos los derechos
 				reservados.

@@ -3,7 +3,7 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	padding: 2rem;
+	padding: 1.5rem 1rem;
 	text-align: center;
 	border-top: 1px solid var(--border-color);
 	background-color: var(--primary-color); /* Fondo principal del footer */
@@ -11,7 +11,7 @@
 }
 
 .footer p {
-	margin: 0.25rem 0;
+	margin: 0;
 }
 
 .mailIconLink {
@@ -21,7 +21,7 @@
 	width: 45px; /* Tamaño del círculo */
 	height: 45px;
 	border-radius: 50%;
-	margin-bottom: 1rem;
+	margin-bottom: 0.75rem;
 	background-color: white; /* Círculo en blanco */
 	transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
