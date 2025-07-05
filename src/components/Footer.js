@@ -13,6 +13,7 @@ function Footer() {
 			<p>
 				<a
 					href="mailto:excursionesjuntos@gmail.com"
+					className={styles.mailIconLink}
 					aria-label="Enviar correo electrónico"
 				>
 					<MdMail />

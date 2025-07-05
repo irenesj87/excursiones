@@ -25,36 +25,39 @@ function UserPage() {
 	const [isLoading, setIsLoading] = useState(false);
 	// Estado para el estado de error
 	const [error, setError] = useState(null);
-	const excursionsUrl = `http://localhost:3001/excursions`;
 
 	/**
-	 * Efecto que se encarga de obtener los datos de las excursiones del usuario.
-	 * Se ejecuta cuando cambia el estado de login, el objeto de usuario o la URL de las excursiones.
-	 * Realiza una petición al servidor para obtener todas las excursiones y luego filtra
-	 * aquellas a las que el usuario se ha apuntado.
-	 * Maneja los estados de carga y error, y resetea la paginación a la primera página
-	 * cuando los datos cambian.
+	 * Efecto que se encarga de obtener los datos de las excursiones a las que el usuario se ha apuntado.
+	 * Se ejecuta cuando cambia el estado de login o el objeto de usuario.
+	 * Realiza una petición a un endpoint específico que devuelve solo las excursiones del usuario,
+	 * mejorando la eficiencia al no tener que descargar y filtrar todas las excursiones en el cliente.
+	 * Maneja los estados de carga y error.
 	 */
 	useEffect(() => {
 		const fetchData = async () => {
-			/**
-			 * Usamos el encadenamiento opcional (?.) para comprobar de forma segura si 'user.excursions' existe y tiene
-			 * elementos, lo que simplifica la condición.
-			 */
-			if (isLoggedIn && user?.excursions?.length > 0) {
+			// Solo hacemos la petición si el usuario está logueado, tiene un email y excursiones asociadas.
+			if (isLoggedIn && user?.mail && user.excursions?.length > 0) {
 				setIsLoading(true);
 				setError(null);
+				const token = sessionStorage.getItem("token");
+				const url = `http://localhost:3001/users/${user.mail}/excursions`;
 				try {
-					const response = await fetch(excursionsUrl);
+					const response = await fetch(url, {
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+					});
 					if (!response.ok) {
+						if (response.status === 401 || response.status === 403) {
+							throw new Error(
+								"No tienes autorización para ver estas excursiones."
+							);
+						}
 						throw new Error(`HTTP error! status: ${response.status}`);
 					}
 					const data = await response.json();
-					// Filtrar las excursiones para mostrar solo aquellas a las que el usuario está apuntado
-					const filteredExcursions = data.filter((excursion) =>
-						user.excursions.includes(excursion.id)
-					);
-					setUserExcursions(filteredExcursions);
+					// El servidor ya devuelve solo las excursiones del usuario, no es necesario filtrar.
+					setUserExcursions(data);
 				} catch (err) {
 					console.error("Error fetching user excursions:", err);
 					setError(err.message || "Error al cargar tus excursiones.");
@@ -63,13 +66,14 @@ function UserPage() {
 					setIsLoading(false);
 				}
 			} else {
-				setUserExcursions([]); // Si no hay excursiones o no está logueado, lista vacía
+				// Si el usuario no está logueado o no tiene excursiones, la lista se muestra vacía.
+				setUserExcursions([]);
 				setIsLoading(false); // Asegurarse de que no quede cargando
 				setError(null);
 			}
 		};
 		fetchData();
-	}, [isLoggedIn, user, excursionsUrl]);
+	}, [isLoggedIn, user]);
 
 	return (
 		/**
