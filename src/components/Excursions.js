@@ -1,6 +1,7 @@
 import { memo, useMemo, useCallback } from "react";
-import { Row, Col, Spinner, Alert } from "react-bootstrap";
+import { Row, Col, Spinner } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
+import { BsBinoculars } from "react-icons/bs";
 import { updateUser } from "../slicers/loginSlice";
 import ExcursionCard from "./ExcursionCard";
 import DelayedFallback from "./DelayedFallback";
@@ -66,7 +67,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 						lg={4}
 						xl={3}
 						key={excursion.id}
-						className="mb-4 mt-4"
+						className="d-flex" // Usamos d-flex para que las cards se estiren y ocupen toda la altura
 					>
 						<ExcursionCard
 							{...excursion}
@@ -83,11 +84,11 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	// Si se están cargando los datos de las excursiones, mostrar el spinner
 	if (isLoading) {
 		return (
-			<DelayedFallback delay={300} className={styles.centeredStatus}>
-				<Spinner as="output" animation="border">
+			<DelayedFallback delay={300} className={`${styles.excursionsContainer} ${styles.centeredStatus}`}>
+				<Spinner as="output" animation="border" role="status">
 					<span className="visually-hidden">Cargando excursiones...</span>
 				</Spinner>
-				<p className="mt-2">Cargando excursiones...</p>
+				<p className="mt-3 fw-bold">Cargando excursiones...</p>
 			</DelayedFallback>
 		);
 	}
@@ -95,11 +96,11 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	// Si hay un error, mostrar un mensaje
 	if (error) {
 		return (
-			<div className={`${styles.centeredStatus} py-5 w-100`}>
-				<Alert variant="danger">
+			<div className={`${styles.excursionsContainer} ${styles.centeredStatus}`} role="status">
+				<p className={styles.messageNotFound}>
 					{error.message ||
 						"Lo sentimos, ha ocurrido un error al cargar las excursiones."}
-				</Alert>
+				</p>
 			</div>
 		);
 	}
@@ -109,19 +110,27 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	 */
 	if (excursionComponents.length === 0) {
 		return (
-			<output
-				className={`${styles.messageNotFound} ${styles.centeredStatus} text-center py-5 w-100`}
+			<div
+				className={`${styles.excursionsContainer} ${styles.centeredStatus}`}
+				role="status"
 			>
-				Lo sentimos, pero no tenemos ninguna excursión con esas características.
-			</output>
+				<div className={styles.messageNotFound}>
+					<BsBinoculars className={styles.messageIcon} aria-hidden="true" />
+					<p className={styles.primaryMessage}>
+						No hemos encontrado excursiones
+					</p>
+					<p className={styles.secondaryMessage}>Prueba a cambiar los filtros para ampliar la búsqueda.</p>
+				</div>
+			</div>
 		);
 	}
 
 	// Si hay excursiones, se muestran.
 	return (
-		<div className="contentPane">
+		<div className={`${styles.excursionsContainer} contentPane`}>
 			<h2 className={styles.title}>Próximas excursiones</h2>
-			<Row className="gx-4">{excursionComponents}</Row>
+			{/* Usamos gy-5 para el espaciado vertical, es más limpio que márgenes individuales */}
+			<Row className="gx-4 gy-5">{excursionComponents}</Row>
 		</div>
 	);
 }

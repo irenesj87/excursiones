@@ -80,20 +80,17 @@ function UserPage() {
 		 * Contenedor principal de la página de usuario.
 		 */
 		<Row className="justify-content-center pt-2">
-			<Col xs={11} md={11} lg={11} xl={6} className="contentPane">
-				<Row className="mb-4">
+			<Col xs={11} md={11} lg={11} xl={8} className="contentPane">
+				<Row className="mb-3">
 					<Col>
 						<h2 className={styles.title}>Tu perfil</h2>
 					</Col>
 				</Row>
-				<Row className="mb-2">
-					<Col>
+				<Row className="mb-3">
+					<Col lg={6} xl={4} className="mb-4 mb-lg-0">
 						<UserInfoForm />
 					</Col>
-				</Row>
-
-				<Row className="mb-4">
-					<Col>
+					<Col lg={6} xl={8}>
 						<PaginatedListDisplay
 							data={userExcursions}
 							isLoading={isLoading}
@@ -101,12 +98,7 @@ function UserPage() {
 							itemsPerPage={2} // Puedes hacer esto una constante o una prop si lo necesitas dinámico
 							renderItem={(excursion) => (
 								<ExcursionCard
-									id={excursion.id}
-									name={excursion.name}
-									area={excursion.area}
-									description={excursion.description}
-									difficulty={excursion.difficulty}
-									time={excursion.time}
+									{...excursion}
 									isLoggedIn={true}
 									isJoined={true}
 								/>

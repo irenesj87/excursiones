@@ -115,11 +115,11 @@ function UserInfoForm() {
 	};
 
 	return (
-		<Card className={`${styles.profileCard} mb-4`}>
+		<Card className={`${styles.profileCard} h-100`}>
 			<Card.Header className={styles.cardHeader}>Datos Personales</Card.Header>
-			<Card.Body className={styles.cardBody}>
+			<Card.Body className={`${styles.cardBody} d-flex flex-column`}>
 				{/* Campo de correo electrónico (solo lectura) */}
-				<Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+				<Form.Group as={Row} className="mb-3 gx-2" controlId="formPlaintextEmail">
 					<Form.Label column sm="3" className="text-sm-end fw-bold">
 						Correo:
 					</Form.Label>
@@ -143,7 +143,7 @@ function UserInfoForm() {
 						/>
 					</Col>
 				</Form.Group>
-				<Form.Group as={Row} className="mb-3 align-items-center">
+				<Form.Group as={Row} className="mb-3 gx-2 align-items-center">
 					<Form.Label
 						column
 						sm="3"
@@ -162,7 +162,7 @@ function UserInfoForm() {
 						/>
 					</Col>
 				</Form.Group>
-				<Form.Group as={Row} className="mb-3 align-items-center">
+				<Form.Group as={Row} className="mb-3 gx-2 align-items-center">
 					<Form.Label
 						column
 						sm="3"
@@ -181,7 +181,7 @@ function UserInfoForm() {
 						/>
 					</Col>
 				</Form.Group>
-				<Form.Group as={Row} className="mb-3 align-items-center">
+				<Form.Group as={Row} className="mb-3 gx-2 align-items-center">
 					<Form.Label
 						column
 						sm="3"
@@ -202,7 +202,7 @@ function UserInfoForm() {
 				</Form.Group>
 				{/* Botón "Editar" visible cuando no se está editando */}
 				{!isEditing && (
-					<div className="mt-5 border-top pt-3">
+					<div className="mt-auto border-top pt-3">
 						<Row className="justify-content-center justify-content-sm-end gx-0">
 							{/* gx-0 para eliminar los "gutters" (espacios entre columnas) si no son necesarios */}
 							<Col xs={12} sm="auto">
@@ -214,17 +214,16 @@ function UserInfoForm() {
 					</div>
 				)}
 				{isEditing && (
-					<div className="mt-5 border-top pt-3">
+					<div className="mt-auto border-top pt-3">
 						<Row className="justify-content-center justify-content-sm-end gx-2">
 							{/* gx-2 para añadir espaciado horizontal entre columnas */}
-							{/* Cada botón ocupa la mitad del ancho en breakpoints extra pequeños (xs), y ancho automático en 
-							sm+ */}
-							<Col xs={6} sm="auto">
+							{/* En xs, los botones ocupan el ancho completo y se apilan. En sm+, se muestran en línea. */}
+							<Col xs={12} sm="auto" className="mb-2 mb-sm-0">
 								<Button variant="danger" onClick={cancelEdit} className="w-100">
 									Cancelar
 								</Button>
 							</Col>
-							<Col xs={6} sm="auto">
+							<Col xs={12} sm="auto">
 								<Button variant="success" onClick={saveEdit} className="w-100">
 									Guardar
 								</Button>

@@ -13,6 +13,8 @@ html.light body {
 	--excursion-card-border-color: #e0e0e0;
 	--excursion-card-title-color: #333;
 	--excursion-card-description-color: #555;
+	--excursion-card-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+	--excursion-card-shadow-hover: 0 10px 20px rgba(0, 0, 0, 0.15);
 
 	/* --- Estilos para la barra de navegación --- */
 	.customNavbar {
@@ -112,6 +114,8 @@ html.dark body {
 	--excursion-card-border-color: var(--border-color-dark);
 	--excursion-card-title-color: var(--text-color-dark);
 	--excursion-card-description-color: rgba(255, 255, 255, 0.85);
+	--excursion-card-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+	--excursion-card-shadow-hover: 0 10px 20px rgba(0, 0, 0, 0.4);
 
 	/* --- Estilos para la barra de navegación --- */
 	.customNavbar {

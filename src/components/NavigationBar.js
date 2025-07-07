@@ -6,7 +6,7 @@ import Logo from "./Logo";
 import SearchBar from "./SearchBar";
 import LandingPageUserProfile from "./LandingPageUserProfile";
 import { toggleMode, setMode } from "../slicers/themeSlice";
-import { RiMoonClearFill, RiSunFill } from "react-icons/ri";
+import { FaMoon, FaSun } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/NavigationBar.module.css";
 import "../css/Themes.css";
@@ -95,9 +95,9 @@ function NavigationBarComponent({
 	// Renderizado condicional para el icono
 	const icon =
 		mode === "light" ? (
-			<RiMoonClearFill className={styles.themeIcon} />
+			<FaMoon className={styles.themeIcon} />
 		) : (
-			<RiSunFill className={styles.themeIcon} />
+			<FaSun className={styles.themeIcon} />
 		);
 
 	/**

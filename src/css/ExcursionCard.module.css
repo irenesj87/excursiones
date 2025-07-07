@@ -1,10 +1,17 @@
 .excursionItemCard {
 	display: flex;
 	flex-direction: column;
-	height: 100%; /* Se le indica a ese div que se estire para ocupar toda la altura disponible */
-	border: 1px solid var(--excursion-card-border-color);
+	height: 100%;
+	border: none !important;
 	background-color: var(--excursion-card-bg);
-	border-radius: 8px;
+	border-radius: 12px;
+	box-shadow: var(--excursion-card-shadow);
+	transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.excursionItemCard:hover {
+	transform: translateY(-5px);
+	box-shadow: var(--excursion-card-shadow-hover);
 }
 
 .excursionItemCard .card-body {
@@ -15,35 +22,53 @@
 }
 
 .excursionTitle {
-	font-size: 1.4rem;
+	font-size: 1.3rem;
 	font-weight: 600;
 	color: var(--excursion-card-title-color);
 	margin-bottom: 0.5rem;
 }
 
 .excursionArea {
-	font-size: 1.1rem;
+	font-size: 1rem;
 	font-style: italic;
+	color: var(--bs-secondary);
 }
 
 .excursionDescription {
-	font-size: 1.1rem;
+	font-size: 1rem;
 	color: var(--excursion-card-description-color);
 	line-height: 1.5;
-	margin-bottom: 1rem;
-	flex-grow: 1;
+	margin-bottom: 0.5rem;
 	text-align: justify; /* Hace que el texto llene el ancho de la línea */
 	text-align-last: left; /* Alinea la última línea a la izquierda */
 	hyphens: auto; /* Permite la división de palabras para un mejor flujo del texto justificado */
 }
 
 .excursionDetails {
-	margin-top: auto;
 	margin-bottom: 1rem;
-	font-size: 1.1rem;
+	font-size: 0.95rem;
 	display: flex;
 	flex-wrap: wrap;
+	gap: 1rem;
+	color: var(--excursion-card-description-color);
+}
+
+.detailItem {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+}
+
+.detailIcon {
+	color: var(--bs-primary);
+}
+
+.joinedStatus {
+	display: inline-flex;
+	align-items: center;
 	gap: 0.5rem;
+	color: var(--bs-success);
+	font-weight: 600;
 }
 
 .readMoreLink {

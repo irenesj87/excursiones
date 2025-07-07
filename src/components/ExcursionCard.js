@@ -1,25 +1,17 @@
 import { useState, memo, useMemo, useCallback } from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import {
+	FiChevronDown,
+	FiChevronUp,
+	FiClock,
+	FiBarChart,
+	FiCheckCircle,
+} from "react-icons/fi";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/ExcursionCard.module.css";
 
 // Límite de caracteres para la descripción truncada
 const MAX_LENGTH = 150;
-
-// Función para poner las badges de diferente color en función de la dificultad de la excursión
-const getDifficultyBadgeClass = (difficulty) => {
-	switch (difficulty?.toLowerCase()) {
-		case "baja":
-			return "bg-success"; // Verde para baja
-		case "media":
-			return "bg-warning text-dark"; // Amarillo para media
-		case "alta":
-			return "bg-danger"; // Roja para alta
-		default:
-			return "bg-secondary";
-	}
-};
 
 /**
  * Componente para la tarjeta de excursión.
@@ -62,10 +54,6 @@ function ExcursionCardComponent({
 			: description;
 	}, [description, isExpanded]);
 
-	const difficultyBadgeClass = useMemo(() => {
-		return getDifficultyBadgeClass(difficulty);
-	}, [difficulty]);
-
 	/**
 	 * Crea un 'handler' para el evento 'click' que llama a la función `onJoin` con el ID de la excursión.
 	 * Se usa `useCallback` para asegurar que la función no se recree innecesariamente,
@@ -107,25 +95,25 @@ function ExcursionCardComponent({
 							</Button>
 						)}
 					</div>
-					<div className={styles.excursionDetails}>
-						<span className={`badge ${difficultyBadgeClass} mt-3 me-2`}>
-							<span>Dificultad:</span> {difficulty}
-						</span>
-						<span className={`badge bg-info text-dark mt-3`}>
-							<span>Tiempo:</span> {time}
-						</span>
+					<div className={`${styles.excursionDetails} mt-3`}>
+						<div className={styles.detailItem}>
+							<FiBarChart className={styles.detailIcon} />
+							<span>{difficulty}</span>
+						</div>
+						<div className={styles.detailItem}>
+							<FiClock className={styles.detailIcon} />
+							<span>{time}</span>
+						</div>
 					</div>
 				</div>
 				{isLoggedIn && (
-					<div className="mt-auto pt-3 border-top">
+					<div className="mt-auto pt-3 border-top d-flex justify-content-center justify-content-md-end">
 						{isJoined ? (
-							<div className="text-center text-sm-end">
-								<span className="text-success text-uppercase fw-bold">
-									Apuntado/a
-								</span>
+							<div className={styles.joinedStatus}>
+								<FiCheckCircle /> <span>Apuntado/a</span>
 							</div>
 						) : (
-							<Row className="justify-content-sm-end gx-0">
+							<Row className="justify-content-sm-end gx-0 w-100">
 								<Col xs={12} sm="auto">
 									<Button onClick={handleJoin} className="w-100">
 										Apuntarse
