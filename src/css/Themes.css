@@ -100,7 +100,7 @@ html.dark body {
 	transition: none; /* Eliminar transición para el body en cambio de tema */
 	background-color: var(--background-color-dark);
 	color: var(--text-color-dark);
-	--heading-color: #a7c957; /* Verde claro y accesible para títulos y logo */
+	--heading-color: #8bc34a; /* Tono de verde menos vibrante, contraste 5.54:1 */
 	--accent-color: #f39c12; /* Naranja más brillante y accesible */
 	--register-link-color: var(--text-color-dark);
 	--register-link-border-color: var(--text-color-dark);

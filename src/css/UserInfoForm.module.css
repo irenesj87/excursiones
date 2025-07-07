@@ -11,3 +11,15 @@
 	padding: 1.5rem;
 	font-size: 1.1rem;
 }
+
+.editButton,
+.cancelButton,
+.saveButton {
+	transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.editButton:hover,
+.cancelButton:hover,
+.saveButton:hover {
+	transform: scale(1.05);
+}

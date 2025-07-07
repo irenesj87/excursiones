@@ -238,8 +238,8 @@ const Layout = () => {
 			/>
 			{/* El elemento <main> es la segunda fila del grid y se expande automáticamente. */}
 			<main className={styles.mainContentWrapper}>
-				<Container fluid className="h-100">
-					<Row className="justify-content-start h-100">
+				<Container fluid>
+					<Row className="justify-content-start">
 						<Routes>
 							{/* Define la ruta por defecto */}
 							<Route

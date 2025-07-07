@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styles from "../css/DelayedFallback.module.css";
 
 /**
  * Componente que evita el parpadeo de los mensajes de carga cuando la carga es muy rápida.
@@ -49,7 +50,9 @@ const DelayedFallback = ({ children, delay = 300, className = "" }) => {
 	 * Si show es true (porque el temporizador ha terminado), se renderiza el children (el texto o el spinner).
 	 * Si show es false (porque el temporizador aún no ha terminado), se renderiza null.
 	 */
-	return <div className={className}>{show ? children : null}</div>;
+	return (
+		<div className={`${styles.baseFallback} ${className}`}>{show ? children : null}</div>
+	);
 };
 
 export default DelayedFallback;

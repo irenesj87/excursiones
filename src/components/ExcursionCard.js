@@ -1,5 +1,5 @@
 import { useState, memo, useMemo, useCallback } from "react";
-import { Card, Button, Row, Col } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import {
 	FiChevronDown,
 	FiChevronUp,
@@ -65,7 +65,7 @@ function ExcursionCardComponent({
 	}, [id, onJoin]);
 
 	return (
-		<Card className={styles.excursionItemCard}>
+		<Card className={`${styles.excursionItemCard} h-100 w-100`}>
 			<Card.Body className="d-flex flex-column">
 				<div>
 					<Card.Title className={styles.excursionTitle}>{name}</Card.Title>
@@ -107,19 +107,17 @@ function ExcursionCardComponent({
 					</div>
 				</div>
 				{isLoggedIn && (
-					<div className="mt-auto pt-3 border-top d-flex justify-content-center justify-content-md-end">
+					<div className="mt-auto pt-3 border-top">
 						{isJoined ? (
-							<div className={styles.joinedStatus}>
+							<div className={`${styles.joinedStatus} text-center text-md-end`}>
 								<FiCheckCircle /> <span>Apuntado/a</span>
 							</div>
 						) : (
-							<Row className="justify-content-sm-end gx-0 w-100">
-								<Col xs={12} sm="auto">
-									<Button onClick={handleJoin} className="w-100">
-										Apuntarse
-									</Button>
-								</Col>
-							</Row>
+							<div className="d-grid d-md-flex justify-content-md-end">
+								<Button onClick={handleJoin} className={styles.joinButton}>
+									Apuntarse
+								</Button>
+							</div>
 						)}
 					</div>
 				)}

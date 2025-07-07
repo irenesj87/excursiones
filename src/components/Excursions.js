@@ -84,11 +84,12 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	// Si se están cargando los datos de las excursiones, mostrar el spinner
 	if (isLoading) {
 		return (
-			<DelayedFallback delay={300} className={`${styles.excursionsContainer} ${styles.centeredStatus}`}>
-				<Spinner as="output" animation="border" role="status">
-					<span className="visually-hidden">Cargando excursiones...</span>
-				</Spinner>
-				<p className="mt-3 fw-bold">Cargando excursiones...</p>
+			<DelayedFallback
+				delay={300}
+				className={`${styles.excursionsContainer} ${styles.centeredStatus} contentPane`}
+			>
+				<Spinner animation="border" aria-hidden="true" />
+				<output className="mt-3 fw-bold">Cargando excursiones...</output>
 			</DelayedFallback>
 		);
 	}
@@ -96,11 +97,13 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	// Si hay un error, mostrar un mensaje
 	if (error) {
 		return (
-			<div className={`${styles.excursionsContainer} ${styles.centeredStatus}`} role="status">
-				<p className={styles.messageNotFound}>
+			<div
+				className={`${styles.excursionsContainer} ${styles.centeredStatus} contentPane`}
+			>
+				<output className={styles.messageNotFound}>
 					{error.message ||
 						"Lo sentimos, ha ocurrido un error al cargar las excursiones."}
-				</p>
+				</output>
 			</div>
 		);
 	}
@@ -111,16 +114,17 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	if (excursionComponents.length === 0) {
 		return (
 			<div
-				className={`${styles.excursionsContainer} ${styles.centeredStatus}`}
-				role="status"
+				className={`${styles.excursionsContainer} ${styles.centeredStatus} contentPane`}
 			>
-				<div className={styles.messageNotFound}>
+				<output className={styles.messageNotFound}>
 					<BsBinoculars className={styles.messageIcon} aria-hidden="true" />
 					<p className={styles.primaryMessage}>
-						No hemos encontrado excursiones
+						No hemos encontrado ninguna excursión con esas características.
 					</p>
-					<p className={styles.secondaryMessage}>Prueba a cambiar los filtros para ampliar la búsqueda.</p>
-				</div>
+					<p className={styles.secondaryMessage}>
+						Prueba a cambiar los filtros para ampliar la búsqueda.
+					</p>
+				</output>
 			</div>
 		);
 	}

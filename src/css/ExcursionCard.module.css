@@ -9,11 +9,6 @@
 	transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
-.excursionItemCard:hover {
-	transform: translateY(-5px);
-	box-shadow: var(--excursion-card-shadow-hover);
-}
-
 .excursionItemCard .card-body {
 	background-color: transparent;
 	flex-grow: 1;
@@ -31,7 +26,7 @@
 .excursionArea {
 	font-size: 1rem;
 	font-style: italic;
-	color: var(--bs-secondary);
+	color: var(--excursion-card-description-color); /* Cambiado para usar un color con mejor contraste */
 }
 
 .excursionDescription {
@@ -63,6 +58,15 @@
 	color: var(--bs-primary);
 }
 
+.readMoreLink {
+	text-decoration: none;
+	font-weight: 550;
+}
+
+.readMoreLink:hover {
+	text-decoration: underline;
+}
+
 .joinedStatus {
 	display: inline-flex;
 	align-items: center;
@@ -71,11 +75,10 @@
 	font-weight: 600;
 }
 
-.readMoreLink {
-	text-decoration: none;
-	font-weight: 550;
+.joinButton {
+	transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 
-.readMoreLink:hover {
-	text-decoration: underline;
+.joinButton:hover {
+	transform: scale(1.05);
 }

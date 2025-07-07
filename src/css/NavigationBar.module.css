@@ -4,26 +4,35 @@
 
 .themeToggleBtn {
 	background-color: transparent;
-	transition: background-color 0.2s ease, border-color 0.2s ease,
-		color 0.2s ease;
+	/* Eliminamos la transición del fondo ya que no debe cambiar */
+	transition: border-color 0.2s ease, color 0.2s ease;
 	color: inherit;
-	padding: 4px 4px;
+	padding: 6px 8px; /* Aumentamos el padding para que el botón no se vea tan apretado */
 	border: none;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	line-height: 1;
-	/* Establece la altura de línea para el texto dentro del botón */
-
-	svg {
-		font-size: 1.2rem;
-	}
 }
 
 .themeIcon {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	font-size: 1.3rem; /* Tamaño base del icono */
+	transition: transform 0.2s ease-in-out; /* Transición suave para el escalado */
+}
+
+.themeToggleBtn:hover {
+	/* Anulamos el cambio de color de fondo que aplica Bootstrap por defecto */
+	color: inherit;
+	background-color: transparent;
+}
+
+.themeToggleBtn:hover .themeIcon {
+	transform: scale(
+		1.2
+	); /* Agranda el icono al pasar el ratón por encima del botón */
 }
 
 .registerLink {

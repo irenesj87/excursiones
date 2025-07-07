@@ -59,15 +59,12 @@ function PaginatedListDisplayComponent({
 	const mdCols = itemsPerPage > 1 ? 2 : 1;
 
 	return (
-		<Card className={`${styles.listCard} ${cardClassName}`}>
+		<Card className={`${styles.listCard} ${cardClassName} h-100 d-flex flex-column`}>
 			{cardHeader && <Card.Header className={styles.cardHeader}>{cardHeader}</Card.Header>}
-			<Card.Body className={styles.cardBody}>
-				<div>
+			<Card.Body className={`${styles.cardBody} d-flex flex-column flex-grow-1`}>
+				<div className="flex-grow-1 d-flex flex-column">
 					{isLoading && (
-						<DelayedFallback
-							delay={300}
-							className="text-center d-flex flex-column justify-content-center align-items-center"
-						>
+						<DelayedFallback delay={300} className="text-center">
 							{/* El Spinner es ahora puramente visual y se oculta de los lectores de pantalla.
 							    Su rol implícito de "status" no será anunciado, evitando redundancia con <output>. */}
 							<Spinner animation="border" aria-hidden="true" />
@@ -81,13 +78,13 @@ function PaginatedListDisplayComponent({
 					)}
 
 					{error && !isLoading && (
-						<div className="d-flex flex-column justify-content-center align-items-center h-100">
+						<div className="d-flex flex-column justify-content-center align-items-center flex-grow-1">
 							<Alert variant="danger">{error || errorMessage}</Alert>
 						</div>
 					)}
 
 					{!isLoading && !error && (
-						<>
+						<div className="d-flex flex-column flex-grow-1">
 							{data.length > 0 ? (
 								<Row xs={1} md={mdCols} className="g-3">
 									{currentItemsToDisplay.map((item) => (
@@ -97,11 +94,11 @@ function PaginatedListDisplayComponent({
 									))}
 								</Row>
 							) : (
-								<div className="d-flex flex-column justify-content-center align-items-center h-100">
+								<div className="d-flex flex-column justify-content-center align-items-center flex-grow-1">
 									<p className={styles.noItemsMessage}>{noItemsMessage}</p>
 								</div>
 							)}
-						</>
+						</div>
 					)}
 				</div>
 

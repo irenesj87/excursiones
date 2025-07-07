@@ -4,7 +4,8 @@
 	flex-grow: 1; /* Ocupa el espacio vertical disponible */
 	padding: 2rem;
 	margin-top: 2rem;
-	background-color: #f8f9fa; /* Un fondo suave para destacar (gris claro de Bootstrap) */
+	background-color: white;
+	border: 1px solid var(--bs-border-color);
 	border-radius: 0.5rem;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
@@ -13,7 +14,6 @@
 	margin-top: 0; /* Reseteamos el margen superior, lo controla el contenedor */
 	margin-bottom: 2rem; /* Más espacio debajo del título */
 	padding-bottom: 0;
-	border-bottom: none; /* Quitamos el borde inferior para un look más limpio */
 	color: var(--heading-color);
 	font-size: 1.6rem;
 	font-weight: bold;
@@ -33,19 +33,22 @@
 .primaryMessage {
 	font-size: 1.4rem;
 	font-weight: 600;
-	color: var(--bs-body-color); /* Color principal del texto para el mensaje principal */
+	/* Usamos la variable de tema para el color principal del texto. */
+	color: var(--text-primary);
 	margin-bottom: 0;
 }
 
 .secondaryMessage {
 	font-size: 1rem;
-	color: var(--bs-secondary-color); /* Color secundario para el texto de ayuda */
+	/* Usamos la variable de tema para el color secundario. */
+	color: var(--text-secondary);
 	margin-bottom: 0;
 }
 
 .messageIcon {
 	font-size: 3rem; /* Hacemos el icono más grande para que destaque */
-	color: var(--bs-secondary-color); /* Color consistente con el texto secundario */
+	/* Usamos la variable de tema para que el icono coincida con el texto secundario. */
+	color: var(--text-secondary);
 	margin-bottom: 0.5rem; /* Espacio extra debajo del icono */
 }
 

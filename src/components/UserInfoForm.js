@@ -206,7 +206,7 @@ function UserInfoForm() {
 						<Row className="justify-content-center justify-content-sm-end gx-0">
 							{/* gx-0 para eliminar los "gutters" (espacios entre columnas) si no son necesarios */}
 							<Col xs={12} sm="auto">
-								<Button onClick={startEdit} className="w-100">
+								<Button onClick={startEdit} className={`${styles.editButton} w-100`}>
 									Editar
 								</Button>
 							</Col>
@@ -219,12 +219,12 @@ function UserInfoForm() {
 							{/* gx-2 para añadir espaciado horizontal entre columnas */}
 							{/* En xs, los botones ocupan el ancho completo y se apilan. En sm+, se muestran en línea. */}
 							<Col xs={12} sm="auto" className="mb-2 mb-sm-0">
-								<Button variant="danger" onClick={cancelEdit} className="w-100">
+								<Button variant="danger" onClick={cancelEdit} className={`${styles.cancelButton} w-100`}>
 									Cancelar
 								</Button>
 							</Col>
 							<Col xs={12} sm="auto">
-								<Button variant="success" onClick={saveEdit} className="w-100">
+								<Button variant="success" onClick={saveEdit} className={`${styles.saveButton} w-100`}>
 									Guardar
 								</Button>
 							</Col>
