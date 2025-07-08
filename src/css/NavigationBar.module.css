@@ -4,11 +4,13 @@
 
 .themeToggleBtn {
 	background-color: transparent;
-	/* Eliminamos la transición del fondo ya que no debe cambiar */
-	transition: border-color 0.2s ease, color 0.2s ease;
-	color: inherit;
+	transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+	color: var(--theme-toggle-btn-color);
 	padding: 6px 8px; /* Aumentamos el padding para que el botón no se vea tan apretado */
-	border: none;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	border: 1px solid var(--theme-toggle-btn-border-color);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -20,16 +22,13 @@
 	align-items: center;
 	justify-content: center;
 	font-size: 1.3rem; /* Tamaño base del icono */
-	transition: transform 0.2s ease-in-out; /* Transición suave para el escalado */
+
 }
 
 .themeToggleBtn:hover {
-	/* Anulamos el cambio de color de fondo que aplica Bootstrap por defecto */
-	color: inherit;
-	background-color: transparent;
-}
-
-.themeToggleBtn:hover .themeIcon {
+	background-color: var(--theme-toggle-btn-bg-hover);
+	color: var(--theme-toggle-btn-color); /* Mantenemos el color del icono */
+	border-color: var(--theme-toggle-btn-border-color); /* Mantenemos el color del borde */
 	transform: scale(
 		1.2
 	); /* Agranda el icono al pasar el ratón por encima del botón */

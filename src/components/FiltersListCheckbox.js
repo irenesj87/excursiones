@@ -1,43 +1,48 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { selectFilter, unselectFilter } from "../slicers/filterSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleFilter } from "../slicers/filterSlice"; // Asumimos una acción 'toggleFilter' para simplicidad
+import "bootstrap/dist/css/bootstrap.css";
+import styles from "../css/FiltersListCheckbox.module.css";
 
-// Componente que controla la selección y deselección de los checkbox
+/** @typedef {import("../types").RootState} RootState */
+
+/**
+ * Componente que renderiza una única opción de filtro como una "píldora" interactiva.
+ * @param {{filterName: string, filter: string}} props
+ * @returns {React.ReactElement}
+ */
 function FiltersListCheckbox({ filterName, filter }) {
-	// Variable para saber si un checkbox está seleccionado o no
-	const [selected, setSelected] = useState(false);
-	const filterDispatch = useDispatch();
+	const dispatch = useDispatch();
 
-	// Función que cambia el estado del checkbox
-	const selectedCheckbox = () => {
-		setSelected(!selected);
+	// Obtenemos los filtros seleccionados para esta categoría (ej. 'area') desde Redux
+	const selectedFilters = useSelector(
+		/** @param {RootState} state */
+		(state) => state.filterReducer[filterName]
+	);
 
-		if (selected) {
-			// Si el checkbox está seleccionado, lo deselecciona
-			filterDispatch(
-				unselectFilter({
-					filterName: filterName,
-					filter: filter,
-				})
-			);
-		} else {
-			// Si no está seleccionado, lo selecciona
-			filterDispatch(
-				selectFilter({
-					filterName: filterName,
-					filter: filter,
-				})
-			);
-		}
+	// El filtro está seleccionado si su valor está incluido en el array del estado de Redux
+	const isChecked = selectedFilters.includes(filter);
+
+	const handleToggle = () => {
+		// Despachamos una única acción para añadir o quitar el filtro
+		dispatch(toggleFilter({ filterType: filterName, value: filter }));
 	};
 
+	// Creamos un ID único para la accesibilidad del input y el label
+	const id = `filter-${filterName}-${filter.replace(/\s+/g, "-")}`;
+
 	return (
-		<li>
-			<label htmlFor={filter}>
-				<input type="checkbox" id={filter} onChange={selectedCheckbox} />{" "}
+		<>
+			<input
+				type="checkbox"
+				id={id}
+				className={styles.hiddenCheckbox}
+				checked={isChecked}
+				onChange={handleToggle}
+			/>
+			<label htmlFor={id} className={styles.filterLabel}>
 				{filter}
 			</label>
-		</li>
+		</>
 	);
 }
 

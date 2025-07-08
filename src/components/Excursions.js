@@ -1,10 +1,10 @@
 import { memo, useMemo, useCallback } from "react";
-import { Row, Col, Spinner } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { BsBinoculars } from "react-icons/bs";
 import { updateUser } from "../slicers/loginSlice";
-import ExcursionCard from "./ExcursionCard";
-import DelayedFallback from "./DelayedFallback";
+import ExcursionCard from "components/ExcursionCard";
+import ExcursionCardSkeleton from "./ExcursionCardSkeleton";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Excursions.module.css";
 
@@ -84,13 +84,24 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	// Si se están cargando los datos de las excursiones, mostrar el spinner
 	if (isLoading) {
 		return (
-			<DelayedFallback
-				delay={300}
-				className={`${styles.excursionsContainer} ${styles.centeredStatus} contentPane`}
-			>
-				<Spinner animation="border" aria-hidden="true" />
-				<output className="mt-3 fw-bold">Cargando excursiones...</output>
-			</DelayedFallback>
+			<div className={`${styles.excursionsContainer} contentPane`}>
+				<h2 className={styles.title}>Próximas excursiones</h2>
+				<Row className="gx-4 gy-5" aria-label="Cargando excursiones...">
+					{/* Mostramos 8 placeholders para dar una idea de la estructura en diferentes tamaños de pantalla */}
+					{Array.from({ length: 3 }).map((_, index) => (
+						<Col
+							xs={12}
+							md={6}
+							lg={4}
+							xl={3}
+							key={`skeleton-card-${index}`}
+							className="d-flex"
+						>
+							<ExcursionCardSkeleton isLoggedIn={isLoggedIn} />
+						</Col>
+					))}
+				</Row>
+			</div>
 		);
 	}
 
@@ -133,7 +144,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	return (
 		<div className={`${styles.excursionsContainer} contentPane`}>
 			<h2 className={styles.title}>Próximas excursiones</h2>
-			{/* Usamos gy-5 para el espaciado vertical, es más limpio que márgenes individuales */}
+			{/* La fila simplemente distribuye las tarjetas; el contenedor padre se encarga de la altura. */}
 			<Row className="gx-4 gy-5">{excursionComponents}</Row>
 		</div>
 	);

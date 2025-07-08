@@ -29,8 +29,21 @@ function SearchBar({ setExcursions, onFetchStart, onFetchEnd, id }) {
 		// Llama a la función onFetchStart si se proporcionó, para indicar que la carga de excursiones ha comenzado.
 		onFetchStart?.();
 		try {
-			// Construye la URL para la API con los parámetros de búsqueda y filtros actuales.
-			const url = `http://localhost:3001/excursions?q=${search}&area=${area}&difficulty=${difficulty}&time=${time}`;
+			// Construye los parámetros de la URL de forma segura.
+			// URLSearchParams se encarga de codificar los valores correctamente.
+			const params = new URLSearchParams();
+
+			// Añade el término de búsqueda si existe.
+			if (search) {
+				params.append("q", search);
+			}
+			// Añade cada filtro seleccionado. Para los arrays, se añade una entrada por cada valor.
+			// Esto genera una URL como: &area=Picos%20de%20Europa&area=Pirineos
+			area.forEach((value) => params.append("area", value));
+			difficulty.forEach((value) => params.append("difficulty", value));
+			time.forEach((value) => params.append("time", value));
+
+			const url = `http://localhost:3001/excursions?${params.toString()}`;
 			const response = await fetch(url);
 			// Si la respuesta del servidor no es exitosa (ej. error 404 o 500), lanza un error.
 			if (!response.ok) {

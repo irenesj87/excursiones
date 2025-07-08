@@ -238,15 +238,21 @@ const Layout = () => {
 			/>
 			{/* El elemento <main> es la segunda fila del grid y se expande automáticamente. */}
 			<main className={styles.mainContentWrapper}>
-				<Container fluid>
-					<Row className="justify-content-start">
+				<Container fluid className="d-flex flex-column flex-grow-1">
+					<Row className="justify-content-start flex-grow-1 align-items-stretch">
 						<Routes>
 							{/* Define la ruta por defecto */}
 							<Route
 								path="/"
 								element={
 									<>
-										<Col xs={12} md={4} lg={3} xl={2} className="mb-3 mb-md-0">
+										<Col
+											xs={12}
+											md={4}
+											lg={3}
+											xl={2}
+											className="mb-3 mb-md-0"
+										>
 											<Filters />
 										</Col>
 										<Col

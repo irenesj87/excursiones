@@ -1,29 +1,57 @@
-.customAccordion {
-	padding-top: 15px;
+/* Contenedor principal de todos los filtros */
+.filtersContainer {
+	margin-top: 2rem;
+	padding: 1rem;
+	background-color: var(--filter-container-bg);
+	border: 1px solid var(--border-color-light);
+	border-radius: 0.5rem;
+	box-shadow: var(--filter-container-shadow);
 }
 
-/* Estilo para la cabecera del acordeón */
-.customAccordionHeader button {
-	font-weight: 450;
-	font-size: 1.1rem;
+/* Cabecera con el título "Filtros" y el botón "Limpiar" */
+.header {
 	display: flex;
-	/* Poner esto permite utilizar las propiedades flexbox para controlar el posicionamiento de sus hijos
-	con 'align-items' y 'justify-content' */
 	align-items: center;
 	justify-content: space-between;
+	margin-bottom: 1.5rem;
+	padding-bottom: 0.75rem;
+	border-bottom: 1px solid var(--border-color-light);
 }
 
-/* Añade un margen a la derecha del icono */
-.customAccordionHeader button svg {
-	margin-right: 10px;
+/* Título principal "Filtros" */
+.title {
+	font-size: 1.25rem;
+	font-weight: 600;
+	margin: 0;
 }
 
-/* Estilo para la cabecera cuando el item está abierto (activo) */
-.customAccordionHeader button:not(.collapsed) {
-	box-shadow: none;
+/* Botón para limpiar los filtros */
+.clearButton {
+	font-size: 0.9rem;
+	font-weight: 500;
+	text-decoration: none;
+	color: var(--filter-clear-btn-color);
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+	padding: 0.25rem 0.5rem;
 }
 
-/* Estilo para el cuerpo del acordeón */
-.customAccordionBody {
-	padding: 1rem 1.25rem;
+.clearButton:hover {
+	color: var(--filter-clear-btn-color-hover);
+}
+
+/* Cada una de las secciones de filtros (Zona, Dificultad, etc.) */
+.filterSection:not(:last-child) {
+	margin-bottom: 1.75rem;
+}
+
+/* Título de cada sección de filtro */
+.filterTitle {
+	font-size: 1rem;
+	font-weight: 600;
+	margin-bottom: 1rem;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
 }

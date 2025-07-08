@@ -117,6 +117,23 @@ html.dark body {
 	--excursion-card-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 	--excursion-card-shadow-hover: 0 10px 20px rgba(0, 0, 0, 0.4);
 
+	/* --- Variables para Filtros --- */
+	--filter-container-bg: var(--surface-color-dark);
+	--filter-container-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+	--filter-pill-bg: rgba(255, 255, 255, 0.08);
+	--filter-pill-text: var(--text-color-dark);
+	--filter-pill-border: rgba(255, 255, 255, 0.15);
+	--filter-pill-bg-hover: rgba(255, 255, 255, 0.15);
+	--filter-pill-border-hover: rgba(255, 255, 255, 0.25);
+	--filter-pill-shadow-checked: 0 2px 8px rgba(0, 0, 0, 0.4);
+	--filter-clear-btn-color: var(--subtle-text-color-dark);
+	--filter-clear-btn-color-hover: #ff8a80; /* Un rojo claro y accesible para el hover */
+
+	/* --- Variables para Botón de Tema --- */
+	--theme-toggle-btn-color: var(--text-color-dark);
+	--theme-toggle-btn-border-color: var(--border-color-dark);
+	--theme-toggle-btn-bg-hover: rgba(255, 255, 255, 0.1);
+
 	/* --- Estilos para la barra de navegación --- */
 	.customNavbar {
 		background-color: var(--background-color-dark);

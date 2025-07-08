@@ -1,15 +1,25 @@
 import { useState, useEffect } from "react";
-import FiltersListCheckbox from "./FiltersListCheckbox";
+import FiltersListCheckbox from "components/FiltersListCheckbox";
+import FilterPillSkeleton from "components/FilterPillSkeleton";
+import FilterError from "components/FilterError";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/FiltersList.module.css";
+
+// Define un tiempo mínimo de visualización para el esqueleto de carga para evitar parpadeos.
+const MIN_LOADING_TIME = 500; // 500ms
 
 function FiltersList({ filterName }) {
 	// Estado que almacena la lista de filtros obtenidos del servidor.
 	const [arrayFilters, setArrayFilters] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
+	const [error, setError] = useState(null);
 
 	// useEffect que saca los filtros del servidor según el tipo de filtro (area, difficulty, time)
 	useEffect(() => {
 		const fetchData = async () => {
+			const startTime = Date.now(); // Registra el tiempo de inicio
+			setIsLoading(true);
+			setError(null);
 			try {
 				const url = `http://localhost:3001/filters?type=${filterName}`;
 				/** @type {RequestInit} */
@@ -21,23 +31,53 @@ function FiltersList({ filterName }) {
 
 				const response = await fetch(url, options);
 				if (!response.ok) {
-					throw new Error("HTTP error " + response.status);
+					throw new Error(`Error HTTP ${response.status}`);
 				}
 				const data = await response.json();
 				setArrayFilters(data);
-			} catch (error) {
-				console.log(error);
+			} catch (err) {
+				console.error(`Error al cargar los filtros para "${filterName}":`, err);
+				setError(err);
+			} finally {
+				const elapsedTime = Date.now() - startTime;
+				const remainingTime = MIN_LOADING_TIME - elapsedTime;
+
+				if (remainingTime > 0) {
+					// Si la carga fue muy rápida, espera el tiempo restante para completar el mínimo.
+					setTimeout(() => setIsLoading(false), remainingTime);
+				} else {
+					// Si la carga tardó más que el mínimo, oculta el esqueleto inmediatamente.
+					setIsLoading(false);
+				}
 			}
 		};
 
 		fetchData();
 	}, [filterName]);
 
-	// Renderiza una lista de checkboxes para cada filtro.
+	if (isLoading) {
+		return (
+			<ul className={styles.filtersGrid}>
+				{/* Mostramos 3 esqueletos para dar una idea del contenido que se cargará */}
+				{[...Array(3)].map((_, index) => (
+					<li key={`skeleton-pill-${index}`}>
+						<FilterPillSkeleton />
+					</li>
+				))}
+			</ul>
+		);
+	}
+
+	if (error) {
+		return <FilterError />;
+	}
+
 	return (
-		<ul className={styles.listInfo}>
-			{arrayFilters.map((i) => (
-				<FiltersListCheckbox key={i} filterName={filterName} filter={i} />
+		<ul className={styles.filtersGrid}>
+			{arrayFilters.map((filterValue) => (
+				<li key={filterValue}>
+					<FiltersListCheckbox filterName={filterName} filter={filterValue} />
+				</li>
 			))}
 		</ul>
 	);

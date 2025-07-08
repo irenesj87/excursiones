@@ -1,0 +1,9 @@
+.skeletonCard {
+	background-color: var(--excursion-card-bg);
+	border-color: var(--excursion-card-border-color);
+	box-shadow: var(--excursion-card-shadow);
+}
+
+/* Los placeholders de react-bootstrap ya tienen su propia animación de "glow",
+   así que no necesitamos definir la animación 'pulse' ni los estilos para cada
+   elemento individual. */

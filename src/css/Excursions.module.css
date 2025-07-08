@@ -2,12 +2,11 @@
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1; /* Ocupa el espacio vertical disponible */
-	padding: 2rem;
-	margin-top: 2rem;
-	background-color: white;
-	border: 1px solid var(--bs-border-color);
+	padding: 1rem 2rem 2rem; /* Ajustamos el padding para que el contenido se alinee visualmente */
+	background-color: var(--filter-container-bg); /* Usamos la misma variable que los filtros */
+	border: 1px solid var(--border-color-light); /* Usamos una variable de tema para el borde */
 	border-radius: 0.5rem;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+	box-shadow: var(--filter-container-shadow); /* Usamos la misma variable que los filtros */
 }
 
 .title {

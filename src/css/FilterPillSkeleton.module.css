@@ -1,0 +1,18 @@
+.skeletonPill {
+	width: 100px; /* Ancho aproximado de una píldora */
+	height: 38px; /* Altura de una píldora (padding + font-size + border) */
+	background-color: var(--filter-pill-bg);
+	border-radius: 50px;
+	animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Animación de pulso para el esqueleto de carga */
+@keyframes pulse {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
+	}
+}

@@ -1,0 +1,43 @@
+/* Oculta la casilla de verificación real, pero la mantiene accesible para lectores de pantalla y navegación por teclado */
+.hiddenCheckbox {
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
+	pointer-events: none;
+}
+
+/* Estilo de la píldora (la etiqueta que se ve) */
+.filterLabel {
+	display: inline-block;
+	padding: 0.5rem 1rem;
+	font-size: 0.9rem;
+	font-weight: 500;
+	color: var(--filter-pill-text);
+	background-color: var(--filter-pill-bg);
+	border: 1px solid var(--filter-pill-border);
+	border-radius: 50px; /* Bordes redondeados para el efecto píldora */
+	cursor: pointer;
+	user-select: none; /* Evita que el texto se pueda seleccionar */
+	text-align: center;
+}
+
+/* Efecto al pasar el ratón por encima */
+.filterLabel:hover {
+	background-color: var(--filter-pill-bg-hover);
+	border-color: var(--filter-pill-border-hover);
+}
+
+/* Estilo para la píldora cuando la casilla está seleccionada */
+.hiddenCheckbox:checked + .filterLabel {
+	background-color: var(--primary-color);
+	color: #fff; /* Texto blanco */
+	border-color: var(--primary-color);
+	box-shadow: var(--filter-pill-shadow-checked);
+}
+
+/* Estilo para el foco (accesibilidad con teclado) */
+.hiddenCheckbox:focus-visible + .filterLabel {
+	outline: 2px solid var(--primary-color);
+	outline-offset: 2px;
+}
