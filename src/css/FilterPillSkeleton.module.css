@@ -1,5 +1,5 @@
 .skeletonPill {
-	width: 100px; /* Ancho aproximado de una píldora */
+	width: 100%; /* Hacemos que ocupe el 100% del contenedor li */
 	height: 38px; /* Altura de una píldora (padding + font-size + border) */
 	background-color: var(--filter-pill-bg);
 	border-radius: 50px;

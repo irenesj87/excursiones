@@ -1,9 +1,53 @@
 .skeletonCard {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
 	background-color: var(--excursion-card-bg);
 	border-color: var(--excursion-card-border-color);
 	box-shadow: var(--excursion-card-shadow);
 }
 
-/* Los placeholders de react-bootstrap ya tienen su propia animación de "glow",
-   así que no necesitamos definir la animación 'pulse' ni los estilos para cada
-   elemento individual. */
+/*
+  Estrategia Mobile-First:
+  1. El bloque para móvil (`placeholderMobile`) se muestra por defecto.
+  2. Los bloques para pantallas más grandes están ocultos.
+  3. Usamos media queries con `min-width` para mostrar el bloque correcto
+     y ocultar el anterior a medida que la pantalla crece.
+*/
+
+.placeholderTablet,
+.placeholderDesktop,
+.placeholderDesktopLarge {
+	display: none;
+}
+
+/* Breakpoint para tabletas (md+) */
+@media (min-width: 768px) {
+	.placeholderMobile {
+		display: none;
+	}
+	.placeholderTablet {
+		display: block;
+	}
+}
+
+/* Breakpoint para escritorio (xl+) */
+@media (min-width: 1200px) {
+	.placeholderTablet {
+		display: none;
+	}
+	.placeholderDesktop {
+		display: block;
+	}
+}
+
+/* Breakpoint para escritorio grande (xxl+) */
+@media (min-width: 1400px) {
+	.placeholderDesktop {
+		display: none;
+	}
+	.placeholderDesktopLarge {
+		display: block;
+	}
+}

@@ -9,7 +9,8 @@
 
 /* Estilo de la píldora (la etiqueta que se ve) */
 .filterLabel {
-	display: inline-block;
+	display: block; /* Cambiamos a block para que ocupe todo el ancho disponible */
+	width: 100%; /* Asegura que la píldora se estire */
 	padding: 0.5rem 1rem;
 	font-size: 0.9rem;
 	font-weight: 500;

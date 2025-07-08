@@ -40,51 +40,70 @@ function ExcursionCardSkeleton({ isLoggedIn = false }) {
 						>
 							{/* 
 							  Usamos placeholders responsivos para simular el reflujo del texto en diferentes tamaños de pantalla.
-							  El número de líneas de placeholder se ajusta para que la altura del esqueleto coincida mejor
-							  con la altura de una tarjeta real en cada breakpoint, evitando así el "salto" del layout.
-							  - xs (1 columna): Más líneas.
-							  - md (2 columnas): Menos líneas.
-							  - lg (3 columnas): Aún menos líneas.
-							  - xl (4 columnas): El menor número de líneas.
+							  El número de líneas se ajusta para que la altura del esqueleto coincida con la de una tarjeta real
+							  en cada breakpoint, evitando el "salto" del layout.
+							  - Móvil (<md): 4 líneas.
+							  - Tableta (md, lg): 7 líneas.
+							  - Escritorio (xl): 4 líneas.
+							  - Escritorio grande (xxl): 3 líneas.
 							*/}
 							<span className="d-block d-md-none">
-								{/* 7 líneas para móvil */}
-								<Placeholder xs={12} /> <Placeholder xs={12} /> <Placeholder xs={12} /> <Placeholder xs={12} /> <Placeholder xs={12} /> <Placeholder xs={12} /> <Placeholder xs={4} />
+								{/* 4 líneas para móvil */}
+								<Placeholder xs={12} /> <Placeholder xs={12} />
+								<Placeholder xs={12} /> <Placeholder xs={4} />
 							</span>
-							<span className="d-none d-md-block d-lg-none">
-								{/* 6 líneas para tabletas en vertical */}
-								<Placeholder xs={12} /> <Placeholder xs={12} /> <Placeholder xs={12} /> <Placeholder xs={12} /> <Placeholder xs={12} /> <Placeholder xs={8} />
+							<span className="d-none d-md-block d-xl-none">
+								{/* 7 líneas para tabletas (md y lg) */}
+								<Placeholder xs={12} /> <Placeholder xs={12} />
+								<Placeholder xs={12} /> <Placeholder xs={12} />
+								<Placeholder xs={12} /> <Placeholder xs={12} />{" "}
+								<Placeholder xs={8} />
 							</span>
-							<span className="d-none d-lg-block d-xl-none">
-								{/* 5 líneas para tabletas en horizontal */}
-								<Placeholder xs={12} /> <Placeholder xs={12} /> <Placeholder xs={12} /> <Placeholder xs={12} /> <Placeholder xs={6} />
+							<span className="d-none d-xl-block d-xxl-none">
+								{/* 4 líneas para escritorio (xl) */}
+								<Placeholder xs={12} /> <Placeholder xs={12} />
+								<Placeholder xs={12} /> <Placeholder xs={10} />
 							</span>
-							<span className="d-none d-xl-block">
-								{/* 4 líneas para escritorio */}
-								<Placeholder xs={12} /> <Placeholder xs={12} /> <Placeholder xs={12} /> <Placeholder xs={10} />
+							<span className="d-none d-xxl-block">
+								{/* 3 líneas para escritorio grande (xxl) */}
+								<Placeholder xs={12} /> <Placeholder xs={12} />
+								<Placeholder xs={8} />
 							</span>
 						</Placeholder>
 						{/* Placeholder para el botón "Leer más", que ocupa espacio en las tarjetas con texto largo */}
 						<Placeholder animation="glow">
-							<Placeholder xs={3} className="mt-1" />
+							<Placeholder xs={3} className="mt-1 mb-1" />
 						</Placeholder>
 					</div>
 					{/* Replicamos la estructura de los detalles (icono + texto) para mayor precisión */}
 					<div className={`${cardStyles.excursionDetails} mt-3`}>
-						<Placeholder as="div" animation="glow" className={cardStyles.detailItem}>
+						<Placeholder
+							as="div"
+							animation="glow"
+							className={cardStyles.detailItem}
+						>
 							<Placeholder xs={1} size="lg" /> {/* Placeholder para el icono */}
-							<Placeholder xs={5} />{" "}
+							<Placeholder xs={5} />
 							{/* Placeholder para el texto (ej. "Dificultad: Media") */}
 						</Placeholder>
-						<Placeholder as="div" animation="glow" className={cardStyles.detailItem}>
+						<Placeholder
+							as="div"
+							animation="glow"
+							className={cardStyles.detailItem}
+						>
 							<Placeholder xs={1} size="lg" /> {/* Placeholder para el icono */}
-							<Placeholder xs={5} /> {/* Placeholder para el texto (ej. "Tiempo: 4h") */}
+							<Placeholder xs={5} />
+							{/* Placeholder para el texto (ej. "Tiempo: 4h") */}
 						</Placeholder>
 					</div>
 				</div>
 				{isLoggedIn && (
 					<div className="mt-auto pt-3 border-top">
-						<Placeholder.Button variant="primary" xs={5} className="float-end" />
+						<Placeholder.Button
+							variant="primary"
+							xs={5}
+							className="float-end"
+						/>
 					</div>
 				)}
 			</Card.Body>

@@ -58,9 +58,9 @@ function FiltersList({ filterName }) {
 	if (isLoading) {
 		return (
 			<ul className={styles.filtersGrid}>
-				{/* Mostramos 3 esqueletos para dar una idea del contenido que se cargará */}
-				{[...Array(3)].map((_, index) => (
-					<li key={`skeleton-pill-${index}`}>
+				{/* Mostramos 4 esqueletos para simular mejor el contenido real y evitar saltos de layout */}
+				{[...Array(4)].map((_, index) => (
+					<li key={`skeleton-pill-${index}`} className={styles.filterItem}>
 						<FilterPillSkeleton />
 					</li>
 				))}
@@ -75,7 +75,7 @@ function FiltersList({ filterName }) {
 	return (
 		<ul className={styles.filtersGrid}>
 			{arrayFilters.map((filterValue) => (
-				<li key={filterValue}>
+				<li key={filterValue} className={styles.filterItem}>
 					<FiltersListCheckbox filterName={filterName} filter={filterValue} />
 				</li>
 			))}
