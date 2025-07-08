@@ -38,17 +38,8 @@ function ExcursionCardSkeleton({ isLoggedIn = false }) {
 							animation="glow"
 							className={cardStyles.excursionDescription}
 						>
-							{/* 
-							  Usamos placeholders responsivos para simular el reflujo del texto en diferentes tamaños de pantalla.
-							  El número de líneas se ajusta para que la altura del esqueleto coincida con la de una tarjeta real
-							  en cada breakpoint, evitando el "salto" del layout.
-							  - Móvil (<md): 4 líneas.
-							  - Tableta (md, lg): 7 líneas.
-							  - Escritorio (xl): 4 líneas.
-							  - Escritorio grande (xxl): 3 líneas.
-							*/}
 							<span className="d-block d-md-none">
-								{/* 4 líneas para móvil */}
+								{/* 4 líneas para xs */}
 								<Placeholder xs={12} /> <Placeholder xs={12} />
 								<Placeholder xs={12} /> <Placeholder xs={4} />
 							</span>
