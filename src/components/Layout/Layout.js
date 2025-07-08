@@ -7,7 +7,8 @@ import React, {
 	memo,
 	useReducer,
 } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { FiFilter } from "react-icons/fi";
+import { Container, Row, Col, Button, Offcanvas } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { verifyToken } from "../../services/authService";
@@ -80,6 +81,12 @@ const LazyRouteWrapper = ({ PageComponent }) => (
  */
 const Layout = () => {
 	const loginDispatch = useDispatch();
+	// Estado para controlar la visibilidad del menú Offcanvas de filtros en móvil.
+	const [showFilters, setShowFilters] = useState(false);
+
+	// Funciones para abrir y cerrar el Offcanvas de filtros.
+	const handleCloseFilters = () => setShowFilters(false);
+	const handleShowFilters = () => setShowFilters(true);
 
 	/**
 	 * useReducer: Es un hook de React, alternativa a useSate, que se usa cuando el estado es más complejo y tiene varias
@@ -246,23 +253,45 @@ const Layout = () => {
 								path="/"
 								element={
 									<>
+										{/* Columna de filtros para vista de escritorio (visible a partir de 'md') */}
 										<Col
-											xs={12}
 											md={4}
 											lg={3}
 											xl={2}
-											className="mb-3 mb-md-0"
+											className="d-none d-md-block ps-md-0 pe-md-0 border-end"
 										>
 											<Filters />
 										</Col>
+										{/* Contenido principal que incluye el botón para móvil y la lista de excursiones */}
 										<Col
 											xs={12}
 											md={8}
 											lg={9}
 											xl={10}
-											className="d-flex flex-column"
+											className="d-flex flex-column position-relative"
 										>
+											{/* Botón para mostrar filtros en móvil (visible solo hasta 'md') */}
+											<div className="d-grid d-md-none mt-3 mb-1">
+												<Button
+													variant="outline-secondary"
+													onClick={handleShowFilters}
+												>
+													<FiFilter className="me-2" />
+													<span>Mostrar Filtros</span>
+												</Button>
+											</div>
 											{excursionsContent}
+											{/* Menú Offcanvas para los filtros en vista móvil. Es independiente del de navegación. */}
+											<Offcanvas
+												show={showFilters}
+												onHide={handleCloseFilters}
+												placement="start"
+												className="d-md-none" // Asegura que el componente solo se active en vistas móviles
+											>
+												<Offcanvas.Body>
+													<Filters />
+												</Offcanvas.Body>
+											</Offcanvas>
 										</Col>
 									</>
 								}

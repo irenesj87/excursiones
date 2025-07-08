@@ -1,11 +1,22 @@
-/* Contenedor principal de todos los filtros */
+/* Contenedor principal de todos los filtros.
+   Ocupará el 100% de la altura de la columna padre y proporcionará el fondo. */
 .filtersContainer {
-	margin-top: 2rem;
-	padding: 1rem;
 	background-color: var(--filter-container-bg);
-	border: 1px solid var(--border-color-light);
-	border-radius: 0.5rem;
-	box-shadow: var(--filter-container-shadow);
+	height: 100%; /* Asegura que el contenedor ocupe toda la altura de la columna padre */
+}
+
+/* Envoltorio interior que será "pegajoso" y permitirá el scroll. */
+.stickyWrapper {
+	position: -webkit-sticky;
+	position: sticky;
+	top: var(--navbar-height);
+	/* La altura máxima es la de la ventana menos la barra de navegación.
+	   Esto asegura que si los filtros son muy largos, el contenedor no se desborde
+	   y en su lugar muestre una barra de scroll. */
+	max-height: calc(100vh - var(--navbar-height));
+	overflow-y: auto;
+	/* El padding que antes estaba en el contenedor principal se mueve aquí. */
+	padding: 2rem 1rem 1rem;
 }
 
 /* Cabecera con el título "Filtros" y el botón "Limpiar" */

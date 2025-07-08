@@ -22,42 +22,44 @@ function Filters() {
 
 	return (
 		<div className={styles.filtersContainer}>
-			<header className={styles.header}>
-				<h2 className={styles.title}>Filtros</h2>
-				<Button
-					variant="link"
-					onClick={handleClearFilters}
-					className={styles.clearButton}
-					aria-label="Limpiar todos los filtros"
-				>
-					<FiX aria-hidden="true" />
-					<span>Limpiar</span>
-				</Button>
-			</header>
+			<div className={styles.stickyWrapper}>
+				<header className={styles.header}>
+					<h2 className={styles.title}>Filtros</h2>
+					<Button
+						variant="link"
+						onClick={handleClearFilters}
+						className={styles.clearButton}
+						aria-label="Limpiar todos los filtros"
+					>
+						<FiX aria-hidden="true" />
+						<span>Limpiar</span>
+					</Button>
+				</header>
 
-			<section className={styles.filterSection}>
-				<h3 className={styles.filterTitle}>
-					<FaMountainSun />
-					<span>Zona</span>
-				</h3>
-				<FiltersList filterName="area" />
-			</section>
+				<section className={styles.filterSection}>
+					<h3 className={styles.filterTitle}>
+						<FaMountainSun />
+						<span>Zona</span>
+					</h3>
+					<FiltersList filterName="area" />
+				</section>
 
-			<section className={styles.filterSection}>
-				<h3 className={styles.filterTitle}>
-					<GoGraph />
-					<span>Dificultad</span>
-				</h3>
-				<FiltersList filterName="difficulty" />
-			</section>
+				<section className={styles.filterSection}>
+					<h3 className={styles.filterTitle}>
+						<GoGraph />
+						<span>Dificultad</span>
+					</h3>
+					<FiltersList filterName="difficulty" />
+				</section>
 
-			<section className={styles.filterSection}>
-				<h3 className={styles.filterTitle}>
-					<MdAccessTimeFilled />
-					<span>Tiempo estimado</span>
-				</h3>
-				<FiltersList filterName="time" />
-			</section>
+				<section className={styles.filterSection}>
+					<h3 className={styles.filterTitle}>
+						<MdAccessTimeFilled />
+						<span>Tiempo estimado</span>
+					</h3>
+					<FiltersList filterName="time" />
+				</section>
+			</div>
 		</div>
 	);
 }

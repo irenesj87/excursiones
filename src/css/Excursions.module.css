@@ -1,12 +1,9 @@
 .excursionsContainer {
 	display: flex;
 	flex-direction: column;
-	flex-grow: 1; /* Ocupa el espacio vertical disponible */
-	padding: 1rem 2rem 2rem; /* Ajustamos el padding para que el contenido se alinee visualmente */
-	background-color: var(--filter-container-bg); /* Usamos la misma variable que los filtros */
-	border: 1px solid var(--border-color-light); /* Usamos una variable de tema para el borde */
-	border-radius: 0.5rem;
-	box-shadow: var(--filter-container-shadow); /* Usamos la misma variable que los filtros */
+	/* Añadimos los márgenes que antes proporcionaba la clase 'contentPane' para mantener el espaciado vertical. */
+	margin-top: 2rem;
+	margin-bottom: 2rem;
 }
 
 .title {

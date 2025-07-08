@@ -2,6 +2,9 @@
 /* --- ESTILOS GENERALES --- */
 /* ======================================== */
 :root {
+	/* --- Alturas y Tamaños Globales --- */
+	--navbar-height: 85px; /* Altura aproximada de la barra de navegación. Ajustar si cambia. */
+
 	/* --- Paleta principal --- */
 	--primary-color: #315036;
 	--accent-color: #c05600;
@@ -14,7 +17,7 @@
 	/* --- Colores de Fondo y Superficie --- */
 	--surface-color-dark: #404040;
 	--secondary-accent-dark: #4a3b33;
-	--background-color-light: #f9f9f8;
+	--background-color-light: #ffffff;
 	--background-color-dark: #1e1e1e;
 
 	/* --- Colores de Borde --- */

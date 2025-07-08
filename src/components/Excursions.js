@@ -84,7 +84,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	// Si se están cargando los datos de las excursiones, mostrar el spinner
 	if (isLoading) {
 		return (
-			<div className={`${styles.excursionsContainer} contentPane`}>
+			<div className={`${styles.excursionsContainer}`}>
 				<h2 className={styles.title}>Próximas excursiones</h2>
 				<Row className="gx-4 gy-5" aria-label="Cargando excursiones...">
 					{/* Mostramos 8 placeholders para dar una idea de la estructura en diferentes tamaños de pantalla */}
@@ -109,7 +109,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	if (error) {
 		return (
 			<div
-				className={`${styles.excursionsContainer} ${styles.centeredStatus} contentPane`}
+				className={`${styles.excursionsContainer} ${styles.centeredStatus}`}
 			>
 				<output className={styles.messageNotFound}>
 					{error.message ||
@@ -125,7 +125,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	if (excursionComponents.length === 0) {
 		return (
 			<div
-				className={`${styles.excursionsContainer} ${styles.centeredStatus} contentPane`}
+				className={`${styles.excursionsContainer} ${styles.centeredStatus}`}
 			>
 				<output className={styles.messageNotFound}>
 					<BsBinoculars className={styles.messageIcon} aria-hidden="true" />
@@ -142,7 +142,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 
 	// Si hay excursiones, se muestran.
 	return (
-		<div className={`${styles.excursionsContainer} contentPane`}>
+		<div className={styles.excursionsContainer}>
 			<h2 className={styles.title}>Próximas excursiones</h2>
 			{/* La fila simplemente distribuye las tarjetas; el contenedor padre se encarga de la altura. */}
 			<Row className="gx-4 gy-5">{excursionComponents}</Row>
