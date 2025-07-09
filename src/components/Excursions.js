@@ -1,11 +1,10 @@
-import { memo, useMemo, useCallback, useRef, useEffect } from "react";
+import { memo, useMemo, useCallback, useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { BsBinoculars } from "react-icons/bs";
 import { updateUser } from "../slicers/loginSlice";
 import ExcursionCard from "components/ExcursionCard";
 import ExcursionCardSkeleton from "./ExcursionCardSkeleton";
-import DelayedFallback from "./DelayedFallback";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Excursions.module.css";
 
@@ -26,16 +25,33 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	);
 	const loginDispatch = useDispatch();
 
-	// Usamos una ref para saber si es la primera carga.
-	// `useRef` persiste su valor entre renderizados sin causar un nuevo renderizado.
-	const hasLoadedOnce = useRef(false);
+	// Estado para las excursiones que se muestran en pantalla. Esto nos permite mantener
+	// los resultados antiguos visibles mientras se cargan los nuevos.
+	const [displayedExcursions, setDisplayedExcursions] = useState(excursionData);
+	// Estado para controlar la aparición retardada de los esqueletos de carga.
+	const [showSkeletons, setShowSkeletons] = useState(isLoading);
 
-	// Este efecto se ejecuta cada vez que `isLoading` cambia.
-	// Marcamos `hasLoadedOnce` como `true` una vez que la primera carga ha terminado (`isLoading` es `false`).
+	// Efecto para gestionar qué excursiones se muestran.
 	useEffect(() => {
+		// Si la carga ha terminado, actualizamos las excursiones visibles con los nuevos datos.
 		if (!isLoading) {
-			hasLoadedOnce.current = true;
+			setDisplayedExcursions(excursionData);
 		}
+	}, [excursionData, isLoading]);
+
+	// Efecto para gestionar la visibilidad de los esqueletos con un retardo.
+	useEffect(() => {
+		let timer;
+		if (isLoading) {
+			// Si empieza a cargar, esperamos 300ms antes de mostrar los esqueletos.
+			timer = setTimeout(() => {
+				setShowSkeletons(true);
+			}, 300);
+		} else {
+			// Si la carga termina, ocultamos los esqueletos inmediatamente.
+			setShowSkeletons(false);
+		}
+		return () => clearTimeout(timer); // Limpieza del temporizador.
 	}, [isLoading]);
 
 	const joinExcursion = useCallback(
@@ -71,7 +87,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 
 	const excursionComponents = useMemo(
 		() =>
-			excursionData.map((excursion) => {
+			displayedExcursions.map((excursion) => {
 				const isJoined = isLoggedIn && user?.excursions?.includes(excursion.id);
 				return (
 					<Col
@@ -91,39 +107,8 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 					</Col>
 				);
 			}),
-		[excursionData, isLoggedIn, user?.excursions, joinExcursion]
+		[displayedExcursions, isLoggedIn, user?.excursions, joinExcursion]
 	);
-
-	// Si se están cargando los datos de las excursiones, mostrar el spinner
-	if (isLoading) {
-		return (
-			<div className={styles.excursionsContainer}>
-				<h2 className={styles.title}>Próximas excursiones</h2>
-				<DelayedFallback
-					className="w-100 align-items-stretch"
-					// Si nunca ha cargado (`hasLoadedOnce` es false), mostramos los skeletons inmediatamente.
-					immediate={!hasLoadedOnce.current}
-				>
-					<Row className="gx-4 gy-5" aria-label="Cargando excursiones...">
-						{/* Mostramos 8 placeholders para dar una idea de la estructura en diferentes tamaños de pantalla */}
-						{Array.from({ length: 8 }).map((_, index) => (
-							<Col
-								xs={12}
-								md={6}
-								lg={4}
-								xl={3}
-								// eslint-disable-next-line react/no-array-index-key
-								key={`skeleton-card-${index}`}
-								className="d-flex"
-							>
-								<ExcursionCardSkeleton isLoggedIn={isLoggedIn} />
-							</Col>
-						))}
-					</Row>
-				</DelayedFallback>
-			</div>
-		);
-	}
 
 	// Si hay un error, mostrar un mensaje
 	if (error) {
@@ -137,10 +122,35 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 		);
 	}
 
+	// Si se deben mostrar los esqueletos de carga.
+	if (showSkeletons) {
+		return (
+			<div className={styles.excursionsContainer}>
+				<h2 className={styles.title}>Próximas excursiones</h2>
+				<Row className="gx-4 gy-5" aria-label="Cargando excursiones...">
+					{/* Mostramos 8 placeholders para dar una idea de la estructura */}
+					{Array.from({ length: 8 }).map((_, index) => (
+						<Col
+							xs={12}
+							md={6}
+							lg={4}
+							xl={3}
+							// eslint-disable-next-line react/no-array-index-key
+							key={`skeleton-card-${index}`}
+							className="d-flex"
+						>
+							<ExcursionCardSkeleton isLoggedIn={isLoggedIn} />
+						</Col>
+					))}
+				</Row>
+			</div>
+		);
+	}
+
 	/** Si llegamos aquí, no se está mostrando el spinner ni hay un error. Si no hay excursiones para mostrar, se muestra
 	 * el mensaje de "No encontrada"
 	 */
-	if (excursionComponents.length === 0) {
+	if (displayedExcursions.length === 0) {
 		return (
 			<div className={`${styles.excursionsContainer} ${styles.centeredStatus}`}>
 				<output className={styles.messageNotFound}>
