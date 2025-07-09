@@ -1,10 +1,11 @@
-import { memo, useMemo, useCallback } from "react";
+import { memo, useMemo, useCallback, useRef, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { BsBinoculars } from "react-icons/bs";
 import { updateUser } from "../slicers/loginSlice";
 import ExcursionCard from "components/ExcursionCard";
 import ExcursionCardSkeleton from "./ExcursionCardSkeleton";
+import DelayedFallback from "./DelayedFallback";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Excursions.module.css";
 
@@ -24,6 +25,18 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 		(state) => state.loginReducer
 	);
 	const loginDispatch = useDispatch();
+
+	// Usamos una ref para saber si es la primera carga.
+	// `useRef` persiste su valor entre renderizados sin causar un nuevo renderizado.
+	const hasLoadedOnce = useRef(false);
+
+	// Este efecto se ejecuta cada vez que `isLoading` cambia.
+	// Marcamos `hasLoadedOnce` como `true` una vez que la primera carga ha terminado (`isLoading` es `false`).
+	useEffect(() => {
+		if (!isLoading) {
+			hasLoadedOnce.current = true;
+		}
+	}, [isLoading]);
 
 	const joinExcursion = useCallback(
 		async (excursionId) => {
@@ -84,23 +97,30 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	// Si se están cargando los datos de las excursiones, mostrar el spinner
 	if (isLoading) {
 		return (
-			<div className={`${styles.excursionsContainer}`}>
+			<div className={styles.excursionsContainer}>
 				<h2 className={styles.title}>Próximas excursiones</h2>
-				<Row className="gx-4 gy-5" aria-label="Cargando excursiones...">
-					{/* Mostramos 8 placeholders para dar una idea de la estructura en diferentes tamaños de pantalla */}
-					{Array.from({ length: 3 }).map((_, index) => (
-						<Col
-							xs={12}
-							md={6}
-							lg={4}
-							xl={3}
-							key={`skeleton-card-${index}`}
-							className="d-flex"
-						>
-							<ExcursionCardSkeleton isLoggedIn={isLoggedIn} />
-						</Col>
-					))}
-				</Row>
+				<DelayedFallback
+					className="w-100 align-items-stretch"
+					// Si nunca ha cargado (`hasLoadedOnce` es false), mostramos los skeletons inmediatamente.
+					immediate={!hasLoadedOnce.current}
+				>
+					<Row className="gx-4 gy-5" aria-label="Cargando excursiones...">
+						{/* Mostramos 8 placeholders para dar una idea de la estructura en diferentes tamaños de pantalla */}
+						{Array.from({ length: 8 }).map((_, index) => (
+							<Col
+								xs={12}
+								md={6}
+								lg={4}
+								xl={3}
+								// eslint-disable-next-line react/no-array-index-key
+								key={`skeleton-card-${index}`}
+								className="d-flex"
+							>
+								<ExcursionCardSkeleton isLoggedIn={isLoggedIn} />
+							</Col>
+						))}
+					</Row>
+				</DelayedFallback>
 			</div>
 		);
 	}
@@ -108,9 +128,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	// Si hay un error, mostrar un mensaje
 	if (error) {
 		return (
-			<div
-				className={`${styles.excursionsContainer} ${styles.centeredStatus}`}
-			>
+			<div className={`${styles.excursionsContainer} ${styles.centeredStatus}`}>
 				<output className={styles.messageNotFound}>
 					{error.message ||
 						"Lo sentimos, ha ocurrido un error al cargar las excursiones."}
@@ -124,9 +142,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	 */
 	if (excursionComponents.length === 0) {
 		return (
-			<div
-				className={`${styles.excursionsContainer} ${styles.centeredStatus}`}
-			>
+			<div className={`${styles.excursionsContainer} ${styles.centeredStatus}`}>
 				<output className={styles.messageNotFound}>
 					<BsBinoculars className={styles.messageIcon} aria-hidden="true" />
 					<p className={styles.primaryMessage}>

@@ -1,3 +1,4 @@
+import React from "react";
 import { Card, Placeholder } from "react-bootstrap";
 import cardStyles from "../css/ExcursionCard.module.css"; // Reutilizamos el CSS de la tarjeta real
 import skeletonStyles from "../css/ExcursionCardSkeleton.module.css";
@@ -8,6 +9,28 @@ import skeletonStyles from "../css/ExcursionCardSkeleton.module.css";
  * @param {{ isLoggedIn?: boolean }} props
  */
 function ExcursionCardSkeleton({ isLoggedIn = false }) {
+	// Objeto de configuración para las líneas de la descripción en cada breakpoint.
+	// Esto centraliza la lógica y hace que sea más fácil de modificar.
+	const descriptionLineConfigs = {
+		xs: {
+			className: "d-block d-md-none",
+			lines: [12, 12, 12, 4], // 4 líneas para xs
+		},
+		md: {
+			className: "d-none d-md-block d-lg-none",
+			lines: [12, 12, 12, 12, 12, 8], // 6 líneas para md
+		},
+		lg: {
+			className: "d-none d-lg-block d-xl-none",
+			lines: [12, 12, 12, 12, 12, 12, 8], // 7 líneas para lg
+		},
+		xl: {
+			className: "d-none d-xl-block d-xxl-none",
+			lines: [12, 12, 12, 10], // 4 líneas para xl
+		},
+		xxl: { className: "d-none d-xxl-block", lines: [12, 12, 8] }, // 3 líneas para xxl
+	};
+
 	return (
 		<Card
 			className={`${skeletonStyles.skeletonCard} h-100 w-100`}
@@ -37,34 +60,19 @@ function ExcursionCardSkeleton({ isLoggedIn = false }) {
 							animation="glow"
 							className={cardStyles.excursionDescription}
 						>
-							<span className="d-block d-md-none">
-								{/* 4 líneas para xs */}
-								<Placeholder xs={12} /> <Placeholder xs={12} />
-								<Placeholder xs={12} /> <Placeholder xs={4} />
-							</span>
-							<span className="d-none d-md-block d-lg-none">
-								{/* 6 líneas para md) */}
-								<Placeholder xs={12} /> <Placeholder xs={12} />
-								<Placeholder xs={12} /> <Placeholder xs={12} />
-								<Placeholder xs={12} /> <Placeholder xs={8} />
-							</span>
-							<span className="d-none d-lg-block d-xl-none">
-								{/* 7 líneas para tabletas lg */}
-								<Placeholder xs={12} /> <Placeholder xs={12} />
-								<Placeholder xs={12} /> <Placeholder xs={12} />
-								<Placeholder xs={12} /> <Placeholder xs={12} />
-								<Placeholder xs={8} />
-							</span>
-							<span className="d-none d-xl-block d-xxl-none">
-								{/* 4 líneas para escritorio (xl) */}
-								<Placeholder xs={12} /> <Placeholder xs={12} />
-								<Placeholder xs={12} /> <Placeholder xs={10} />
-							</span>
-							<span className="d-none d-xxl-block">
-								{/* 3 líneas para escritorio grande (xxl) */}
-								<Placeholder xs={12} /> <Placeholder xs={12} />
-								<Placeholder xs={8} />
-							</span>
+							{Object.entries(descriptionLineConfigs).map(
+								([breakpoint, config]) => (
+									<span key={breakpoint} className={config.className}>
+										{config.lines.map((width, index) => (
+											// Usamos una clave única y estable combinando el breakpoint y el índice.
+											// Esto soluciona la advertencia de Sonar "Do not use Array index in keys".
+											<React.Fragment key={`${breakpoint}-line-${index}`}>
+												<Placeholder xs={width} />{" "}
+											</React.Fragment>
+										))}
+									</span>
+								)
+							)}
 						</Placeholder>
 						{/* Placeholder para el botón "Leer más", que ocupa espacio en las tarjetas con texto largo */}
 						<Placeholder animation="glow">

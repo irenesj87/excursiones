@@ -258,7 +258,7 @@ const Layout = () => {
 											md={4}
 											lg={3}
 											xl={2}
-											className="d-none d-md-block ps-md-0 pe-md-0 border-end"
+											className="d-none d-md-block ps-md-0 pe-md-0"
 										>
 											<Filters />
 										</Col>

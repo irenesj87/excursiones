@@ -1,5 +1,5 @@
 .listCard {
-	border: 1px solid var(--border-color);
+	border: 1px solid var(--separator-color);
 	box-shadow: var(--box-shadow);
 	background-color: var(--card-bg);
 	color: var(--text-color);

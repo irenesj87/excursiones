@@ -4,22 +4,30 @@ import styles from "../css/DelayedFallback.module.css";
 /**
  * Componente que evita el parpadeo de los mensajes de carga cuando la carga es muy rápida.
  * @param {object} props - Las propiedades del componente.
- * @param {React.ReactNode} props.children - El contenido a mostrar dentro del fallback (ej. un Spinner).
+ * @param {React.ReactNode} props.children - El contenido a mostrar (ej. un Spinner o skeletons).
  * @param {number} [props.delay=300] - Tiempo en milisegundos que se esperará antes de mostrar `children`.
  * @param {string} [props.className=""] - Clases CSS para el div contenedor.
+ * @param {boolean} [props.immediate=false] - Si es `true`, muestra `children` inmediatamente, ignorando el `delay`.
  * @returns {React.ReactElement | null} El componente que renderiza el contenido con retraso, o null.
  */
-const DelayedFallback = ({ children, delay = 300, className = "" }) => {
+const DelayedFallback = ({
+	children,
+	delay = 300,
+	className = "",
+	immediate = false,
+}) => {
 	/**
 	 * Variable de estado booleana que controla si el contenido de "children" debe mostrarse o no. Inicialmente, está a false
 	 * por lo que ese contenido está oculto.
+	 * Si `immediate` es true, se inicializa a `true` para mostrar el contenido al instante.
 	 */
-	const [show, setShow] = useState(false);
+	const [show, setShow] = useState(immediate);
 
 	/**
 	 * useEffect que se ejecutará después de que el componente se renderice por primera
 	 */
 	useEffect(() => {
+		if (show) return; // Si ya se está mostrando (por `immediate`), no hacer nada.
 		// Comprobación de seguridad. Si el delay es 0 o negativo, mostrar inmediatamente.
 		if (delay <= 0) {
 			setShow(true);
@@ -40,7 +48,7 @@ const DelayedFallback = ({ children, delay = 300, className = "" }) => {
 		 * actualizar el estado de un componente que ya no existe, lo que causaría un error en React.
 		 */
 		return () => clearTimeout(timer);
-	}, [delay]);
+	}, [delay, show]);
 
 	/**
 	 * El componente siempre renderiza un div. A este div se le aplica el className que se le haya pasado. Esto es importante 

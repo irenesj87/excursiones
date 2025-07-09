@@ -29,8 +29,8 @@
 .primaryMessage {
 	font-size: 1.4rem;
 	font-weight: 600;
-	/* Usamos la variable de tema para el color principal del texto. */
-	color: var(--text-primary);
+	/* Hereda el color principal del texto del body para adaptarse al tema. */
+	color: inherit;
 	margin-bottom: 0;
 }
 

@@ -60,7 +60,11 @@ function FiltersList({ filterName }) {
 			<ul className={styles.filtersGrid}>
 				{/* Mostramos 4 esqueletos para simular mejor el contenido real y evitar saltos de layout */}
 				{[...Array(4)].map((_, index) => (
-					<li key={`skeleton-pill-${index}`} className={styles.filterItem}>
+					<li
+						// eslint-disable-next-line react/no-array-index-key
+						key={`skeleton-pill-${index}`}
+						className={styles.filterItem}
+					>
 						<FilterPillSkeleton />
 					</li>
 				))}

@@ -8,6 +8,12 @@ html.light body {
 	--register-link-color: var(--text-color-light);
 	--register-link-border-color: var(--text-color-light);
 
+	/* Variables de color para texto genérico */
+	--text-secondary: #6c757d; /* Color secundario de Bootstrap */
+
+	/* Color para bordes y separadores principales */
+	--separator-color: var(--border-color-light);
+
 	/* --- Variables para ExcursionCard --- */
 	--excursion-card-bg: #ffffff;
 	--excursion-card-border-color: #e0e0e0;
@@ -24,21 +30,6 @@ html.light body {
 		padding-top: 1.2rem;
 		padding-bottom: 1.2rem;
 		width: 100%;
-	}
-
-	/* Elimina la transición para los controles de formulario en modo claro */
-	.form-control {
-		transition: none;
-	}
-
-	.contentPane {
-		background-color: white;
-		border: 1px solid var(--border-color-light);
-		border-radius: 0.5rem;
-		margin-top: 2rem;
-		margin-bottom: 2rem;
-		padding-left: 1.5rem;
-		padding-right: 1.5rem;
 	}
 
 	/* --- Estilos para filtros --- */
@@ -124,10 +115,12 @@ html.dark body {
 	--accent-color: #f39c12; /* Naranja más brillante y accesible */
 	--register-link-color: var(--text-color-dark);
 	--register-link-border-color: var(--text-color-dark);
-	--border-color-light: var(--border-color-dark); /* Redefinimos la variable para que los bordes se adapten */
-	/* Este color (blanco con 35% de opacidad) se usará para placeholders, controles deshabilitados y paginación deshabilitada */
-	/* Aumentada opacidad para cumplir contraste AA (ratio > 4.5:1) */
-	--subtle-text-color-dark: rgba(255, 255, 255, 0.75);
+
+	/* Variables de color para texto genérico */
+	--text-secondary: var(--subtle-text-color-dark);
+
+	/* Color para bordes y separadores principales */
+	--separator-color: var(--border-color-dark);
 
 	/* --- Variables para ExcursionCard --- */
 	--excursion-card-bg: #2a2a2a; /* Un poco más claro que el fondo para que destaque */
@@ -180,16 +173,6 @@ html.dark body {
 		background-color: rgb(255, 255, 255, 0.1);
 		color: var(--register-link-color);
 		border-color: var(--register-link-border-color);
-	}
-
-	.contentPane {
-		background-color: var(--background-color-dark);
-		border: 1px solid var(--border-color-dark);
-		border-radius: 0.5rem;
-		margin-top: 2rem;
-		margin-bottom: 2rem;
-		padding-left: 1.5rem;
-		padding-right: 1.5rem;
 	}
 
 	/* --- Estilos para los filtros --- */
@@ -342,4 +325,25 @@ html.dark body {
 	.offcanvas-body .nav-link[class*="logoutLink"] {
 		color: white; /* Asegura que el texto sea blanco sobre el fondo verde/gris oscuro */
 	}
+}
+
+/* ======================================== */
+/* --- ESTILOS GLOBALES (No dependen del tema) --- */
+/* ======================================== */
+
+/* Elimina la transición para los controles de formulario en ambos temas */
+.form-control {
+	transition: none;
+}
+
+/* Estilo para los paneles de contenido principales, como los de las páginas de formulario */
+.contentPane {
+	/* Usa variables de tema para adaptarse al modo claro/oscuro */
+	background-color: var(--excursion-card-bg); /* Reutilizamos el fondo de las tarjetas */
+	border: 1px solid var(--separator-color);
+	border-radius: 0.5rem;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
 }

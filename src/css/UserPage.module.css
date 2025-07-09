@@ -20,6 +20,6 @@
 
 /* Estilos específicos para la tarjeta de excursiones en la página de usuario. */
 .excursionsCard {
-	border: 1px solid var(--border-color-light);
+	border: 1px solid var(--separator-color);
 	border-radius: 0.5rem;
 }

@@ -1,6 +1,6 @@
 .filtersContainer {
 	background-color: var(--filter-container-bg);
-	border-right: 1px solid var(--border-color-light);
+	border-right: 1px solid var(--separator-color);
 }
 
 /* Contenedor para el contenido principal de los filtros, permite el scroll */
@@ -16,8 +16,8 @@
 	font-weight: 600;
 	margin: 0;
 	margin-bottom: 2rem; /* Espacio después del título y el borde */
-	padding-bottom: 0.75rem; /* Espacio entre el texto y el borde */
-	border-bottom: 1px solid var(--border-color-light);
+	padding-bottom: 0.75rem;
+	border-bottom: 1px solid var(--separator-color);
 }
 
 .filterSection:not(:last-child) {
@@ -37,7 +37,7 @@
 /* Footer que contiene el botón de limpiar, se mantiene en la parte inferior */
 .filtersFooter {
 	padding: 1rem 1.5rem;
-	border-top: 1px solid var(--border-color-light);
+	border-top: 1px solid var(--separator-color);
 	background-color: var(--filter-container-bg); /* Asegura que tenga fondo si el contenido hace scroll por detrás */
 	flex-shrink: 0; /* Evita que el footer se encoja */
 }
