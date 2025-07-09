@@ -31,9 +31,9 @@
 
 /* Estilo para la píldora cuando la casilla está seleccionada */
 .hiddenCheckbox:checked + .filterLabel {
-	background-color: var(--primary-color);
-	color: #fff; /* Texto blanco */
-	border-color: var(--primary-color);
+	background-color: var(--filter-pill-bg-checked);
+	color: var(--filter-pill-text-checked);
+	border-color: var(--filter-pill-border-checked);
 	box-shadow: var(--filter-pill-shadow-checked);
 }
 

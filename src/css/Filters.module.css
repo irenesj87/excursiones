@@ -1,63 +1,29 @@
-/* Contenedor principal de todos los filtros.
-   Ocupará el 100% de la altura de la columna padre y proporcionará el fondo. */
 .filtersContainer {
 	background-color: var(--filter-container-bg);
-	height: 100%; /* Asegura que el contenedor ocupe toda la altura de la columna padre */
+	border-right: 1px solid var(--border-color-light);
 }
 
-/* Envoltorio interior que será "pegajoso" y permitirá el scroll. */
-.stickyWrapper {
-	position: -webkit-sticky;
-	position: sticky;
-	top: var(--navbar-height);
-	/* La altura máxima es la de la ventana menos la barra de navegación.
-	   Esto asegura que si los filtros son muy largos, el contenedor no se desborde
-	   y en su lugar muestre una barra de scroll. */
-	max-height: calc(100vh - var(--navbar-height));
+/* Contenedor para el contenido principal de los filtros, permite el scroll */
+.scrollableContent {
+	flex-grow: 1; /* Ocupa todo el espacio vertical disponible */
 	overflow-y: auto;
-	/* El padding que antes estaba en el contenedor principal se mueve aquí. */
-	padding: 2rem 1rem 1rem;
+	padding: 1.5rem;
 }
 
-/* Cabecera con el título "Filtros" y el botón "Limpiar" */
-.header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	margin-bottom: 1.5rem;
-	padding-bottom: 0.75rem;
-	border-bottom: 1px solid var(--border-color-light);
-}
-
-/* Título principal "Filtros" */
-.title {
+/* Título principal para la vista de escritorio */
+.desktopTitle {
 	font-size: 1.25rem;
 	font-weight: 600;
 	margin: 0;
+	margin-bottom: 2rem; /* Espacio después del título y el borde */
+	padding-bottom: 0.75rem; /* Espacio entre el texto y el borde */
+	border-bottom: 1px solid var(--border-color-light);
 }
 
-/* Botón para limpiar los filtros */
-.clearButton {
-	font-size: 0.9rem;
-	font-weight: 500;
-	text-decoration: none;
-	color: var(--filter-clear-btn-color);
-	display: flex;
-	align-items: center;
-	gap: 0.25rem;
-	padding: 0.25rem 0.5rem;
-}
-
-.clearButton:hover {
-	color: var(--filter-clear-btn-color-hover);
-}
-
-/* Cada una de las secciones de filtros (Zona, Dificultad, etc.) */
 .filterSection:not(:last-child) {
 	margin-bottom: 1.75rem;
 }
 
-/* Título de cada sección de filtro */
 .filterTitle {
 	font-size: 1rem;
 	font-weight: 600;
@@ -65,4 +31,20 @@
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
+	color: var(--filter-title-color, inherit); /* Usar variable para el color */
+}
+
+/* Footer que contiene el botón de limpiar, se mantiene en la parte inferior */
+.filtersFooter {
+	padding: 1rem 1.5rem;
+	border-top: 1px solid var(--border-color-light);
+	background-color: var(--filter-container-bg); /* Asegura que tenga fondo si el contenido hace scroll por detrás */
+	flex-shrink: 0; /* Evita que el footer se encoja */
+}
+
+/* En móvil (dentro del offcanvas), no queremos el borde derecho */
+@media (max-width: 767.98px) {
+	.filtersContainer {
+		border-right: none;
+	}
 }

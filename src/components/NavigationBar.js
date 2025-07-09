@@ -173,7 +173,6 @@ function NavigationBarComponent({
 				<div className="d-flex align-items-center justify-content-end ms-auto ms-md-0 order-md-3 order-lg-3">
 					<Button
 						className={`${styles.themeToggleBtn} me-2`}
-						variant="outline-secondary"
 						id="toggleButton"
 						onClick={toggleTheme}
 						aria-label={

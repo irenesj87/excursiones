@@ -42,6 +42,26 @@ html.light body {
 	}
 
 	/* --- Estilos para filtros --- */
+	--filters-toggle-btn-color: #6c757d; /* Color secundario de Bootstrap */
+	--filters-toggle-btn-border: #ced4da;
+	--filters-toggle-btn-bg-hover: #e2e6ea;
+	--filters-toggle-btn-color-hover: #6c757d;
+	--filters-toggle-btn-border-hover: #ced4da;
+
+	--filter-container-bg: #ffffff;
+	--filter-pill-bg: #f1f3f5;
+	--filter-pill-text: #495057;
+	--filter-pill-border: #dee2e6;
+	--filter-pill-bg-hover: #e9ecef;
+	--filter-pill-border-hover: #adb5bd;
+	--filter-pill-shadow-checked: 0 2px 5px rgba(0, 0, 0, 0.1);
+	--filter-title-color: var(--text-color-light);
+
+	/* --- Variables para Píldoras de Filtros Seleccionadas --- */
+	--filter-pill-bg-checked: var(--primary-color);
+	--filter-pill-text-checked: #ffffff;
+	--filter-pill-border-checked: var(--primary-color);
+
 	.accordion-button,
 	.accordion-body {
 		background-color: var(--background-color-light);
@@ -117,6 +137,18 @@ html.dark body {
 	--excursion-card-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 	--excursion-card-shadow-hover: 0 10px 20px rgba(0, 0, 0, 0.4);
 
+	/* --- Variables para Botones de Filtros --- */
+	--filters-toggle-btn-color: var(--text-color-dark);
+	--filters-toggle-btn-border: var(--border-color-dark);
+	--filters-toggle-btn-bg-hover: rgba(255, 255, 255, 0.1);
+	--filters-toggle-btn-color-hover: var(--text-color-dark);
+	--filters-toggle-btn-border-hover: var(--border-color-dark);
+
+	/* --- Variables para Píldoras de Filtros Seleccionadas --- */
+	--filter-pill-bg-checked: var(--heading-color); /* #8bc34a */
+	--filter-pill-text-checked: #1e1e1e; /* Texto oscuro para contraste */
+	--filter-pill-border-checked: var(--heading-color);
+
 	/* --- Variables para Filtros --- */
 	--filter-container-bg: var(--surface-color-dark);
 	--filter-container-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -126,8 +158,7 @@ html.dark body {
 	--filter-pill-bg-hover: rgba(255, 255, 255, 0.15);
 	--filter-pill-border-hover: rgba(255, 255, 255, 0.25);
 	--filter-pill-shadow-checked: 0 2px 8px rgba(0, 0, 0, 0.4);
-	--filter-clear-btn-color: var(--subtle-text-color-dark);
-	--filter-clear-btn-color-hover: #ff8a80; /* Un rojo claro y accesible para el hover */
+	--filter-title-color: var(--text-color-dark);
 
 	/* --- Variables para Botón de Tema --- */
 	--theme-toggle-btn-color: var(--text-color-dark);

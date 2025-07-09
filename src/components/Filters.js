@@ -1,5 +1,5 @@
 import { Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import FiltersList from "./FiltersList";
 import { clearAllFilters } from "../slicers/filterSlice";
 import { FaMountainSun } from "react-icons/fa6";
@@ -8,34 +8,35 @@ import { MdAccessTimeFilled } from "react-icons/md";
 import { FiX } from "react-icons/fi";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Filters.module.css";
+/** @typedef {import('../types').RootState} RootState */
 
 /**
  * Componente para renderizar los filtros de búsqueda (zona, dificultad, tiempo estimado)
  * @returns {React.ReactElement} El componente para los filtros
+ * @param {{showTitle?: boolean}} props - Propiedades del componente. `showTitle` controla si se muestra el título.
  */
-function Filters() {
+function Filters({ showTitle = true }) {
 	const dispatch = useDispatch();
+	const { area, difficulty, time } = useSelector(
+		/** @param {RootState} state */
+		(state) => state.filterReducer
+	);
+
+	// Comprueba si hay algún filtro activo para habilitar/deshabilitar el botón
+	const hasActiveFilters =
+		area.length > 0 || difficulty.length > 0 || time.length > 0;
 
 	const handleClearFilters = () => {
 		dispatch(clearAllFilters());
 	};
 
 	return (
-		<div className={styles.filtersContainer}>
-			<div className={styles.stickyWrapper}>
-				<header className={styles.header}>
-					<h2 className={styles.title}>Filtros</h2>
-					<Button
-						variant="link"
-						onClick={handleClearFilters}
-						className={styles.clearButton}
-						aria-label="Limpiar todos los filtros"
-					>
-						<FiX aria-hidden="true" />
-						<span>Limpiar</span>
-					</Button>
-				</header>
-
+		// El contenedor principal usa flexbox para posicionar el footer abajo.
+		// La clase h-100 es crucial para que ocupe toda la altura de su padre (la Col o el Offcanvas.Body)
+		<div className={`${styles.filtersContainer} h-100 d-flex flex-column`}>
+			{/* Contenedor para el contenido que puede hacer scroll */}
+			<div className={styles.scrollableContent}>
+				{showTitle && <h2 className={styles.desktopTitle}>Filtros</h2>}
 				<section className={styles.filterSection}>
 					<h3 className={styles.filterTitle}>
 						<FaMountainSun />
@@ -43,7 +44,6 @@ function Filters() {
 					</h3>
 					<FiltersList filterName="area" />
 				</section>
-
 				<section className={styles.filterSection}>
 					<h3 className={styles.filterTitle}>
 						<GoGraph />
@@ -51,7 +51,6 @@ function Filters() {
 					</h3>
 					<FiltersList filterName="difficulty" />
 				</section>
-
 				<section className={styles.filterSection}>
 					<h3 className={styles.filterTitle}>
 						<MdAccessTimeFilled />
@@ -60,6 +59,20 @@ function Filters() {
 					<FiltersList filterName="time" />
 				</section>
 			</div>
+
+			{/* El footer se mantiene en la parte inferior */}
+			<footer className={styles.filtersFooter}>
+				<Button
+					variant={hasActiveFilters ? "danger" : "secondary"}
+					onClick={handleClearFilters}
+					className="w-100"
+					aria-label="Limpiar todos los filtros"
+					disabled={!hasActiveFilters}
+				>
+					<FiX aria-hidden="true" className="me-2" />
+					<span>Limpiar Filtros</span>
+				</Button>
+			</footer>
 		</div>
 	);
 }

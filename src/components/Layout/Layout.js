@@ -275,21 +275,27 @@ const Layout = () => {
 												<Button
 													variant="outline-secondary"
 													onClick={handleShowFilters}
+													// Añadimos una clase para poder aplicar estilos de tema
+													className={styles.filtersToggleButton}
 												>
 													<FiFilter className="me-2" />
 													<span>Mostrar Filtros</span>
 												</Button>
 											</div>
 											{excursionsContent}
-											{/* Menú Offcanvas para los filtros en vista móvil. Es independiente del de navegación. */}
+											{/* Menú Offcanvas para los filtros en breakpoints pequeños. Es independiente del de navegación. */}
 											<Offcanvas
 												show={showFilters}
 												onHide={handleCloseFilters}
 												placement="start"
-												className="d-md-none" // Asegura que el componente solo se active en vistas móviles
+												className="d-md-none" // Asegura que el componente solo se active en breakpoints pequeños
 											>
-												<Offcanvas.Body>
-													<Filters />
+												<Offcanvas.Header closeButton>
+													<Offcanvas.Title>Filtros</Offcanvas.Title>
+												</Offcanvas.Header>
+												{/* Hacemos que el body sea un flex container para que el contenido de Filters se expanda */}
+												<Offcanvas.Body className="d-flex flex-column">
+													<Filters showTitle={false} />
 												</Offcanvas.Body>
 											</Offcanvas>
 										</Col>

@@ -1,4 +1,3 @@
-import React from "react";
 import { Card, Placeholder } from "react-bootstrap";
 import cardStyles from "../css/ExcursionCard.module.css"; // Reutilizamos el CSS de la tarjeta real
 import skeletonStyles from "../css/ExcursionCardSkeleton.module.css";
@@ -43,11 +42,17 @@ function ExcursionCardSkeleton({ isLoggedIn = false }) {
 								<Placeholder xs={12} /> <Placeholder xs={12} />
 								<Placeholder xs={12} /> <Placeholder xs={4} />
 							</span>
-							<span className="d-none d-md-block d-xl-none">
-								{/* 7 líneas para tabletas (md y lg) */}
+							<span className="d-none d-md-block d-lg-none">
+								{/* 6 líneas para md) */}
 								<Placeholder xs={12} /> <Placeholder xs={12} />
 								<Placeholder xs={12} /> <Placeholder xs={12} />
-								<Placeholder xs={12} /> <Placeholder xs={12} />{" "}
+								<Placeholder xs={12} /> <Placeholder xs={8} />
+							</span>
+							<span className="d-none d-lg-block d-xl-none">
+								{/* 7 líneas para tabletas lg */}
+								<Placeholder xs={12} /> <Placeholder xs={12} />
+								<Placeholder xs={12} /> <Placeholder xs={12} />
+								<Placeholder xs={12} /> <Placeholder xs={12} />
 								<Placeholder xs={8} />
 							</span>
 							<span className="d-none d-xl-block d-xxl-none">
