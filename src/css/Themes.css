@@ -3,41 +3,38 @@
 /* ======================================== */
 html.light body {
 	transition: none;
-	background-color: var(--background-color-light);
-	color: var(--text-color-light);
-	--register-link-color: var(--text-color-light);
-	--register-link-border-color: var(--text-color-light);
+	/* Paleta de verdes para el modo claro */
+	background-color: #f7f9f7; /* Blanco con un sutil tinte verde */
+	color: #1a2b1e; /* Verde muy oscuro, casi negro, para texto principal */
+	--register-link-color: #1a2b1e;
+	--register-link-border-color: #1a2b1e;
 
 	/* Variables de color para texto genérico */
-	--text-secondary: #6c757d; /* Color secundario de Bootstrap */
+	--text-secondary: #5c7f67; /* Verde-grisáceo para texto secundario */
 
 	/* Color para bordes y separadores principales */
-	--separator-color: var(--border-color-light);
+	--separator-color: #dce3dd; /* Verde-grisáceo muy claro */
 
 	/* --- Variables para ExcursionCard --- */
-	--excursion-card-bg: #ffffff;
-	--excursion-card-border-color: #e0e0e0;
-	--excursion-card-title-color: #333;
-	--excursion-card-description-color: #555;
-	--excursion-card-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-	--excursion-card-shadow-hover: 0 10px 20px rgba(0, 0, 0, 0.15);
+	--excursion-card-bg: #ffffff; /* Blanco puro para que las tarjetas resalten */
+	--excursion-card-border-color: var(--separator-color);
+	--excursion-card-title-color: #1a2b1e;
+	--excursion-card-description-color: #496851; /* Verde oscuro para descripciones */
+	--excursion-card-shadow: 0 5px 15px rgba(49, 80, 54, 0.08);
+	--excursion-card-shadow-hover: 0 10px 20px rgba(49, 80, 54, 0.12);
 
 	/* --- Estilos para la barra de navegación --- */
 	.customNavbar {
-		background-color: var(--background-color-light);
-		z-index: 1030;
-		color: var(--text-color-light);
-		padding-top: 1.2rem;
-		padding-bottom: 1.2rem;
-		width: 100%;
+		background-color: #f7f9f7;
+		color: #1a2b1e;
 	}
 
 	/* --- Estilos para filtros --- */
-	--filters-toggle-btn-color: #6c757d; /* Color secundario de Bootstrap */
-	--filters-toggle-btn-border: #ced4da;
+	--filters-toggle-btn-color: #5c7f67;
+	--filters-toggle-btn-border: #dce3dd;
 	--filters-toggle-btn-bg-hover: #e2e6ea;
-	--filters-toggle-btn-color-hover: #6c757d;
-	--filters-toggle-btn-border-hover: #ced4da;
+	--filters-toggle-btn-color-hover: #315036;
+	--filters-toggle-btn-border-hover: #dce3dd;
 
 	--filter-container-bg: #ffffff;
 	--filter-pill-bg: #f1f3f5;
@@ -46,7 +43,7 @@ html.light body {
 	--filter-pill-bg-hover: #e9ecef;
 	--filter-pill-border-hover: #adb5bd;
 	--filter-pill-shadow-checked: 0 2px 5px rgba(0, 0, 0, 0.1);
-	--filter-title-color: var(--text-color-light);
+	--filter-title-color: #1a2b1e;
 
 	/* --- Variables para Píldoras de Filtros Seleccionadas --- */
 	--filter-pill-bg-checked: var(--primary-color);
@@ -55,53 +52,37 @@ html.light body {
 
 	.accordion-button,
 	.accordion-body {
-		background-color: var(--background-color-light);
-		color: var(--text-color-light);
-		transition: none;
+		background-color: #f7f9f7;
+		color: #1a2b1e;
 
 		&::after {
 			/* Define la imagen de fondo para el icono del acordeón en modo claro */
-			background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23333'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
+			background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%231a2b1e'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
 		}
 	}
 
 	.offcanvas-header {
-		background-color: var(--background-color-light);
+		background-color: #f7f9f7;
 		color: var(--primary-color);
-		font-weight: bolder;
-		padding: 1rem 1.25rem;
-		border-bottom: 1px solid #dee2e6;
+		border-bottom: 1px solid var(--separator-color);
 	}
 
 	.offcanvas-body {
-		padding: 1rem 0;
+		background-color: #ffffff;
 	}
 
-	/* Estilos para los enlaces de navegación dentro del Offcanvas */
-	.offcanvas-body .nav-link {
-		display: block;
-		width: 95%;
-		margin-left: 2.5%;
-		text-align: center;
-		margin-bottom: 0.6rem;
-		color: var(--text-color-light);
-		padding: 0.6rem 1rem;
-		text-decoration: none;
-		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-		border-radius: 0.375rem;
+	/* Botón para mostrar filtros en breakpoints xs */
+	.filtersToggleButton {
+		color: var(--filters-toggle-btn-color);
+		border-color: var(--filters-toggle-btn-border);
+		background-color: transparent;
 	}
 
-	/* Estilos específicos para los enlaces de login y logout dentro del Offcanvas */
-	.offcanvas-body .nav-link[class*="loginLink"],
-	.offcanvas-body .nav-link[class*="logoutLink"] {
-		color: white; /* Asegura que el texto sea blanco sobre el fondo verde/gris oscuro */
+	.filtersToggleButton:hover {
+		color: var(--filters-toggle-btn-color-hover);
+		background-color: var(--filters-toggle-btn-bg-hover);
+		border-color: var(--filters-toggle-btn-border-hover);
 	}
-
-	/* --- Estilos para Paginación (Enlaces) --- */
-	.page-link {
-		transition: none; /* Elimina la transición para los enlaces de paginación */
-	}
-
 }
 
 /* ======================================== */
@@ -109,189 +90,181 @@ html.light body {
 /* ======================================== */
 html.dark body {
 	transition: none; /* Eliminar transición para el body en cambio de tema */
-	background-color: var(--background-color-dark);
-	color: var(--text-color-dark);
-	--heading-color: #8bc34a; /* Tono de verde menos vibrante, contraste 5.54:1 */
-	--accent-color: #f39c12; /* Naranja más brillante y accesible */
-	--register-link-color: var(--text-color-dark);
-	--register-link-border-color: var(--text-color-dark);
+	/* Paleta de verdes oscuros "Bosque Profundo" */
+	background-color: #1a2b1e; /* Verde muy oscuro para el fondo */
+	color: #e8f5e9; /* Blanco verdoso muy claro para el texto principal */
+	--heading-color: #7cb342; /* Verde brillante y accesible para títulos y acentos */
+	--accent-color: #f39c12; /* Naranja para alertas, se mantiene por su buen contraste */
+	--register-link-color: #e8f5e9;
+	--register-link-border-color: #a3b8a8; /* Borde más sutil */
 
 	/* Variables de color para texto genérico */
-	--text-secondary: var(--subtle-text-color-dark);
+	--text-secondary: #a3b8a8; /* Verde-grisáceo para texto secundario */
 
 	/* Color para bordes y separadores principales */
-	--separator-color: var(--border-color-dark);
+	--separator-color: #3a5a40; /* Verde oscuro para bordes */
 
 	/* --- Variables para ExcursionCard --- */
-	--excursion-card-bg: #2a2a2a; /* Un poco más claro que el fondo para que destaque */
-	--excursion-card-border-color: var(--border-color-dark);
-	--excursion-card-title-color: var(--text-color-dark);
-	--excursion-card-description-color: rgba(255, 255, 255, 0.85);
+	--excursion-card-bg: #213426; /* Verde un poco más claro que el fondo */
+	--excursion-card-border-color: var(--separator-color);
+	--excursion-card-title-color: #e8f5e9;
+	--excursion-card-description-color: #b0c7b5; /* Un tono más claro para descripciones */
 	--excursion-card-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 	--excursion-card-shadow-hover: 0 10px 20px rgba(0, 0, 0, 0.4);
 
 	/* --- Variables para Botones de Filtros --- */
-	--filters-toggle-btn-color: var(--text-color-dark);
-	--filters-toggle-btn-border: var(--border-color-dark);
+	--filters-toggle-btn-color: #e8f5e9;
+	--filters-toggle-btn-border: #a3b8a8;
 	--filters-toggle-btn-bg-hover: rgba(255, 255, 255, 0.1);
-	--filters-toggle-btn-color-hover: var(--text-color-dark);
-	--filters-toggle-btn-border-hover: var(--border-color-dark);
+	--filters-toggle-btn-color-hover: #e8f5e9;
+	--filters-toggle-btn-border-hover: #a3b8a8;
 
 	/* --- Variables para Píldoras de Filtros Seleccionadas --- */
-	--filter-pill-bg-checked: var(--heading-color); /* #8bc34a */
-	--filter-pill-text-checked: #1e1e1e; /* Texto oscuro para contraste */
+	--filter-pill-bg-checked: var(--heading-color); /* Verde brillante */
+	--filter-pill-text-checked: #1a2b1e; /* Texto oscuro para máximo contraste */
 	--filter-pill-border-checked: var(--heading-color);
 
 	/* --- Variables para Filtros --- */
-	--filter-container-bg: var(--surface-color-dark);
+	--filter-container-bg: #1a2b1e; /* Mismo que el fondo principal */
 	--filter-container-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-	--filter-pill-bg: rgba(255, 255, 255, 0.08);
-	--filter-pill-text: var(--text-color-dark);
-	--filter-pill-border: rgba(255, 255, 255, 0.15);
-	--filter-pill-bg-hover: rgba(255, 255, 255, 0.15);
-	--filter-pill-border-hover: rgba(255, 255, 255, 0.25);
+	--filter-pill-bg: #3a5a40; /* Verde oscuro para píldoras no seleccionadas */
+	--filter-pill-text: #e8f5e9;
+	--filter-pill-border: #4f7659;
+	--filter-pill-bg-hover: #4f7659;
+	--filter-pill-border-hover: #6a994e;
 	--filter-pill-shadow-checked: 0 2px 8px rgba(0, 0, 0, 0.4);
-	--filter-title-color: var(--text-color-dark);
+	--filter-title-color: #e8f5e9;
 
 	/* --- Variables para Botón de Tema --- */
-	--theme-toggle-btn-color: var(--text-color-dark);
-	--theme-toggle-btn-border-color: var(--border-color-dark);
+	--theme-toggle-btn-color: #e8f5e9;
+	--theme-toggle-btn-border-color: #3a5a40;
 	--theme-toggle-btn-bg-hover: rgba(255, 255, 255, 0.1);
 
 	/* --- Estilos para la barra de navegación --- */
 	.customNavbar {
-		background-color: var(--background-color-dark);
-		color: var(--text-color-dark);
-		padding-top: 1.2rem;
-		padding-bottom: 1.2rem;
-		width: 100%;
-		border-bottom: 1px solid var(--border-color-dark);
+		background-color: #1a2b1e;
+		color: #e8f5e9;
+		border-bottom: 1px solid var(--separator-color);
 	}
 
 	/* Estilos de hover para el enlace de registro en la barra de navegación */
 	.customNavbar .nav-link[class*="registerLink"]:hover {
 		background-color: rgb(255, 255, 255, 0.1);
 		color: var(--register-link-color);
-		border-color: var(--register-link-border-color);
+		border-color: #e8f5e9;
 	}
 
 	/* --- Estilos para los filtros --- */
 	.accordion-button,
 	.accordion-body {
-		background-color: var(--background-color-dark);
-		color: var(--text-color-dark);
-		transition: none;
+		background-color: #1a2b1e;
+		color: #e8f5e9;
 		&::after {
 			/* Define la imagen de fondo para el icono del acordeón en modo oscuro */
-			background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23E5E7EB'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
+			background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23e8f5e9'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
 		}
 	}
 
 	.accordion-item {
-		border-bottom: 1px solid var(--border-color-dark);
-		background-color: var(--background-color-dark);
+		border-bottom: 1px solid var(--separator-color);
+		background-color: #1a2b1e;
 	}
 
 	/* --- Estilos para las Card --- */
 	.card {
-		background-color: var(--surface-color-dark);
-		color: var(--text-color-dark);
-		border-color: var(--surface-color-dark);
-		border: 1px solid var(--border-color-dark);
+		background-color: #213426;
+		color: #e8f5e9;
+		border-color: #213426;
+		border: 1px solid var(--separator-color);
 		border-radius: 0.5rem;
 	}
 
 	/* Establece el color de fondo y el borde inferior del encabezado de la tarjeta */
 	.card-header {
 		background-color: var(--primary-color);
-		border-bottom: 1px solid var(--border-color-dark);
+		border-bottom: 1px solid var(--separator-color);
 	}
 
 	/* Establece el color de fondo, color de texto y radio de borde del cuerpo de la tarjeta */
 	.card-body {
-		background-color: var(--surface-color-dark);
+		background-color: #213426;
 		border-radius: 0.5rem;
 	}
 
 	/* Cambia el color del borde superior dentro de las tarjetas para que coincida con el tema oscuro */
 	.card-body .border-top {
-		border-top-color: var(--border-color-dark) !important;
+		border-top-color: #3a5a40;
 	}
 
 	/* Establece el color de texto del texto de la tarjeta */
 	.card-text {
-		color: var(--text-color-dark);
+		color: #e8f5e9;
 	}
 
 	/* Establece el color de texto de las insignias dentro de la tarjeta */
 	.card .badge {
-		color: var(--text-color-light);
+		color: #1a2b1e;
 	}
 
 	.card-body .no-excursions-text {
-		background-color: var(--secondary-accent-dark);
-		color: var(--text-color-dark);
+		background-color: #2a402e;
+		color: #e8f5e9;
 	}
 
 	/* --- Estilos para los Form.Control --- */
 	.form-control {
 		/* Establece el color de fondo, color de texto, borde y elimina la transición para los controles de formulario */
-		background-color: var(--surface-color-dark);
-		color: var(--text-color-dark);
-		border: 1px solid var(--border-color-dark);
+		background-color: #213426;
+		color: #e8f5e9;
+		border: 1px solid var(--separator-color);
 		transition: none;
 	}
 
 	.form-control::placeholder {
-		color: var(--subtle-text-color-dark);
+		color: #a3b8a8;
 	}
 
 	.form-control:disabled,
 	.form-control[readonly] {
 		/* Establece el color de fondo, color de texto y borde para controles de formulario deshabilitados o de solo lectura */
-		background-color: var(--background-color-dark);
-		color: var(--subtle-text-color-dark);
-		border: 1px solid var(--border-color-dark);
+		background-color: #1a2b1e;
+		color: #a3b8a8;
+		border: 1px solid var(--separator-color);
 	}
 
 	/* Establece el color de texto para controles de formulario de texto sin formato de solo lectura */
 	.form-control-plaintext[readonly] {
-		color: var(--text-color-dark);
+		color: #e8f5e9;
 	}
 
 	/* --- Estilos para Paginación --- */
 	.pagination {
-		--bs-pagination-color: var(--text-color-dark);
-		--bs-pagination-bg: var(--surface-color-dark);
-		--bs-pagination-border-color: var(--border-color-dark);
-		--bs-pagination-hover-color: var(--text-color-dark);
+		--bs-pagination-color: #e8f5e9;
+		--bs-pagination-bg: #213426;
+		--bs-pagination-border-color: var(--separator-color);
+		--bs-pagination-hover-color: #e8f5e9;
 		/* Un fondo ligeramente diferente para el hover */
-		--bs-pagination-hover-bg: #2a2a2a;
-		--bs-pagination-hover-border-color: var(--border-color-dark);
-		--bs-pagination-focus-color: var(--text-color-dark);
-		--bs-pagination-focus-bg: #333333; /* Un poco más oscuro para el foco */
+		--bs-pagination-hover-bg: #3a5a40;
+		--bs-pagination-hover-border-color: #3a5a40;
+		--bs-pagination-focus-color: #e8f5e9;
+		--bs-pagination-focus-bg: #4f7659; /* Un poco más oscuro para el foco */
 		/* Sombra de foco genérica, ya que --primary-color-rgb no está definido */
 		--bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(130, 138, 145, 0.25);
 
-		--bs-pagination-active-color: #fff; /* Texto blanco para el elemento activo */
+		--bs-pagination-active-color: #1a2b1e; /* Texto oscuro para el elemento activo */
+		--bs-pagination-active-bg: var(--heading-color);
+		--bs-pagination-active-border-color: var(--heading-color);
 
-		--bs-pagination-disabled-color: var(--subtle-text-color-dark);
+		--bs-pagination-disabled-color: #a3b8a8;
 		/* Mismo fondo que el normal para deshabilitados, pero con texto atenuado */
-		--bs-pagination-disabled-bg: var(--surface-color-dark);
-		--bs-pagination-disabled-border-color: var(--border-color-dark);
-	}
-
-	/* --- Estilos para Paginación (Enlaces) --- */
-	.page-link {
-		transition: none; /* Elimina la transición para los enlaces de paginación */
+		--bs-pagination-disabled-bg: #213426;
+		--bs-pagination-disabled-border-color: var(--separator-color);
 	}
 
 	.offcanvas-header {
-		background-color: var(--background-color-dark);
-		color: var(--text-color-dark); /* Corregido: Texto blanco para contraste sobre fondo oscuro */
-		font-weight: bolder;
-		padding: 1rem 1.25rem;
-		border-bottom: 1px solid var(--border-color-dark);
+		background-color: #1a2b1e;
+		color: #e8f5e9;
+		border-bottom: 1px solid var(--separator-color);
 
 		/* Invierte los colores del botón de cierre para que sea visible en modo oscuro */
 		.btn-close {
@@ -299,31 +272,20 @@ html.dark body {
 		}
 	}
 
-	/* Establece el color de fondo y el padding del cuerpo del Offcanvas */
 	.offcanvas-body {
-		background-color: var(--surface-color-dark);
-		padding: 1rem 0;
+		background-color: #1a2b1e;
 	}
 
-	/* --- Estilos para links dentro del Offcanvas --- */
-	.offcanvas-body .nav-link {
-		/* Estilos para los enlaces de navegación dentro del Offcanvas */
-		display: block;
-		width: 95%;
-		margin-left: 2.5%;
-		text-align: center;
-		margin-bottom: 0.6rem;
-		color: var(--text-color-dark);
-		padding: 0.6rem 1rem;
-		text-decoration: none;
-		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-		border-radius: 0.375rem;
+	/* Botón para mostrar filtros en breakpoints xs */
+	.filtersToggleButton {
+		color: var(--filters-toggle-btn-color);
+		border-color: var(--filters-toggle-btn-border);
+		background-color: transparent;
 	}
 
-	/* Estilos específicos para los enlaces de login y logout dentro del Offcanvas */
-	.offcanvas-body .nav-link[class*="loginLink"],
-	.offcanvas-body .nav-link[class*="logoutLink"] {
-		color: white; /* Asegura que el texto sea blanco sobre el fondo verde/gris oscuro */
+	.filtersToggleButton:hover {
+		color: var(--filters-toggle-btn-color-hover);
+		background-color: var(--filters-toggle-btn-bg-hover);
 	}
 }
 
@@ -331,15 +293,67 @@ html.dark body {
 /* --- ESTILOS GLOBALES (No dependen del tema) --- */
 /* ======================================== */
 
-/* Elimina la transición para los controles de formulario en ambos temas */
-.form-control {
+/* Elimina la transición para varios componentes de Bootstrap en ambos temas */
+.form-control,
+.page-link,
+.accordion-button,
+.accordion-body {
 	transition: none;
+}
+
+/* Estilos comunes para la barra de navegación */
+.customNavbar {
+	padding-top: 1.2rem;
+	padding-bottom: 1.2rem;
+	width: 100%;
+}
+
+/* Estilos comunes para el Offcanvas */
+.offcanvas-header {
+	font-weight: bolder;
+	padding: 1rem 1.25rem;
+}
+
+.offcanvas-body {
+	padding: 1rem 0;
+}
+
+.offcanvas-body .nav-link {
+	display: block;
+	width: 95%;
+	margin-left: 2.5%;
+	text-align: center;
+	margin-bottom: 0.6rem;
+	padding: 0.6rem 1rem;
+	text-decoration: none;
+	border-radius: 0.375rem;
+	transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+/* En el modo claro, el color del texto del enlace se hereda del body */
+/* Excluimos los botones de login/logout para que no hereden el color del texto */
+html.light .offcanvas-body .nav-link:not([class*="loginLink"]):not([class*="logoutLink"]) {
+	color: inherit;
+}
+
+/* En el modo oscuro, el color del texto del enlace es el principal del tema oscuro */
+/* Excluimos los botones de login/logout para que no hereden el color del texto */
+html.dark .offcanvas-body .nav-link:not([class*="loginLink"]):not([class*="logoutLink"]) {
+	color: #e8f5e9;
+}
+
+/* Estilos específicos para los enlaces de login y logout dentro del Offcanvas (común a ambos temas) */
+.offcanvas-body .nav-link[class*="loginLink"],
+.offcanvas-body .nav-link[class*="logoutLink"] {
+	color: white; /* Asegura que el texto sea blanco sobre el fondo verde/gris oscuro */
 }
 
 /* Estilo para los paneles de contenido principales, como los de las páginas de formulario */
 .contentPane {
 	/* Usa variables de tema para adaptarse al modo claro/oscuro */
-	background-color: var(--excursion-card-bg); /* Reutilizamos el fondo de las tarjetas */
+	background-color: var(
+		--excursion-card-bg
+	); /* Reutilizamos el fondo de las tarjetas */
 	border: 1px solid var(--separator-color);
 	border-radius: 0.5rem;
 	margin-top: 2rem;

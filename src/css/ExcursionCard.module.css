@@ -78,7 +78,3 @@
 .joinButton {
 	transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
-
-.joinButton:hover {
-	transform: scale(1.05);
-}

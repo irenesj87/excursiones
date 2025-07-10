@@ -109,7 +109,7 @@ function ExcursionCardComponent({
 				{isLoggedIn && (
 					<div className="mt-auto pt-3 border-top">
 						{isJoined ? (
-							<div className={`${styles.joinedStatus} text-center text-md-end`}>
+							<div className={`${styles.joinedStatus} d-grid d-md-flex justify-content-md-end`}>
 								<FiCheckCircle /> <span>Apuntado/a</span>
 							</div>
 						) : (

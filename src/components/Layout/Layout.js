@@ -275,8 +275,8 @@ const Layout = () => {
 												<Button
 													variant="outline-secondary"
 													onClick={handleShowFilters}
-													// Añadimos una clase para poder aplicar estilos de tema
-													className={styles.filtersToggleButton}
+													// Esta clase ahora es global y se define en Themes.css
+													className="filtersToggleButton"
 												>
 													<FiFilter className="me-2" />
 													<span>Mostrar Filtros</span>

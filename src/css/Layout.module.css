@@ -2,9 +2,6 @@
 /* --- ESTILOS GENERALES --- */
 /* ======================================== */
 :root {
-	/* --- Alturas y Tamaños Globales --- */
-	--navbar-height: 85px; /* Altura aproximada de la barra de navegación. Ajustar si cambia. */
-
 	/* --- Paleta principal --- */
 	--primary-color: #315036;
 	--accent-color: #c05600;
@@ -14,31 +11,14 @@
 	--text-color-light: #333333;
 	--text-color-dark: #e0e0e0;
 
-	/* --- Colores de Fondo y Superficie --- */
-	--surface-color-dark: #404040;
-	--secondary-accent-dark: #4a3b33;
-	--background-color-light: #ffffff;
-	--background-color-dark: #1e1e1e;
-
 	/* --- Colores de Borde --- */
 	--border-color-light: #e0e0e0;
-	--border-color-dark: #777777;
 	--logout-bg-color: rgb(80, 73, 73);
 	--logout-bg-color-hover: rgb(100, 93, 93);
 
-	/* --- Variables para Filtros --- */
-	--filter-container-bg: #ffffff;
-	--filter-container-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-	--filter-pill-bg: #f1f3f5;
-	--filter-pill-text: #495057;
-	--filter-pill-border: #dee2e6;
-	--filter-pill-bg-hover: #e9ecef;
-	--filter-pill-border-hover: #adb5bd;
-	--filter-pill-shadow-checked: 0 2px 5px rgba(0, 0, 0, 0.1);
-	--filter-clear-btn-color: #6c757d; /* Color secundario de Bootstrap */
+	/* --- Variables para componentes específicos que no dependen del tema --- */
 	--filter-clear-btn-color-hover: #dc3545; /* Color de peligro de Bootstrap */
 
-	/* --- Variables para Botón de Tema --- */
 	--theme-toggle-btn-color: var(--text-color-light);
 	--theme-toggle-btn-border-color: var(--border-color-light);
 	--theme-toggle-btn-bg-hover: rgba(0, 0, 0, 0.05);
@@ -65,7 +45,7 @@ html {
 *:focus-visible {
 	outline: 3px solid var(--focus-outline-color);
 	outline-offset: 2px;
-	border-radius: 2px; /* Opcional: para que el contorno sea redondeado */
+	border-radius: 2px;
 }
 
 .layout {
@@ -78,20 +58,7 @@ html {
 
 .mainContentWrapper {
 	/* Hace que el contenido principal crezca para empujar el footer hacia abajo */
-	flex-grow: 1;
 	display: flex;
 	flex-direction: column;
-}
-
-/* Botón para mostrar filtros en móvil */
-.filtersToggleButton {
-	color: var(--filters-toggle-btn-color);
-	border-color: var(--filters-toggle-btn-border);
-	background-color: transparent;
-}
-
-.filtersToggleButton:hover {
-	color: var(--filters-toggle-btn-color-hover);
-	background-color: var(--filters-toggle-btn-bg-hover);
-	border-color: var(--filters-toggle-btn-border-hover);
+	flex-grow: 1;
 }

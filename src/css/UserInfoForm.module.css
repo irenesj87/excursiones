@@ -17,9 +17,3 @@
 .saveButton {
 	transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
-
-.editButton:hover,
-.cancelButton:hover,
-.saveButton:hover {
-	transform: scale(1.05);
-}
