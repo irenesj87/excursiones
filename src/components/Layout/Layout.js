@@ -81,9 +81,9 @@ const LazyRouteWrapper = ({ PageComponent }) => (
  */
 const Layout = () => {
 	const loginDispatch = useDispatch();
+
 	// Estado para controlar la visibilidad del menú Offcanvas de filtros en móvil.
 	const [showFilters, setShowFilters] = useState(false);
-
 	// Funciones para abrir y cerrar el Offcanvas de filtros.
 	const handleCloseFilters = () => setShowFilters(false);
 	const handleShowFilters = () => setShowFilters(true);
@@ -91,10 +91,9 @@ const Layout = () => {
 	/**
 	 * useReducer: Es un hook de React, alternativa a useSate, que se usa cuando el estado es más complejo y tiene varias
 	 * cosas interrelacionadas entre sí, en este caso, los datos, el estado de carga y los errores.
-	 */
-	/**
-	 * Estado para la gestión de datos de excursiones, usando un reducer para mayor claridad. Este es el objeto que define el
-	 * estado inicial.
+	 *
+	 * Estado para la gestión de datos de excursiones, usando un reducer para mayor claridad. Este es el objeto que define
+	 * el estado inicial.
 	 */
 	const excursionsInitialState = {
 		data: [],
@@ -147,14 +146,15 @@ const Layout = () => {
 	);
 
 	/**
-	 * Estado para saber si la comprobación inicial de autenticación del usuario ha terminado. Esto evita que cuando el usuario
-	 * esté logueado vea un parpadeo de los botones que se utilizan cuando el usuario no está logueado
+	 * Estado para saber si la comprobación inicial de autenticación del usuario ha terminado. Esto evita que cuando el
+	 * usuario esté logueado vea un parpadeo de los botones
 	 */
 	const [isAuthCheckComplete, setIsAuthCheckComplete] = useState(false);
 
 	/**
-	 * useEffect que controla el token en sessionStorage. Se guarda el token actual en sessionStorage y se loguea al usuario
-	 * de nuevo en caso de que se refresque la página. Con esto el usuario no perderá su sesión, es decir, se queda logueado
+	 * useEffect que controla el token en sessionStorage. Se guarda el token actual en sessionStorage y se loguea al
+	 * usuario de nuevo en caso de que se refresque la página. Con esto el usuario no perderá su sesión, es decir, se
+	 * queda logueado
 	 */
 	useEffect(() => {
 		const verifyAuthStatus = async () => {
@@ -172,8 +172,7 @@ const Layout = () => {
 						})
 					);
 				}
-				// Si 'data' es null (porque no había token), no se hace nada y el usuario
-				// permanece en el estado inicial (deslogueado).
+				// Si 'data' es null (porque no había token), no se hace nada y el usuario permanece en el estado inicial (deslogueado).
 			} catch (error) {
 				console.error(
 					"Error en la verificación del estado de autenticación:",
@@ -243,7 +242,6 @@ const Layout = () => {
 				onExcursionsFetchEnd={handleExcursionsFetchEnd}
 				isAuthCheckComplete={isAuthCheckComplete}
 			/>
-			{/* El elemento <main> es la segunda fila del grid y se expande automáticamente. */}
 			<main className={styles.mainContentWrapper}>
 				<Container fluid className="d-flex flex-column flex-grow-1">
 					<Row className="justify-content-start flex-grow-1 align-items-stretch">
@@ -253,7 +251,7 @@ const Layout = () => {
 								path="/"
 								element={
 									<>
-										{/* Columna de filtros para vista de escritorio (visible a partir de 'md') */}
+										{/* Columna de filtros visible a partir de 'md') */}
 										<Col
 											md={4}
 											lg={3}
@@ -262,7 +260,8 @@ const Layout = () => {
 										>
 											<Filters />
 										</Col>
-										{/* Contenido principal que incluye el botón para móvil y la lista de excursiones */}
+										{/* Contenido principal que incluye el botón para breakpoints pequeños y la lista 
+										    de excursiones */}
 										<Col
 											xs={12}
 											md={8}
@@ -270,12 +269,11 @@ const Layout = () => {
 											xl={10}
 											className="d-flex flex-column position-relative"
 										>
-											{/* Botón para mostrar filtros en móvil (visible solo hasta 'md') */}
+											{/* Botón para mostrar filtros (visible solo hasta 'md') */}
 											<div className="d-grid d-md-none mt-3 mb-1">
 												<Button
 													variant="outline-secondary"
 													onClick={handleShowFilters}
-													// Esta clase ahora es global y se define en Themes.css
 													className="filtersToggleButton"
 												>
 													<FiFilter className="me-2" />
@@ -283,7 +281,8 @@ const Layout = () => {
 												</Button>
 											</div>
 											{excursionsContent}
-											{/* Menú Offcanvas para los filtros en breakpoints pequeños. Es independiente del de navegación. */}
+											{/* Menú Offcanvas para los filtros en breakpoints pequeños. Es independiente 
+											del de navegación. */}
 											<Offcanvas
 												show={showFilters}
 												onHide={handleCloseFilters}
