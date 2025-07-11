@@ -17,8 +17,8 @@ html {
 }
 
 /* --- Estilos de Foco para Accesibilidad --- */
-/* Se usa :focus-visible para mostrar el contorno solo a los usuarios de teclado, 
-   mejorando la experiencia sin molestar a los usuarios de ratón. */
+
+/* Se usa :focus-visible para mostrar el contorno solo a los usuarios de teclado, mejorando la experiencia sin molestar a los usuarios de ratón. */
 *:focus-visible {
 	outline: 3px solid var(--focus-outline-color);
 	outline-offset: 2px;
