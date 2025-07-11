@@ -15,7 +15,7 @@
 	text-transform: uppercase;
 	font-weight: bold;
 	padding: 1rem 1.25rem;
-	border-bottom: 1px solid var(--primary-color);
+	border-bottom: 1px solid var(--separator-color);
 }
 
 /* Estilos específicos para la tarjeta de excursiones en la página de usuario. */

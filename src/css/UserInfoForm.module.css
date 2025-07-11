@@ -1,13 +1,22 @@
+.profileCard {
+	background-color: var(--excursion-card-bg);
+	border: 1px solid var(--separator-color);
+	color: var(--text-color);
+	/* Mantenemos el border-radius por defecto de las tarjetas de Bootstrap para consistencia */
+	border-radius: 0.375rem;
+}
+
 .cardHeader {
 	background-color: var(--primary-color);
 	color: white;
 	text-transform: uppercase;
 	font-weight: bold;
 	padding: 1rem 1.25rem;
-	border-bottom: 1px solid var(--primary-color);
+	border-bottom: 1px solid var(--separator-color);
 }
 
 .cardBody {
+	background-color: transparent; /* Aseguramos que el cuerpo de la tarjeta no sobreescriba el fondo */
 	padding: 1.5rem;
 	font-size: 1.1rem;
 }

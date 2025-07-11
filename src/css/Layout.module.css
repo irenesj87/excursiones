@@ -1,34 +1,6 @@
 /* ======================================== */
 /* --- ESTILOS GENERALES --- */
 /* ======================================== */
-:root {
-	/* --- Paleta principal --- */
-	--primary-color: #315036;
-	--accent-color: #c05600;
-	--heading-color: var(--primary-color);
-
-	/* --- Colores de texto ---*/
-	--text-color-light: #333333;
-	--text-color-dark: #e0e0e0;
-
-	/* --- Colores de Borde --- */
-	--border-color-light: #e0e0e0;
-	--logout-bg-color: rgb(80, 73, 73);
-	--logout-bg-color-hover: rgb(100, 93, 93);
-
-	/* --- Variables para componentes específicos que no dependen del tema --- */
-	--filter-clear-btn-color-hover: #dc3545; /* Color de peligro de Bootstrap */
-
-	--theme-toggle-btn-color: var(--text-color-light);
-	--theme-toggle-btn-border-color: var(--border-color-light);
-	--theme-toggle-btn-bg-hover: rgba(0, 0, 0, 0.05);
-
-	/* --- Accesibilidad --- */
-	--focus-outline-color: var(--accent-color);
-
-	/* --- Tamaños y Tipografías --- */
-	font-size: 16px;
-}
 
 html {
 	box-sizing: border-box;
@@ -37,6 +9,11 @@ html {
 *::before,
 *::after {
 	box-sizing: inherit;
+}
+
+:root {
+	/* --- Tamaños y Tipografías --- */
+	font-size: 16px;
 }
 
 /* --- Estilos de Foco para Accesibilidad --- */

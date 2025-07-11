@@ -19,10 +19,5 @@
 	margin: 0;
 	font-size: 0.9rem;
 	font-weight: 500;
-	color: var(--text-color-light);
-}
-
-/* Adaptación para el tema oscuro */
-html.dark .errorMessage {
-	color: var(--text-color-dark);
+	color: var(--text-color);
 }

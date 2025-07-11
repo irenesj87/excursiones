@@ -11,7 +11,7 @@
 	text-transform: uppercase;
 	font-weight: bold;
 	padding: 1rem 1.25rem;
-	border-bottom: 1px solid var(--primary-color);
+	border-bottom: 1px solid var(--separator-color);
 }
 
 .cardBody {

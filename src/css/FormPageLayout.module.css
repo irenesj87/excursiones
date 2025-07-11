@@ -1,13 +1,19 @@
 .container {
+	display: flex;
+	flex-direction: column;
 	justify-content: center;
+	flex-grow: 1; /* Asegura que el contenedor ocupe el espacio vertical disponible */
 	padding-top: 2rem;
 	padding-bottom: 2rem;
 }
 
 .formCard {
+	background-color: var(--excursion-card-bg);
+	border: 1px solid var(--separator-color);
+	color: var(--text-color);
 	margin-top: 2rem;
 	margin-bottom: 2rem;
-	padding-bottom: 2rem;
+	padding: 2rem;
 	border-radius: 0.5rem;
 }
 
@@ -19,7 +25,7 @@
 	font-size: 1.6rem;
 	letter-spacing: 0.5px;
 	padding-bottom: 0.75rem;
-	margin-bottom: 2rem;
+	margin-bottom: 1.5rem; /* Espacio ajustado para un mejor layout */
 }
 
 /* Media query para breakpoints pequeños (xs breakpoint de Bootstrap es <576px) */

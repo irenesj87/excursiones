@@ -72,7 +72,7 @@
 
 .loginLink:hover,
 .loginLink:focus {
-	color: var(--text-color-dark);
+	color: white;
 }
 
 .loginLink:hover {
