@@ -10,9 +10,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 /**
  * Componente que muestra un esqueleto de carga para una ExcursionCard.
  * Utiliza react-loading-skeleton para una apariencia consistente y se adapta al modo oscuro.
- * @param {{ isLoggedIn?: boolean }} props
+ * @param {{ isLoggedIn?: boolean, isJoined?: boolean }} props
  */
-function ExcursionCardSkeleton({ isLoggedIn = false }) {
+function ExcursionCardSkeleton({ isLoggedIn = false, isJoined = false }) {
 	const mode = useSelector(
 		/** @param {RootState} state */
 		(state) => state.themeReducer.mode
@@ -59,8 +59,17 @@ function ExcursionCardSkeleton({ isLoggedIn = false }) {
 
 					{/* Botón de "Apuntarse" */}
 					{isLoggedIn && (
-						<div className="mt-auto pt-3 border-top d-flex justify-content-end">
-							<Skeleton height={38} width={90} />
+						<div className="mt-auto pt-3 border-top d-flex justify-content-end align-items-center">
+							{isJoined ? (
+								<div
+									className={`${cardStyles.joinedStatus} d-flex align-items-center`}
+								>
+									<Skeleton circle width={22} height={22} />
+									<Skeleton width={80} style={{ marginLeft: "0.5rem" }} />
+								</div>
+							) : (
+								<Skeleton height={38} width={90} />
+							)}
 						</div>
 					)}
 				</Card.Body>

@@ -22,14 +22,10 @@ import LoginPageSkeleton from "../LoginPageSkeleton";
 import UserPageSkeleton from "../UserPageSkeleton";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../../css/Layout.module.css";
-/**
- * Carga perezosa para componentes de ruta. El lazy loading permite que los componentes se carguen sólo cuando el usuario lo
- * necesita, así se mejoran los tiempos iniciales de carga de la página.
- */
 
 /**
- * Carga perezosa para componentes de ruta, asegurando un tiempo de carga mínimo
- * para evitar parpadeos del esqueleto de carga.
+ * Carga perezosa para componentes de ruta, asegurando un tiempo de carga mínimo para evitar parpadeos del esqueleto de 
+ * carga.
  * @param {() => Promise<any>} factory - La función de importación dinámica.
  * @param {number} [minTime=500] - El tiempo mínimo de carga en milisegundos.
  * @returns {React.LazyExoticComponent<any>}
@@ -52,30 +48,19 @@ const UserPage = lazyWithMinTime(() => import("../UserPage"));
  */
 const Footer = memo(OriginalFooter);
 
-// Constantes para configurar el indicador de carga (o fallback) de Suspense para los componentes que se cargan de forma
-// perezosa
-const baseFallbackClassName =
-	"d-flex justify-content-center align-items-center fw-bold p-5 flex-grow-1"; // Se utiliza para dar estilo al contenedor mientras una página se carga
-// Mensaje de texto que se mostrará al usuario
-const fallbackContent = "Cargando página...";
-
 /**
  * Componente wrapper para simplificar la renderización de rutas con carga perezosa.
  * @param {{
  *   PageComponent: React.ComponentType<any>;
- *   SkeletonComponent?: React.ComponentType<any>;
+ *   SkeletonComponent: React.ComponentType<any>;
  *   [key: string]: any;
- * }} props - Las propiedades del componente, que incluyen el componente de página, un esqueleto opcional y cualquier otra prop a pasar.
+ * }} props - Las propiedades del componente, que incluyen el componente de página, un esqueleto y cualquier otra prop a pasar.
  * @returns {React.ReactElement} Componente para simplificar la carga perezosa.
  */
 const LazyRouteWrapper = ({ PageComponent, SkeletonComponent, ...rest }) => {
 	// El fallback ahora se muestra inmediatamente. El tiempo mínimo de visualización
 	// se controla en la carga del componente con `lazyWithMinTime`.
-	const fallback = SkeletonComponent ? (
-		<SkeletonComponent />
-	) : (
-		<div className={baseFallbackClassName}>{fallbackContent}</div>
-	);
+	const fallback = <SkeletonComponent />;
 
 	return (
 		<Col xs={12}>

@@ -14,11 +14,11 @@ function UserExcursionsSkeleton() {
 			</Card.Header>
 			<Card.Body className="d-flex flex-column flex-grow-1">
 				<Row xs={1} md={2} className="g-3">
-					{/* Muestra 2 tarjetas de esqueleto para simular la lista */}
-					{[...Array(2)].map((_, i) => (
+					{/* Muestra 4 tarjetas de esqueleto para simular la lista */}
+					{[...Array(4)].map((_, i) => (
 						// eslint-disable-next-line react/no-array-index-key
 						<Col key={`user-excursion-skeleton-${i}`}>
-							<ExcursionCardSkeleton />
+							<ExcursionCardSkeleton isLoggedIn={true} isJoined={true} />
 						</Col>
 					))}
 				</Row>

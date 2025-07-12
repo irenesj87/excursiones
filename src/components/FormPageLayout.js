@@ -9,9 +9,9 @@ import styles from "../css/FormPageLayout.module.css";
  * @param {import('react-bootstrap/esm/Col').ColProps['xl']} [props.colWidth="5"] - Ancho de la columna para el formulario en breakpoints grandes.
  */
 function FormPageLayout({ title, children, colWidth = "5" }) {
-	return ( // Eliminamos las clases flex-grow-1 para que no compita con el layout principal
-		<Container fluid className={styles.container}>
-			<Row className="justify-content-center align-items-center">
+	return (
+		<Container fluid className={`${styles.container} h-100`}>
+			<Row className="justify-content-center align-items-center h-100">
 				<Col xs={12} md={9} lg={8} xl={colWidth}>
 					<Card className={styles.formCard}>
 						<Card.Body>

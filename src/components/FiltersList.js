@@ -1,15 +1,28 @@
 import { useState, useEffect } from "react";
-import FiltersListCheckbox from "components/FiltersListCheckbox";
-import FilterPillSkeleton from "components/FilterPillSkeleton";
-import FilterError from "components/FilterError";
+import { useSelector } from "react-redux";
+import { SkeletonTheme } from "react-loading-skeleton";
+import FiltersListCheckbox from "./FiltersListCheckbox";
+import FilterPillSkeleton from "./FilterPillSkeleton";
+import FilterError from "./FilterError";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/FiltersList.module.css";
+
+/** @typedef {import("../types").RootState} RootState */
 
 function FiltersList({ filterName }) {
 	// Estado que almacena la lista de filtros obtenidos del servidor.
 	const [arrayFilters, setArrayFilters] = useState([]);
 	const [isLoading, setIsLoading] = useState(true); // Inicia como true para la carga inicial.
 	const [error, setError] = useState(null);
+
+	const mode = useSelector(
+		/** @param {RootState} state */
+		(state) => state.themeReducer.mode
+	);
+
+	// Define los colores del esqueleto según el tema.
+	const baseColor = mode === "dark" ? "#202020" : "#e0e0e0";
+	const highlightColor = mode === "dark" ? "#444" : "#f5f5f5";
 
 	// useEffect que saca los filtros del servidor según el tipo de filtro (area, difficulty, time)
 	useEffect(() => {
@@ -56,18 +69,20 @@ function FiltersList({ filterName }) {
 	// Muestra los esqueletos siempre que isLoading sea true.
 	if (isLoading) {
 		return (
-			<ul className={styles.filtersGrid}>
-				{/* Mostramos 4 esqueletos para simular mejor el contenido real y evitar saltos de layout */}
-				{[...Array(4)].map((_, index) => (
-					<li
-						// eslint-disable-next-line react/no-array-index-key
-						key={`skeleton-pill-${index}`}
-						className={styles.filterItem}
-					>
-						<FilterPillSkeleton />
-					</li>
-				))}
-			</ul>
+			<SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
+				<ul className={styles.filtersGrid}>
+					{/* Mostramos 4 esqueletos para simular mejor el contenido real y evitar saltos de layout */}
+					{[...Array(4)].map((_, index) => (
+						<li
+							// eslint-disable-next-line react/no-array-index-key
+							key={`skeleton-pill-${index}`}
+							className={styles.filterItem}
+						>
+							<FilterPillSkeleton />
+						</li>
+					))}
+				</ul>
+			</SkeletonTheme>
 		);
 	}
 
