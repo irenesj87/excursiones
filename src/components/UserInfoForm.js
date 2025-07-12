@@ -3,7 +3,6 @@ import { Card, Col, Form, Row, Button } from "react-bootstrap";
 import UserPageInputEdit from "./UserPageInputEdit";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../slicers/loginSlice";
-import { Navigate } from "react-router";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/UserInfoForm.module.css";
 
@@ -15,8 +14,8 @@ import styles from "../css/UserInfoForm.module.css";
 function UserInfoForm() {
 	// Variable que necesitamos para poder usar los dispatchers de Redux.
 	const loginDispatch = useDispatch();
-	// Este useSelector nos da la información de si un usuario está logueado o no, así como los datos del usuario actual.
-	const { login: isLoggedIn, user } = useSelector(
+	// Este useSelector nos da los datos del usuario actual.
+	const { user } = useSelector(
 		/** @param {RootState} state */
 		(state) => state.loginReducer
 	);
@@ -68,11 +67,6 @@ function UserInfoForm() {
 		 */
 		body: JSON.stringify(currentUser),
 	};
-
-	// Si el usuario no está logueado, lo redirigimos a la página de inicio.
-	if (!isLoggedIn) {
-		return <Navigate replace to="/" />;
-	}
 
 	// Función para iniciar el modo de edición.
 	// Guarda los valores actuales como "originales" y muestra los inputs de edición.

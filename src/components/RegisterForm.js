@@ -112,90 +112,85 @@ function RegisterForm() {
 			>
 				<Row>
 					{/* Campo para el nombre */}
-					<ValidatedFormGroup
-						as={Col}
-						xs={12}
-						md={6}
-						id="formGridName"
-						name="Nombre"
-						inputToChange={setName}
-						validationFunction={validateName}
-						value={name}
-						message={true}
-						autocomplete="given-name"
-					/>
+					<Col xs={12} md={6}>
+						<ValidatedFormGroup
+							id="formGridName"
+							name="Nombre"
+							inputToChange={setName}
+							validationFunction={validateName}
+							value={name}
+							message={true}
+							autocomplete="given-name"
+						/>
+					</Col>
 					{/* Campo para los apellidos */}
-					<ValidatedFormGroup
-						as={Col}
-						xs={12}
-						md={6}
-						id="formGridSurname"
-						name="Apellidos"
-						inputToChange={setSurname}
-						validationFunction={validateSurname}
-						value={surname}
-						message={true}
-						autocomplete="family-name"
-					/>
+					<Col xs={12} md={6}>
+						<ValidatedFormGroup
+							id="formGridSurname"
+							name="Apellidos"
+							inputToChange={setSurname}
+							validationFunction={validateSurname}
+							value={surname}
+							message={true}
+							autocomplete="family-name"
+						/>
+					</Col>
 				</Row>
 				<Row>
 					{/* Campo para el teléfono */}
-					<ValidatedFormGroup
-						as={Col}
-						xs={12}
-						md={6}
-						id="formGridPhone"
-						name="Teléfono"
-						inputType="tel"
-						inputToChange={setPhone}
-						validationFunction={validatePhone}
-						value={phone}
-						message={true}
-						autocomplete="tel"
-					/>
+					<Col xs={12} md={6}>
+						<ValidatedFormGroup
+							id="formGridPhone"
+							name="Teléfono"
+							inputType="tel"
+							inputToChange={setPhone}
+							validationFunction={validatePhone}
+							value={phone}
+							message={true}
+							autocomplete="tel"
+						/>
+					</Col>
 					{/* Campo para el correo electrónico */}
-					<ValidatedFormGroup
-						as={Col}
-						xs={12}
-						md={6}
-						id="formGridEmail"
-						name="Correo electrónico"
-						inputType="email"
-						inputToChange={setMail}
-						validationFunction={validateMail}
-						value={mail}
-						message={true}
-						autocomplete="email"
-					/>
+					<Col xs={12} md={6}>
+						<ValidatedFormGroup
+							id="formGridEmail"
+							name="Correo electrónico"
+							inputType="email"
+							inputToChange={setMail}
+							validationFunction={validateMail}
+							value={mail}
+							message={true}
+							autocomplete="email"
+						/>
+					</Col>
 				</Row>
 				<Row>
 					{/* Campo para la contraseña */}
-					<ValidatedFormGroup
-						as={Col}
-						xs={12}
-						md={6}
-						id="password"
-						name="Contraseña"
-						inputType="password"
-						inputToChange={setPassword}
-						validationFunction={validatePassword}
-						value={password}
-						message={true}
-						autocomplete="new-password"
-					/>
-					<ValidatedFormGroup
-						as={Col}
-						xs={12}
-						md={6}
-						id="confirm-password" // ID para el campo de confirmación de contraseña.
-						name="Repite la contraseña"
-						inputType="password"
-						inputToChange={setSamePassword}
-						validationFunction={(value) => validSamePassword(password, value)}
-						value={samePassword}
-						message={true}
-						autocomplete="new-password"
-					/>
+					<Col xs={12} md={6}>
+						<ValidatedFormGroup
+							id="password"
+							name="Contraseña"
+							inputType="password"
+							inputToChange={setPassword}
+							validationFunction={validatePassword}
+							value={password}
+							message={true}
+							autocomplete="new-password"
+						/>
+					</Col>
+					{/* Campo para la confirmación de contraseña */}
+					<Col xs={12} md={6}>
+						<ValidatedFormGroup
+							id="confirm-password" // ID para el campo de confirmación de contraseña.
+							name="Repite la contraseña"
+							inputType="password"
+							inputToChange={setSamePassword}
+							validationFunction={(value) => validSamePassword(password, value)}
+							value={samePassword}
+							message={true}
+							autocomplete="new-password"
+						/>
+					</Col>
 				</Row>
 				{/* Mensaje informativo sobre los requisitos de la contraseña. */}
 				<ul className={`${styles.infoMessage} mb-3`}>

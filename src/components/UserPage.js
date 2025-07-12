@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 import UserInfoForm from "./UserInfoForm";
 import ExcursionCard from "./ExcursionCard";
 import PaginatedListDisplay from "./PaginatedListDisplay";
 import UserPageSkeleton from "./UserPageSkeleton";
+import UserExcursionsSkeleton from "./UserExcursionsSkeleton.js";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/UserPage.module.css";
 
@@ -14,8 +16,8 @@ import styles from "../css/UserPage.module.css";
  * Componente que representa la página de perfil del usuario. Muestra la información personal del usuario y las excursiones
  * a las que se ha apuntado.
  */
-function UserPage() {
-	// useSelector que dice si el usuario está logueado o no. Además, da la información del usuario
+function UserPage({ isAuthCheckComplete }) {
+	// useSelector que indica si el usuario está logueado y proporciona la información del usuario.
 	const { login: isLoggedIn, user } = useSelector(
 		/** @param {RootState} state */
 		(state) => state.loginReducer
@@ -88,23 +90,32 @@ function UserPage() {
 		fetchData();
 	}, [isLoggedIn, user]);
 
-	// Mientras los datos de las excursiones del usuario se están cargando, se muestra el esqueleto de la página completa.
-	// Esto proporciona una mejor experiencia de usuario, ya que la estructura de la página no cambia bruscamente.
-	if (isLoading) {
+	// Mientras la comprobación de autenticación inicial no se haya completado,
+	// mostramos el esqueleto para evitar una redirección prematura o un parpadeo del contenido.
+	if (!isAuthCheckComplete) {
 		return <UserPageSkeleton />;
 	}
 
+	// Una vez completada la comprobación, si el usuario no está autenticado,
+	// lo redirigimos a la página de inicio.
+	if (!isLoggedIn) {
+		return <Navigate replace to="/" />;
+	}
+
 	return (
-		/**
-		 * Contenedor principal de la página de usuario.
-		 */ <Row className="justify-content-center pt-2">
-			<Col xs={11} md={11} lg={11} xl={8} className="contentPane">
+		<Row className="justify-content-center pt-2">
+			<Col xs={11} md={11} lg={11} xl={8}>
 				<h2 className={`${styles.title} mb-3`}>Tu perfil</h2>
 				<Row className="mb-3">
 					<Col lg={6} xl={4} className="mb-4 mb-lg-0">
 						<UserInfoForm />
 					</Col>
-					<Col lg={6} xl={8}>
+					<Col lg={6} xl={8}>						
+						{/* Condición: Si los datos están cargando, muestra el esqueleto. De lo contrario, muestra la lista de excursiones paginada. */}
+						{isLoading ? (
+							<UserExcursionsSkeleton />
+						) : (
+						
 						<PaginatedListDisplay
 							data={userExcursions}
 							isLoading={isLoading}
@@ -119,7 +130,8 @@ function UserPage() {
 							cardHeader="Excursiones a las que te has apuntado"
 							cardClassName={styles.excursionsCard}
 							colProps={{ xs: 12 }}
-						/>
+						/>						
+						)}
 					</Col>
 				</Row>
 			</Col>

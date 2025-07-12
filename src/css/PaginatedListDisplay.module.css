@@ -1,7 +1,7 @@
 .listCard {
 	border: 1px solid var(--separator-color);
-	box-shadow: var(--box-shadow);
-	background-color: var(--card-bg);
+	box-shadow: var(--excursion-card-shadow);
+	background-color: var(--excursion-card-bg);
 	color: var(--text-color);
 }
 

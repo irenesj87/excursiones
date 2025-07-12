@@ -1,0 +1,30 @@
+import { Row, Col, Card } from "react-bootstrap";
+import ExcursionCardSkeleton from "./ExcursionCardSkeleton";
+import styles from "../css/UserPage.module.css";
+
+/**
+ * Componente que muestra un esqueleto de carga para la lista de excursiones del usuario.
+ * @returns {React.ReactElement}
+ */
+function UserExcursionsSkeleton() {
+	return (
+		<Card className={`${styles.excursionsCard} h-100 d-flex flex-column`}>
+			<Card.Header className={styles.cardHeader}>
+				Excursiones a las que te has apuntado
+			</Card.Header>
+			<Card.Body className="d-flex flex-column flex-grow-1">
+				<Row xs={1} md={2} className="g-3">
+					{/* Muestra 2 tarjetas de esqueleto para simular la lista */}
+					{[...Array(2)].map((_, i) => (
+						// eslint-disable-next-line react/no-array-index-key
+						<Col key={`user-excursion-skeleton-${i}`}>
+							<ExcursionCardSkeleton />
+						</Col>
+					))}
+				</Row>
+			</Card.Body>
+		</Card>
+	);
+}
+
+export default UserExcursionsSkeleton;

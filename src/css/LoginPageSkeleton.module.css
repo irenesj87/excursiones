@@ -1,7 +1,0 @@
-.inputPlaceholder {
-	height: 38px; /* Altura estándar de un Form.Control de Bootstrap */
-}
-
-.buttonPlaceholder {
-	min-width: 70px; /* Ancho mínimo para que se parezca al botón real */
-}

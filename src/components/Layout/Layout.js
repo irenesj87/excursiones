@@ -17,7 +17,6 @@ import NavigationBar from "../NavigationBar";
 import Filters from "../Filters";
 import Excursions from "../Excursions";
 import OriginalFooter from "../Footer"; // Se renombra la importación original para que no haya conflictos
-import DelayedFallback from "../DelayedFallback";
 import RegisterPageSkeleton from "../RegisterPageSkeleton";
 import LoginPageSkeleton from "../LoginPageSkeleton";
 import UserPageSkeleton from "../UserPageSkeleton";
@@ -27,9 +26,26 @@ import styles from "../../css/Layout.module.css";
  * Carga perezosa para componentes de ruta. El lazy loading permite que los componentes se carguen sólo cuando el usuario lo
  * necesita, así se mejoran los tiempos iniciales de carga de la página.
  */
-const RegisterPage = lazy(() => import("../RegisterPage"));
-const LoginPage = lazy(() => import("../LoginPage"));
-const UserPage = lazy(() => import("../UserPage"));
+
+/**
+ * Carga perezosa para componentes de ruta, asegurando un tiempo de carga mínimo
+ * para evitar parpadeos del esqueleto de carga.
+ * @param {() => Promise<any>} factory - La función de importación dinámica.
+ * @param {number} [minTime=500] - El tiempo mínimo de carga en milisegundos.
+ * @returns {React.LazyExoticComponent<any>}
+ */
+const lazyWithMinTime = (factory, minTime = 500) => {
+	return lazy(() =>
+		Promise.all([
+			factory(),
+			new Promise((resolve) => setTimeout(resolve, minTime)),
+		]).then(([moduleExports]) => moduleExports)
+	);
+};
+
+const RegisterPage = lazyWithMinTime(() => import("../RegisterPage"));
+const LoginPage = lazyWithMinTime(() => import("../LoginPage"));
+const UserPage = lazyWithMinTime(() => import("../UserPage"));
 /**
  * La memoización es una técnica de optimización donde se cachean los resultados para que no se tenga que renderizar otra
  * vez una función o un componente. Así se mejoran los tiempos de ejecución de la página.
@@ -42,38 +58,32 @@ const baseFallbackClassName =
 	"d-flex justify-content-center align-items-center fw-bold p-5 flex-grow-1"; // Se utiliza para dar estilo al contenedor mientras una página se carga
 // Mensaje de texto que se mostrará al usuario
 const fallbackContent = "Cargando página...";
-// Tiempo de espera en milisegundos antes de mostrar el fallback
-const fallbackDelay = 300;
 
 /**
  * Componente wrapper para simplificar la renderización de rutas con carga perezosa.
- * @param {object} props - Las propiedades del componente.
- * @param {React.ComponentType} props.PageComponent - El componente de la página a renderizar.
- * @param {React.ComponentType} [props.SkeletonComponent] - El componente skeleton a mostrar durante la carga. Es opcional.
+ * @param {{
+ *   PageComponent: React.ComponentType<any>;
+ *   SkeletonComponent?: React.ComponentType<any>;
+ *   [key: string]: any;
+ * }} props - Las propiedades del componente, que incluyen el componente de página, un esqueleto opcional y cualquier otra prop a pasar.
  * @returns {React.ReactElement} Componente para simplificar la carga perezosa.
  */
-const LazyRouteWrapper = ({ PageComponent, SkeletonComponent }) => {
-	// Determina qué fallback usar: el skeleton específico si se proporciona, o el genérico en caso contrario.
-	const fallback = SkeletonComponent ? ( // Si se proporciona un skeleton...
-		// ...lo envolvemos en DelayedFallback para evitar parpadeos en cargas rápidas.
-		<DelayedFallback delay={fallbackDelay}>
-			<SkeletonComponent />
-		</DelayedFallback>
+const LazyRouteWrapper = ({ PageComponent, SkeletonComponent, ...rest }) => {
+	// El fallback ahora se muestra inmediatamente. El tiempo mínimo de visualización
+	// se controla en la carga del componente con `lazyWithMinTime`.
+	const fallback = SkeletonComponent ? (
+		<SkeletonComponent />
 	) : (
-		// Si no, usamos el fallback genérico con el mismo retardo.
-		<DelayedFallback delay={fallbackDelay} className={baseFallbackClassName}>
-			{fallbackContent}
-		</DelayedFallback>
+		<div className={baseFallbackClassName}>{fallbackContent}</div>
 	);
 
 	return (
 		<Col xs={12}>
 			{/**
-			 * Suspense: Es un mecanismo que permite mostrar una interfaz de "carga" (un fallback) mientras espera que un
-			 * componente perezoso (lazy) termine de cargarse.
+			 * Suspense muestra el `fallback` mientras espera que el componente perezoso se cargue.
 			 */}
 			<Suspense fallback={fallback}>
-				<PageComponent />
+				<PageComponent {...rest} />
 			</Suspense>
 		</Col>
 	);
@@ -331,6 +341,7 @@ const Layout = () => {
 									<LazyRouteWrapper
 										PageComponent={UserPage}
 										SkeletonComponent={UserPageSkeleton}
+										isAuthCheckComplete={isAuthCheckComplete}
 									/>
 								}
 							/>
