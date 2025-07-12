@@ -1,0 +1,7 @@
+.inputPlaceholder {
+	height: 38px; /* Altura estándar de un Form.Control de Bootstrap */
+}
+
+.buttonPlaceholder {
+	width: 75px; /* Ancho similar al botón "Editar" */
+}

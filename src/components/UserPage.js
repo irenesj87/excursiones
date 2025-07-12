@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Card, Placeholder } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import UserInfoForm from "./UserInfoForm";
+import DelayedFallback from "./DelayedFallback";
 import ExcursionCard from "./ExcursionCard";
 import PaginatedListDisplay from "./PaginatedListDisplay";
 import "bootstrap/dist/css/bootstrap.css";
@@ -21,8 +22,8 @@ function UserPage() {
 	);
 	// Estado para guardar la información de las excursiones del usuario
 	const [userExcursions, setUserExcursions] = useState([]);
-	// Estado para el estado de carga de las excursiones
-	const [isLoading, setIsLoading] = useState(false);
+	// Estado para el estado de carga de las excursiones. Inicia en true.
+	const [isLoading, setIsLoading] = useState(true);
 	// Estado para el estado de error
 	const [error, setError] = useState(null);
 
@@ -35,10 +36,12 @@ function UserPage() {
 	 */
 	useEffect(() => {
 		const fetchData = async () => {
+			// Iniciar el estado de carga para cada nueva petición.
+			setIsLoading(true);
+			setError(null);
+
 			// Solo hacemos la petición si el usuario está logueado, tiene un email y excursiones asociadas.
 			if (isLoggedIn && user?.mail && user.excursions?.length > 0) {
-				setIsLoading(true);
-				setError(null);
 				const token = sessionStorage.getItem("token");
 				const url = `http://localhost:3001/users/${user.mail}/excursions`;
 				try {
@@ -75,6 +78,63 @@ function UserPage() {
 		fetchData();
 	}, [isLoggedIn, user]);
 
+	/**
+	 * Renderiza un placeholder para la lista de excursiones del usuario.
+	 * @returns {React.ReactElement}
+	 */
+	const renderExcursionsPlaceholder = () => (
+		<Card className={`${styles.excursionsCard} h-100 d-flex flex-column`}>
+			<Card.Header as="div">
+				<Placeholder animation="glow">
+					<Placeholder xs={8} />
+				</Placeholder>
+			</Card.Header>
+			<Card.Body className="d-flex flex-column flex-grow-1">
+				{/* Muestra un mensaje de carga en lugar de esqueletos de tarjetas para simplicidad */}
+				<div className="d-flex justify-content-center align-items-center flex-grow-1">
+					<Placeholder as="p" animation="glow">
+						<Placeholder xs={12} />
+					</Placeholder>
+				</div>
+			</Card.Body>
+		</Card>
+	);
+
+	// Lógica para determinar qué contenido mostrar en la sección de excursiones.
+	// Se extrae de un ternario anidado para mejorar la legibilidad y cumplir con las reglas del linter.
+	let excursionsContent;
+	if (isLoading) {
+		// Si está cargando, muestra el esqueleto.
+		excursionsContent = (
+			<DelayedFallback delay={200}>
+				{renderExcursionsPlaceholder()}
+			</DelayedFallback>
+		);
+	} else {
+		// Si la carga ha terminado, muestra la lista paginada.
+		excursionsContent = (
+			<PaginatedListDisplay
+				data={userExcursions}
+				isLoading={false} // Se pasa false porque la carga se gestiona aquí.
+				error={error}
+				itemsPerPage={4}
+				renderItem={(excursion) => (
+					<ExcursionCard
+						{...excursion}
+						isLoggedIn={true}
+						isJoined={true}
+					/>
+				)}
+				itemKeyExtractor={(excursion) => excursion.id}
+				noItemsMessage="Aún no te has apuntado a ninguna excursión."
+				errorMessage="Error al cargar tus excursiones."
+				cardHeader="Excursiones a las que te has apuntado"
+				cardClassName={styles.excursionsCard}
+				colProps={{ xs: 12 }}
+			/>
+		);
+	}
+
 	return (
 		/**
 		 * Contenedor principal de la página de usuario.
@@ -84,29 +144,8 @@ function UserPage() {
 				<Row className="mb-3">
 					<Col lg={6} xl={4} className="mb-4 mb-lg-0">
 						<UserInfoForm />
-					</Col>
-					<Col lg={6} xl={8}>
-						<PaginatedListDisplay
-							data={userExcursions}
-							isLoading={isLoading}
-							error={error}
-							itemsPerPage={4} // Puedes hacer esto una constante o una prop si lo necesitas dinámico
-							renderItem={(excursion) => (
-								<ExcursionCard
-									{...excursion}
-									isLoggedIn={true}
-									isJoined={true}
-								/>
-							)}
-							itemKeyExtractor={(excursion) => excursion.id}
-							noItemsMessage="Aún no te has apuntado a ninguna excursión."
-							loadingMessage="Cargando tus excursiones..."
-							errorMessage="Error al cargar tus excursiones."
-							cardHeader="Excursiones a las que te has apuntado"
-							cardClassName={styles.excursionsCard} // Aplica estilos específicos de UserPage
-							colProps={{ xs: 12 }} // Asegura que cada tarjeta ocupe el ancho en breakpoints pequeños
-						/>
-					</Col>
+					</Col>					
+					<Col lg={6} xl={8}>{excursionsContent}</Col>
 				</Row>
 			</Col>
 		</Row>

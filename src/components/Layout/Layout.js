@@ -18,6 +18,9 @@ import Filters from "../Filters";
 import Excursions from "../Excursions";
 import OriginalFooter from "../Footer"; // Se renombra la importación original para que no haya conflictos
 import DelayedFallback from "../DelayedFallback";
+import RegisterPageSkeleton from "../RegisterPageSkeleton";
+import LoginPageSkeleton from "../LoginPageSkeleton";
+import UserPageSkeleton from "../UserPageSkeleton";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../../css/Layout.module.css";
 /**
@@ -40,39 +43,41 @@ const baseFallbackClassName =
 // Mensaje de texto que se mostrará al usuario
 const fallbackContent = "Cargando página...";
 // Tiempo de espera en milisegundos antes de mostrar el fallback
-const fallbackDelay = 500;
+const fallbackDelay = 300;
 
 /**
  * Componente wrapper para simplificar la renderización de rutas con carga perezosa.
  * @param {object} props - Las propiedades del componente.
  * @param {React.ComponentType} props.PageComponent - El componente de la página a renderizar.
+ * @param {React.ComponentType} [props.SkeletonComponent] - El componente skeleton a mostrar durante la carga. Es opcional.
  * @returns {React.ReactElement} Componente para simplificar la carga perezosa.
  */
-const LazyRouteWrapper = ({ PageComponent }) => (
-	<Col xs={12}>
-		{/**
-		 * Suspense: Es un mecanismo que permite mostrar una interfaz de "carga" (un fallback) mientras espera que un
-		 * componente perezoso (lazy) termine de cargarse.
-		 */}
-		<Suspense
-			// La prop "fallback" dice que se debe renderizar durante esa espera
-			fallback={
-				/**
-				 * Se le pasa el retraso de 500ms que definimos en la constante. Esto evita que el mensaje "Cargando página..."
-				 * parpadee si la página carga muy rápido.
-				 */
-				<DelayedFallback
-					delay={fallbackDelay}
-					className={baseFallbackClassName}
-				>
-					{fallbackContent}
-				</DelayedFallback>
-			}
-		>
-			<PageComponent />
-		</Suspense>
-	</Col>
-);
+const LazyRouteWrapper = ({ PageComponent, SkeletonComponent }) => {
+	// Determina qué fallback usar: el skeleton específico si se proporciona, o el genérico en caso contrario.
+	const fallback = SkeletonComponent ? ( // Si se proporciona un skeleton...
+		// ...lo envolvemos en DelayedFallback para evitar parpadeos en cargas rápidas.
+		<DelayedFallback delay={fallbackDelay}>
+			<SkeletonComponent />
+		</DelayedFallback>
+	) : (
+		// Si no, usamos el fallback genérico con el mismo retardo.
+		<DelayedFallback delay={fallbackDelay} className={baseFallbackClassName}>
+			{fallbackContent}
+		</DelayedFallback>
+	);
+
+	return (
+		<Col xs={12}>
+			{/**
+			 * Suspense: Es un mecanismo que permite mostrar una interfaz de "carga" (un fallback) mientras espera que un
+			 * componente perezoso (lazy) termine de cargarse.
+			 */}
+			<Suspense fallback={fallback}>
+				<PageComponent />
+			</Suspense>
+		</Col>
+	);
+};
 
 /**
  * Componente principal del layout de la aplicación.
@@ -304,15 +309,30 @@ const Layout = () => {
 							{/* Define las rutas para los componentes RegisterPage, LoginPage y UserPage */}
 							<Route
 								path="registerPage"
-								element={<LazyRouteWrapper PageComponent={RegisterPage} />}
+								element={
+									<LazyRouteWrapper
+										PageComponent={RegisterPage}
+										SkeletonComponent={RegisterPageSkeleton}
+									/>
+								}
 							/>
 							<Route
 								path="loginPage"
-								element={<LazyRouteWrapper PageComponent={LoginPage} />}
+								element={
+									<LazyRouteWrapper
+										PageComponent={LoginPage}
+										SkeletonComponent={LoginPageSkeleton}
+									/>
+								}
 							/>
 							<Route
 								path="userPage"
-								element={<LazyRouteWrapper PageComponent={UserPage} />}
+								element={
+									<LazyRouteWrapper
+										PageComponent={UserPage}
+										SkeletonComponent={UserPageSkeleton}
+									/>
+								}
 							/>
 						</Routes>
 					</Row>
