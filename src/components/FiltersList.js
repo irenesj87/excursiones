@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import FiltersListCheckbox from "components/FiltersListCheckbox";
 import FilterPillSkeleton from "components/FilterPillSkeleton";
 import FilterError from "components/FilterError";
-import DelayedFallback from "components/DelayedFallback";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/FiltersList.module.css";
 
@@ -15,6 +14,9 @@ function FiltersList({ filterName }) {
 	// useEffect que saca los filtros del servidor según el tipo de filtro (area, difficulty, time)
 	useEffect(() => {
 		const fetchData = async () => {
+			// Guardamos el tiempo de inicio para asegurar una duración mínima de la animación de carga.
+			const startTime = Date.now();
+
 			setIsLoading(true);
 			setError(null);
 
@@ -37,7 +39,14 @@ function FiltersList({ filterName }) {
 				console.error(`Error al cargar los filtros para "${filterName}":`, err);
 				setError(err);
 			} finally {
-				setIsLoading(false);
+				const elapsedTime = Date.now() - startTime;
+				const minimumLoadingTime = 300; // 300ms de retardo mínimo
+				const remainingTime = minimumLoadingTime - elapsedTime;
+
+				// Esperamos el tiempo restante para asegurar que el esqueleto se vea al menos 300ms.
+				setTimeout(() => {
+					setIsLoading(false);
+				}, Math.max(0, remainingTime));
 			}
 		};
 
@@ -47,20 +56,18 @@ function FiltersList({ filterName }) {
 	// Muestra los esqueletos siempre que isLoading sea true.
 	if (isLoading) {
 		return (
-			<DelayedFallback delay={0.0000000001}>
-				<ul className={styles.filtersGrid}>
-					{/* Mostramos 4 esqueletos para simular mejor el contenido real y evitar saltos de layout */}
-					{[...Array(4)].map((_, index) => (
-						<li
-							// eslint-disable-next-line react/no-array-index-key
-							key={`skeleton-pill-${index}`}
-							className={styles.filterItem}
-						>
-							<FilterPillSkeleton />
-						</li>
-					))}
-				</ul>
-			</DelayedFallback>
+			<ul className={styles.filtersGrid}>
+				{/* Mostramos 4 esqueletos para simular mejor el contenido real y evitar saltos de layout */}
+				{[...Array(4)].map((_, index) => (
+					<li
+						// eslint-disable-next-line react/no-array-index-key
+						key={`skeleton-pill-${index}`}
+						className={styles.filterItem}
+					>
+						<FilterPillSkeleton />
+					</li>
+				))}
+			</ul>
 		);
 	}
 

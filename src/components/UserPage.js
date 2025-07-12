@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { Row, Col, Card, Placeholder } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import UserInfoForm from "./UserInfoForm";
-import DelayedFallback from "./DelayedFallback";
 import ExcursionCard from "./ExcursionCard";
 import PaginatedListDisplay from "./PaginatedListDisplay";
+import UserPageSkeleton from "./UserPageSkeleton";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/UserPage.module.css";
 
@@ -36,6 +36,9 @@ function UserPage() {
 	 */
 	useEffect(() => {
 		const fetchData = async () => {
+			// Guardamos el tiempo de inicio para asegurar una duración mínima de la animación de carga.
+			const startTime = Date.now();
+
 			// Iniciar el estado de carga para cada nueva petición.
 			setIsLoading(true);
 			setError(null);
@@ -66,7 +69,14 @@ function UserPage() {
 					setError(err.message || "Error al cargar tus excursiones.");
 					setUserExcursions([]); // Limpiar en caso de error
 				} finally {
-					setIsLoading(false);
+					const elapsedTime = Date.now() - startTime;
+					const minimumLoadingTime = 300; // 300ms de retardo mínimo
+					const remainingTime = minimumLoadingTime - elapsedTime;
+
+					// Esperamos el tiempo restante para asegurar que el esqueleto se vea al menos 300ms.
+					setTimeout(() => {
+						setIsLoading(false);
+					}, Math.max(0, remainingTime));
 				}
 			} else {
 				// Si el usuario no está logueado o no tiene excursiones, la lista se muestra vacía.
@@ -78,74 +88,39 @@ function UserPage() {
 		fetchData();
 	}, [isLoggedIn, user]);
 
-	/**
-	 * Renderiza un placeholder para la lista de excursiones del usuario.
-	 * @returns {React.ReactElement}
-	 */
-	const renderExcursionsPlaceholder = () => (
-		<Card className={`${styles.excursionsCard} h-100 d-flex flex-column`}>
-			<Card.Header as="div">
-				<Placeholder animation="glow">
-					<Placeholder xs={8} />
-				</Placeholder>
-			</Card.Header>
-			<Card.Body className="d-flex flex-column flex-grow-1">
-				{/* Muestra un mensaje de carga en lugar de esqueletos de tarjetas para simplicidad */}
-				<div className="d-flex justify-content-center align-items-center flex-grow-1">
-					<Placeholder as="p" animation="glow">
-						<Placeholder xs={12} />
-					</Placeholder>
-				</div>
-			</Card.Body>
-		</Card>
-	);
-
-	// Lógica para determinar qué contenido mostrar en la sección de excursiones.
-	// Se extrae de un ternario anidado para mejorar la legibilidad y cumplir con las reglas del linter.
-	let excursionsContent;
+	// Mientras los datos de las excursiones del usuario se están cargando, se muestra el esqueleto de la página completa.
+	// Esto proporciona una mejor experiencia de usuario, ya que la estructura de la página no cambia bruscamente.
 	if (isLoading) {
-		// Si está cargando, muestra el esqueleto.
-		excursionsContent = (
-			<DelayedFallback delay={200}>
-				{renderExcursionsPlaceholder()}
-			</DelayedFallback>
-		);
-	} else {
-		// Si la carga ha terminado, muestra la lista paginada.
-		excursionsContent = (
-			<PaginatedListDisplay
-				data={userExcursions}
-				isLoading={false} // Se pasa false porque la carga se gestiona aquí.
-				error={error}
-				itemsPerPage={4}
-				renderItem={(excursion) => (
-					<ExcursionCard
-						{...excursion}
-						isLoggedIn={true}
-						isJoined={true}
-					/>
-				)}
-				itemKeyExtractor={(excursion) => excursion.id}
-				noItemsMessage="Aún no te has apuntado a ninguna excursión."
-				errorMessage="Error al cargar tus excursiones."
-				cardHeader="Excursiones a las que te has apuntado"
-				cardClassName={styles.excursionsCard}
-				colProps={{ xs: 12 }}
-			/>
-		);
+		return <UserPageSkeleton />;
 	}
 
 	return (
 		/**
 		 * Contenedor principal de la página de usuario.
-		 */		<Row className="justify-content-center pt-2">
+		 */ <Row className="justify-content-center pt-2">
 			<Col xs={11} md={11} lg={11} xl={8} className="contentPane">
 				<h2 className={`${styles.title} mb-3`}>Tu perfil</h2>
 				<Row className="mb-3">
 					<Col lg={6} xl={4} className="mb-4 mb-lg-0">
 						<UserInfoForm />
-					</Col>					
-					<Col lg={6} xl={8}>{excursionsContent}</Col>
+					</Col>
+					<Col lg={6} xl={8}>
+						<PaginatedListDisplay
+							data={userExcursions}
+							isLoading={isLoading}
+							error={error}
+							itemsPerPage={4}
+							renderItem={(excursion) => (
+								<ExcursionCard {...excursion} isLoggedIn={true} isJoined={true} />
+							)}
+							itemKeyExtractor={(excursion) => excursion.id}
+							noItemsMessage="Aún no te has apuntado a ninguna excursión."
+							errorMessage="Error al cargar tus excursiones."
+							cardHeader="Excursiones a las que te has apuntado"
+							cardClassName={styles.excursionsCard}
+							colProps={{ xs: 12 }}
+						/>
+					</Col>
 				</Row>
 			</Col>
 		</Row>
