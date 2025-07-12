@@ -4,6 +4,7 @@ import styles from "../css/UserPage.module.css";
 
 /**
  * Componente que muestra un esqueleto de carga para la lista de excursiones del usuario.
+ * No incluye `SkeletonTheme` para poder ser anidado en otros componentes de esqueleto.
  * @returns {React.ReactElement}
  */
 function UserExcursionsSkeleton() {

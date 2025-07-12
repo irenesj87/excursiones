@@ -1,6 +1,7 @@
 import { memo, useMemo, useCallback, useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
+import { SkeletonTheme } from "react-loading-skeleton";
 import { BsBinoculars } from "react-icons/bs";
 import { updateUser } from "../slicers/loginSlice";
 import ExcursionCard from "components/ExcursionCard";
@@ -22,6 +23,10 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	const { login: isLoggedIn, user } = useSelector(
 		/** @param {RootState} state */
 		(state) => state.loginReducer
+	);
+	const mode = useSelector(
+		/** @param {RootState} state */
+		(state) => state.themeReducer.mode
 	);
 	const loginDispatch = useDispatch();
 
@@ -122,28 +127,34 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 		);
 	}
 
+	// Define los colores del esqueleto según el tema para una experiencia visual consistente.
+	const baseColor = mode === "dark" ? "#202020" : "#e0e0e0";
+	const highlightColor = mode === "dark" ? "#444" : "#f5f5f5";
+
 	// Si se deben mostrar los esqueletos de carga.
 	if (showSkeletons) {
 		return (
-			<div className={styles.excursionsContainer}>
-				<h2 className={styles.title}>Próximas excursiones</h2>
-				<Row className="gx-4 gy-5" aria-label="Cargando excursiones...">
-					{/* Mostramos 8 placeholders para dar una idea de la estructura */}
-					{Array.from({ length: 8 }).map((_, index) => (
-						<Col
-							xs={12}
-							md={6}
-							lg={4}
-							xl={3}
-							// eslint-disable-next-line react/no-array-index-key
-							key={`skeleton-card-${index}`}
-							className="d-flex"
-						>
-							<ExcursionCardSkeleton isLoggedIn={isLoggedIn} />
-						</Col>
-					))}
-				</Row>
-			</div>
+			<SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
+				<div className={styles.excursionsContainer}>
+					<h2 className={styles.title}>Próximas excursiones</h2>
+					<Row className="gx-4 gy-5" aria-label="Cargando excursiones...">
+						{/* Mostramos 8 placeholders para dar una idea de la estructura */}
+						{Array.from({ length: 8 }).map((_, index) => (
+							<Col
+								xs={12}
+								md={6}
+								lg={4}
+								xl={3}
+								// eslint-disable-next-line react/no-array-index-key
+								key={`skeleton-card-${index}`}
+								className="d-flex"
+							>
+								<ExcursionCardSkeleton isLoggedIn={isLoggedIn} />
+							</Col>
+						))}
+					</Row>
+				</div>
+			</SkeletonTheme>
 		);
 	}
 

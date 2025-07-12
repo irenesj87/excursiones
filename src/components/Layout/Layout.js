@@ -24,17 +24,27 @@ import "bootstrap/dist/css/bootstrap.css";
 import styles from "../../css/Layout.module.css";
 
 /**
- * Carga perezosa para componentes de ruta, asegurando un tiempo de carga mínimo para evitar parpadeos del esqueleto de 
- * carga.
+ * Carga perezosa para componentes de ruta. Su propósito es asegurar que cuando un componente se carga de forma perezosa,
+ * el indicador de carga (como por ejemplo un "esqueleto" o skeleton) se muestre al usuario durante un tiempo mínimo, que
+ * por defecto es de 500 milisegundos. Resulve un problema común de experiencia de usuario llamado parpadeo (flickering)
  * @param {() => Promise<any>} factory - La función de importación dinámica.
  * @param {number} [minTime=500] - El tiempo mínimo de carga en milisegundos.
  * @returns {React.LazyExoticComponent<any>}
  */
 const lazyWithMinTime = (factory, minTime = 500) => {
 	return lazy(() =>
+		// Promise.all espera a que todas las promesas de su array se completen. Por lo tanto, no continuará hasta que:
+		// El componente se haya cargado. Y además, hayan pasado los 500 milisegundos.
 		Promise.all([
+			// Esta es la función que realmente importa el componente (ej. () => import("../RegisterPage"))
 			factory(),
+			// Al mismo tiempo, crea una segunda promesa que simplemente espera el tiempo definido en minTime usando setTimeout.
 			new Promise((resolve) => setTimeout(resolve, minTime)),
+			/**
+			 * Una vez que ambas condiciones se cumplen, Promise.all retorna un array con los resultados de ambas
+			 * promesas. Esta línea se encarga de extraer y retornar únicamente el resultado de la primera promesa
+			 * (el módulo del componente), que es lo que lazy de React necesita para funcionar.
+			 */
 		]).then(([moduleExports]) => moduleExports)
 	);
 };
@@ -42,6 +52,7 @@ const lazyWithMinTime = (factory, minTime = 500) => {
 const RegisterPage = lazyWithMinTime(() => import("../RegisterPage"));
 const LoginPage = lazyWithMinTime(() => import("../LoginPage"));
 const UserPage = lazyWithMinTime(() => import("../UserPage"));
+
 /**
  * La memoización es una técnica de optimización donde se cachean los resultados para que no se tenga que renderizar otra
  * vez una función o un componente. Así se mejoran los tiempos de ejecución de la página.
@@ -323,6 +334,10 @@ const Layout = () => {
 							<Route
 								path="userPage"
 								element={
+									// Se simplifica la lógica para renderizar siempre el componente UserPage (envuelto en el cargador perezoso).
+									// Se pasa `isAuthCheckComplete` para que `UserPage` pueda gestionar su propio estado de carga,
+									// incluyendo la espera de la verificación de autenticación.
+									// Esto evita el desmontaje y remontaje del esqueleto, solucionando el reinicio de la animación.
 									<LazyRouteWrapper
 										PageComponent={UserPage}
 										SkeletonComponent={UserPageSkeleton}

@@ -6,7 +6,6 @@ import UserInfoForm from "./UserInfoForm";
 import ExcursionCard from "./ExcursionCard";
 import PaginatedListDisplay from "./PaginatedListDisplay";
 import UserPageSkeleton from "./UserPageSkeleton";
-import UserExcursionsSkeleton from "./UserExcursionsSkeleton.js";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/UserPage.module.css";
 
@@ -29,6 +28,12 @@ function UserPage({ isAuthCheckComplete }) {
 	// Estado para el estado de error
 	const [error, setError] = useState(null);
 
+	// Para estabilizar la dependencia del useEffect, creamos una representación estable
+	// del array de excursiones. JSON.stringify es una forma sencilla de hacerlo.
+	// De esta manera, el efecto solo se volverá a ejecutar si el contenido del array
+	// cambia, no solo su referencia en memoria.
+	const userExcursionIds = JSON.stringify(user?.excursions);
+
 	/**
 	 * Efecto que se encarga de obtener los datos de las excursiones a las que el usuario se ha apuntado.
 	 * Se ejecuta cuando cambia el estado de login o el objeto de usuario.
@@ -37,6 +42,13 @@ function UserPage({ isAuthCheckComplete }) {
 	 * Maneja los estados de carga y error.
 	 */
 	useEffect(() => {
+		// Solo se procede a buscar datos una vez que la comprobación de autenticación inicial ha finalizado.
+		// Esto previene que el efecto se ejecute con un estado de autenticación transitorio (ej. usuario aún no cargado)
+		// que podría causar un parpadeo al establecer `isLoading` en `false` prematuramente.
+		if (!isAuthCheckComplete) {
+			return; // No hacer nada hasta que la autenticación esté verificada.
+		}
+
 		const fetchData = async () => {
 			// Guardamos el tiempo de inicio para asegurar una duración mínima de la animación de carga.
 			const startTime = Date.now();
@@ -88,20 +100,22 @@ function UserPage({ isAuthCheckComplete }) {
 			}
 		};
 		fetchData();
-	}, [isLoggedIn, user]);
+	}, [isAuthCheckComplete, isLoggedIn, user?.mail, userExcursionIds, user?.excursions.length]);
 
-	// Mientras la comprobación de autenticación inicial no se haya completado,
-	// mostramos el esqueleto para evitar una redirección prematura o un parpadeo del contenido.
-	if (!isAuthCheckComplete) {
+	// La condición de carga ahora considera tanto la comprobación de autenticación (`isAuthCheckComplete`)
+	// como la carga de datos de las excursiones (`isLoading`).
+	// Esto asegura que el esqueleto se muestre de forma continua hasta que todo esté listo,
+	// evitando el reinicio de la animación.
+	if (!isAuthCheckComplete || isLoading) {
 		return <UserPageSkeleton />;
 	}
 
-	// Una vez completada la comprobación, si el usuario no está autenticado,
-	// lo redirigimos a la página de inicio.
+	// Una vez que la autenticación está completa y los datos cargados, podemos redirigir si no está logueado.
 	if (!isLoggedIn) {
 		return <Navigate replace to="/" />;
 	}
 
+	// Si el usuario está logueado
 	return (
 		<Row className="justify-content-center pt-2">
 			<Col xs={11} md={11} lg={11} xl={8}>
@@ -110,19 +124,15 @@ function UserPage({ isAuthCheckComplete }) {
 					<Col lg={6} xl={4} className="mb-4 mb-lg-0">
 						<UserInfoForm />
 					</Col>
-					<Col lg={6} xl={8}>						
-						{/* Condición: Si los datos están cargando, muestra el esqueleto. De lo contrario, muestra la lista de excursiones paginada. */}
-						{isLoading ? (
-							<UserExcursionsSkeleton />
-						) : (
-						
+					<Col lg={6} xl={8}>
+						{/* Una vez que la carga ha finalizado, mostramos la lista de excursiones o los mensajes de error/vacío. */}
 						<PaginatedListDisplay
 							data={userExcursions}
 							isLoading={isLoading}
 							error={error}
 							itemsPerPage={4}
 							renderItem={(excursion) => (
-								<ExcursionCard {...excursion} isLoggedIn={true} isJoined={true} />
+								<ExcursionCard {...excursion} isLoggedIn isJoined />
 							)}
 							itemKeyExtractor={(excursion) => excursion.id}
 							noItemsMessage="Aún no te has apuntado a ninguna excursión."
@@ -130,8 +140,7 @@ function UserPage({ isAuthCheckComplete }) {
 							cardHeader="Excursiones a las que te has apuntado"
 							cardClassName={styles.excursionsCard}
 							colProps={{ xs: 12 }}
-						/>						
-						)}
+						/>
 					</Col>
 				</Row>
 			</Col>
