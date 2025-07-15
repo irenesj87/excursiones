@@ -19,7 +19,6 @@ import Excursions from "../Excursions";
 import OriginalFooter from "../Footer"; // Se renombra la importación original para que no haya conflictos
 import RegisterPageSkeleton from "../RegisterPageSkeleton";
 import LoginPageSkeleton from "../LoginPageSkeleton";
-import UserPageSkeleton from "../UserPageSkeleton";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../../css/Layout.module.css";
 
@@ -334,13 +333,13 @@ const Layout = () => {
 							<Route
 								path="userPage"
 								element={
-									// Se simplifica la lógica para renderizar siempre el componente UserPage (envuelto en el cargador perezoso).
-									// Se pasa `isAuthCheckComplete` para que `UserPage` pueda gestionar su propio estado de carga,
-									// incluyendo la espera de la verificación de autenticación.
-									// Esto evita el desmontaje y remontaje del esqueleto, solucionando el reinicio de la animación.
+									// Se usa LazyRouteWrapper para estandarizar la carga de componentes y pasar props de forma segura.
 									<LazyRouteWrapper
 										PageComponent={UserPage}
-										SkeletonComponent={UserPageSkeleton}
+										// El esqueleto se gestiona dentro de UserPage, por lo que el fallback de Suspense puede ser nulo.
+										// Esto previene que Suspense muestre un esqueleto propio, cediendo el control a UserPage.
+										// Pasamos un componente que retorna null para lograr un fallback nulo.
+										SkeletonComponent={() => null}
 										isAuthCheckComplete={isAuthCheckComplete}
 									/>
 								}

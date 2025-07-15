@@ -52,59 +52,60 @@ function UserPage({ isAuthCheckComplete }) {
 		const fetchData = async () => {
 			// Guardamos el tiempo de inicio para asegurar una duración mínima de la animación de carga.
 			const startTime = Date.now();
-
+			
 			// Iniciar el estado de carga para cada nueva petición.
 			setIsLoading(true);
 			setError(null);
 
-			// Solo hacemos la petición si el usuario está logueado, tiene un email y excursiones asociadas.
-			if (isLoggedIn && user?.mail && user.excursions?.length > 0) {
-				const token = sessionStorage.getItem("token");
-				const url = `http://localhost:3001/users/${user.mail}/excursions`;
+			let excursionsData = [];
+			let fetchError = null;
+
+			if (isLoggedIn && user?.mail) {
 				try {
-					const response = await fetch(url, {
-						headers: {
-							Authorization: `Bearer ${token}`,
-						},
-					});
-					if (!response.ok) {
-						if (response.status === 401 || response.status === 403) {
+					if (user.excursions?.length > 0) {
+						const token = sessionStorage.getItem("token");
+						const url = `http://localhost:3001/users/${user.mail}/excursions`;
+						const response = await fetch(url, {
+							headers: {
+								Authorization: `Bearer ${token}`,
+							},
+						});
+						if (!response.ok) {
 							throw new Error(
-								"No tienes autorización para ver estas excursiones."
+								response.status === 401 || response.status === 403
+									? "No tienes autorización."
+									: `Error HTTP: ${response.status}`
 							);
 						}
-						throw new Error(`HTTP error! status: ${response.status}`);
+						excursionsData = await response.json();
 					}
-					const data = await response.json();
-					// El servidor ya devuelve solo las excursiones del usuario, no es necesario filtrar.
-					setUserExcursions(data);
 				} catch (err) {
-					console.error("Error fetching user excursions:", err);
-					setError(err.message || "Error al cargar tus excursiones.");
-					setUserExcursions([]); // Limpiar en caso de error
-				} finally {
-					const elapsedTime = Date.now() - startTime;
-					const minimumLoadingTime = 300; // 300ms de retardo mínimo
-					const remainingTime = minimumLoadingTime - elapsedTime;
-
-					// Esperamos el tiempo restante para asegurar que el esqueleto se vea al menos 300ms.
-					setTimeout(() => {
-						setIsLoading(false);
-					}, Math.max(0, remainingTime));
+					console.error("Error al obtener excursiones:", err);
+					fetchError = err.message || "Error al cargar tus excursiones.";
 				}
-			} else {
-				// Si el usuario no está logueado o no tiene excursiones, la lista se muestra vacía.
-				setUserExcursions([]);
-				setIsLoading(false); // Asegurarse de que no quede cargando
-				setError(null);
-			}
+			
+
+			// Aplicar un retraso mínimo antes de actualizar el estado de carga.
+			const elapsedTime = Date.now() - startTime;
+			const remainingTime = Math.max(0, 300 - elapsedTime);
+			await new Promise((resolve) => setTimeout(resolve, remainingTime));
+
+			setUserExcursions(excursionsData);
+			setError(fetchError);
+		}
+			setIsLoading(false);
 		};
 		fetchData();
+
+		// Cleanup function to handle unmounting
+		return () => {
+			// Any cleanup if necessary, like aborting fetch requests
+		};
 	}, [isAuthCheckComplete, isLoggedIn, user?.mail, userExcursionIds, user?.excursions.length]);
 
 	// La condición de carga ahora considera tanto la comprobación de autenticación (`isAuthCheckComplete`)
-	// como la carga de datos de las excursiones (`isLoading`).
-	// Esto asegura que el esqueleto se muestre de forma continua hasta que todo esté listo,
+	// como la carga de datos de las excursiones (`isLoading`) y si el tiempo mínimo ha transcurrido.
+	// Esto asegura que el esqueleto se muestre de forma continua hasta que esté listo,
 	// evitando el reinicio de la animación.
 	if (!isAuthCheckComplete || isLoading) {
 		return <UserPageSkeleton />;
