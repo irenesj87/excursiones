@@ -26,17 +26,17 @@ import UserPageSkeleton from "components/UserPageSkeleton";
 /**
  * Carga perezosa para componentes de ruta. Su propósito es asegurar que cuando un componente se carga de forma perezosa,
  * el indicador de carga (como por ejemplo un "esqueleto" o skeleton) se muestre al usuario durante un tiempo mínimo, que
- * por defecto es de 500 milisegundos. Resulve un problema común de experiencia de usuario llamado parpadeo (flickering)
+ * por defecto es de 500 milisegundos. Resulve un problema común de experiencia de usuario llamado parpadeo (flickering).
  * @param {() => Promise<any>} factory - La función de importación dinámica.
  * @param {number} [minTime=500] - El tiempo mínimo de carga en milisegundos.
  * @returns {React.LazyExoticComponent<any>}
  */
 const lazyWithMinTime = (factory, minTime = 500) => {
 	return lazy(() =>
-		// Promise.all espera a que todas las promesas de su array se completen. Por lo tanto, no continuará hasta que:
-		// El componente se haya cargado. Y además, hayan pasado los 500 milisegundos.
+		// Promise.all espera a que todas las promesas de su array se completen. Por lo tanto, no continuará hasta que
+		// el componente se haya cargado, y además, hayan pasado los 500 milisegundos.
 		Promise.all([
-			// Esta es la función que realmente importa el componente (ej. () => import("../RegisterPage"))
+			// Esta es la función que importa el componente (ej. () => import("../RegisterPage"))
 			factory(),
 			// Al mismo tiempo, crea una segunda promesa que simplemente espera el tiempo definido en minTime usando setTimeout.
 			new Promise((resolve) => setTimeout(resolve, minTime)),
@@ -69,14 +69,13 @@ const Footer = memo(OriginalFooter);
  * @returns {React.ReactElement} Componente para simplificar la carga perezosa.
  */
 const LazyRouteWrapper = ({ PageComponent, SkeletonComponent, ...rest }) => {
-	// El fallback ahora se muestra inmediatamente. El tiempo mínimo de visualización
-	// se controla en la carga del componente con `lazyWithMinTime`.
+	// El skeleton se muestra inmediatamente
 	const fallback = <SkeletonComponent />;
 
 	return (
 		<Col xs={12}>
 			{/**
-			 * Suspense muestra el `fallback` mientras espera que el componente perezoso se cargue.
+			 * Suspense muestra el `fallback` (el skeleton) mientras espera que el componente perezoso se cargue.
 			 */}
 			<Suspense fallback={fallback}>
 				<PageComponent {...rest} />
@@ -88,12 +87,11 @@ const LazyRouteWrapper = ({ PageComponent, SkeletonComponent, ...rest }) => {
 /**
  * Componente principal del layout de la aplicación.
  * Gestiona el estado de las excursiones, la autenticación del usuario y la estructura general de la página.
- * @returns {React.ReactElement} El componente Layout
+ * @returns {React.ReactElement} El Layout
  */
 const Layout = () => {
 	const loginDispatch = useDispatch();
-
-	// Estado para controlar la visibilidad del menú Offcanvas de filtros en móvil.
+	// Estado para controlar la visibilidad del menú Offcanvas de filtros en breakpoints pequeños.
 	const [showFilters, setShowFilters] = useState(false);
 	// Funciones para abrir y cerrar el Offcanvas de filtros.
 	const handleCloseFilters = () => setShowFilters(false);
@@ -183,7 +181,8 @@ const Layout = () => {
 						})
 					);
 				}
-				// Si 'data' es null (porque no había token), no se hace nada y el usuario permanece en el estado inicial (deslogueado).
+				// Si 'data' es null (porque no había token), no se hace nada y el usuario permanece en el estado inicial
+				// (deslogueado).
 			} catch (error) {
 				console.error(
 					"Error en la verificación del estado de autenticación:",
@@ -243,8 +242,6 @@ const Layout = () => {
 		/>
 	);
 
-	// El layout principal usa Flexbox (`styles.layout`) para asegurar que el footer se mantenga al final de la página,
-	// incluso si el contenido es corto.
 	return (
 		<div className={styles.layout}>
 			<NavigationBar
@@ -262,7 +259,7 @@ const Layout = () => {
 								path="/"
 								element={
 									<>
-										{/* Columna de filtros visible a partir de 'md') */}
+										{/* Columna de filtros visible a partir de 'md' en adelante */}
 										<Col
 											md={4}
 											lg={3}
@@ -303,7 +300,6 @@ const Layout = () => {
 												<Offcanvas.Header closeButton>
 													<Offcanvas.Title>Filtros</Offcanvas.Title>
 												</Offcanvas.Header>
-												{/* Hacemos que el body sea un flex container para que el contenido de Filters se expanda */}
 												<Offcanvas.Body className="d-flex flex-column">
 													<Filters showTitle={false} />
 												</Offcanvas.Body>
@@ -334,12 +330,8 @@ const Layout = () => {
 							<Route
 								path="userPage"
 								element={
-									// Se usa LazyRouteWrapper para estandarizar la carga de componentes y pasar props de forma segura.
 									<LazyRouteWrapper
 										PageComponent={UserPage}
-										// El esqueleto se gestiona dentro de UserPage, por lo que el fallback de Suspense puede ser nulo.
-										// Esto previene que Suspense muestre un esqueleto propio, cediendo el control a UserPage.
-										// Pasamos un componente que retorna null para lograr un fallback nulo.
 										SkeletonComponent={UserPageSkeleton}
 										isAuthCheckComplete={isAuthCheckComplete}
 									/>
