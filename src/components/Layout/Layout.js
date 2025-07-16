@@ -21,6 +21,7 @@ import RegisterPageSkeleton from "../RegisterPageSkeleton";
 import LoginPageSkeleton from "../LoginPageSkeleton";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../../css/Layout.module.css";
+import UserPageSkeleton from "components/UserPageSkeleton";
 
 /**
  * Carga perezosa para componentes de ruta. Su propósito es asegurar que cuando un componente se carga de forma perezosa,
@@ -339,7 +340,7 @@ const Layout = () => {
 										// El esqueleto se gestiona dentro de UserPage, por lo que el fallback de Suspense puede ser nulo.
 										// Esto previene que Suspense muestre un esqueleto propio, cediendo el control a UserPage.
 										// Pasamos un componente que retorna null para lograr un fallback nulo.
-										SkeletonComponent={() => null}
+										SkeletonComponent={UserPageSkeleton}
 										isAuthCheckComplete={isAuthCheckComplete}
 									/>
 								}

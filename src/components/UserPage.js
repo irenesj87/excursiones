@@ -5,7 +5,6 @@ import { Navigate } from "react-router-dom";
 import UserInfoForm from "./UserInfoForm";
 import ExcursionCard from "./ExcursionCard";
 import PaginatedListDisplay from "./PaginatedListDisplay";
-import UserPageSkeleton from "./UserPageSkeleton";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/UserPage.module.css";
 
@@ -52,7 +51,7 @@ function UserPage({ isAuthCheckComplete }) {
 		const fetchData = async () => {
 			// Guardamos el tiempo de inicio para asegurar una duración mínima de la animación de carga.
 			const startTime = Date.now();
-			
+
 			// Iniciar el estado de carga para cada nueva petición.
 			setIsLoading(true);
 			setError(null);
@@ -83,16 +82,15 @@ function UserPage({ isAuthCheckComplete }) {
 					console.error("Error al obtener excursiones:", err);
 					fetchError = err.message || "Error al cargar tus excursiones.";
 				}
-			
 
-			// Aplicar un retraso mínimo antes de actualizar el estado de carga.
-			const elapsedTime = Date.now() - startTime;
-			const remainingTime = Math.max(0, 300 - elapsedTime);
-			await new Promise((resolve) => setTimeout(resolve, remainingTime));
+				// Aplicar un retraso mínimo antes de actualizar el estado de carga.
+				const elapsedTime = Date.now() - startTime;
+				const remainingTime = Math.max(0, 300 - elapsedTime);
+				await new Promise((resolve) => setTimeout(resolve, remainingTime));
 
-			setUserExcursions(excursionsData);
-			setError(fetchError);
-		}
+				setUserExcursions(excursionsData);
+				setError(fetchError);
+			}
 			setIsLoading(false);
 		};
 		fetchData();
@@ -101,15 +99,13 @@ function UserPage({ isAuthCheckComplete }) {
 		return () => {
 			// Any cleanup if necessary, like aborting fetch requests
 		};
-	}, [isAuthCheckComplete, isLoggedIn, user?.mail, userExcursionIds, user?.excursions.length]);
-
-	// La condición de carga ahora considera tanto la comprobación de autenticación (`isAuthCheckComplete`)
-	// como la carga de datos de las excursiones (`isLoading`) y si el tiempo mínimo ha transcurrido.
-	// Esto asegura que el esqueleto se muestre de forma continua hasta que esté listo,
-	// evitando el reinicio de la animación.
-	if (!isAuthCheckComplete || isLoading) {
-		return <UserPageSkeleton />;
-	}
+	}, [
+		isAuthCheckComplete,
+		isLoggedIn,
+		user?.mail,
+		userExcursionIds,
+		user?.excursions.length,
+	]);
 
 	// Una vez que la autenticación está completa y los datos cargados, podemos redirigir si no está logueado.
 	if (!isLoggedIn) {
