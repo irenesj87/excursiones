@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo, memo } from "react";
-import { Row, Col, Spinner, Alert, Pagination, Card } from "react-bootstrap";
-import DelayedFallback from "./DelayedFallback";
+import { Row, Col, Alert, Pagination, Card } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/PaginatedListDisplay.module.css";
 
@@ -27,7 +26,6 @@ function PaginatedListDisplayComponent({
 	renderItem,
 	itemsPerPage,
 	noItemsMessage = "No hay elementos para mostrar.",
-	loadingMessage = "Cargando...",
 	errorMessage = "Ha ocurrido un error al cargar los datos.",
 	itemKeyExtractor,
 	cardClassName = "",
@@ -59,23 +57,17 @@ function PaginatedListDisplayComponent({
 	const mdCols = itemsPerPage > 1 ? 2 : 1;
 
 	return (
-		<Card className={`${styles.listCard} ${cardClassName} h-100 d-flex flex-column`}>
-			{cardHeader && <Card.Header className={styles.cardHeader}>{cardHeader}</Card.Header>}
-			<Card.Body className={`${styles.cardBody} d-flex flex-column flex-grow-1`}>
+		<Card
+			className={`${styles.listCard} ${cardClassName} h-100 d-flex flex-column`}
+		>
+			{cardHeader && (
+				<Card.Header className={styles.cardHeader}>{cardHeader}</Card.Header>
+			)}
+			<Card.Body
+				className={`${styles.cardBody} d-flex flex-column flex-grow-1`}
+			>
 				<div className="flex-grow-1 d-flex flex-column">
-					{isLoading && (
-						<DelayedFallback delay={300} className="text-center">
-							{/* El Spinner es ahora puramente visual y se oculta de los lectores de pantalla.
-							    Su rol implícito de "status" no será anunciado, evitando redundancia con <output>. */}
-							<Spinner animation="border" aria-hidden="true" />
-							{/* El mensaje de carga se envuelve en <output> para accesibilidad.
-							    <output> tiene implícitamente role="status" y aria-live="polite",
-							    lo que asegura que el mensaje sea anunciado a los usuarios de lectores de pantalla. */}
-							<output className="mt-2">
-								{loadingMessage}
-							</output>
-						</DelayedFallback>
-					)}
+					{isLoading && null}
 
 					{error && !isLoading && (
 						<div className="d-flex flex-column justify-content-center align-items-center flex-grow-1">
