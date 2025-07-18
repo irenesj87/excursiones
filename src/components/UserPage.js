@@ -6,6 +6,7 @@ import UserInfoForm from "./UserInfoForm";
 import ExcursionCard from "./ExcursionCard";
 import PaginatedListDisplay from "./PaginatedListDisplay";
 import UserPageSkeleton from "./UserPageSkeleton";
+import UserExcursionsSkeleton from "./UserExcursionsSkeleton";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/UserPage.module.css";
 
@@ -42,64 +43,53 @@ function UserPage({ isAuthCheckComplete }) {
 	 * Maneja los estados de carga y error.
 	 */
 	useEffect(() => {
-		// Solo se procede a buscar datos una vez que la comprobación de autenticación inicial ha finalizado.
-		// Esto previene que el efecto se ejecute con un estado de autenticación transitorio (ej. usuario aún no cargado)
-		// que podría causar un parpadeo al establecer `isLoading` en `false` prematuramente.
 		if (!isAuthCheckComplete) {
 			return; // No hacer nada hasta que la autenticación esté verificada.
 		}
 
+		// Si el usuario no está logueado o no tiene excursiones, terminamos la carga.
+		if (!isLoggedIn || !user?.mail || (user.excursions?.length ?? 0) === 0) {
+			setIsLoading(false);
+			setUserExcursions([]);
+			setError(null);
+			return;
+		}
+
 		const fetchData = async () => {
+			setIsLoading(true);
+			setError(null);
 			// Guardamos el tiempo de inicio para asegurar una duración mínima de la animación de carga.
 			const startTime = Date.now();
 
-			// Iniciar el estado de carga para cada nueva petición.
-			setIsLoading(true);
-			setError(null);
-
-			let excursionsData = [];
-			let fetchError = null;
-
-			if (isLoggedIn && user?.mail) {
-				try {
-					if (user.excursions?.length > 0) {
-						const token = sessionStorage.getItem("token");
-						const url = `http://localhost:3001/users/${user.mail}/excursions`;
-						const response = await fetch(url, {
-							headers: {
-								Authorization: `Bearer ${token}`,
-							},
-						});
-						if (!response.ok) {
-							throw new Error(
-								response.status === 401 || response.status === 403
-									? "No tienes autorización."
-									: `Error HTTP: ${response.status}`
-							);
-						}
-						excursionsData = await response.json();
-					}
-				} catch (err) {
-					console.error("Error al obtener excursiones:", err);
-					fetchError = err.message || "Error al cargar tus excursiones.";
+			try {
+				const token = sessionStorage.getItem("token");
+				const url = `http://localhost:3001/users/${user.mail}/excursions`;
+				const response = await fetch(url, {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				});
+				if (!response.ok) {
+					throw new Error(
+						response.status === 401 || response.status === 403
+							? "No tienes autorización."
+							: `Error HTTP: ${response.status}`
+					);
 				}
-
-				// Aplicar un retraso mínimo antes de actualizar el estado de carga.
+				const data = await response.json();
+				setUserExcursions(data);
+			} catch (err) {
+				console.error("Error al obtener excursiones:", err);
+				setError(err.message || "Error al cargar tus excursiones.");
+				setUserExcursions([]); // Limpiar en caso de error
+			} finally {
+				// Asegurar un tiempo de carga mínimo para evitar parpadeos
 				const elapsedTime = Date.now() - startTime;
-				const remainingTime = Math.max(0, 300 - elapsedTime);
-				await new Promise((resolve) => setTimeout(resolve, remainingTime));
-
-				setUserExcursions(excursionsData);
-				setError(fetchError);
+				const remainingTime = Math.max(0, 500 - elapsedTime); // 500ms
+				setTimeout(() => setIsLoading(false), remainingTime);
 			}
-			setIsLoading(false);
 		};
 		fetchData();
-
-		// Cleanup function to handle unmounting
-		return () => {
-			// Any cleanup if necessary, like aborting fetch requests
-		};
 	}, [
 		isAuthCheckComplete,
 		isLoggedIn,
@@ -129,22 +119,29 @@ function UserPage({ isAuthCheckComplete }) {
 						<UserInfoForm />
 					</Col>
 					<Col lg={6} xl={8}>
-					{/* Una vez que la carga ha finalizado, mostramos la lista de excursiones o los mensajes de error/vacío. */}
-						<PaginatedListDisplay
-							data={userExcursions}
-							isLoading={isLoading}
-							error={error}
-							itemsPerPage={4}
-							renderItem={(excursion) => (
-								<ExcursionCard {...excursion} isLoggedIn isJoined />
-							)}
-							itemKeyExtractor={(excursion) => excursion.id}
-							noItemsMessage="Aún no te has apuntado a ninguna excursión."
-							errorMessage="Error al cargar tus excursiones."
-							cardHeader="Excursiones a las que te has apuntado"
-							cardClassName={styles.excursionsCard}
-							colProps={{ xs: 12 }}
-						/>
+						{isLoading ? (
+							// Mientras cargan las excursiones, mostramos solo el esqueleto de esa sección.
+							<UserExcursionsSkeleton
+								numExcursions={user?.excursions?.length ?? 0}
+							/>
+						) : (
+							// Cuando la carga termina, mostramos la lista real.
+							<PaginatedListDisplay
+								data={userExcursions}
+								isLoading={false} // La carga ya se ha manejado arriba.
+								error={error}
+								itemsPerPage={4}
+								renderItem={(excursion) => (
+									<ExcursionCard {...excursion} isLoggedIn isJoined />
+								)}
+								itemKeyExtractor={(excursion) => excursion.id}
+								noItemsMessage="Aún no te has apuntado a ninguna excursión."
+								errorMessage="Error al cargar tus excursiones."
+								cardHeader="Excursiones a las que te has apuntado"
+								cardClassName={styles.excursionsCard}
+								colProps={{ xs: 12 }}
+							/>
+						)}
 					</Col>
 				</Row>
 			</Col>
