@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 import UserInfoForm from "./UserInfoForm";
 import ExcursionCard from "./ExcursionCard";
 import PaginatedListDisplay from "./PaginatedListDisplay";
+import UserPageSkeleton from "./UserPageSkeleton";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/UserPage.module.css";
 
@@ -107,12 +108,18 @@ function UserPage({ isAuthCheckComplete }) {
 		user?.excursions.length,
 	]);
 
-	// Una vez que la autenticación está completa y los datos cargados, podemos redirigir si no está logueado.
+	// 1. Mientras la comprobación de autenticación inicial no haya terminado, mostramos un esqueleto.
+	// Esto es clave para evitar la redirección prematura.
+	if (!isAuthCheckComplete) {
+		return <UserPageSkeleton />;
+	}
+
+	// 2. Una vez la comprobación ha terminado, si el usuario no está logueado, redirigimos.
 	if (!isLoggedIn) {
 		return <Navigate replace to="/" />;
 	}
 
-	// Si el usuario está logueado
+	// 3. Si la comprobación ha terminado y el usuario está logueado, mostramos la página.
 	return (
 		<Row className="justify-content-center pt-2">
 			<Col xs={11} md={11} lg={11} xl={8}>

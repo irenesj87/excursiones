@@ -84,6 +84,15 @@
 	font-weight: 600;
 }
 
+.cardActionArea {
+	/* Un botón estándar de Bootstrap mide ~38px. Damos un min-height ligeramente superior
+	   para asegurar que tanto el botón como el estado "Apuntado/a" quepan sin problemas. */
+	min-height: 42px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
 .joinButton {
 	transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }

@@ -32,8 +32,6 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	// Estado para las excursiones que se muestran en pantalla. Esto nos permite mantener
 	// los resultados antiguos visibles mientras se cargan los nuevos.
 	const [displayedExcursions, setDisplayedExcursions] = useState(excursionData);
-	// Estado para controlar la aparición retardada de los esqueletos de carga.
-	const [showSkeletons, setShowSkeletons] = useState(isLoading);
 
 	// Efecto para gestionar qué excursiones se muestran.
 	useEffect(() => {
@@ -41,23 +39,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 		if (!isLoading) {
 			setDisplayedExcursions(excursionData);
 		}
-	}, [excursionData, isLoading]);
-
-	// Efecto para gestionar la visibilidad de los esqueletos con un retardo.
-	useEffect(() => {
-		let timer;
-		if (isLoading) {
-			// Si empieza a cargar, esperamos 300ms antes de mostrar los esqueletos.
-			timer = setTimeout(() => {
-				setShowSkeletons(true);
-			}, 300);
-			setShowSkeletons(true);
-		} else {
-			// Si la carga termina, ocultamos los esqueletos inmediatamente.
-			setShowSkeletons(false);
-		}
-		return () => clearTimeout(timer); // Limpieza del temporizador.
-	}, [isLoading]);
+	}, [isLoading, excursionData]);
 
 	const joinExcursion = useCallback(
 		async (excursionId) => {
@@ -127,12 +109,14 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 		);
 	}
 
-	// Define los colores del esqueleto según el tema para una experiencia visual consistente.
-	const baseColor = mode === "dark" ? "#202020" : "#e0e0e0";
-	const highlightColor = mode === "dark" ? "#444" : "#f5f5f5";
+	// --- Lógica de Renderizado ---
 
-	// Si se deben mostrar los esqueletos de carga.
-	if (showSkeletons) {
+	// 1. Si estamos cargando y no hay excursiones previas que mostrar (carga inicial),
+	// mostramos los esqueletos para evitar el salto de layout.
+	if (isLoading && displayedExcursions.length === 0) {
+		const baseColor = mode === "dark" ? "#202020" : "#e0e0e0";
+		const highlightColor = mode === "dark" ? "#444" : "#f5f5f5";
+
 		return (
 			<SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
 				<div className={styles.excursionsContainer}>
@@ -158,10 +142,8 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 		);
 	}
 
-	/** Si llegamos aquí, no se está mostrando el spinner ni hay un error. Si no hay excursiones para mostrar, se muestra
-	 * el mensaje de "No encontrada"
-	 */
-	if (displayedExcursions.length === 0) {
+	// 2. Si la carga ha finalizado y no hay excursiones, mostrar el mensaje "no encontrado".
+	if (!isLoading && displayedExcursions.length === 0) {
 		return (
 			<div className={`${styles.excursionsContainer} ${styles.centeredStatus}`}>
 				<output className={styles.messageNotFound}>
@@ -177,7 +159,8 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 		);
 	}
 
-	// Si hay excursiones, se muestran.
+	// 3. Por defecto, mostrar las excursiones. Durante una búsqueda, se mostrarán las
+	// antiguas mientras se cargan las nuevas, manteniendo el layout estable.
 	return (
 		<div className={styles.excursionsContainer}>
 			<h2 className={styles.title}>Próximas excursiones</h2>

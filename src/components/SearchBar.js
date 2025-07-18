@@ -6,8 +6,10 @@ import "bootstrap/dist/css/bootstrap.css";
 
 // Componente que maneja la barra de búsqueda
 function SearchBar({ setExcursions, onFetchStart, onFetchEnd, id }) {
-	// Estado que almacena el texto de búsqueda introducido por el usuario.
+	// Estado para el texto de búsqueda inmediato del input.
 	const [search, setSearch] = useState("");
+	// Estado para el texto de búsqueda "debounced" (retrasado) que se usará en la API.
+	const [debouncedSearch, setDebouncedSearch] = useState(search);
 	// Selector de Redux que obtiene los filtros de área, dificultad y tiempo del estado `filterReducer`.
 	const { area, difficulty, time } = useSelector(
 		/** @param {RootState} state */
@@ -20,10 +22,20 @@ function SearchBar({ setExcursions, onFetchStart, onFetchEnd, id }) {
 		setSearch(currentSearch);
 	};
 
+	// Efecto para aplicar el "debounce" al término de búsqueda.
+	// Solo actualiza `debouncedSearch` cuando el usuario deja de teclear por 500ms.
+	useEffect(() => {
+		const timerId = setTimeout(() => {
+			setDebouncedSearch(search);
+		}, 500); // Un debounce de 500ms es una buena práctica.
+
+		return () => clearTimeout(timerId);
+	}, [search]);
+
 	/**
 	 * Función memoizada con useCallback para realizar la petición de búsqueda de excursiones.
 	 * useCallback evita que esta función se recree en cada renderizado, optimizando el rendimiento.
-	 * Solo se volverá a crear si alguna de sus dependencias (search, area, etc.) cambia.
+	 * Ahora solo se volverá a crear si alguna de sus dependencias (debouncedSearch, area, etc.) cambia.
 	 */
 	const fetchData = useCallback(async () => {
 		// Llama a la función onFetchStart si se proporcionó, para indicar que la carga de excursiones ha comenzado.
@@ -34,8 +46,8 @@ function SearchBar({ setExcursions, onFetchStart, onFetchEnd, id }) {
 			const params = new URLSearchParams();
 
 			// Añade el término de búsqueda si existe.
-			if (search) {
-				params.append("q", search);
+			if (debouncedSearch) {
+				params.append("q", debouncedSearch);
 			}
 			// Añade cada filtro seleccionado. Para los arrays, se añade una entrada por cada valor.
 			// Esto genera una URL como: &area=Picos%20de%20Europa&area=Pirineos
@@ -63,21 +75,13 @@ function SearchBar({ setExcursions, onFetchStart, onFetchEnd, id }) {
 			// Llama a onFetchEnd con el objeto de error para que el componente padre pueda manejarlo.
 			onFetchEnd?.(error);
 		}
-	}, [search, area, difficulty, time, setExcursions, onFetchStart, onFetchEnd]);
+	}, [debouncedSearch, area, difficulty, time, setExcursions, onFetchStart, onFetchEnd]);
 
-	/**
-	 * useEffect que implementa la técnica de "debounce" para la búsqueda. Esto evita que se realice una petición a la API con
-	 * cada tecla que el usuario presiona.
-	 */
+	// Este efecto se ejecuta cada vez que el término de búsqueda "debounced" o los filtros cambian.
+	// De esta forma, los filtros se aplican instantáneamente, mientras que la búsqueda por texto espera.
 	useEffect(() => {
-		// Establece un temporizador que ejecutará fetchData después de 1000ms (1 segundo).
-		const timerId = setTimeout(() => {
-			fetchData();
-		}, 1000);
-		// Función de limpieza: se ejecuta antes de que el efecto se vuelva a ejecutar o cuando el componente se desmonta.
-		// Cancela el temporizador anterior para evitar que se ejecuten búsquedas innecesarias si el usuario sigue escribiendo.
-		return () => clearTimeout(timerId);
-	}, [fetchData]); // El efecto depende de la función fetchData memoizada. Se volverá a ejecutar solo si fetchData cambia.
+		fetchData();
+	}, [fetchData]);
 
 	return (
 		<input

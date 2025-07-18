@@ -57,6 +57,28 @@
 	min-height: 400px; /* Asegura que el contenedor tenga una altura mínima */
 }
 
+
+/* Animación para la entrada de las tarjetas */
+.cardEnter {
+	/* La animación se llama 'fadeIn', dura 0.6s, tiene una curva de velocidad 'ease-out'
+	   y se mantiene en su estado final ('forwards'). */
+	animation: fadeIn 0.6s ease-out forwards;
+	opacity: 0; /* Las tarjetas inician invisibles antes de que comience la animación. */
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(20px); /* Empieza 20px más abajo */
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0); /* Termina en su posición normal */
+	}
+}
+
+
+
 /* --- Media Queries --- */
 @media (max-width: 991.98px) {
 	/* Para md y pantallas más pequeñas */

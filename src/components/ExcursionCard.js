@@ -9,6 +9,7 @@ import {
 	FiCheckCircle,
 } from "react-icons/fi";
 import "bootstrap/dist/css/bootstrap.css";
+import ExcursionDetailItem from "./ExcursionDetailItem";
 import styles from "../css/ExcursionCard.module.css";
 
 // Límite de caracteres para la descripción truncada
@@ -69,7 +70,7 @@ function ExcursionCardComponent({
 		<Card className={`${styles.excursionItemCard} h-100 w-100`}>
 			<Card.Body className="d-flex flex-column">
 				<div>
-					<Card.Title className={styles.excursionTitle}>{name}</Card.Title>
+					<Card.Title className={`${styles.excursionTitle} mb-3`}>{name}</Card.Title>
 					<Card.Subtitle className={`${styles.excursionArea} mb-2`}>
 						<FiMapPin className={styles.areaIcon} />
 						<span>{area}</span>
@@ -98,21 +99,17 @@ function ExcursionCardComponent({
 						)}
 					</div>
 					<div className={`${styles.excursionDetails} mt-3`}>
-						<div className={styles.detailItem}>
-							<FiBarChart className={styles.detailIcon} />
-							<span>{difficulty}</span>
-						</div>
-						<div className={styles.detailItem}>
-							<FiClock className={styles.detailIcon} />
-							<span>{time}</span>
-						</div>
+						<ExcursionDetailItem IconComponent={FiBarChart} text={difficulty} />
+						<ExcursionDetailItem IconComponent={FiClock} text={time} />
 					</div>
 				</div>
 				{isLoggedIn && (
-					<div className="mt-auto pt-3 border-top">
+					<div className={`${styles.cardActionArea} mt-auto pt-3 border-top`}>
 						{isJoined ? (
-							<div className={`${styles.joinedStatus} d-grid d-md-flex justify-content-md-end`}>
-								<FiCheckCircle /> <span>Apuntado/a</span>
+							<div className="d-grid d-md-flex justify-content-center justify-content-md-end">
+								<div className={styles.joinedStatus}>
+									<FiCheckCircle /> <span>Apuntado/a</span>
+								</div>
 							</div>
 						) : (
 							<div className="d-grid d-md-flex justify-content-md-end">
