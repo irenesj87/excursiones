@@ -2,7 +2,7 @@ import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FiltersList from "./FiltersList";
 import { clearAllFilters } from "../slicers/filterSlice";
-import { FiMap, FiBarChart,FiClock, FiX } from "react-icons/fi";
+import { FiMapPin, FiBarChart,FiClock, FiX } from "react-icons/fi";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Filters.module.css";
 /** @typedef {import('../types').RootState} RootState */
@@ -36,21 +36,21 @@ function Filters({ showTitle = true }) {
 				{showTitle && <h2 className={styles.desktopTitle}>Filtros</h2>}
 				<section className={styles.filterSection}>
 					<h3 className={styles.filterTitle}>
-						<FiMap />
+						<FiMapPin className={styles.filterIcon} />
 						<span>Zona</span>
 					</h3>
 					<FiltersList filterName="area" />
 				</section>
 				<section className={styles.filterSection}>
 					<h3 className={styles.filterTitle}>
-						<FiBarChart />
+						<FiBarChart className={styles.filterIcon}/>
 						<span>Dificultad</span>
 					</h3>
 					<FiltersList filterName="difficulty" />
 				</section>
 				<section className={styles.filterSection}>
 					<h3 className={styles.filterTitle}>
-						<FiClock />
+						<FiClock className={styles.filterIcon}/>
 						<span>Tiempo estimado</span>
 					</h3>
 					<FiltersList filterName="time" />

@@ -1,6 +1,7 @@
 import { useState, memo, useMemo, useCallback } from "react";
 import { Card, Button } from "react-bootstrap";
 import {
+	FiMapPin,
 	FiChevronDown,
 	FiChevronUp,
 	FiClock,
@@ -70,7 +71,8 @@ function ExcursionCardComponent({
 				<div>
 					<Card.Title className={styles.excursionTitle}>{name}</Card.Title>
 					<Card.Subtitle className={`${styles.excursionArea} mb-2`}>
-						{area}
+						<FiMapPin className={styles.areaIcon} />
+						<span>{area}</span>
 					</Card.Subtitle>
 					<div className={styles.excursionDescriptionContainer}>
 						<Card.Text className={styles.excursionDescription}>

@@ -27,11 +27,16 @@
 .filterTitle {
 	font-size: 1rem;
 	font-weight: 600;
+	text-transform: uppercase;
 	margin-bottom: 1rem;
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
 	color: var(--filter-title-color, inherit); /* Usar variable para el color */
+}
+
+.filterIcon {
+	font-size: 1.2rem;
 }
 
 /* Footer que contiene el botón de limpiar, se mantiene en la parte inferior */
