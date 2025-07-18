@@ -24,3 +24,7 @@
 	font-style: italic;
 	text-align: center;
 }
+
+.paginationContainer {
+	padding-top: 1rem;
+}

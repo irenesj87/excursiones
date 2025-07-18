@@ -2,7 +2,7 @@
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	border: none !important;
+	border: none;
 	background-color: var(--excursion-card-bg);
 	border-radius: 12px;
 	box-shadow: var(--excursion-card-shadow);
@@ -56,6 +56,7 @@
 
 .detailIcon {
 	color: var(--bs-primary);
+	font-size: 1.2rem;
 }
 
 .readMoreLink {

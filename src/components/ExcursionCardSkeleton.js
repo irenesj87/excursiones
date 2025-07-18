@@ -33,7 +33,7 @@ function ExcursionCardSkeleton({ isLoggedIn = false, isJoined = false }) {
 
 					{/* Descripción y "Leer más" */}
 					<div className={cardStyles.excursionDescriptionContainer}>
-						<Skeleton count={4} />
+						<Skeleton count={3} />
 						<Skeleton width="25%" style={{ marginTop: "0.25rem" }} />
 					</div>
 

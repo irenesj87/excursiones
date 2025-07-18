@@ -48,15 +48,15 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 		let timer;
 		if (isLoading) {
 			// Si empieza a cargar, esperamos 300ms antes de mostrar los esqueletos.
-			/*timer = setTimeout(() => {
+			timer = setTimeout(() => {
 				setShowSkeletons(true);
-			}, 300);*/
+			}, 300);
 			setShowSkeletons(true);
 		} else {
 			// Si la carga termina, ocultamos los esqueletos inmediatamente.
 			setShowSkeletons(false);
 		}
-		/*return () => clearTimeout(timer); // Limpieza del temporizador.*/
+		return () => clearTimeout(timer); // Limpieza del temporizador.
 	}, [isLoading]);
 
 	const joinExcursion = useCallback(

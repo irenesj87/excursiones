@@ -122,7 +122,7 @@ function UserPage({ isAuthCheckComplete }) {
 						<UserInfoForm />
 					</Col>
 					<Col lg={6} xl={8}>
-						{/* Una vez que la carga ha finalizado, mostramos la lista de excursiones o los mensajes de error/vacío. */}
+					{/* Una vez que la carga ha finalizado, mostramos la lista de excursiones o los mensajes de error/vacío. */}
 						<PaginatedListDisplay
 							data={userExcursions}
 							isLoading={isLoading}

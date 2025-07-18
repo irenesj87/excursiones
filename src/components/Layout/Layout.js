@@ -31,7 +31,7 @@ import UserPageSkeleton from "components/UserPageSkeleton";
  * @param {number} [minTime=500] - El tiempo mínimo de carga en milisegundos.
  * @returns {React.LazyExoticComponent<any>}
  */
-const lazyWithMinTime = (factory, minTime = 300) => {
+const lazyWithMinTime = (factory, minTime = 500) => {
 	return lazy(() =>
 		// Promise.all espera a que todas las promesas de su array se completen. Por lo tanto, no continuará hasta que
 		// el componente se haya cargado, y además, hayan pasado los 500 milisegundos.
