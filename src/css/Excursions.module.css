@@ -1,14 +1,13 @@
 .excursionsContainer {
 	display: flex;
 	flex-direction: column;
-	/* Añadimos los márgenes que antes proporcionaba la clase 'contentPane' para mantener el espaciado vertical. */
 	margin-top: 2rem;
 	margin-bottom: 2rem;
 }
 
 .title {
 	margin-top: 0; /* Reseteamos el margen superior, lo controla el contenedor */
-	margin-bottom: 2rem; /* Más espacio debajo del título */
+	margin-bottom: 2rem;
 	padding-bottom: 0;
 	color: var(--heading-color);
 	font-size: 1.6rem;
@@ -23,7 +22,7 @@
 	align-items: center;
 	gap: 0.5rem; /* Reducimos el espacio para una composición más compacta */
 	text-align: center;
-	max-width: 500px; /* Evita que el texto sea demasiado ancho en pantallas grandes */
+	max-width: 500px;
 }
 
 .primaryMessage {
@@ -36,7 +35,6 @@
 
 .secondaryMessage {
 	font-size: 1rem;
-	/* Usamos la variable de tema para el color secundario. */
 	color: var(--text-secondary);
 	margin-bottom: 0;
 }
@@ -45,7 +43,7 @@
 	font-size: 3rem; /* Hacemos el icono más grande para que destaque */
 	/* Usamos la variable de tema para que el icono coincida con el texto secundario. */
 	color: var(--text-secondary);
-	margin-bottom: 0.5rem; /* Espacio extra debajo del icono */
+	margin-bottom: 0.5rem;
 }
 
 .centeredStatus {
@@ -59,31 +57,8 @@
 
 /* --- Media Queries --- */
 @media (max-width: 991.98px) {
-	/* Para md y pantallas más pequeñas */
+	/* Para breakpoints md hacia abajo  */
 	.title {
-		text-align: center; /* Centramos el título en pantallas más pequeñas */
-	}
-}
-
-@keyframes wobble {
-	0%,
-	100% {
-		transform: rotate(0deg);
-		transform-origin: 50% 50%;
-	}
-	15% {
-		transform: rotate(-8deg);
-	}
-	30% {
-		transform: rotate(6deg);
-	}
-	45% {
-		transform: rotate(-4deg);
-	}
-	60% {
-		transform: rotate(2deg);
-	}
-	75% {
-		transform: rotate(-1deg);
+		text-align: center;
 	}
 }

@@ -39,12 +39,20 @@ function ExcursionCardComponent({
 	isJoined,
 	onJoin,
 }) {
-	// useState que dice si una descripción está expandida o no
+	/**
+	 * Estado que controla si la descripción de la excursión está expandida o truncada.
+	 * @type {[boolean, React.Dispatch<React.SetStateAction<boolean>>]}
+	 */
 	const [isExpanded, setIsExpanded] = useState(false);
 
-	// Función para alternar la visibilidad completa de la descripción
+	/**
+	 * Alterna el estado de `isExpanded` para mostrar u ocultar la descripción completa.
+	 * Previene el comportamiento por defecto del evento si es llamado desde un elemento interactivo.
+	 * @param {React.MouseEvent<HTMLButtonElement>} e - El evento del click.
+	 * @returns {void}
+	 */
 	const toggleReadMore = (e) => {
-		e.preventDefault(); // Prevenir cualquier comportamiento por defecto si es un enlace
+		e.preventDefault();
 		setIsExpanded(!isExpanded);
 	};
 
@@ -58,8 +66,12 @@ function ExcursionCardComponent({
 
 	/**
 	 * Crea un 'handler' para el evento 'click' que llama a la función `onJoin` con el ID de la excursión.
-	 * Se usa `useCallback` para asegurar que la función no se recree innecesariamente,
-	 * lo que es beneficioso para la optimización del rendimiento, especialmente porque `ExcursionCard` está memoizado.
+	 * Se usa `useCallback` para asegurar que la función no se recree innecesariamente, lo que es beneficioso para la optimización 
+	 * del rendimiento, especialmente porque `ExcursionCard` está memoizado.
+	 * @returns {void}
+	 * @callback handleJoin
+	 * @param {string | number} id - El ID de la excursión a la que el usuario desea apuntarse.
+	 * @param {function} onJoin - La función callback que se ejecuta para unirse a la excursión.
 	 */
 	const handleJoin = useCallback(() => {
 		// Llama a la función onJoin (si existe) pasándole el id de la excursión.
@@ -70,7 +82,9 @@ function ExcursionCardComponent({
 		<Card className={`${styles.excursionItemCard} h-100 w-100`}>
 			<Card.Body className="d-flex flex-column">
 				<div>
-					<Card.Title className={`${styles.excursionTitle} mb-3`}>{name}</Card.Title>
+					<Card.Title className={`${styles.excursionTitle} mb-3`}>
+						{name}
+					</Card.Title>
 					<Card.Subtitle className={`${styles.excursionArea} mb-2`}>
 						<FiMapPin className={styles.areaIcon} />
 						<span>{area}</span>
