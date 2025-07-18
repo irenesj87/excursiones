@@ -6,7 +6,6 @@ import UserInfoForm from "./UserInfoForm";
 import ExcursionCard from "./ExcursionCard";
 import PaginatedListDisplay from "./PaginatedListDisplay";
 import UserPageSkeleton from "./UserPageSkeleton";
-import UserExcursionsSkeleton from "./UserExcursionsSkeleton";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/UserPage.module.css";
 
@@ -98,50 +97,50 @@ function UserPage({ isAuthCheckComplete }) {
 		user?.excursions.length,
 	]);
 
-	// 1. Mientras la comprobación de autenticación inicial no haya terminado, mostramos un esqueleto.
-	// Esto es clave para evitar la redirección prematura.
-	if (!isAuthCheckComplete) {
+	// --- Lógica de Renderizado Secuencial ---
+
+	// 1. Si la comprobación de autenticación no ha terminado O si estamos cargando las excursiones,
+	// mostramos el esqueleto completo de la página. Esto unifica el estado de carga y previene
+	// que se muestre una parte de la página con datos reales y otra con un esqueleto.
+	if (!isAuthCheckComplete || isLoading) {
 		return <UserPageSkeleton />;
 	}
 
-	// 2. Una vez la comprobación ha terminado, si el usuario no está logueado, redirigimos.
+	// 2. Una vez que ha cargado, si el usuario no está logueado, lo redirigimos.
 	if (!isLoggedIn) {
 		return <Navigate replace to="/" />;
 	}
 
-	// 3. Si la comprobación ha terminado y el usuario está logueado, mostramos la página.
+	// 3. Si todas las comprobaciones han pasado, mostramos el contenido final de la página.
 	return (
 		<Row className="justify-content-center pt-2">
 			<Col xs={11} md={11} lg={11} xl={8}>
 				<h2 className={`${styles.title} mb-3`}>Tu perfil</h2>
 				<Row className="mb-3">
 					<Col lg={6} xl={4} className="mb-4 mb-lg-0">
+						{/* El formulario de información del usuario ya no necesita su propio estado de carga,
+						ya que se gestiona de forma centralizada arriba. */}
 						<UserInfoForm />
 					</Col>
 					<Col lg={6} xl={8}>
-						{isLoading ? (
-							// Mientras cargan las excursiones, mostramos solo el esqueleto de esa sección.
-							<UserExcursionsSkeleton
-								numExcursions={user?.excursions?.length ?? 0}
-							/>
-						) : (
-							// Cuando la carga termina, mostramos la lista real.
-							<PaginatedListDisplay
-								data={userExcursions}
-								isLoading={false} // La carga ya se ha manejado arriba.
-								error={error}
-								itemsPerPage={4}
-								renderItem={(excursion) => (
-									<ExcursionCard {...excursion} isLoggedIn isJoined />
-								)}
-								itemKeyExtractor={(excursion) => excursion.id}
-								noItemsMessage="Aún no te has apuntado a ninguna excursión."
-								errorMessage="Error al cargar tus excursiones."
-								cardHeader="Excursiones a las que te has apuntado"
-								cardClassName={styles.excursionsCard}
-								colProps={{ xs: 12 }}
-							/>
-						)}
+						{/* La lista de excursiones ahora se renderiza directamente. El componente
+						PaginatedListDisplay gestionará internamente si debe mostrar la lista,
+						el mensaje de error o el mensaje de "no hay elementos". */}
+						<PaginatedListDisplay
+							data={userExcursions}
+							isLoading={false} // La carga principal ya se ha manejado.
+							error={error}
+							itemsPerPage={4}
+							renderItem={(excursion) => (
+								<ExcursionCard {...excursion} isLoggedIn isJoined />
+							)}
+							itemKeyExtractor={(excursion) => excursion.id}
+							noItemsMessage="Aún no te has apuntado a ninguna excursión."
+							errorMessage="Error al cargar tus excursiones."
+							cardHeader="Excursiones a las que te has apuntado"
+							cardClassName={styles.excursionsCard}
+							colProps={{ xs: 12 }}
+						/>
 					</Col>
 				</Row>
 			</Col>

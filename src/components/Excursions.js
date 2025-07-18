@@ -13,27 +13,29 @@ import styles from "../css/Excursions.module.css";
 /** @typedef {import('types.js').Excursion} Excursion */
 
 /**
- * Componente que sirve para mostrar la lista de excursiones.
+ * Componente que sirve para mostrar la lista de excursiones disponibles
  * @param {object} props - Las propiedades del componente.
  * @param {Excursion[]} [props.excursionData=[]] - Array de objetos de excursiones a mostrar.
  * @param {boolean} props.isLoading - Indica si los datos de las excursiones se están cargando.
  * @param {Error | null} props.error - Objeto de error si ha ocurrido un problema al cargar las excursiones.
  */
 function ExcursionsComponent({ excursionData = [], isLoading, error }) {
+	// Se obtiene el estado del loginReducer y el objeto usuario
 	const { login: isLoggedIn, user } = useSelector(
 		/** @param {RootState} state */
 		(state) => state.loginReducer
 	);
+	// Se obtiene el estado del themeReducer para saber el modo (claro u oscuro)
 	const mode = useSelector(
 		/** @param {RootState} state */
 		(state) => state.themeReducer.mode
 	);
 	const loginDispatch = useDispatch();
-	// Estado para las excursiones que se muestran en pantalla. Esto nos permite mantener
-	// los resultados antiguos visibles mientras se cargan los nuevos.
+	// Estado para las excursiones que se muestran en. Esto nos permite mantener los resultados antiguos visibles mientras se cargan los 
+	// nuevos datos para evitar que parpadeen o se queden en blanco.
 	const [displayedExcursions, setDisplayedExcursions] = useState(excursionData);
 
-	// Efecto para gestionar qué excursiones se muestran.
+	// Efecto para gestionar qué excursiones se muestran. Se ejecuta cada vez que isLoading o excursionData cambian
 	useEffect(() => {
 		// Si la carga ha terminado, actualizamos las excursiones visibles con los nuevos datos.
 		if (!isLoading) {
@@ -41,11 +43,15 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 		}
 	}, [isLoading, excursionData]);
 
+	/**
+	 * Función que sirve para apuntarse a una excursión. Envuelve la función un callback. Esto la memoriza y sólo se volverá a crear si 
+	 * user?.mail o loginDispatch cambian.
+	 */
 	const joinExcursion = useCallback(
 		async (excursionId) => {
 			const auxUserMail = user?.mail;
-			if (!auxUserMail) return;
-
+			if (!auxUserMail) return; // Si no hay correo de usuario, la función termina
+			// Llama a la API con un usuario específico y una excursión específica
 			const url = `http://localhost:3001/users/${auxUserMail}/excursions/${excursionId}`;
 			/** @type {RequestInit} */
 			const options = {
@@ -72,6 +78,8 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 		[user?.mail, loginDispatch]
 	);
 
+	// Renderiza las ExcursionCard pasándole todas las propiedades de la excursión, el estado de login y si el usuario actual está apuntado
+	// a ella o no
 	const excursionComponents = useMemo(
 		() =>
 			displayedExcursions.map((excursion) => {
@@ -83,7 +91,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 						lg={4}
 						xl={3}
 						key={excursion.id}
-						className="d-flex" // Usamos d-flex para que las cards se estiren y ocupen toda la altura
+						className="d-flex" // d-flex para que las cards se estiren y ocupen toda la altura
 					>
 						<ExcursionCard
 							{...excursion}
@@ -109,12 +117,12 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 		);
 	}
 
-	// --- Lógica de Renderizado ---
+	// --- Lógica de Renderizado Condicional ---
 
 	// 1. Si estamos cargando y no hay excursiones previas que mostrar (carga inicial),
 	// mostramos los esqueletos para evitar el salto de layout.
 	if (isLoading && displayedExcursions.length === 0) {
-		const baseColor = mode === "dark" ? "#202020" : "#e0e0e0";
+		const baseColor = mode === "dark" ? "#2d3748" : "#e0e0e0";
 		const highlightColor = mode === "dark" ? "#444" : "#f5f5f5";
 
 		return (
@@ -142,8 +150,10 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 		);
 	}
 
-	// 2. Si la carga ha finalizado y no hay excursiones, mostrar el mensaje "no encontrado".
-	if (!isLoading && displayedExcursions.length === 0) {
+	// 2. Si la carga ha finalizado y el resultado de la búsqueda (`excursionData`) está vacío,
+	// mostramos el mensaje "no encontrado". Se comprueba `excursionData` en lugar de `displayedExcursions`
+	// para evitar el parpadeo del mensaje durante la transición de carga a resultados.
+	if (!isLoading && excursionData.length === 0) {
 		return (
 			<div className={`${styles.excursionsContainer} ${styles.centeredStatus}`}>
 				<output className={styles.messageNotFound}>
