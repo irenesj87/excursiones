@@ -4,17 +4,9 @@
 	width: 100%;
 	height: 100%;
 	background-color: var(--excursion-card-bg);
-	border-color: var(--excursion-card-border-color);
 	box-shadow: var(--excursion-card-shadow);
+	border-radius: 12px;
 }
-
-/*
-  Estrategia Mobile-First:
-  1. El bloque para móvil (`placeholderMobile`) se muestra por defecto.
-  2. Los bloques para pantallas más grandes están ocultos.
-  3. Usamos media queries con `min-width` para mostrar el bloque correcto
-     y ocultar el anterior a medida que la pantalla crece.
-*/
 
 .placeholderTablet,
 .placeholderDesktop,

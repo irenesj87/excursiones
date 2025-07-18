@@ -1,6 +1,7 @@
+import { useCallback } from "react";
 import { Card } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
-import cardStyles from "../css/ExcursionCard.module.css"; // Reutilizamos el CSS de la tarjeta real
+import cardStyles from "../css/ExcursionCard.module.css"; // Se reutiliza el CSS de la tarjeta real
 import skeletonStyles from "../css/ExcursionCardSkeleton.module.css";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -10,13 +11,18 @@ import "react-loading-skeleton/dist/skeleton.css";
  * @param {{ isLoggedIn?: boolean, isJoined?: boolean }} props
  */
 function ExcursionCardSkeleton({ isLoggedIn = false, isJoined = false }) {
-	const renderDetailItem = () => (
-		// Replicamos la estructura de flexbox con gap del componente real,
-		// por lo que no necesitamos márgenes manuales.
-		<div className={cardStyles.detailItem}>
-			<Skeleton circle width={20} height={20} />
-			<Skeleton width="60%" />
-		</div>
+	// Función auxiliar para renderizar un elemento de detalle del esqueleto.
+	// Se memoiza para evitar recreaciones innecesarias en cada render.
+	const renderDetailItem = useCallback(
+		() => (
+			// Replicamos la estructura de flexbox con gap del componente real,
+			// por lo que no necesitamos márgenes manuales.
+			<div className={cardStyles.detailItem}>
+				<Skeleton circle width={20} height={20} />
+				<Skeleton width="60%" />
+			</div>
+		),
+		[]
 	);
 
 	return (
@@ -27,14 +33,14 @@ function ExcursionCardSkeleton({ isLoggedIn = false, isJoined = false }) {
 			<Card.Body className="d-flex flex-column">
 				<div>
 					{/* Título */}
-					<Skeleton height={21} width="70%" style={{ marginBottom: "0.5rem" }} />
+					<Skeleton height={21} width="70%" className="mb-3" />
 					{/* Subtítulo (Área) */}
 					<Skeleton height={16} width="40%" className="mb-2" />
 
 					{/* Descripción y "Leer más" */}
 					<div className={cardStyles.excursionDescriptionContainer}>
-						<Skeleton count={3} />
-						<Skeleton width="25%" style={{ marginTop: "0.25rem" }} />
+						<Skeleton count={4} />
+						<Skeleton width="25%" className="mt-1" />
 					</div>
 
 					{/* Detalles (Dificultad, Tiempo) */}
@@ -52,7 +58,7 @@ function ExcursionCardSkeleton({ isLoggedIn = false, isJoined = false }) {
 								className={`${cardStyles.joinedStatus} d-flex align-items-center`}
 							>
 								<Skeleton circle width={22} height={22} />
-								<Skeleton width={80} style={{ marginLeft: "0.5rem" }} />
+								<Skeleton width={80} className="ms-2" />
 							</div>
 						) : (
 							<Skeleton height={38} width={90} />
