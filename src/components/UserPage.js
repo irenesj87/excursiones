@@ -117,12 +117,12 @@ function UserPage({ isAuthCheckComplete }) {
 			<Col xs={11} md={11} lg={11} xl={8}>
 				<h2 className={`${styles.title} mb-3`}>Tu perfil</h2>
 				<Row className="mb-3">
-					<Col lg={6} xl={4} className="mb-4 mb-lg-0">
+					<Col xl={4} className="mb-4">
 						{/* El formulario de información del usuario ya no necesita su propio estado de carga,
 						ya que se gestiona de forma centralizada arriba. */}
 						<UserInfoForm />
 					</Col>
-					<Col lg={6} xl={8}>
+					<Col xl={8}>
 						{/* La lista de excursiones ahora se renderiza directamente. El componente
 						PaginatedListDisplay gestionará internamente si debe mostrar la lista,
 						el mensaje de error o el mensaje de "no hay elementos". */}

@@ -34,10 +34,10 @@ function UserPageSkeleton() {
 				<Col xs={11} md={11} lg={11} xl={8}>
 					<h2 className={`${styles.title} mb-3`}>Tu perfil</h2>
 					<Row className="mb-3">
-						<Col lg={6} xl={4} className="mb-4 mb-lg-0">
+						<Col xl={4} className="mb-4">
 							<UserInfoSkeleton />
 						</Col>
-						<Col lg={6} xl={8}>
+						<Col xl={8}>
 							<UserExcursionsSkeleton numExcursions={numExcursions} />
 						</Col>
 					</Row>

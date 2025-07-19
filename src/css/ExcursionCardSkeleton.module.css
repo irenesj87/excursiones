@@ -7,39 +7,3 @@
 	box-shadow: var(--excursion-card-shadow);
 	border-radius: 12px;
 }
-
-.placeholderTablet,
-.placeholderDesktop,
-.placeholderDesktopLarge {
-	display: none;
-}
-
-/* Breakpoint para tabletas (md+) */
-@media (min-width: 768px) {
-	.placeholderMobile {
-		display: none;
-	}
-	.placeholderTablet {
-		display: block;
-	}
-}
-
-/* Breakpoint para escritorio (xl+) */
-@media (min-width: 1200px) {
-	.placeholderTablet {
-		display: none;
-	}
-	.placeholderDesktop {
-		display: block;
-	}
-}
-
-/* Breakpoint para escritorio grande (xxl+) */
-@media (min-width: 1400px) {
-	.placeholderDesktop {
-		display: none;
-	}
-	.placeholderDesktopLarge {
-		display: block;
-	}
-}
