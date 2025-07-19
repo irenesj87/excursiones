@@ -7,16 +7,12 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 /**
  * Componente que muestra un esqueleto de carga para una ExcursionCard.
- * Utiliza react-loading-skeleton para una apariencia consistente y se adapta al modo oscuro.
  * @param {{ isLoggedIn?: boolean, isJoined?: boolean }} props
  */
 function ExcursionCardSkeleton({ isLoggedIn = false, isJoined = false }) {
-	// Función auxiliar para renderizar un elemento de detalle del esqueleto.
-	// Se memoiza para evitar recreaciones innecesarias en cada render.
+	// Función auxiliar para renderizar un elemento de detalle del esqueleto. Se memoiza para evitar recreaciones innecesarias en cada render.
 	const renderDetailItem = useCallback(
 		() => (
-			// Replicamos la estructura de flexbox con gap del componente real,
-			// por lo que no necesitamos márgenes manuales.
 			<div className={cardStyles.detailItem}>
 				<Skeleton circle width={20} height={20} />
 				<Skeleton width="60%" />
@@ -36,20 +32,17 @@ function ExcursionCardSkeleton({ isLoggedIn = false, isJoined = false }) {
 					<Skeleton height={21} width="70%" className="mb-3" />
 					{/* Subtítulo (Área) */}
 					<Skeleton height={16} width="40%" className="mb-2" />
-
 					{/* Descripción y "Leer más" */}
 					<div className={cardStyles.excursionDescriptionContainer}>
 						<Skeleton count={4} />
 						<Skeleton width="25%" className="mt-1" />
 					</div>
-
 					{/* Detalles (Dificultad, Tiempo) */}
 					<div className={`${cardStyles.excursionDetails} mt-3`}>
 						{renderDetailItem()}
 						{renderDetailItem()}
 					</div>
 				</div>
-
 				{/* Botón de "Apuntarse" */}
 				{isLoggedIn && (
 					<div className="mt-auto pt-3 border-top d-flex justify-content-end align-items-center">

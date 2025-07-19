@@ -1,21 +1,28 @@
-import React from "react";
 import styles from "../css/ExcursionCard.module.css";
+import { memo } from "react";
 
 /**
  * Componente para mostrar un detalle específico de una excursión (ej. dificultad, tiempo).
  * @param {object} props - Las propiedades del componente.
- * @param {React.ElementType} props.IconComponent - El componente de icono a renderizar (ej. FiBarChart).
- * @param {string} props.text - El texto a mostrar junto al icono.
+ * @param {React.ElementType} props.IconComponent - El componente de icono a renderizar.
+ * @param {string} props.text - El valor del detalle a mostrar (ej. "Media", "4h").
+ * @param {string} props.label - Etiqueta descriptiva para accesibilidad y tooltips (ej. "Dificultad").
  * @returns {React.ReactElement}
  */
-function ExcursionDetailItem({ IconComponent, text }) {
+function ExcursionDetailItemComponent({ IconComponent, text, label }) {
+	// Crea un texto de título completo para el tooltip del navegador.
+	const title = label ? `${label}: ${text}` : text;
+
 	return (
-		<div className={styles.detailItem}>
-			{/* Renderiza el componente de icono que se le pasa como prop */}
-			<IconComponent className={styles.detailIcon} />
+		<div className={styles.detailItem} title={title}>
+			{/* El icono es decorativo y se oculta a los lectores de pantalla. */}
+			<IconComponent className={styles.detailIcon} aria-hidden="true" />
+			{/* La etiqueta se muestra solo a los lectores de pantalla para dar contexto. */}
+			{label && <span className="visually-hidden">{`${label}: `}</span>}
 			<span>{text}</span>
 		</div>
 	);
 }
-
+// Se utiliza memo para evitar renderizados innecesarios si las props no han cambiado.
+const ExcursionDetailItem = memo(ExcursionDetailItemComponent);
 export default ExcursionDetailItem;

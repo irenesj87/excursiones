@@ -113,8 +113,16 @@ function ExcursionCardComponent({
 						)}
 					</div>
 					<div className={`${styles.excursionDetails} mt-3`}>
-						<ExcursionDetailItem IconComponent={FiBarChart} text={difficulty} />
-						<ExcursionDetailItem IconComponent={FiClock} text={time} />
+						<ExcursionDetailItem
+							IconComponent={FiBarChart}
+							text={difficulty}
+							label="Dificultad"
+						/>
+						<ExcursionDetailItem
+							IconComponent={FiClock}
+							text={time}
+							label="Tiempo estimado"
+						/>
 					</div>
 				</div>
 				{isLoggedIn && (
