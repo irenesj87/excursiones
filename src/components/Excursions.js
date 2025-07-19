@@ -1,4 +1,4 @@
-import { memo, useMemo, useCallback, useState, useEffect } from "react";
+import { memo, useMemo, useCallback, useState, useEffect, useRef } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { SkeletonTheme } from "react-loading-skeleton";
@@ -13,9 +13,9 @@ import styles from "../css/Excursions.module.css";
 /** @typedef {import('types.js').Excursion} Excursion */
 
 /**
- * Componente que sirve para mostrar la lista de excursiones disponibles
+ * Componente que sirve para mostrar la lista de excursiones disponibles.
  * @param {object} props - Las propiedades del componente.
- * @param {Excursion[]} [props.excursionData=[]] - Array de objetos de excursiones a mostrar.
+ * @param {Excursion[]} [props.excursionData=[]] - Array de excursiones a mostrar.
  * @param {boolean} props.isLoading - Indica si los datos de las excursiones se están cargando.
  * @param {Error | null} props.error - Objeto de error si ha ocurrido un problema al cargar las excursiones.
  */
@@ -31,21 +31,39 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 		(state) => state.themeReducer.mode
 	);
 	const loginDispatch = useDispatch();
-	// Estado para las excursiones que se muestran en. Esto nos permite mantener los resultados antiguos visibles mientras se cargan los 
-	// nuevos datos para evitar que parpadeen o se queden en blanco.
+	// Estado para las excursiones que se muestran. Esto nos permite mantener los resultados antiguos visibles mientras se cargan
+	// los nuevos datos para evitar que parpadeen o se queden en blanco.
 	const [displayedExcursions, setDisplayedExcursions] = useState(excursionData);
+	// Estado para anunciar cambios a los lectores de pantalla.
+	const [announcement, setAnnouncement] = useState("");
+	const isInitialLoad = useRef(true);
 
 	// Efecto para gestionar qué excursiones se muestran. Se ejecuta cada vez que isLoading o excursionData cambian
 	useEffect(() => {
 		// Si la carga ha terminado, actualizamos las excursiones visibles con los nuevos datos.
 		if (!isLoading) {
 			setDisplayedExcursions(excursionData);
+
+			// Solo anunciar en cargas posteriores a la inicial (ej. al aplicar filtros)
+			if (!isInitialLoad.current) {
+				if (excursionData.length > 0) {
+					const plural =
+						excursionData.length === 1 ? "excursión" : "excursiones";
+					const message = `Búsqueda completada. Se han encontrado ${excursionData.length} ${plural}.`;
+					setAnnouncement(message);
+				}
+				// Si no hay resultados, el componente de "no encontrado" ya se anuncia.
+			}
+
+			if (isInitialLoad.current) {
+				isInitialLoad.current = false;
+			}
 		}
 	}, [isLoading, excursionData]);
 
 	/**
-	 * Función que sirve para apuntarse a una excursión. Envuelve la función un callback. Esto la memoriza y sólo se volverá a crear si 
-	 * user?.mail o loginDispatch cambian.
+	 * Función asíncrona para unirse a una excursión.
+	 * @param {string | number} excursionId - El ID de la excursión a la que el usuario desea unirse.
 	 */
 	const joinExcursion = useCallback(
 		async (excursionId) => {
@@ -78,14 +96,16 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 		[user?.mail, loginDispatch]
 	);
 
-	// Renderiza las ExcursionCard pasándole todas las propiedades de la excursión, el estado de login y si el usuario actual está apuntado
-	// a ella o no
+	/**
+	 * Componentes de las tarjetas de excursión, memoizados para optimizar el rendimiento.
+	 */
 	const excursionComponents = useMemo(
 		() =>
 			displayedExcursions.map((excursion) => {
 				const isJoined = isLoggedIn && user?.excursions?.includes(excursion.id);
 				return (
 					<Col
+						as="li" // Renderizar como un elemento de lista para mejorar la semántica
 						xs={12}
 						md={6}
 						lg={4}
@@ -109,18 +129,20 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	if (error) {
 		return (
 			<div className={`${styles.excursionsContainer} ${styles.centeredStatus}`}>
-				<output className={styles.messageNotFound}>
-					{error.message ||
-						"Lo sentimos, ha ocurrido un error al cargar las excursiones."}
-				</output>
+				{/* Usamos role="alert" para que el error sea anunciado inmediatamente por los lectores de pantalla */}
+				<div role="alert" className={styles.messageNotFound}>
+					<p className={styles.primaryMessage}>
+						{error.message ||
+							"Lo sentimos, ha ocurrido un error al cargar las excursiones."}
+					</p>
+				</div>
 			</div>
 		);
 	}
 
 	// --- Lógica de Renderizado Condicional ---
 
-	// 1. Si estamos cargando y no hay excursiones previas que mostrar (carga inicial),
-	// mostramos los esqueletos para evitar el salto de layout.
+	// 1. Si estamos cargando y no hay excursiones previas que mostrar (carga inicial), mostramos los esqueletos para evitar salto de layout.
 	if (isLoading && displayedExcursions.length === 0) {
 		const baseColor = mode === "dark" ? "#2d3748" : "#e0e0e0";
 		const highlightColor = mode === "dark" ? "#444" : "#f5f5f5";
@@ -129,7 +151,11 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 			<SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
 				<div className={styles.excursionsContainer}>
 					<h2 className={styles.title}>Próximas excursiones</h2>
-					<Row className="gx-4 gy-5" aria-label="Cargando excursiones...">
+					{/* Anunciamos el estado de carga a los lectores de pantalla de forma no intrusiva */}
+					<div role="status" aria-live="polite" className="visually-hidden">
+						Cargando excursiones...
+					</div>
+					<Row className="gx-4 gy-5">
 						{/* Mostramos 8 placeholders para dar una idea de la estructura */}
 						{Array.from({ length: 8 }).map((_, index) => (
 							<Col
@@ -156,7 +182,8 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	if (!isLoading && excursionData.length === 0) {
 		return (
 			<div className={`${styles.excursionsContainer} ${styles.centeredStatus}`}>
-				<output className={styles.messageNotFound}>
+				{/* Usamos role="status" para que el mensaje se anuncie de forma no intrusiva */}
+				<div role="status" className={styles.messageNotFound}>
 					<BsBinoculars className={styles.messageIcon} aria-hidden="true" />
 					<p className={styles.primaryMessage}>
 						No hemos encontrado ninguna excursión con esas características.
@@ -164,7 +191,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 					<p className={styles.secondaryMessage}>
 						Prueba a cambiar los filtros para ampliar la búsqueda.
 					</p>
-				</output>
+				</div>
 			</div>
 		);
 	}
@@ -173,9 +200,18 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	// antiguas mientras se cargan las nuevas, manteniendo el layout estable.
 	return (
 		<div className={styles.excursionsContainer}>
+			{/* Este elemento anuncia los resultados de los filtros a los lectores de pantalla sin ser visible. */}
+			<div role="status" aria-live="polite" className="visually-hidden">
+				{announcement}
+			</div>
 			<h2 className={styles.title}>Próximas excursiones</h2>
-			{/* La fila simplemente distribuye las tarjetas; el contenedor padre se encarga de la altura. */}
-			<Row className="gx-4 gy-5">{excursionComponents}</Row>
+			{/* Usamos una lista (ul) para agrupar las tarjetas de excursiones, lo que es semánticamente correcto.
+			    La prop 'as' en Row y Col (dentro de excursionComponents) se encarga de renderizar los elementos HTML correctos.
+			    'list-unstyled' de Bootstrap elimina los estilos por defecto de la lista.
+			 */}
+			<Row as="ul" className="gx-4 gy-5 list-unstyled">
+				{excursionComponents}
+			</Row>
 		</div>
 	);
 }
