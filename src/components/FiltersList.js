@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { useSelector } from "react-redux";
 import { SkeletonTheme } from "react-loading-skeleton";
 import FiltersListCheckbox from "./FiltersListCheckbox";
@@ -9,7 +9,11 @@ import styles from "../css/FiltersList.module.css";
 
 /** @typedef {import("../types").RootState} RootState */
 
-function FiltersList({ filterName }) {
+/**
+ * Componente que muestra una lista de filtros para una categoría específica (ej. área, dificultad, tiempo).
+ * @param {{ filterName: string }} props - Las propiedades del componente.
+ */
+function FiltersListComponent({ filterName }) {
 	// Estado que almacena la lista de filtros obtenidos del servidor.
 	const [arrayFilters, setArrayFilters] = useState([]);
 	const [isLoading, setIsLoading] = useState(true); // Inicia como true para la carga inicial.
@@ -24,7 +28,9 @@ function FiltersList({ filterName }) {
 	const baseColor = mode === "dark" ? "#202020" : "#e0e0e0";
 	const highlightColor = mode === "dark" ? "#444" : "#f5f5f5";
 
-	// useEffect que saca los filtros del servidor según el tipo de filtro (area, difficulty, time)
+	/**
+	 * Efecto que se encarga de obtener los datos de los filtros desde el servidor.
+	 */
 	useEffect(() => {
 		const fetchData = async () => {
 			// Guardamos el tiempo de inicio para asegurar una duración mínima de la animación de carga.
@@ -70,7 +76,11 @@ function FiltersList({ filterName }) {
 	if (isLoading) {
 		return (
 			<SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
-				<ul className={styles.filtersGrid}>
+				{/* Anunciamos el estado de carga a los lectores de pantalla de forma no intrusiva */}
+				<div role="status" aria-live="polite" className="visually-hidden">
+					Cargando filtros de {filterName}...
+				</div>
+				<ul className={styles.filtersGrid} aria-hidden="true">
 					{/* Mostramos 4 esqueletos para simular mejor el contenido real y evitar saltos de layout */}
 					{[...Array(4)].map((_, index) => (
 						<li
@@ -101,5 +111,7 @@ function FiltersList({ filterName }) {
 		</ul>
 	);
 }
+
+const FiltersList = memo(FiltersListComponent);
 
 export default FiltersList;

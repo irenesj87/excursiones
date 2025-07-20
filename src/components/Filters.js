@@ -2,7 +2,7 @@ import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FiltersList from "./FiltersList";
 import { clearAllFilters } from "../slicers/filterSlice";
-import { FiMapPin, FiBarChart,FiClock, FiX } from "react-icons/fi";
+import { FiMapPin, FiBarChart, FiClock, FiX } from "react-icons/fi";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Filters.module.css";
 
@@ -13,6 +13,24 @@ import styles from "../css/Filters.module.css";
  * @returns {React.ReactElement} El componente para los filtros
  * @param {{showTitle?: boolean}} props - Propiedades del componente. `showTitle` controla si se muestra el título.
  */
+const filterSections = [
+	{
+		name: "area",
+		title: "Zona",
+		Icon: FiMapPin,
+	},
+	{
+		name: "difficulty",
+		title: "Dificultad",
+		Icon: FiBarChart,
+	},
+	{
+		name: "time",
+		title: "Tiempo estimado",
+		Icon: FiClock,
+	},
+];
+
 function Filters({ showTitle = true }) {
 	const dispatch = useDispatch();
 	const { area, difficulty, time } = useSelector(
@@ -42,27 +60,15 @@ function Filters({ showTitle = true }) {
 			{/* Contenedor para el contenido que puede hacer scroll */}
 			<div className={styles.scrollableContent}>
 				{showTitle && <h2 className={styles.desktopTitle}>Filtros</h2>}
-				<section className={styles.filterSection}>
-					<h3 className={styles.filterTitle}>
-						<FiMapPin className={styles.filterIcon} aria-hidden="true" />
-						<span>Zona</span>
-					</h3>
-					<FiltersList filterName="area" />
-				</section>
-				<section className={styles.filterSection}>
-					<h3 className={styles.filterTitle}>
-						<FiBarChart className={styles.filterIcon} aria-hidden="true" />
-						<span>Dificultad</span>
-					</h3>
-					<FiltersList filterName="difficulty" />
-				</section>
-				<section className={styles.filterSection}>
-					<h3 className={styles.filterTitle}>
-						<FiClock className={styles.filterIcon} aria-hidden="true" />
-						<span>Tiempo estimado</span>
-					</h3>
-					<FiltersList filterName="time" />
-				</section>
+				{filterSections.map(({ name, title, Icon }) => (
+					<section key={name} className={styles.filterSection}>
+						<h3 className={styles.filterTitle}>
+							<Icon className={styles.filterIcon} aria-hidden="true" />
+							<span>{title}</span>
+						</h3>
+						<FiltersList filterName={name} />
+					</section>
+				))}
 			</div>
 
 			{/* El footer se mantiene en la parte inferior */}
