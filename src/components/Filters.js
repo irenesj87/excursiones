@@ -5,6 +5,7 @@ import { clearAllFilters } from "../slicers/filterSlice";
 import { FiMapPin, FiBarChart,FiClock, FiX } from "react-icons/fi";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Filters.module.css";
+
 /** @typedef {import('../types').RootState} RootState */
 
 /**
@@ -19,10 +20,17 @@ function Filters({ showTitle = true }) {
 		(state) => state.filterReducer
 	);
 
-	// Comprueba si hay algún filtro activo para habilitar/deshabilitar el botón
+	/**
+	 * Comprueba si hay algún filtro activo para habilitar/deshabilitar el botón de limpiar filtros.
+	 * @type {boolean}
+	 */
 	const hasActiveFilters =
 		area.length > 0 || difficulty.length > 0 || time.length > 0;
 
+	/**
+	 * Maneja el evento de click para limpiar todos los filtros. Despacha la acción `clearAllFilters` al store de Redux.
+	 * @returns {void}
+	 */
 	const handleClearFilters = () => {
 		dispatch(clearAllFilters());
 	};
@@ -36,21 +44,21 @@ function Filters({ showTitle = true }) {
 				{showTitle && <h2 className={styles.desktopTitle}>Filtros</h2>}
 				<section className={styles.filterSection}>
 					<h3 className={styles.filterTitle}>
-						<FiMapPin className={styles.filterIcon} />
+						<FiMapPin className={styles.filterIcon} aria-hidden="true" />
 						<span>Zona</span>
 					</h3>
 					<FiltersList filterName="area" />
 				</section>
 				<section className={styles.filterSection}>
 					<h3 className={styles.filterTitle}>
-						<FiBarChart className={styles.filterIcon}/>
+						<FiBarChart className={styles.filterIcon} aria-hidden="true" />
 						<span>Dificultad</span>
 					</h3>
 					<FiltersList filterName="difficulty" />
 				</section>
 				<section className={styles.filterSection}>
 					<h3 className={styles.filterTitle}>
-						<FiClock className={styles.filterIcon}/>
+						<FiClock className={styles.filterIcon} aria-hidden="true" />
 						<span>Tiempo estimado</span>
 					</h3>
 					<FiltersList filterName="time" />

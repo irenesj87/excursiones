@@ -1,5 +1,5 @@
-import styles from "../css/ExcursionCard.module.css";
 import { memo } from "react";
+import styles from "../css/ExcursionCard.module.css";
 
 /**
  * Componente para mostrar un detalle específico de una excursión (ej. dificultad, tiempo).
@@ -10,6 +10,11 @@ import { memo } from "react";
  * @returns {React.ReactElement}
  */
 function ExcursionDetailItemComponent({ IconComponent, text, label }) {
+	// Si no hay texto para mostrar, no renderizamos nada para evitar un ítem vacío.
+	if (!text) {
+		return null;
+	}
+
 	// Crea un texto de título completo para el tooltip del navegador.
 	const title = label ? `${label}: ${text}` : text;
 
