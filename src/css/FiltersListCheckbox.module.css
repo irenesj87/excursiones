@@ -1,44 +1,45 @@
-/* Oculta la casilla de verificación real, pero la mantiene accesible para lectores de pantalla y navegación por teclado */
-.hiddenCheckbox {
-	position: absolute;
-	opacity: 0;
-	width: 0;
-	height: 0;
-	pointer-events: none;
-}
-
-/* Estilo de la píldora (la etiqueta que se ve) */
-.filterLabel {
-	display: block; /* Cambiamos a block para que ocupe todo el ancho disponible */
-	width: 100%; /* Asegura que la píldora se estire */
+.filterPill {
+	background: none;
+	font: inherit;
+	margin: 0;
+	display: block;
+	width: 100%;
 	padding: 0.5rem 1rem;
 	font-size: 0.9rem;
 	font-weight: 500;
 	color: var(--filter-pill-text);
 	background-color: var(--filter-pill-bg);
 	border: 1px solid var(--filter-pill-border);
-	border-radius: 50px; /* Bordes redondeados para el efecto píldora */
+	border-radius: 50px;
 	cursor: pointer;
 	user-select: none; /* Evita que el texto se pueda seleccionar */
 	text-align: center;
 }
 
 /* Efecto al pasar el ratón por encima */
-.filterLabel:hover {
+.filterPill:hover{
 	background-color: var(--filter-pill-bg-hover);
 	border-color: var(--filter-pill-border-hover);
 }
 
-/* Estilo para la píldora cuando la casilla está seleccionada */
-.hiddenCheckbox:checked + .filterLabel {
+/* Estilo para la píldora cuando está seleccionada (aria-checked="true") */
+.checked {
 	background-color: var(--filter-pill-bg-checked);
 	color: var(--filter-pill-text-checked);
 	border-color: var(--filter-pill-border-checked);
 	box-shadow: var(--filter-pill-shadow-checked);
 }
 
-/* Estilo para el foco (accesibilidad con teclado) */
-.hiddenCheckbox:focus-visible + .filterLabel {
+/* Al pasar el ratón por encima de una píldora seleccionada, nos aseguramos
+   de que los estilos de 'hover' no interfieran con los de 'checked',
+   manteniendo así la legibilidad y la apariencia de "seleccionado". */
+.checked:hover {
+	background-color: var(--filter-pill-bg-checked);
+	border-color: var(--filter-pill-border-checked);
+}
+
+/* Estilo para el foco del botón (accesibilidad con teclado) */
+.filterPill:focus-visible {
 	outline: 2px solid var(--primary-color);
 	outline-offset: 2px;
 }

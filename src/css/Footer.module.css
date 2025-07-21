@@ -5,11 +5,11 @@
 	justify-content: center;
 	padding: 1.5rem 1rem;
 	text-align: center;
-	background-color: var(--primary-color); /* Fondo principal del footer */
-	color: white; /* Texto en blanco para contraste */
+	background-color: var(--primary-color);
+	color: white;
 }
 
-.footer p {
+.footerText {
 	margin: 0;
 }
 
@@ -22,15 +22,12 @@
 	border-radius: 50%;
 	margin-bottom: 0.75rem;
 	background-color: white; /* Círculo en blanco */
+	font-size: 1.5rem;
+	color: var(--primary-color); /* Icono con el color primario */
 	transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 
 .mailIconLink:hover {
 	transform: scale(1.15);
 	background-color: #f0f0f0; /* Un gris muy claro para el hover */
-}
-
-.mailIconLink svg {
-	font-size: 1.5rem;
-	color: var(--primary-color); /* Icono con el color primario */
 }
