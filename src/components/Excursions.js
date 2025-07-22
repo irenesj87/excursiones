@@ -97,7 +97,10 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	);
 
 	/**
-	 * Componentes de las tarjetas de excursión, memoizados para optimizar el rendimiento.
+	 * Componentes de las tarjetas de excursión, memoizados para optimizar el rendimiento, ya que el mapear un array a componentes
+	 * puede ser costoso si hay muchas excursiones.
+	 * Cada tarjeta recibe las propiedades necesarias y se encarga de mostrar la información de la excursión.
+	 * Además, se comprueba si el usuario ha iniciado sesión y si ya está apuntado a la excursión para mostrar el botón de unirse o no.
 	 */
 	const excursionComponents = useMemo(
 		() =>

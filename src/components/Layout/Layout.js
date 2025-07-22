@@ -94,8 +94,9 @@ const Layout = () => {
 	const loginDispatch = useDispatch();
 	// Estado para controlar la visibilidad del menú Offcanvas de filtros en breakpoints pequeños.
 	const [showFilters, setShowFilters] = useState(false);
-	// Funciones para abrir y cerrar el Offcanvas de filtros.
+	// Funciones para cerrar el Offcanvas de filtros.
 	const handleCloseFilters = () => setShowFilters(false);
+	// Función para abrir el Offcanvas de filtros.
 	const handleShowFilters = () => setShowFilters(true);
 
 	/**

@@ -147,6 +147,13 @@ function ExcursionCardComponent({
 	);
 }
 
+/**
+ * Memoiza el componente ExcursionCardComponent para evitar renderizados innecesarios.
+ * Esto es útil para mejorar el rendimiento, especialmente si el componente recibe props que no cambian
+ * frecuentemente, como el ID, nombre, área, descripción, dificultad y tiempo de la excursión.
+ * En este caso se hace porque su renderizado puede ser costoso si se renderiza muchas veces
+ * en una lista de excursiones muy larga.
+ */
 const ExcursionCard = memo(ExcursionCardComponent);
 
 export default ExcursionCard;

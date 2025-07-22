@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FiltersList from "./FiltersList";
@@ -31,7 +32,7 @@ const filterSections = [
 	},
 ];
 
-function Filters({ showTitle = true }) {
+function FiltersComponent({ showTitle = true }) {
 	const dispatch = useDispatch();
 	const { area, difficulty, time } = useSelector(
 		/** @param {RootState} state */
@@ -87,5 +88,7 @@ function Filters({ showTitle = true }) {
 		</div>
 	);
 }
+
+const Filters = memo(FiltersComponent);
 
 export default Filters;
