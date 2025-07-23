@@ -375,10 +375,18 @@ html.dark
 	background-color: var(
 		--excursion-card-bg
 	); /* Reutilizamos el fondo de las tarjetas */
+	color: var(--text-color);
 	border: 1px solid var(--separator-color);
 	border-radius: 0.5rem;
 	margin-top: 2rem;
 	margin-bottom: 2rem;
-	padding-left: 1.5rem;
-	padding-right: 1.5rem;
+	padding: 2rem;
+}
+
+/* Media query para breakpoints pequeños (xs breakpoint de Bootstrap es <576px) */
+@media (max-width: 575.98px) {
+	.contentPane {
+		margin-top: 1rem;
+		margin-bottom: 1.5rem;
+	}
 }

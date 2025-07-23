@@ -1,4 +1,5 @@
-import { Nav } from "react-bootstrap";
+import React from "react";
+import { Nav, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../slicers/loginSlice";
@@ -8,9 +9,11 @@ import styles from "../css/LandingPageUserProfile.module.css";
 /** @typedef {import('types.js').RootState} RootState */
 
 /**
- * Componente que muestra los enlaces de navegación para un usuario logueado.
+ * Componente que muestra los enlaces de navegación para un usuario logueado, incluyendo un enlace al perfil y un botón para cerrar sesión.
+ * Permite cerrar un menú colapsable (Offcanvas) si se proporciona la función `onClickCloseCollapsible`.
  * @param {object} props - Las propiedades del componente.
  * @param {() => void} [props.onClickCloseCollapsible] - Función para cerrar el menú colapsable (Offcanvas) en breakpoints pequeños.
+ * @returns {React.ReactElement} Un elemento JSX que representa los enlaces de navegación del usuario.
  */
 function LandingPageUserProfile({ onClickCloseCollapsible }) {
 	const logoutDispatch = useDispatch();
@@ -44,14 +47,18 @@ function LandingPageUserProfile({ onClickCloseCollapsible }) {
 		try {
 			const response = await fetch(url, options);
 			if (!response.ok) {
-				throw new Error("HTTP error " + response.status);
+				// A pesar del error, procedemos a desloguear al usuario en el cliente.
+				// Es importante registrar el error para depuración.
+				console.error("El logout en el servidor falló:", response.status);
 			}
+		} catch (error) {
+			// Capturamos errores de red y otros problemas, pero aún así deslogueamos en el cliente.
+			console.error("Error durante la petición de logout:", error);
+		} finally {
 			// El usuario se desloguea...
 			logoutDispatch(logout());
 			// ...y su token se elimina
 			delete sessionStorage["token"];
-		} catch (error) {
-			console.log(error);
 		}
 	};
 
@@ -65,9 +72,9 @@ function LandingPageUserProfile({ onClickCloseCollapsible }) {
 			>
 				Perfil
 			</Nav.Link>
-			<Nav.Link className={styles.logoutLink} onClick={logOut}>
+			<Button variant="secondary" onClick={logOut}>
 				Cerrar sesión
-			</Nav.Link>
+			</Button>
 		</>
 	);
 }

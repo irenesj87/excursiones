@@ -7,16 +7,6 @@
 	padding-bottom: 2rem;
 }
 
-.formCard {
-	background-color: var(--excursion-card-bg);
-	border: 1px solid var(--separator-color);
-	color: var(--text-color);
-	margin-top: 2rem;
-	margin-bottom: 2rem;
-	padding: 2rem;
-	border-radius: 0.5rem;
-}
-
 .cardTitle {
 	color: var(--heading-color);
 	font-weight: bold;
@@ -33,9 +23,5 @@
 	.container {
 		padding-top: 1rem;
 		padding-bottom: 1rem;
-	}
-	.formCard {
-		margin-top: 1rem;
-		margin-bottom: 1.5rem;
 	}
 }
