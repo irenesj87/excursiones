@@ -72,7 +72,11 @@ function LandingPageUserProfile({ onClickCloseCollapsible }) {
 			>
 				Perfil
 			</Nav.Link>
-			<Button variant="secondary" onClick={logOut}>
+			<Button
+				variant="secondary"
+				onClick={logOut}
+				className={styles.logoutButton}
+			>
 				Cerrar sesión
 			</Button>
 		</>

@@ -9,7 +9,7 @@ import styles from "../css/UserPage.module.css";
  */
 function UserInfoSkeleton() {
 	return (
-		<Card className={`${userInfoStyles.profileCard} h-100`}>
+		<Card className={`${userInfoStyles.profileCard} w-100 flex-grow-1`}>
 			<Card.Header className={styles.cardHeader}>Datos Personales</Card.Header>
 			<Card.Body className="d-flex flex-column">
 				<div className="flex-grow-1">
@@ -32,7 +32,11 @@ function UserInfoSkeleton() {
 				<div className="mt-auto border-top pt-3">
 					<Row className="justify-content-sm-end">
 						<Col xs={12} sm="auto">
-							<Skeleton height={38} width={70} />
+							<Skeleton
+								height={38}
+								className="w-100"
+								style={{ minWidth: 70 }}
+							/>
 						</Col>
 					</Row>
 				</div>

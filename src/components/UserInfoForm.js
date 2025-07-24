@@ -109,7 +109,9 @@ function UserInfoForm() {
 	};
 
 	return (
-		<Card className={`${styles.profileCard} h-100`}>
+		// Se reemplaza `h-100` por `flex-grow-1`. Esto hace que la tarjeta se expanda
+		// para ocupar el espacio vertical restante dentro de su contenedor flex padre.
+		<Card className={`${styles.profileCard} w-100 flex-grow-1`}>
 			<Card.Header className={styles.cardHeader}>Datos Personales</Card.Header>
 			<Card.Body className={`${styles.cardBody} d-flex flex-column`}>
 				{/* Campo de correo electrónico (solo lectura) */}

@@ -19,10 +19,9 @@ import Excursions from "../Excursions";
 import OriginalFooter from "../Footer"; // Se renombra la importación original para que no haya conflictos
 import RegisterPageSkeleton from "../RegisterPageSkeleton";
 import LoginPageSkeleton from "../LoginPageSkeleton";
-import NullFallback from "components/NullFallback";
+import UserPageSkeleton from "components/UserPageSkeleton";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../../css/Layout.module.css";
-
 
 /**
  * Carga perezosa para componentes de ruta. Su propósito es asegurar que cuando un componente se carga de forma perezosa,
@@ -334,7 +333,7 @@ const Layout = () => {
 								element={
 									<LazyRouteWrapper
 										PageComponent={UserPage}
-										SkeletonComponent={NullFallback}
+										SkeletonComponent={UserPageSkeleton}
 										isAuthCheckComplete={isAuthCheckComplete}
 									/>
 								}
