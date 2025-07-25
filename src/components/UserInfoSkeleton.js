@@ -1,7 +1,6 @@
-import { Row, Col, Card } from "react-bootstrap";
+import { Row, Col, Card, Form } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
 import userInfoStyles from "../css/UserInfoForm.module.css";
-import styles from "../css/UserPage.module.css";
 
 /**
  * Renderiza un esqueleto para la tarjeta de información del usuario.
@@ -10,19 +9,31 @@ import styles from "../css/UserPage.module.css";
 function UserInfoSkeleton() {
 	return (
 		<Card className={`${userInfoStyles.profileCard} w-100 flex-grow-1`}>
-			<Card.Header className={styles.cardHeader}>Datos Personales</Card.Header>
-			<Card.Body className="d-flex flex-column">
-				<div className="flex-grow-1">
-					{/* Simula 4 filas de etiqueta + input, como en UserInfoForm */}
-					{[...Array(4)].map((_, i) => (
+			<Card.Header className={userInfoStyles.cardHeader}>
+				Datos Personales
+			</Card.Header>
+			<Card.Body className={`${userInfoStyles.cardBody} d-flex flex-column`}>
+				<div>
+					{/* Simula la fila de Correo (solo texto) */}
+					{/* Se añade 'align-items-center' para que el esqueleto se alinee visualmente como el componente real */}
+					<Row className="mb-3 gx-2 align-items-center">
+						<Form.Label column sm={3} className="text-sm-end fw-bold">
+							<Skeleton width="80%" />
+						</Form.Label>
+						<Col sm={9}>
+							<Skeleton width="60%" />
+						</Col>
+					</Row>
+					{/* Simula 3 filas de etiqueta + input, como en UserInfoForm */}
+					{[...Array(3)].map((_, i) => (
 						<Row
 							// eslint-disable-next-line react/no-array-index-key
 							key={`user-info-placeholder-row-${i}`}
 							className="mb-3 gx-2 align-items-center"
 						>
-							<Col sm={3} className="text-sm-end">
+							<Form.Label column sm={3} className="text-sm-end fw-bold">
 								<Skeleton width="80%" />
-							</Col>
+							</Form.Label>
 							<Col sm={9}>
 								<Skeleton height={38} />
 							</Col>
@@ -30,7 +41,7 @@ function UserInfoSkeleton() {
 					))}
 				</div>
 				<div className="mt-auto border-top pt-3">
-					<Row className="justify-content-sm-end">
+					<Row className="justify-content-sm-end gx-0">
 						<Col xs={12} sm="auto">
 							<Skeleton
 								height={38}

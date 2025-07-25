@@ -29,12 +29,12 @@ function LoginPageSkeleton() {
 					<div className="mb-3">
 						{/* Para la etiqueta, usamos un contenedor para aplicar un margen inferior y asegurar la separación 
 					visual. */}
-						<Skeleton width="35%" containerClassName="d-block mb-2" />
+						<Skeleton width="40%" containerClassName="d-block mb-2" />
 						<Skeleton height={38} />
 					</div>
 					{/* Esqueleto para el segundo campo de formulario */}
 					<div className="mb-3">
-						<Skeleton width="20%" containerClassName="d-block mb-2" />
+						<Skeleton width="40%" containerClassName="d-block mb-2" />
 						<Skeleton height={38} />
 					</div>
 					{/* Esqueleto para el botón de envío */}
