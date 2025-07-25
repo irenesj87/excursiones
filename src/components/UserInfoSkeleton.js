@@ -24,8 +24,8 @@ function UserInfoSkeleton() {
 							<Skeleton width="60%" />
 						</Col>
 					</Row>
-					{/* Simula 3 filas de etiqueta + input, como en UserInfoForm */}
-					{[...Array(3)].map((_, i) => (
+					{/* Simula 2 filas de etiqueta + input con margen estándar */}
+					{[...Array(2)].map((_, i) => (
 						<Row
 							// eslint-disable-next-line react/no-array-index-key
 							key={`user-info-placeholder-row-${i}`}
@@ -39,6 +39,15 @@ function UserInfoSkeleton() {
 							</Col>
 						</Row>
 					))}
+					{/* Simula la última fila con un margen inferior mayor para separarla de los botones */}
+					<Row className="mb-4 gx-2 align-items-center">
+						<Form.Label column sm={3} className="text-sm-end fw-bold">
+							<Skeleton width="80%" />
+						</Form.Label>
+						<Col sm={9}>
+							<Skeleton height={38} />
+						</Col>
+					</Row>
 				</div>
 				<div className="mt-auto border-top pt-3">
 					<Row className="justify-content-sm-end gx-0">
