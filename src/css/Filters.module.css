@@ -53,3 +53,10 @@
 		border-right: none;
 	}
 }
+
+/* Estilos para el botón cuando está "aria-disabled" para que se vea y actúe como deshabilitado pero siga siendo enfocable */
+.filtersFooter button[aria-disabled="true"] {
+	opacity: 0.65;
+	cursor: not-allowed;
+	pointer-events: none; /* Evita clics de ratón, pero no el foco por teclado */
+}

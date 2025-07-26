@@ -50,8 +50,10 @@ function FiltersComponent({ showTitle = true }) {
 	 * Maneja el evento de click para limpiar todos los filtros. Despacha la acción `clearAllFilters` al store de Redux.
 	 * @returns {void}
 	 */
-	const handleClearFilters = () => {
-		dispatch(clearAllFilters());
+	const handleClearFilters = () => {	
+		if (hasActiveFilters) {
+			dispatch(clearAllFilters());
+		}
 	};
 
 	return (
@@ -79,7 +81,7 @@ function FiltersComponent({ showTitle = true }) {
 					onClick={handleClearFilters}
 					className="w-100"
 					aria-label="Limpiar todos los filtros"
-					disabled={!hasActiveFilters}
+					aria-disabled={!hasActiveFilters}
 				>
 					<FiX aria-hidden="true" className="me-2" />
 					<span>Limpiar Filtros</span>

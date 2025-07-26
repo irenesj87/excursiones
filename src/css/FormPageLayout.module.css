@@ -7,6 +7,14 @@
 	padding-bottom: 2rem;
 }
 
+/* Media query para breakpoints pequeños (xs breakpoint de Bootstrap es <576px) */
+@media (max-width: 575.98px) {
+	.container {
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+	}
+}
+
 .cardTitle {
 	color: var(--heading-color);
 	font-weight: bold;
@@ -18,16 +26,8 @@
 	margin-bottom: 0.5rem; /* Reduce el espacio inferior para acercar el subtítulo */
 }
 
-/* Media query para breakpoints pequeños (xs breakpoint de Bootstrap es <576px) */
-@media (max-width: 575.98px) {
-	.container {
-		padding-top: 1rem;
-		padding-bottom: 1rem;
-	}
-}
-
 .cardSubtitle {
-	color: var(--text-secondary);
+	color: var(--text-color);
 	font-size: 1.2rem;
 	font-weight: 500;
 	letter-spacing: 0.5px;
