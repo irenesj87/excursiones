@@ -10,6 +10,9 @@ function RegisterPage() {
 		<FormPageLayout
 			title="Bienvenido/a"
 			subtitle="Crea tu cuenta para empezar a explorar."
+			switcherPrompt="¿Ya tienes una cuenta?"
+			switcherLinkText="Inicia sesión"
+			switcherLinkTo="/loginPage"
 		>
 			<RegisterForm />
 		</FormPageLayout>

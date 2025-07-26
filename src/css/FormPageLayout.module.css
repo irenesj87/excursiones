@@ -33,3 +33,22 @@
 	margin-top: 0;
 	margin-bottom: 2.5rem; /* Espacio después del subtítulo y antes del formulario */
 }
+
+.switcher {
+	text-align: center;
+	background-color: transparent;
+	border-top: 1px solid var(--bs-border-color-translucent);
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	color: var(--bs-secondary-color);
+}
+
+.switcherLink {
+	font-weight: 600;
+	color: var(--bs-primary);
+	text-decoration: none;
+}
+
+.switcherLink:hover {
+	text-decoration: underline;
+}

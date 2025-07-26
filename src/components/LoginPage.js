@@ -8,7 +8,6 @@ function LoginPage() {
 		<FormPageLayout
 			title="Inicia sesión"
 			colWidth="3"
-			subtitle="Nos alegra verte de nuevo."
 			switcherPrompt="¿No tienes una cuenta?"
 			switcherLinkText="Regístrate"
 			switcherLinkTo="/registerPage"
