@@ -1,8 +1,10 @@
 .excursionsContainer {
 	display: flex;
 	flex-direction: column;
+	flex-grow: 1;
 	margin-top: 2rem;
 	margin-bottom: 2rem;
+	min-height: 100%;
 }
 
 .title {

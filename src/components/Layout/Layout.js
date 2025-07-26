@@ -26,7 +26,7 @@ import styles from "../../css/Layout.module.css";
 /**
  * Carga perezosa para componentes de ruta. Su propósito es asegurar que cuando un componente se carga de forma perezosa,
  * el indicador de carga (como por ejemplo un "esqueleto" o skeleton) se muestre al usuario durante un tiempo mínimo, que
- * por defecto es de 500 milisegundos. Resulve un problema común de experiencia de usuario llamado parpadeo (flickering).
+ * por defecto es de 500 milisegundos. Resuelve un problema común de experiencia de usuario llamado parpadeo (flickering).
  * @param {() => Promise<any>} factory - La función de importación dinámica.
  * @param {number} [minTime=500] - El tiempo mínimo de carga en milisegundos.
  * @returns {React.LazyExoticComponent<any>}
