@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Col, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/ValidatedFormGroup.module.css";
 
@@ -23,26 +23,24 @@ function ValidatedFormGroup({
 	validationFunction,
 	value,
 	message,
-	autocomplete,
-	...colProps // Collect remaining props (like xs, md, lg)
+	autocomplete
 }) {
 	// Variable that saves if the information we receive is valid or not, (is not blank or in an incorrect format)
 	const [notValid, setNotValid] = useState(false);
 
 	// Function that receives the information and updates it
 	const nameChange = (event) => {
-		const value = event.target.value;
-		inputToChange(value);
-		setNotValid(!validationFunction(value));
+		const newValue = event.target.value;
+		inputToChange(newValue);
+		setNotValid(!validationFunction(newValue));
 	};
 
 	return (
-		<Form.Group as={Col} {...colProps} className="mb-3">
-			<Form.Label htmlFor={id}>{name}</Form.Label>
+		<Form.Group className="mb-3" controlId={id}>
+			<Form.Label>{name}</Form.Label>
 			<Form.Control
 				type={inputType}
 				onChange={nameChange}
-				id={id}
 				name={name}
 				value={value}
 				autoComplete={autocomplete}

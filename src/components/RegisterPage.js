@@ -7,7 +7,10 @@ import "bootstrap/dist/css/bootstrap.css";
  */
 function RegisterPage() {
 	return (
-		<FormPageLayout title="Bienvenido/a">
+		<FormPageLayout
+			title="Bienvenido/a"
+			subtitle="Crea tu cuenta para empezar a explorar."
+		>
 			<RegisterForm />
 		</FormPageLayout>
 	);

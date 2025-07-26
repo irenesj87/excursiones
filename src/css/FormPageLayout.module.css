@@ -15,7 +15,7 @@
 	font-size: 1.6rem;
 	letter-spacing: 0.5px;
 	padding-bottom: 0.75rem;
-	margin-bottom: 1.5rem; /* Espacio ajustado para un mejor layout */
+	margin-bottom: 0.5rem; /* Reduce el espacio inferior para acercar el subtítulo */
 }
 
 /* Media query para breakpoints pequeños (xs breakpoint de Bootstrap es <576px) */
@@ -24,4 +24,12 @@
 		padding-top: 1rem;
 		padding-bottom: 1rem;
 	}
+}
+
+.cardSubtitle {
+	color: var(--bs-secondary-color);
+	font-size: 1.2rem;
+	text-align: center;
+	margin-top: 0;
+	margin-bottom: 2.5rem; /* Espacio después del subtítulo y antes del formulario */
 }

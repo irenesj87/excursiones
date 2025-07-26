@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import FormPageLayout from "./FormPageLayout";
+import registerFormStyles from "../css/RegisterForm.module.css";
 
 /** @typedef {import("../types").RootState} RootState */
 
@@ -31,9 +32,15 @@ function RegisterPageSkeleton() {
 	);
 
 	return (
-		<FormPageLayout title="Bienvenido/a">
+		<FormPageLayout
+			title="Bienvenido/a"
+			subtitle="Crea tu cuenta para empezar a explorar."
+		>
 			<SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
-				<div aria-hidden="true">
+				<div
+					aria-hidden="true"
+					className={`${registerFormStyles.formLabel} fw-bold`}
+				>
 					<Row>
 						<Col xs={12} md={6}>
 							{renderInputPlaceholder("30%")} {/* Nombre */}
@@ -60,12 +67,15 @@ function RegisterPageSkeleton() {
 					</Row>
 
 					{/* Esqueleto para el mensaje informativo */}
-					<div className="mb-3">
-						<Skeleton count={2} />
-					</div>
+					<ul className={`${registerFormStyles.infoMessage} mb-3`}>
+						<li>
+							Tu contraseña debe tener al menos 8 caracteres, una letra y un
+							número.
+						</li>
+					</ul>
 
 					{/* Esqueleto para el botón de envío */}
-					<div className="mt-5 pt-3 border-top">
+					<div className="mt-5 pt-3">
 						<Row className="justify-content-sm-end">
 							<Col xs={12} sm="auto">
 								<Skeleton

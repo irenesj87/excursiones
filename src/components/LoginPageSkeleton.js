@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import FormPageLayout from "./FormPageLayout";
+import loginFormStyles from "../css/LoginForm.module.css";
 
 /** @typedef {import("../types").RootState} RootState */
 
@@ -22,9 +23,16 @@ function LoginPageSkeleton() {
 	const highlightColor = mode === "dark" ? "#444" : "#f5f5f5";
 
 	return (
-		<FormPageLayout title="Inicia sesión" colWidth="3">
+		<FormPageLayout
+			title="Inicia sesión"
+			colWidth="3"
+			subtitle="Nos alegra verte de nuevo."
+		>
 			<SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
-				<div aria-hidden="true">
+				<div
+					aria-hidden="true"
+					className={`${loginFormStyles.formLabel} fw-bold`}
+				>
 					{/* Esqueleto para un campo de formulario (etiqueta + input) */}
 					<div className="mb-3">
 						{/* Para la etiqueta, usamos un contenedor para aplicar un margen inferior y asegurar la separación 
