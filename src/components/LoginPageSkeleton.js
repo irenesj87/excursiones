@@ -27,6 +27,9 @@ function LoginPageSkeleton() {
 			title="Inicia sesión"
 			colWidth="3"
 			subtitle="Nos alegra verte de nuevo."
+			switcherPrompt="¿No tienes una cuenta?"
+			switcherLinkText="Regístrate"
+			switcherLinkTo="/registerPage"
 		>
 			<SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
 				<div
@@ -46,7 +49,7 @@ function LoginPageSkeleton() {
 						<Skeleton height={38} />
 					</div>
 					{/* Esqueleto para el botón de envío */}
-					<div className="mt-5 pt-3 border-top">
+					<div className="mt-5 pt-3">
 						<Row className="justify-content-sm-end">
 							<Col xs={12} sm="auto">
 								{/*

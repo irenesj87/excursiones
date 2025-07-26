@@ -107,7 +107,7 @@ export function LoginForm() {
 					message={false}
 					autocomplete="current-password"
 				/>
-				<div className="mt-5 pt-3 border-top">
+				<div className="mt-5 pt-3">
 					{/* justify-content-sm-end alineará la Col a la derecha en breakpoints sm y mayores */}
 					<Row className="justify-content-sm-end">
 						{/* sm="auto" hace que la Col se ajuste al contenido en breakpoints sm y mayores */}
