@@ -168,6 +168,8 @@ const Layout = () => {
 	 */
 	useEffect(() => {
 		const verifyAuthStatus = async () => {
+			const startTime = Date.now();
+			// Obtiene el token de sesión del almacenamiento del navegador.
 			const sessionToken = sessionStorage.getItem("token");
 			try {
 				// Usamos el servicio de autenticación. Este ya maneja el caso de que no haya token.
@@ -193,7 +195,13 @@ const Layout = () => {
 				loginDispatch(logout());
 				sessionStorage.removeItem("token");
 			} finally {
-				setIsAuthCheckComplete(true); // Marcar autenticación del usuario como completa independientemente del resultado
+				const elapsedTime = Date.now() - startTime;
+				const minDisplayTime = 500; // Tiempo mínimo de espera en milisegundos
+				const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
+				// Espera el tiempo restante para asegurar que el esqueleto se muestre al menos 500 ms
+				setTimeout(() => {
+					setIsAuthCheckComplete(true);
+				}, remainingTime);
 			}
 		};
 		verifyAuthStatus();

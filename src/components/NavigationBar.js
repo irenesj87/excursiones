@@ -1,10 +1,19 @@
 import { useState, useEffect, memo } from "react";
-import { Nav, Navbar, Container, Button, Offcanvas } from "react-bootstrap";
+import {
+	Nav,
+	Navbar,
+	Container,
+	Button,
+	Offcanvas,
+	Tooltip,
+	OverlayTrigger,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
 import LandingPageUserProfile from "./LandingPageUserProfile";
+import AuthNavSkeleton from "./AuthNavSkeleton";
 import { toggleMode, setMode } from "../slicers/themeSlice";
 import { FaMoon, FaSun } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.css";
@@ -100,6 +109,12 @@ function NavigationBarComponent({
 			<FaSun className={styles.themeIcon} />
 		);
 
+	const renderTooltip = (props) => (
+		<Tooltip id="button-tooltip" {...props}>
+			{mode === "light" ? "Cambiar a modo oscuro" : "Cambiar a modo claro"}
+		</Tooltip>
+	);
+
 	/**
 	 * Componente que muestra los enlaces de navegación para usuarios no logueados (Registrarse, Iniciar sesión).
 	 */
@@ -111,15 +126,15 @@ function NavigationBarComponent({
 				to="/registerPage"
 				onClick={handleCloseOffcanvas}
 			>
-				Regístrate
+				Crear cuenta
 			</Nav.Link>
 			<Nav.Link
-				className={`${styles.loginLink} me-3`}
+				className={styles.loginLink}
 				as={Link}
 				to="/loginPage"
 				onClick={handleCloseOffcanvas}
 			>
-				Inicia sesión
+				Iniciar sesión
 			</Nav.Link>
 		</>
 	);
@@ -131,14 +146,13 @@ function NavigationBarComponent({
 		<LandingPageUserProfile onClickCloseCollapsible={handleCloseOffcanvas} />
 	);
 
-	// Por defecto, no mostrar nada si la comprobación de autenticación no está completa. Sirve para evitar el FOUC
-	let authNavContent = null;
+	// Renderiza el contenido de autenticación apropiado (links o esqueleto)
+	let authNavContent;
 	if (isAuthCheckComplete) {
-		if (isLoggedIn) {
-			authNavContent = LoggedItems; // Si la autenticación está completa y el usuario está logueado
-		} else {
-			authNavContent = NoLoggedItems; // Si la autenticación está completa y el usuario no está logueado
-		}
+		authNavContent = isLoggedIn ? LoggedItems : NoLoggedItems;
+	} else {
+		// Muestra un esqueleto mientras se verifica la autenticación para evitar saltos de layout
+		authNavContent = <AuthNavSkeleton />;
 	}
 
 	return (
@@ -176,16 +190,22 @@ function NavigationBarComponent({
 				y justify-content-end alinea los items hijos al final del contenedor. */}
 				{/* order-lg-3: para posicionarlo correctamente en breakpoints grandes */}
 				<div className="d-flex align-items-center justify-content-end ms-auto ms-md-0 order-md-3 order-lg-3">
-					<Button
-						className={`${styles.themeToggleBtn} me-2`}
-						id="toggleButton"
-						onClick={toggleTheme}
-						aria-label={
-							mode === "light" ? "Activar modo oscuro" : "Activar modo claro"
-						}
+					<OverlayTrigger
+						placement="bottom"
+						delay={{ show: 250, hide: 400 }}
+						overlay={renderTooltip}
 					>
-						{icon}
-					</Button>
+						<Button
+							className={`${styles.themeToggleBtn} me-2`}
+							id="toggleButton"
+							onClick={toggleTheme}
+							aria-label={
+								mode === "light" ? "Activar modo oscuro" : "Activar modo claro"
+							}
+						>
+							{icon}
+						</Button>
+					</OverlayTrigger>
 					{/* Inline items para breakpoints grandes */}
 					{/* No visible en breakpoints pequeños (d-none), visible en grandes (d-lg-flex) */}
 					{/* Posicionado antes del toggle para mantener el orden en breakpoints grandes */}

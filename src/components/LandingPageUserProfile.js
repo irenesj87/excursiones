@@ -70,7 +70,7 @@ function LandingPageUserProfile({ onClickCloseCollapsible }) {
 				to="/UserPage"
 				onClick={onClickCloseCollapsible}
 			>
-				Perfil
+				Tu perfil
 			</Nav.Link>
 			<Button
 				variant="secondary"
