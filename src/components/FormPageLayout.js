@@ -6,7 +6,7 @@ import styles from "../css/FormPageLayout.module.css";
  * Componente que proporciona un diseño de página reutilizable para formularios.
  * Centra el contenido del formulario en una tarjeta, adaptándose a diferentes breakpoints.
  * Layout reutilizable para páginas con formularios centrados (Login, Registro).
- * @param {object} props
+ * @param {object} props - Las propiedades del componente.
  * @param {string} props.title - El título principal que se mostrará en la tarjeta.
  * @param {string} [props.subtitle] - Un subtítulo opcional para dar más contexto.
  * @param {React.ReactNode} props.children - El contenido del formulario a renderizar.
@@ -37,18 +37,12 @@ function FormPageLayout({
 		<Container as="main" fluid className={`${styles.container} h-100`}>
 			<Row className="justify-content-center align-items-center h-100">
 				<Col xs={12} md={9} lg={8} xl={colWidth}>
-					<Card
-						className="contentPane"
-						role="region"
-						aria-labelledby={titleId}
-					>
+					<Card className="contentPane" role="region" aria-labelledby={titleId}>
 						<Card.Body>
 							<Card.Title as="h2" id={titleId} className={styles.cardTitle}>
 								{title}
 							</Card.Title>
-							{subtitle && (
-								<p className={styles.cardSubtitle}>{subtitle}</p>
-							)}
+							{subtitle && <p className={styles.cardSubtitle}>{subtitle}</p>}
 							{children}
 						</Card.Body>
 						{switcherPrompt && switcherLinkText && switcherLinkTo && (
