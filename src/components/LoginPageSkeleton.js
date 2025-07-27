@@ -17,10 +17,16 @@ function LoginPageSkeleton() {
 		(state) => state.themeReducer.mode
 	);
 	// Define los colores del esqueleto según el tema para una experiencia visual consistente.
-	// Para el modo claro, se ha aumentado el contraste entre el color base y el de resaltado
-	// para que la animación sea más perceptible, similar a como se ve en el modo oscuro.
 	const baseColor = mode === "dark" ? "#202020" : "#e0e0e0";
 	const highlightColor = mode === "dark" ? "#444" : "#f5f5f5";
+
+	/** Renderiza un placeholder para un campo de formulario (label + input). */
+	const renderInputPlaceholder = () => (
+		<div className="mb-3">
+			<Skeleton width="40%" containerClassName="d-block mb-2" />
+			<Skeleton height={38} />
+		</div>
+	);
 
 	return (
 		<FormPageLayout
@@ -36,18 +42,8 @@ function LoginPageSkeleton() {
 					aria-hidden="true"
 					className={`${loginFormStyles.formLabel} fw-bold`}
 				>
-					{/* Esqueleto para un campo de formulario (etiqueta + input) */}
-					<div className="mb-3">
-						{/* Para la etiqueta, usamos un contenedor para aplicar un margen inferior y asegurar la separación 
-					visual. */}
-						<Skeleton width="40%" containerClassName="d-block mb-2" />
-						<Skeleton height={38} />
-					</div>
-					{/* Esqueleto para el segundo campo de formulario */}
-					<div className="mb-3">
-						<Skeleton width="40%" containerClassName="d-block mb-2" />
-						<Skeleton height={38} />
-					</div>
+					{renderInputPlaceholder()}
+					{renderInputPlaceholder()}
 					{/* Esqueleto para el botón de envío */}
 					<div className="mt-5 pt-3">
 						<Row className="justify-content-sm-end">
@@ -56,7 +52,8 @@ function LoginPageSkeleton() {
 							  Para el esqueleto del botón, necesitamos un comportamiento responsivo:
 							  - En breakpoints pequeños (xs), debe ocupar el 100% del ancho (como el botón real).
 							  - En breakpoints más grandes (sm+), debe tener un ancho fijo para simular el botón.
-							  La clase `w-100` asegura el ancho completo, y el `min-width` en el estilo evita que la columna `sm="auto"` colapse en pantallas grandes.
+							  - La clase `w-100` asegura el ancho completo, y el `min-width` en el estilo evita que la columna 
+							  `sm="auto"` colapse en breakpoints grandes.
 							*/}
 								<Skeleton
 									height={38}

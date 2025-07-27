@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Row, Col, Button, Form } from "react-bootstrap";
+import { useEffect, useState, useReducer, useRef } from "react";
+import { Row, Col, Button, Form, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { validateMail, validatePassword } from "../validation/validations.js";
 import ValidatedFormGroup from "./ValidatedFormGroup";
@@ -10,21 +10,49 @@ import { userLogin } from "../helpers/helpers.js";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/LoginForm.module.css";
 
-/* Componente que valida la info de los inputs y deshabilita el botón "Enviar" hasta que lo que escribe el usuario 
-esté en el formato correcto */
+// Estado inicial para el reducer del formulario.
+const initialState = {
+	isLoading: false,
+	error: null,
+	isButtonDisabled: true,
+};
+
+/**
+ * Reducer para gestionar el estado del formulario de inicio de sesión.
+ * @param {object} state - El estado actual del formulario.
+ * @param {object} action - La acción a despachar.
+ */
+// El reducer centraliza toda la lógica de actualización del estado del formulario.
+function loginReducer(state, action) {
+	switch (action.type) {
+		case "LOGIN_START":
+			return { ...state, isLoading: true, error: null };
+		case "LOGIN_SUCCESS":
+			return { ...state, isLoading: false };
+		case "LOGIN_FAILURE":
+			return { ...state, isLoading: false, error: action.payload };
+		case "SET_VALIDITY":
+			return { ...state, isButtonDisabled: !action.payload };
+		case "CLEAR_ERROR":
+			return { ...state, error: null };
+		default:
+			throw new Error(`Acción no soportada: ${action.type}`);
+	}
+}
+
+/**
+ * Componente que representa el formulario de inicio de sesión.
+ */
 export function LoginForm() {
 	const loginDispatch = useDispatch();
 	const navigate = useNavigate();
-	// Variable que guarda el correo del usuario que está intentando loguearse
 	const [mail, setMail] = useState("");
-	// Variable que guarda la contraseña del usuario que está intentando loguearse
 	const [password, setPassword] = useState("");
-	// Variable que guarda si el botón está deshabilitado o no
-	const [disabled, setDisabled] = useState(true);
-	// Variable que avisa si ha habido algún error al loguearse el usuario
-	const [loginError, setLoginError] = useState(null);
-	// Variable que dice cuando hay que mostrar la alerta de error
-	const [showErrorAlert, setShowErrorAlert] = useState(false);
+
+	// Usamos useReducer para gestionar el estado del formulario.
+	const [formState, formDispatch] = useReducer(loginReducer, initialState);
+	// Ref para la alerta de error, para poder mover el foco a ella.
+	const errorAlertRef = useRef(null);
 
 	/**
 	 * Maneja el envío del formulario de inicio de sesión. Realiza una petición al servidor para autenticar al usuario y, si
@@ -32,26 +60,25 @@ export function LoginForm() {
 	 */
 	const submit = async (e) => {
 		e.preventDefault();
-		setLoginError(null);
-		setShowErrorAlert(false);
+		formDispatch({ type: "LOGIN_START" });
 
 		try {
 			const data = await userLogin(mail, password);
-			// El usuario se loguea y guardamos su info y su token en la store...
 			loginDispatch(
 				login({
 					user: data.user,
 					token: data.token,
 				})
 			);
-			// ...y después guardamos el token en sessionStorage
 			window.sessionStorage["token"] = data.token;
-			// Cuando el usuario se loguea le mandamos a su página de usuario
+			formDispatch({ type: "LOGIN_SUCCESS" });
 			navigate("/UserPage");
 		} catch (error) {
 			console.error("Login failed:", error);
-			setLoginError(error.message || "Error al iniciar sesión.");
-			setShowErrorAlert(true);
+			formDispatch({
+				type: "LOGIN_FAILURE",
+				payload: error.message || "Error al iniciar sesión.",
+			});
 		}
 	};
 
@@ -60,30 +87,33 @@ export function LoginForm() {
 	 * El botón se habilita solo si el correo electrónico y la contraseña cumplen con las validaciones.
 	 */
 	useEffect(() => {
-		if (validateMail(mail) && validatePassword(password)) {
-			setDisabled(false);
-		} else {
-			setDisabled(true);
-		}
+		const isValid = validateMail(mail) && validatePassword(password);
+		formDispatch({ type: "SET_VALIDITY", payload: isValid });
 	}, [mail, password]);
 
-	/**
-	 * Cierra la alerta de mensaje de error y resetea el estado del error.
-	 * Se pasa como prop al componente ErrorMessageAlert.
-	 */
-	const handleCloseAlert = () => {
-		setShowErrorAlert(false);
-		setLoginError(null);
-	};
+	// Efecto para mover el foco a la alerta de error cuando aparece.
+	useEffect(() => {
+		if (formState.error && errorAlertRef.current) {
+			errorAlertRef.current.focus();
+		}
+	}, [formState.error]);
 
 	return (
 		<>
-			{showErrorAlert && loginError && (
-				<ErrorMessageAlert message={loginError} onClose={handleCloseAlert} />
+			{formState.error && (
+				// El div wrapper permite que la alerta sea programáticamente enfocable.
+				// tabIndex="-1" lo hace enfocable vía JS sin añadirlo al orden de tabulación.
+				<div ref={errorAlertRef} tabIndex={-1}>
+					<ErrorMessageAlert
+						message={formState.error}
+						onClose={() => formDispatch({ type: "CLEAR_ERROR" })}
+					/>
+				</div>
 			)}
 			<Form
 				id="loginForm"
 				noValidate
+				aria-busy={formState.isLoading}
 				onSubmit={submit}
 				className={`${styles.formLabel} fw-bold`}
 			>
@@ -94,7 +124,7 @@ export function LoginForm() {
 					inputToChange={setMail}
 					validationFunction={validateMail}
 					value={mail}
-					message={false}
+					message={true}
 					autocomplete="email"
 				/>
 				<ValidatedFormGroup
@@ -104,21 +134,32 @@ export function LoginForm() {
 					inputToChange={setPassword}
 					validationFunction={validatePassword}
 					value={password}
-					message={false}
+					message={true}
 					autocomplete="current-password"
 				/>
 				<div className="mt-5 pt-3">
-					{/* justify-content-sm-end alineará la Col a la derecha en breakpoints sm y mayores */}
 					<Row className="justify-content-sm-end">
-						{/* sm="auto" hace que la Col se ajuste al contenido en breakpoints sm y mayores */}
 						<Col xs={12} sm="auto">
 							<Button
-								variant={disabled ? "secondary" : "success"}
+								variant={formState.isButtonDisabled ? "secondary" : "success"}
 								type="submit"
-								disabled={disabled}
-								className="w-100" // w-100 hace que el botón ocupe el ancho de su Col padre
+								disabled={formState.isButtonDisabled || formState.isLoading}
+								className="w-100"
 							>
-								Enviar
+								{formState.isLoading ? (
+									<>
+										<Spinner
+											as="span"
+											animation="border"
+											size="sm"
+											role="status"
+											aria-hidden="true"
+										/>
+										<span className="visually-hidden">Cargando...</span>
+									</>
+								) : (
+									"Enviar"
+								)}
 							</Button>
 						</Col>
 					</Row>
