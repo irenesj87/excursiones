@@ -151,7 +151,12 @@ function NavigationBarComponent({
 			<Container fluid>
 				{/* Agrupados con d-flex */}
 				<div className="d-flex flex-wrap align-items-center">
-					<Navbar.Brand as={Link} to="/" onClick={handleCloseOffcanvas}>
+					<Navbar.Brand
+						as={Link}
+						to="/"
+						onClick={handleCloseOffcanvas}
+						aria-label="Excursiones Juntos, página de inicio"
+					>
 						<Logo />
 					</Navbar.Brand>
 				</div>
