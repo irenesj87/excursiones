@@ -35,11 +35,14 @@ html.light body {
 	/* --- Variables para ExcursionCard --- */
 	--excursion-card-bg: #ffffff; /* Blanco puro para que las tarjetas resalten */
 	--excursion-card-bg-joined: #dff0d8; /* Verde muy claro y sutil para tarjetas apuntadas */
-	--excursion-card-joined-status-text: var(--bs-success); /* Verde oscuro de Bootstrap */
+	--excursion-card-joined-status-text: var(
+		--bs-success
+	); /* Verde oscuro de Bootstrap */
 	--excursion-card-border-color: var(--separator-color);
 	--excursion-card-title-color: #1a2b1e;
 	--excursion-card-shadow: 0 5px 15px rgba(49, 80, 54, 0.08);
 	--excursion-card-shadow-hover: 0 10px 20px rgba(49, 80, 54, 0.12);
+	--excursion-card-icon-color: var(--primary-color);
 
 	/* --- Estilos para la barra de navegación --- */
 	.customNavbar {
@@ -141,11 +144,14 @@ html.dark body {
 	/* --- Variables para ExcursionCard --- */
 	--excursion-card-bg: #213426; /* Verde un poco más claro que el fondo */
 	--excursion-card-bg-joined: #2a402e; /* Verde ligeramente más saturado para indicar "apuntado" */
-	--excursion-card-joined-status-text: var(--heading-color); /* Verde brillante para contraste */
+	--excursion-card-joined-status-text: var(
+		--heading-color
+	); /* Verde brillante para contraste */
 	--excursion-card-border-color: var(--separator-color);
 	--excursion-card-title-color: #e8f5e9;
 	--excursion-card-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 	--excursion-card-shadow-hover: 0 10px 20px rgba(0, 0, 0, 0.4);
+	--excursion-card-icon-color: var(--heading-color);
 
 	/* --- Variables para Botones de Filtros --- */
 	--filters-toggle-btn-color: #e8f5e9;

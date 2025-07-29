@@ -25,9 +25,6 @@
 .themeToggleBtn:hover {
 	background-color: transparent;
 	color: var(--theme-toggle-btn-color); /* Mantenemos el color del icono */
-	transform: scale(
-		1.2
-	); /* Agranda el icono al pasar el ratón por encima del botón */
 }
 
 .registerLink {

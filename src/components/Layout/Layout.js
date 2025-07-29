@@ -5,6 +5,7 @@ import React, {
 	lazy,
 	Suspense,
 	memo,
+	useRef,
 	useReducer,
 } from "react";
 import { FiFilter } from "react-icons/fi";
@@ -93,6 +94,9 @@ const Layout = () => {
 	const loginDispatch = useDispatch();
 	// Estado para controlar la visibilidad del menú Offcanvas de filtros en breakpoints pequeños.
 	const [showFilters, setShowFilters] = useState(false);
+	// Ref para registrar el momento en que comienza una búsqueda de excursiones.
+	const fetchStartTimeRef = useRef(null);
+
 	// Funciones para cerrar el Offcanvas de filtros.
 	const handleCloseFilters = () => setShowFilters(false);
 	// Función para abrir el Offcanvas de filtros.
@@ -150,7 +154,14 @@ const Layout = () => {
 	 */
 	const handleExcursionsFetchSuccess = useCallback(
 		(/** @type {any[]} */ excursions) => {
-			excursionsDispatch({ type: "FETCH_SUCCESS", payload: excursions });
+			const elapsedTime = Date.now() - (fetchStartTimeRef.current || Date.now());
+			const minDisplayTime = 500; // 500ms
+			const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
+
+			setTimeout(
+				() => excursionsDispatch({ type: "FETCH_SUCCESS", payload: excursions }),
+				remainingTime
+			);
 		},
 		[]
 	);
@@ -229,6 +240,7 @@ const Layout = () => {
 	 * resetea error.
 	 */
 	const handleExcursionsFetchStart = useCallback(() => {
+		fetchStartTimeRef.current = Date.now();
 		excursionsDispatch({ type: "FETCH_START" });
 	}, []);
 
@@ -238,7 +250,14 @@ const Layout = () => {
 	 */
 	const handleExcursionsFetchEnd = useCallback((/** @type {any} */ error) => {
 		if (error) {
-			excursionsDispatch({ type: "FETCH_ERROR", payload: error });
+			const elapsedTime = Date.now() - (fetchStartTimeRef.current || Date.now());
+			const minDisplayTime = 500;
+			const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
+
+			setTimeout(
+				() => excursionsDispatch({ type: "FETCH_ERROR", payload: error }),
+				remainingTime
+			);
 		}
 	}, []);
 

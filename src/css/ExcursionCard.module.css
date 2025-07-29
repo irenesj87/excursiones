@@ -41,6 +41,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	gap: 1rem;
+	color: var(--text-color);
 }
 
 .detailItem {
@@ -50,7 +51,7 @@
 }
 
 .detailIcon {
-	color: var(--bs-primary);
+	color: var(--excursion-card-icon-color);
 	font-size: 1.2rem;
 }
 

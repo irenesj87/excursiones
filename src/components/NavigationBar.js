@@ -192,7 +192,6 @@ function NavigationBarComponent({
 				<div className="d-flex align-items-center justify-content-end ms-auto ms-md-0 order-md-3 order-lg-3">
 					<OverlayTrigger
 						placement="bottom"
-						delay={{ show: 250, hide: 400 }}
 						overlay={renderTooltip}
 					>
 						<Button

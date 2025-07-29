@@ -1,9 +1,9 @@
 import { memo, useCallback } from "react";
 import { Card, Button } from "react-bootstrap";
+import ExcursionDetailItem from "./ExcursionDetailItem";
 import { FiMapPin, FiClock, FiCheckCircle } from "react-icons/fi";
 import cn from "classnames";
 import "bootstrap/dist/css/bootstrap.css";
-import ExcursionDetailItem from "./ExcursionDetailItem";
 import styles from "../css/ExcursionCard.module.css";
 
 /**
@@ -59,13 +59,17 @@ function ExcursionCardComponent({
 					<Card.Title className={`${styles.excursionTitle} mb-3`}>
 						{name}
 					</Card.Title>
-					<Card.Subtitle className={`${styles.excursionArea} mb-2`}>
-						<FiMapPin className={styles.areaIcon} />
-						<span>{area}</span>
-					</Card.Subtitle>
 
-					<div className={`${styles.excursionDetails} mt-3`}>
-						<div className={styles.detailItem} title={`Dificultad: ${difficulty}`}>
+					<div className={styles.excursionDetails}>
+						<ExcursionDetailItem
+							IconComponent={FiMapPin}
+							text={area}
+							label="Zona"
+						/>
+						<div
+							className={styles.detailItem}
+							title={`Dificultad: ${difficulty}`}
+						>
 							{/* Etiqueta oculta para accesibilidad */}
 							<span className="visually-hidden">Dificultad: </span>
 							<span

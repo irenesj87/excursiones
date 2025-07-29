@@ -1,5 +1,5 @@
+import { Card, Row, Col } from "react-bootstrap";
 import { useCallback } from "react";
-import { Card } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
 import cardStyles from "../css/ExcursionCard.module.css"; // Se reutiliza el CSS de la tarjeta real
 import skeletonStyles from "../css/ExcursionCardSkeleton.module.css";
@@ -10,7 +10,8 @@ import "react-loading-skeleton/dist/skeleton.css";
  * @param {{ isLoggedIn?: boolean, isJoined?: boolean }} props
  */
 function ExcursionCardSkeleton({ isLoggedIn = false, isJoined = false }) {
-	// Función auxiliar para renderizar un elemento de detalle del esqueleto. Se memoiza para evitar recreaciones innecesarias en cada render.
+	// Función auxiliar para renderizar un elemento de detalle del esqueleto. Se memoiza para evitar recreaciones innecesarias en
+	// cada render.
 	const renderDetailItem = useCallback(
 		() => (
 			<div className={cardStyles.detailItem}>
@@ -26,30 +27,40 @@ function ExcursionCardSkeleton({ isLoggedIn = false, isJoined = false }) {
 			className={`${skeletonStyles.skeletonCard} h-100 w-100`}
 			aria-hidden="true"
 		>
-			<Card.Body className="d-flex flex-column">
+			<Card.Body className="d-flex flex-column flex-grow-1">
 				<div>
 					{/* Título */}
 					<Skeleton height={21} width="70%" className="mb-3" />
-					{/* Subtítulo (Área) */}
-					<Skeleton height={16} width="40%" className="mb-2" />
-					{/* Detalles (Dificultad, Tiempo) */}
-					<div className={`${cardStyles.excursionDetails} mt-3`}>
+					{/* Detalles (Zona, Dificultad, Tiempo) */}
+					<div className={cardStyles.excursionDetails}>
+						{renderDetailItem()}
 						{renderDetailItem()}
 						{renderDetailItem()}
 					</div>
 				</div>
 				{/* Botón de "Apuntarse" */}
 				{isLoggedIn && (
-					<div className="mt-auto pt-3 border-top d-flex justify-content-end align-items-center">
+					<div className="mt-auto pt-3 border-top">
 						{isJoined ? (
-							<div
-								className={`${cardStyles.joinedStatus} d-flex align-items-center`}
-							>
-								<Skeleton circle width={22} height={22} />
-								<Skeleton width={80} className="ms-2" />
+							<div className="d-grid d-md-flex justify-content-center justify-content-md-end">
+								<div
+									className={`${cardStyles.joinedStatus} d-flex align-items-center`}
+								>
+									<Skeleton circle width={22} height={22} />
+									<Skeleton width={80} className="ms-2" />
+								</div>
 							</div>
 						) : (
-							<Skeleton height={38} width={90} />
+							<Row className="justify-content-md-end">
+								<Col xs={12} md="auto">
+									<Skeleton
+										height={38}
+										className="w-100"
+										// El min-width da al esqueleto un ancho base en breakpoints 'md' y superiores
+										style={{ minWidth: 100 }}
+									/>
+								</Col>
+							</Row>
 						)}
 					</div>
 				)}
