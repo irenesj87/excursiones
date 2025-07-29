@@ -32,11 +32,6 @@ function ExcursionCardSkeleton({ isLoggedIn = false, isJoined = false }) {
 					<Skeleton height={21} width="70%" className="mb-3" />
 					{/* Subtítulo (Área) */}
 					<Skeleton height={16} width="40%" className="mb-2" />
-					{/* Descripción y "Leer más" */}
-					<div className={cardStyles.excursionDescriptionContainer}>
-						<Skeleton count={4} />
-						<Skeleton width="25%" className="mt-1" />
-					</div>
 					{/* Detalles (Dificultad, Tiempo) */}
 					<div className={`${cardStyles.excursionDetails} mt-3`}>
 						{renderDetailItem()}

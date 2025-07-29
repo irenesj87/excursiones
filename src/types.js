@@ -44,7 +44,6 @@
  * @property {number | string} id
  * @property {string} name
  * @property {string} area
- * @property {string} description
  * @property {string} difficulty
  * @property {string} time
  */

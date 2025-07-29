@@ -1,4 +1,3 @@
-import { FaMountain } from "react-icons/fa";
 import styles from "../css/Logo.module.css";
 
 /**
@@ -7,7 +6,6 @@ import styles from "../css/Logo.module.css";
 function Logo() {
 	return (
 		<div className={styles.logoContainer}>
-			<FaMountain className={styles.logoIcon} aria-hidden="true" />
 			<span className={styles.logoText}>Excursiones Juntos</span>
 		</div>
 	);

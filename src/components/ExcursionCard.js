@@ -1,19 +1,10 @@
-import { useState, memo, useMemo, useCallback } from "react";
+import { memo, useCallback } from "react";
 import { Card, Button } from "react-bootstrap";
-import {
-	FiMapPin,
-	FiChevronDown,
-	FiChevronUp,
-	FiClock,
-	FiBarChart,
-	FiCheckCircle,
-} from "react-icons/fi";
+import { FiMapPin, FiClock, FiCheckCircle } from "react-icons/fi";
+import cn from "classnames";
 import "bootstrap/dist/css/bootstrap.css";
 import ExcursionDetailItem from "./ExcursionDetailItem";
 import styles from "../css/ExcursionCard.module.css";
-
-// Límite de caracteres para la descripción truncada
-const MAX_LENGTH = 150;
 
 /**
  * Componente para la tarjeta de excursión.
@@ -21,7 +12,6 @@ const MAX_LENGTH = 150;
  * @param {string | number} props.id - El ID de la excursión.
  * @param {string} props.name - El nombre de la excursión.
  * @param {string} props.area - La zona donde se realiza la excursión.
- * @param {string} props.description - La descripción de la excursión.
  * @param {string} props.difficulty - La dificultad de la excursión (ej. "Baja", "Media", "Alta").
  * @param {string} props.time - El tiempo estimado de la excursión.
  * @param {boolean} props.isLoggedIn - Indica si el usuario ha iniciado sesión.
@@ -32,7 +22,6 @@ function ExcursionCardComponent({
 	id,
 	name,
 	area,
-	description,
 	difficulty,
 	time,
 	isLoggedIn,
@@ -40,33 +29,8 @@ function ExcursionCardComponent({
 	onJoin,
 }) {
 	/**
-	 * Estado que controla si la descripción de la excursión está expandida o truncada.
-	 * @type {[boolean, React.Dispatch<React.SetStateAction<boolean>>]}
-	 */
-	const [isExpanded, setIsExpanded] = useState(false);
-
-	/**
-	 * Alterna el estado de `isExpanded` para mostrar u ocultar la descripción completa.
-	 * Previene el comportamiento por defecto del evento si es llamado desde un elemento interactivo.
-	 * @param {React.MouseEvent<HTMLButtonElement>} e - El evento del click.
-	 * @returns {void}
-	 */
-	const toggleReadMore = (e) => {
-		e.preventDefault();
-		setIsExpanded(!isExpanded);
-	};
-
-	// Se muestra la descripción entera si hay menos de 150 caracteres o la muestra truncada si hay más (memoizada)
-	const displayDescription = useMemo(() => {
-		if (!description) return "";
-		return description.length > MAX_LENGTH && !isExpanded
-			? `${description.substring(0, MAX_LENGTH)}...`
-			: description;
-	}, [description, isExpanded]);
-
-	/**
 	 * Crea un 'handler' para el evento 'click' que llama a la función `onJoin` con el ID de la excursión.
-	 * Se usa `useCallback` para asegurar que la función no se recree innecesariamente, lo que es beneficioso para la optimización 
+	 * Se usa `useCallback` para asegurar que la función no se recree innecesariamente, lo que es beneficioso para la optimización
 	 * del rendimiento, especialmente porque `ExcursionCard` está memoizado.
 	 * @returns {void}
 	 * @callback handleJoin
@@ -78,8 +42,18 @@ function ExcursionCardComponent({
 		onJoin?.(id);
 	}, [id, onJoin]);
 
+	const difficultyClassMap = {
+		Baja: styles.difficultyLow,
+		Media: styles.difficultyMedium,
+		Alta: styles.difficultyHigh,
+	};
+
 	return (
-		<Card className={`${styles.excursionItemCard} h-100 w-100`}>
+		<Card
+			className={cn(styles.excursionItemCard, "h-100 w-100", {
+				[styles.isJoinedCard]: isJoined,
+			})}
+		>
 			<Card.Body className="d-flex flex-column">
 				<div>
 					<Card.Title className={`${styles.excursionTitle} mb-3`}>
@@ -89,35 +63,20 @@ function ExcursionCardComponent({
 						<FiMapPin className={styles.areaIcon} />
 						<span>{area}</span>
 					</Card.Subtitle>
-					<div className={styles.excursionDescriptionContainer}>
-						<Card.Text className={styles.excursionDescription}>
-							{displayDescription}
-						</Card.Text>
-						{description && description.length > MAX_LENGTH && (
-							<Button
-								variant="link"
-								onClick={toggleReadMore}
-								className={`${styles.readMoreLink} p-0 mt-1 d-flex align-items-center`}
-								aria-expanded={isExpanded}
-							>
-								{isExpanded ? (
-									<>
-										Leer menos <FiChevronUp className="ms-1" />
-									</>
-								) : (
-									<>
-										Leer más <FiChevronDown className="ms-1" />
-									</>
-								)}
-							</Button>
-						)}
-					</div>
+
 					<div className={`${styles.excursionDetails} mt-3`}>
-						<ExcursionDetailItem
-							IconComponent={FiBarChart}
-							text={difficulty}
-							label="Dificultad"
-						/>
+						<div className={styles.detailItem} title={`Dificultad: ${difficulty}`}>
+							{/* Etiqueta oculta para accesibilidad */}
+							<span className="visually-hidden">Dificultad: </span>
+							<span
+								className={cn(
+									styles.difficultyIndicator,
+									difficultyClassMap[difficulty]
+								)}
+								aria-hidden="true"
+							/>
+							<span>{difficulty}</span>
+						</div>
 						<ExcursionDetailItem
 							IconComponent={FiClock}
 							text={time}
