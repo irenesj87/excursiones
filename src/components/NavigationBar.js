@@ -190,10 +190,7 @@ function NavigationBarComponent({
 				y justify-content-end alinea los items hijos al final del contenedor. */}
 				{/* order-lg-3: para posicionarlo correctamente en breakpoints grandes */}
 				<div className="d-flex align-items-center justify-content-end ms-auto ms-md-0 order-md-3 order-lg-3">
-					<OverlayTrigger
-						placement="bottom"
-						overlay={renderTooltip}
-					>
+					<OverlayTrigger placement="bottom" overlay={renderTooltip}>
 						<Button
 							className={`${styles.themeToggleBtn} me-2`}
 							id="toggleButton"
@@ -216,6 +213,7 @@ function NavigationBarComponent({
 					{/* Toggle Offcanvas (Hamburguesa) */}
 					<Navbar.Toggle
 						aria-controls="offcanvasNavbar"
+						aria-label="Abrir menú de navegación"
 						onClick={handleShowOffcanvas}
 						className="d-lg-none"
 					/>
@@ -242,7 +240,7 @@ function NavigationBarComponent({
 					className={styles.offcanvasMenu}
 					backdrop={true}
 				>
-					<Offcanvas.Header closeButton>
+					<Offcanvas.Header closeButton closeLabel="Cerrar menú">
 						<Offcanvas.Title>Menú</Offcanvas.Title>
 					</Offcanvas.Header>
 					<Offcanvas.Body>

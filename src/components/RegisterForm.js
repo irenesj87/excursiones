@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Row, Col, Form, Button } from "react-bootstrap";
+import { useState, useEffect, useReducer, useRef } from "react";
+import { Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../slicers/loginSlice.js";
@@ -17,7 +17,37 @@ import ErrorMessageAlert from "./ErrorMessageAlert.js";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/RegisterForm.module.css";
 
-// Componente que contiene la lógica del formulario de registro
+// Estado inicial para el reducer del formulario.
+const initialState = {
+	isLoading: false,
+	error: null,
+	isButtonDisabled: true,
+};
+
+/**
+ * Reducer para gestionar el estado del formulario de registro.
+ * @param {object} state - El estado actual del formulario.
+ * @param {object} action - La acción a despachar.
+ */
+function registerReducer(state, action) {
+	switch (action.type) {
+		case "REGISTER_START":
+			return { ...state, isLoading: true, error: null };
+		case "REGISTER_SUCCESS":
+			return { ...state, isLoading: false };
+		case "REGISTER_FAILURE":
+			return { ...state, isLoading: false, error: action.payload };
+		case "SET_VALIDITY":
+			return { ...state, isButtonDisabled: !action.payload };
+		case "CLEAR_ERROR":
+			return { ...state, error: null };
+		default:
+			throw new Error(`Acción no soportada: ${action.type}`);
+	}
+}
+/**
+ * Componente que contiene la lógica del formulario de registro.
+ */
 function RegisterForm() {
 	// Hook para despachar acciones de Redux.
 	const loginDispatch = useDispatch();
@@ -25,8 +55,6 @@ function RegisterForm() {
 	const navigate = useNavigate();
 
 	// Estados locales para los campos del formulario y el control de la UI.
-	// Estado para controlar si el botón de envío está deshabilitado.
-	const [disabled, setDisabled] = useState(true);
 	// Estado para el nombre del usuario.
 	const [name, setName] = useState("");
 	// Estado para los apellidos del usuario.
@@ -39,20 +67,20 @@ function RegisterForm() {
 	const [password, setPassword] = useState("");
 	// Estado para la confirmación de la contraseña.
 	const [samePassword, setSamePassword] = useState("");
-	// Estado para almacenar mensajes de error de registro.
-	const [registerError, setRegisterError] = useState(null);
-	// Estado para controlar la visibilidad de la alerta de error.
-	const [showErrorAlert, setShowErrorAlert] = useState(false);
+	// Usamos useReducer para gestionar el estado del formulario.
+	const [formState, formDispatch] = useReducer(registerReducer, initialState);
+	// Ref para la alerta de error, para poder mover el foco a ella.
+	const errorAlertRef = useRef(null);
 
 	/**
 	 * Maneja el envío del formulario de registro. Realiza el registro del usuario, lo loguea automáticamente y lo redirige a
 	 * la página principal.
+	 * @param {React.FormEvent<HTMLFormElement>} e - El evento de envío del formulario.
 	 */
 	const submit = async (e) => {
 		e.preventDefault();
-		setRegisterError(null);
-		setShowErrorAlert(false);
-
+		// Inicia el estado de carga y limpia errores previos.
+		formDispatch({ type: "REGISTER_START" });
 		try {
 			// Intenta registrar al nuevo usuario con los datos proporcionados.
 			await registerUser(name, surname, phone, mail, password);
@@ -68,17 +96,21 @@ function RegisterForm() {
 			);
 			// Guarda el token en sessionStorage para persistencia de la sesión.
 			window.sessionStorage["token"] = loginData.token;
+			// Indica que el proceso ha finalizado con éxito.
+			formDispatch({ type: "REGISTER_SUCCESS" });
 			// Redirige al usuario a la página principal.
 			navigate("/");
 		} catch (error) {
 			console.error("Registration or login failed:", error);
-			setRegisterError(error.message || "Error al registrarse.");
-			setShowErrorAlert(true);
+			formDispatch({
+				type: "REGISTER_FAILURE",
+				payload: error.message || "Error al registrarse.",
+			});
 		}
 	};
 
 	/**
-	 * Efecto que habilita o deshabilita el botón de envío del formulario.El botón se habilita solo si todos los campos del
+	 * Efecto que habilita o deshabilita el botón de envío del formulario basado en la validez de todos los campos. El botón se habilita solo si todos los campos del
 	 * formulario cumplen con las validaciones.
 	 */
 	useEffect(() => {
@@ -89,25 +121,34 @@ function RegisterForm() {
 			validateMail(mail) &&
 			validatePassword(password) &&
 			validSamePassword(password, samePassword);
-		setDisabled(!isValid);
+		formDispatch({ type: "SET_VALIDITY", payload: isValid });
 	}, [name, surname, phone, mail, password, samePassword]);
+
+	/**
+	 * Efecto para mover el foco a la alerta de error cuando esta aparece.
+	 */
+	useEffect(() => {
+		if (formState.error && errorAlertRef.current) {
+			errorAlertRef.current.focus();
+		}
+	}, [formState.error]);
 
 	return (
 		<>
 			{/* Muestra la alerta de error si showErrorAlert es true y hay un mensaje de error. */}
-			{showErrorAlert && registerError && (
-				<ErrorMessageAlert
-					message={registerError}
-					onClose={() => {
-						setShowErrorAlert(false);
-						setRegisterError(null);
-					}}
-				/>
+			{formState.error && (
+				<div ref={errorAlertRef} tabIndex={-1}>
+					<ErrorMessageAlert
+						message={formState.error}
+						onClose={() => formDispatch({ type: "CLEAR_ERROR" })}
+					/>
+				</div>
 			)}
 			{/* Formulario de registro */}
 			<Form
 				id="registerForm"
 				className={`${styles.formLabel} fw-bold`}
+				aria-busy={formState.isLoading}
 				onSubmit={submit}
 			>
 				<Row>
@@ -176,6 +217,7 @@ function RegisterForm() {
 							value={password}
 							message={true}
 							autocomplete="new-password"
+							ariaDescribedBy="password-requirements"
 						/>
 					</Col>
 					{/* Campo para la confirmación de contraseña */}
@@ -193,7 +235,7 @@ function RegisterForm() {
 					</Col>
 				</Row>
 				{/* Mensaje informativo sobre los requisitos de la contraseña. */}
-				<ul className={`${styles.infoMessage} mb-3`}>
+				<ul id="password-requirements" className={`${styles.infoMessage} mb-3`}>
 					<li>
 						Tu contraseña debe tener al menos 8 caracteres, una letra y un
 						número.
@@ -206,12 +248,25 @@ function RegisterForm() {
 						{/* sm="auto" hace que la Col se ajuste al contenido en breakpoints 'sm' y mayores */}
 						<Col xs={12} sm="auto">
 							<Button
-								variant={disabled ? "secondary" : "success"}
+								variant={formState.isButtonDisabled ? "secondary" : "success"}
 								type="submit"
-								disabled={disabled}
+								disabled={formState.isButtonDisabled || formState.isLoading}
 								className="w-100" // w-100 hace que el botón ocupe el ancho de su Col padre
 							>
-								Enviar
+								{formState.isLoading ? (
+									<>
+										<Spinner
+											as="span"
+											animation="border"
+											size="sm"
+											role="status"
+											aria-hidden="true"
+										/>
+										<span className="visually-hidden">Cargando...</span>
+									</>
+								) : (
+									"Enviar"
+								)}
 							</Button>
 						</Col>
 					</Row>

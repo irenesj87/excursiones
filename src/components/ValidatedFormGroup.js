@@ -14,19 +14,23 @@ import styles from "../css/ValidatedFormGroup.module.css";
  * @param {string} props.value - El valor actual del campo de formulario.
  * @param {boolean} props.message - Si es true, muestra un mensaje de error cuando la validación falla.
  * @param {string} props.autocomplete - Valor para el atributo autocomplete del input.
+ * @param {string} [props.ariaDescribedBy] - IDs adicionales para aria-describedby, separados por espacios.
  */
 function ValidatedFormGroup({
-	id, 
+	id,
 	name,
 	inputType = "text", // Default inputType to text
 	inputToChange,
 	validationFunction,
 	value,
 	message,
-	autocomplete
+	autocomplete,
+	ariaDescribedBy,
 }) {
 	// Variable that saves if the information we receive is valid or not, (is not blank or in an incorrect format)
 	const [notValid, setNotValid] = useState(false);
+	// ID único para el mensaje de error, para asociarlo con el input.
+	const errorId = `${id}-error`;
 
 	// Function that receives the information and updates it
 	const nameChange = (event) => {
@@ -34,6 +38,11 @@ function ValidatedFormGroup({
 		inputToChange(newValue);
 		setNotValid(!validationFunction(newValue));
 	};
+
+	// Combina los IDs externos con el ID del error interno si es visible.
+	const describedBy = [ariaDescribedBy, message && notValid ? errorId : null]
+		.filter(Boolean)
+		.join(" ");
 
 	return (
 		<Form.Group className="mb-3" controlId={id}>
@@ -44,10 +53,11 @@ function ValidatedFormGroup({
 				name={name}
 				value={value}
 				autoComplete={autocomplete}
+				aria-describedby={describedBy || undefined}
 			/>
 			{message && notValid && (
-				<p className={styles.errorMessage}>
-					Recuerda, no puedes dejar un campo vacío o en un formato incorrecto
+				<p id={errorId} className={styles.errorMessage}>
+					Recuerda, no puedes dejar un campo vacío o en un formato incorrecto.
 				</p>
 			)}
 		</Form.Group>
