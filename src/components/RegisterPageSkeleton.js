@@ -72,8 +72,7 @@ function RegisterPageSkeleton() {
 					{/* Esqueleto para el mensaje informativo */}
 					<ul className={`${registerFormStyles.infoMessage} mb-3`}>
 						<li>
-							Tu contraseña debe tener al menos 8 caracteres, una letra y un
-							número.
+							<Skeleton />
 						</li>
 					</ul>
 

@@ -91,6 +91,8 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 				loginDispatch(updateUser({ user: data }));
 			} catch (error) {
 				console.error("Error al unirse a la excursión:", error);
+				// Relanzamos el error para que el componente que llama (ExcursionCard) pueda manejarlo.
+				throw error;
 			}
 		},
 		[user?.mail, loginDispatch]
@@ -159,8 +161,8 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 						Cargando excursiones...
 					</div>
 					<Row className="gx-4 gy-5">
-						{/* Mostramos 6 placeholders para dar una idea de la estructura */}
-						{Array.from({ length: 6}).map((_, index) => (
+						{/* Mostramos 8 placeholders para dar una idea de la estructura */}
+						{Array.from({ length: 8}).map((_, index) => (
 							<Col
 								xs={12}
 								md={6}
