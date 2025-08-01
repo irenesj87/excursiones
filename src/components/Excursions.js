@@ -2,7 +2,7 @@ import { memo, useMemo, useCallback, useState, useEffect, useRef } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { SkeletonTheme } from "react-loading-skeleton";
-import { BsBinoculars } from "react-icons/bs";
+import { FiSearch } from "react-icons/fi";
 import { updateUser } from "../slicers/loginSlice";
 import ExcursionCard from "components/ExcursionCard";
 import ExcursionCardSkeleton from "./ExcursionCardSkeleton";
@@ -189,7 +189,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 			<div className={`${styles.excursionsContainer} ${styles.centeredStatus}`}>
 				{/* Usamos role="status" para que el mensaje se anuncie de forma no intrusiva */}
 				<div role="status" className={styles.messageNotFound}>
-					<BsBinoculars className={styles.messageIcon} aria-hidden="true" />
+					<FiSearch className={styles.messageIcon} aria-hidden="true" />
 					<p className={styles.primaryMessage}>
 						No hemos encontrado ninguna excursión con esas características.
 					</p>

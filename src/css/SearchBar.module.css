@@ -1,0 +1,45 @@
+.searchContainer {
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
+.searchInput {
+	/* Añade padding para los iconos */
+	padding-left: 2.5rem; /* Espacio para el icono de búsqueda */
+	padding-right: 2.5rem; /* Espacio para el botón de limpiar */
+}
+
+/* Oculta el botón de limpieza por defecto que añaden los navegadores WebKit (Chrome, Safari) */
+.searchInput::-webkit-search-cancel-button {
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+.searchIcon {
+	position: absolute;
+	left: 0.875rem; /* Ajusta según sea necesario */
+	color: var(--text-secondary);
+	pointer-events: none; /* Para que no sea interactivo */
+}
+
+.clearButton {
+	position: absolute;
+	right: 0.5rem; /* Ajusta según sea necesario */
+	background: none;
+	border: none;
+	padding: 0.25rem;
+	cursor: pointer;
+	color: var(--text-secondary);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: var(--bs-border-radius-sm);
+}
+
+.clearButton:hover,
+.clearButton:focus-visible {
+	color: var(--text-color);
+	background-color: var(--theme-toggle-btn-bg-hover);
+}
