@@ -1,10 +1,10 @@
 import { Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { SkeletonTheme } from "react-loading-skeleton";
+import UserInfoSkeleton from "./UserInfoSkeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import styles from "../css/UserPage.module.css";
 
-import UserInfoSkeleton from "./UserInfoSkeleton"; // Import the extracted component
 /** @typedef {import("../types").RootState} RootState */
 
 /**
@@ -23,7 +23,7 @@ function UserPageSkeleton() {
 
 	return (
 		<SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
-			<Row className="justify-content-center pt-2 h-100" aria-hidden="true">
+			<Row as="main" className="justify-content-center pt-2 h-100" aria-hidden="true">
 				<Col xs={11} md={11} lg={11} xl={8} className="d-flex flex-column pb-5">
 					<h2 className={`${styles.title} mb-3`}>Tu perfil</h2>
 					<UserInfoSkeleton />

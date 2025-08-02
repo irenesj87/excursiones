@@ -1,16 +1,18 @@
 import { Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import UserInfoForm from "./UserInfoForm"; //
-import UserPageSkeleton from "./UserPageSkeleton"; //
+import UserInfoForm from "./UserInfoForm"; 
+import UserPageSkeleton from "./UserPageSkeleton"; 
 import "bootstrap/dist/css/bootstrap.css";
+
 import styles from "../css/UserPage.module.css";
 
 /** @typedef {import('types.js').RootState} RootState */
 
 /**
- * Componente que representa la página de perfil del usuario. Muestra la información personal del usuario y las excursiones
- * a las que se ha apuntado.
+ * Componente que representa la página de perfil del usuario.
+ * @param {object} props - Las propiedades del componente.
+ * @param {boolean} props.isAuthCheckComplete - Indica si la comprobación de autenticación ha finalizado.
  */
 function UserPage({ isAuthCheckComplete }) {
 	// useSelector que indica si el usuario está logueado y proporciona la información del usuario.
@@ -38,7 +40,7 @@ function UserPage({ isAuthCheckComplete }) {
 		// Se añade `h-100` a la Row y `d-flex flex-column` a la Col para asegurar que el layout
 		// ocupe toda la altura disponible y que el contenido se organice verticalmente.
 		// Esto empuja el footer hacia abajo, evitando la superposición.
-		<Row className="justify-content-center pt-2 h-100">
+		<Row as="main" className="justify-content-center pt-2 h-100">
 			<Col xs={11} md={11} lg={11} xl={8} className="d-flex flex-column pb-5">
 				<h2 className={`${styles.title} mb-3`}>Tu perfil</h2>
 				{/* UserInfoForm se expandirá para ocupar el espacio restante gracias al siguiente cambio. */}

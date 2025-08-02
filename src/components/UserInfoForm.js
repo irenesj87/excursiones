@@ -41,7 +41,11 @@ function UserInfoForm() {
 		successMessage: null,
 	};
 
-	// Reducer para gestionar el estado del formulario
+	/**
+	 * Reducer para gestionar el estado del formulario de información del usuario.
+	 * @param {object} state - El estado actual del formulario.
+	 * @param {object} action - La acción a despachar.
+	 */
 	const formReducer = (state, action) => {
 		switch (action.type) {
 			case "START_EDIT":
@@ -134,21 +138,27 @@ function UserInfoForm() {
 			label: "Teléfono",
 			field: "phone",
 			validation: validatePhone,
-			errorMessage: "El formato del teléfono no es válido (9 dígitos).",
+			errorMessage: "El formato del teléfono no es válido.",
 		},
 	];
 
-	// Función para iniciar el modo de edición.
+	/**
+	 * Inicia el modo de edición del formulario.
+	 */
 	const startEdit = () => {
 		formDispatch({ type: "START_EDIT" });
 	};
 
-	// Función para cancelar el modo de edición.
+	/**
+	 * Cancela el modo de edición y restaura los valores originales del formulario.
+	 */
 	const cancelEdit = () => {
 		formDispatch({ type: "CANCEL_EDIT" });
 	};
 
-	// Función para guardar la información que el usuario ha cambiado.
+	/**
+	 * Guarda la información del usuario en el servidor. Realiza una petición PUT para actualizar los datos del usuario.
+	 */
 	const saveEdit = async () => {
 		formDispatch({ type: "SAVE_START" });
 		/** @type {RequestInit} */
@@ -184,6 +194,11 @@ function UserInfoForm() {
 		}
 	};
 
+	/**
+	 * Maneja el cambio de valor en un campo del formulario.
+	 * @param {string} field - El nombre del campo que se está actualizando.
+	 * @param {string} value - El nuevo valor del campo.
+	 */
 	const handleInputChange = (field, value) => {
 		formDispatch({ type: "UPDATE_FIELD", payload: { field, value } });
 	};
@@ -195,6 +210,18 @@ function UserInfoForm() {
 		}
 	}, [isEditing]);
 
+	// Efecto para auto-descartar el mensaje de éxito después de 5 segundos.
+	useEffect(() => {
+		if (successMessage) {
+			const timer = setTimeout(() => {
+				formDispatch({ type: "CLEAR_MESSAGES" });
+			}, 5000); // 5 segundos
+
+			// Limpia el temporizador si el componente se desmonta o el mensaje se descarta manualmente.
+			return () => clearTimeout(timer);
+		}
+	}, [successMessage]);
+
 	// Efecto para enfocar las alertas cuando aparecen.
 	useEffect(() => {
 		if ((error || successMessage) && alertRef.current) {
@@ -202,12 +229,36 @@ function UserInfoForm() {
 		}
 	}, [error, successMessage]);
 
+	// Determina el `aria-label` para el contenedor de la alerta.
+	// Esto proporciona un nombre accesible al grupo de alertas, que es anunciado por los lectores de pantalla al enfocarlo.
+	// Si hay un mensaje de éxito, se usa un label específico. Si hay un error y se está editando, se usa otro label.
+	// Si no hay alertas, se deja undefined para que no interfiera con la accesibilidad.
+	const alertContainerAriaLabel = (() => {
+		if (successMessage) {
+			return "Mensaje de éxito";
+		}
+		if (isEditing && error) {
+			return "Mensaje de error";
+		}
+		return undefined;
+	})();
+
 	return (
 		<Card className={`${styles.profileCard} w-100 flex-grow-1`}>
 			<Card.Header className={styles.cardHeader}>Datos Personales</Card.Header>
 			<Card.Body className={`${styles.cardBody} d-flex flex-column`}>
-				{/* Contenedor para alertas de éxito y error */}
-				<div ref={alertRef} tabIndex={-1}>
+				{/*
+				 * Contenedor para alertas de éxito y error.
+				 * - `role="group"` agrupa las alertas semánticamente.
+				 * - `aria-label` proporciona un nombre accesible al grupo, que es anunciado por los lectores de pantalla al enfocarlo.
+				 * - `ref` y `tabIndex={-1}` permiten que el contenedor sea enfocado programáticamente.
+				 */}
+				<div
+					ref={alertRef}
+					tabIndex={-1}
+					role="group"
+					aria-label={alertContainerAriaLabel}
+				>
 					{successMessage && (
 						<Alert
 							variant="success"
@@ -230,7 +281,7 @@ function UserInfoForm() {
 					)}
 				</div>
 
-				{/* Campo de correo electrónico (solo lectura) */}
+				{/* Campo de correo electrónico (sólo lectura) */}
 				<Form.Group
 					as={Row}
 					className="mb-3 gx-2"
