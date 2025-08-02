@@ -13,7 +13,13 @@ Para ejecutar este proyecto, es necesario tener en funcionamiento tanto el **bac
   - **Recomendado:** Descarga el instalador "LTS" desde la página oficial de Node.js.
 
 - **Git:** Es el sistema de control de versiones utilizado para clonar los repositorios.
+
   - **Recomendado:** Descárgalo desde la página oficial de Git.
+
+- **Nodemon (Opcional pero recomendado):** Herramienta que reinicia el servidor automáticamente al detectar cambios en los archivos, agilizando el desarrollo.
+  ```bash
+  npm install -g nodemon
+  ```
 
 Una vez instalados, puedes verificar que todo está correcto abriendo una terminal y ejecutando los siguientes comandos. Deberían mostrarte sus respectivas versiones:
 
@@ -21,6 +27,7 @@ Una vez instalados, puedes verificar que todo está correcto abriendo una termin
 node -v
 npm -v
 git --version
+nodemon -v
 ```
 
 ### 1. Configuración del Backend (`testserver`)
