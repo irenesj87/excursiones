@@ -49,7 +49,7 @@ function UserInfoSkeleton() {
 						</Col>
 					</Row>
 				</div>
-				<div className="mt-auto border-top pt-3">
+				<div className="mt-auto pt-3">
 					<Row className="justify-content-sm-end gx-0">
 						<Col xs={12} sm="auto">
 							<Skeleton

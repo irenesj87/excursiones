@@ -13,6 +13,7 @@ import styles from "../css/ValidatedFormGroup.module.css";
  * @param {(value: string) => boolean} props.validationFunction - Función que valida el valor del input y retorna true si es válido.
  * @param {string} props.value - El valor actual del campo de formulario.
  * @param {boolean} props.message - Si es true, muestra un mensaje de error cuando la validación falla.
+ * @param {string} [props.errorMessage] - Mensaje de error específico. Si no se proporciona, se usa uno genérico.
  * @param {string} props.autocomplete - Valor para el atributo autocomplete del input.
  * @param {string} [props.ariaDescribedBy] - IDs adicionales para aria-describedby, separados por espacios.
  */
@@ -24,6 +25,7 @@ function ValidatedFormGroup({
 	validationFunction,
 	value,
 	message,
+	errorMessage,
 	autocomplete,
 	ariaDescribedBy,
 }) {
@@ -53,12 +55,13 @@ function ValidatedFormGroup({
 				name={name}
 				value={value}
 				autoComplete={autocomplete}
+				isInvalid={notValid}
 				aria-describedby={describedBy || undefined}
 			/>
-			{message && notValid && (
-				<p id={errorId} className={styles.errorMessage}>
-					Recuerda, no puedes dejar un campo vacío o en un formato incorrecto.
-				</p>
+			{message && (
+				<Form.Control.Feedback type="invalid" id={errorId} className={`${styles.errorMessage} text-danger fw-bold mt-1}`}>
+					{errorMessage || "Recuerda, no puedes dejar un campo vacío o en un formato incorrecto."}
+				</Form.Control.Feedback>
 			)}
 		</Form.Group>
 	);

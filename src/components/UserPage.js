@@ -39,7 +39,7 @@ function UserPage({ isAuthCheckComplete }) {
 		// ocupe toda la altura disponible y que el contenido se organice verticalmente.
 		// Esto empuja el footer hacia abajo, evitando la superposición.
 		<Row className="justify-content-center pt-2 h-100">
-			<Col xs={11} md={11} lg={11} xl={8} className="d-flex flex-column pb-4">
+			<Col xs={11} md={11} lg={11} xl={8} className="d-flex flex-column pb-5">
 				<h2 className={`${styles.title} mb-3`}>Tu perfil</h2>
 				{/* UserInfoForm se expandirá para ocupar el espacio restante gracias al siguiente cambio. */}
 				<UserInfoForm />

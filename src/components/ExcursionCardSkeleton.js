@@ -39,7 +39,7 @@ function ExcursionCardSkeleton({ isLoggedIn = false, isJoined = false }) {
 				</div>
 				{/* Botón de "Apuntarse" */}
 				{isLoggedIn && (
-					<div className="mt-auto pt-3 border-top">
+					<div className="mt-auto pt-3">
 						{isJoined ? (
 							<div className="d-grid d-md-flex justify-content-center justify-content-md-end">
 								<div

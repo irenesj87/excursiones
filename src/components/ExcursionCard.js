@@ -99,7 +99,7 @@ function ExcursionCardComponent({
 					</div>
 				</div>
 				{isLoggedIn && (
-					<div className={`${styles.cardActionArea} mt-auto pt-3 border-top`}>
+					<div className={`${styles.cardActionArea} mt-auto pt-3`}>
 						{isJoined ? (
 							<div className="d-grid d-md-flex justify-content-center justify-content-md-end">
 								<div className={styles.joinedStatus}>

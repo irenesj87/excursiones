@@ -24,13 +24,7 @@ function UserPageSkeleton() {
 	return (
 		<SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
 			<Row className="justify-content-center pt-2 h-100" aria-hidden="true">
-				<Col
-					xs={11}
-					md={11}
-					lg={11}
-					xl={8}
-					className="d-flex flex-column pb-4"
-				>
+				<Col xs={11} md={11} lg={11} xl={8} className="d-flex flex-column pb-5">
 					<h2 className={`${styles.title} mb-3`}>Tu perfil</h2>
 					<UserInfoSkeleton />
 				</Col>
