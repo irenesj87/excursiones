@@ -1,7 +1,7 @@
 import { useEffect, useState, useReducer, useRef } from "react";
 import { Row, Col, Button, Form, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router";
-import { validateMail, validatePassword } from "../validation/validations.js";
+import { validateMail, validateName } from "../validation/validations.js";
 import ValidatedFormGroup from "./ValidatedFormGroup";
 import ErrorMessageAlert from "./ErrorMessageAlert.js";
 import { login } from "../slicers/loginSlice";
@@ -87,7 +87,11 @@ export function LoginForm() {
 	 * El botón se habilita solo si el correo electrónico y la contraseña cumplen con las validaciones.
 	 */
 	useEffect(() => {
-		const isValid = validateMail(mail) && validatePassword(password);
+		// Para el login, solo validamos que los campos no estén vacíos. La validación de la contraseña
+		// la realiza el servidor. Reutilizamos `validateName` para la contraseña, ya que su única
+		// función es comprobar que el campo no esté vacío.
+		const isValid =
+			validateMail(mail) === true && validateName(password) === true;
 		formDispatch({ type: "SET_VALIDITY", payload: isValid });
 	}, [mail, password]);
 
@@ -133,7 +137,7 @@ export function LoginForm() {
 					inputType="password"
 					name="Contraseña"
 					inputToChange={setPassword}
-					validationFunction={validatePassword}
+					validationFunction={validateName}
 					value={password}
 					message={true}
 					autocomplete="current-password"

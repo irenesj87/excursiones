@@ -124,13 +124,14 @@ function RegisterForm() {
 	 */
 	useEffect(() => {
 		const { name, surname, phone, mail, password, samePassword } = values;
+		// Se comprueba explícitamente que el resultado de cada validación sea `true`.
 		const isValid =
-			validateName(name) &&
-			validateSurname(surname) &&
-			validatePhone(phone) &&
-			validateMail(mail) &&
-			validatePassword(password) &&
-			validSamePassword(password, samePassword);
+			validateName(name) === true &&
+			validateSurname(surname) === true &&
+			validatePhone(phone) === true &&
+			validateMail(mail) === true &&
+			validatePassword(password) === true &&
+			validSamePassword(password, samePassword) === true;
 		formDispatch({ type: "SET_VALIDITY", payload: isValid });
 	}, [values]);
 
@@ -171,7 +172,7 @@ function RegisterForm() {
 				inputType: "tel",
 				validationFunction: validatePhone,
 				autocomplete: "tel",
-				errorMessage: "El formato del teléfono no es válido (9 dígitos).",
+				errorMessage: "El formato del teléfono no es válido.",
 			},
 			{
 				id: "formGridEmail",
@@ -244,12 +245,21 @@ function RegisterForm() {
 					</Row>
 				))}
 				{/* Mensaje informativo sobre los requisitos de la contraseña. */}
-				<ul id="password-requirements" className={`${styles.infoMessage} mb-3`}>
-					<li>
-						Tu contraseña debe tener al menos 8 caracteres, una letra y un
-						número.
-					</li>
-				</ul>
+				<div
+					id="password-requirements"
+					className={`${styles.infoMessage} mb-3`}
+				>
+					<p className="mb-1 fw-normal">
+						La contraseña debe cumplir las siguientes condiciones:
+					</p>
+					{/* ps-3 añade un poco de sangría a la lista para mejorar la legibilidad */}
+					<ul className="mb-0 ps-3 fw-normal">
+						<li>Contener al menos 8 caracteres.</li>
+						<li>Contener al menos una letra.</li>
+						<li>Contener al menos un número.</li>
+						<li>Contener al menos un carácter especial (ej: @$!%*?&.,_-).</li>
+					</ul>
+				</div>
 
 				<div className="mt-5 pt-3">
 					{/* justify-content-sm-end alineará la Col a la derecha en breakpoints 'sm' y mayores */}

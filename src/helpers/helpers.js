@@ -1,4 +1,7 @@
-// This function has the variables and the fetch that is neccessary for an user to logged
+/**
+ * Inicia sesión de un usuario.
+ * @param {string} mail - El correo electrónico del usuario.
+ * @param {string} password - La contraseña del usuario. */
 const userLogin = (mail, password) => {
 	// Variable that has the url that is needed for the fetch
 	const url = `http://localhost:3001/login`;
@@ -10,6 +13,7 @@ const userLogin = (mail, password) => {
 	};
 
 	// Variable that saves the options that the fetch needs
+	/** @type {RequestInit} */
 	const options = {
 		method: "POST",
 		mode: "cors",
@@ -26,7 +30,13 @@ const userLogin = (mail, password) => {
 	});
 };
 
-// This function has the variables and the fetch that is neccessary for an user to register
+/**
+ * Registra un nuevo usuario.
+ * @param {string} name - El nombre del usuario.
+ * @param {string} surname - El apellido del usuario.
+ * @param {string} phone - El número de teléfono del usuario.
+ * @param {string} mail - El correo electrónico del usuario.
+ * @param {string} password - La contraseña del usuario. */
 const registerUser = (name, surname, phone, mail, password) => {
 	// Variable that has the url that is needed for the fetch
 	const url = `http://localhost:3001/users`;
@@ -41,6 +51,7 @@ const registerUser = (name, surname, phone, mail, password) => {
 	};
 
 	// Variable that saves the options that the fetch needs
+	/** @type {RequestInit} */
 	const options = {
 		method: "POST",
 		mode: "cors",

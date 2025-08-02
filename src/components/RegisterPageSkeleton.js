@@ -69,12 +69,18 @@ function RegisterPageSkeleton() {
 						</Col>
 					</Row>
 
-					{/* Esqueleto para el mensaje informativo */}
-					<ul className={`${registerFormStyles.infoMessage} mb-3`}>
-						<li>
-							<Skeleton />
-						</li>
-					</ul>
+					{/* Esqueleto para el mensaje informativo de la contraseña, imitando la nueva estructura. */}
+					<div className={`${registerFormStyles.infoMessage} mb-3`}>
+						<p className="mb-1 fw-normal">
+							<Skeleton width="70%" />
+						</p>
+						<ul className="mb-0 ps-3 fw-normal">
+							<li><Skeleton width="40%" /></li>
+							<li><Skeleton width="35%" /></li>
+							<li><Skeleton width="35%" /></li>
+							<li><Skeleton width="60%" /></li>
+						</ul>
+					</div>
 
 					{/* Esqueleto para el botón de envío */}
 					<div className="mt-5 pt-3">
