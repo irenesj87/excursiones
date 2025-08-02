@@ -31,8 +31,7 @@ El servidor es responsable de gestionar los datos de usuarios y excursiones.
     ```bash
     npm start
     ```
-    > [!IMPORTANT]
-    > Mantén esta terminal abierta mientras trabajas con la aplicación.
+    > **Nota:** Mantén esta terminal abierta mientras trabajas con la aplicación.
 
 ### 2. Configuración del Frontend (`excursiones`)
 
