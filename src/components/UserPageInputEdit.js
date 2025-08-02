@@ -11,6 +11,7 @@ import styles from "../css/UserPageInputEdit.module.css";
  * @property {boolean} isEditing - Indica si el campo está en modo de edición.
  * @property {(value: string) => boolean} validationFunction - Función para validar el valor del campo.
  * @property {boolean} message - Indica si se debe mostrar un mensaje de error.
+ * @property {string} [errorMessage] - Mensaje de error específico. Si no se proporciona, se usa uno genérico.
  */
 
 /**
@@ -19,8 +20,15 @@ import styles from "../css/UserPageInputEdit.module.css";
  * @param {React.Ref<HTMLInputElement>} ref - La ref que se reenvía al input.
  */
 function UserPageInputEditComponent(props, ref) {
-	const { id, value, onInputChange, isEditing, validationFunction, message } =
-		props;
+	const {
+		id,
+		value,
+		onInputChange,
+		isEditing,
+		validationFunction,
+		message,
+		errorMessage,
+	} = props;
 	const [notValid, setNotValid] = useState(false);
 	const errorId = `${id}-error`;
 
@@ -57,7 +65,8 @@ function UserPageInputEditComponent(props, ref) {
 					id={errorId}
 					className={`${styles.errorMessage} text-danger fw-bold mt-1`}
 				>
-					Recuerda, no puedes dejar un campo vacío o en un formato incorrecto.
+					{errorMessage ||
+						"Recuerda, no puedes dejar un campo vacío o en un formato incorrecto."}
 				</Form.Control.Feedback>
 			)}
 		</>

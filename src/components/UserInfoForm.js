@@ -120,18 +120,21 @@ function UserInfoForm() {
 			field: "name",
 			ref: nameInputRef,
 			validation: validateName,
+			errorMessage: "El nombre no puede estar vacío.",
 		},
 		{
 			id: "formPlaintextSurname",
 			label: "Apellidos",
 			field: "surname",
 			validation: validateSurname,
+			errorMessage: "Los apellidos no pueden estar vacíos.",
 		},
 		{
 			id: "formPlaintextPhone",
 			label: "Teléfono",
 			field: "phone",
 			validation: validatePhone,
+			errorMessage: "El formato del teléfono no es válido (9 dígitos).",
 		},
 	];
 
@@ -267,6 +270,7 @@ function UserInfoForm() {
 								value={values[field.field]}
 								validationFunction={field.validation}
 								message={true}
+								errorMessage={field.errorMessage}
 							/>
 						</Col>
 					</Form.Group>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer, useRef } from "react";
+import { useEffect, useReducer, useRef } from "react";
 import { Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +19,14 @@ import styles from "../css/RegisterForm.module.css";
 
 // Estado inicial para el reducer del formulario.
 const initialState = {
+	values: {
+		name: "",
+		surname: "",
+		phone: "",
+		mail: "",
+		password: "",
+		samePassword: "",
+	},
 	isLoading: false,
 	error: null,
 	isButtonDisabled: true,
@@ -37,6 +45,14 @@ function registerReducer(state, action) {
 			return { ...state, isLoading: false };
 		case "REGISTER_FAILURE":
 			return { ...state, isLoading: false, error: action.payload };
+		case "UPDATE_FIELD":
+			return {
+				...state,
+				values: {
+					...state.values,
+					[action.payload.field]: action.payload.value,
+				},
+			};
 		case "SET_VALIDITY":
 			return { ...state, isButtonDisabled: !action.payload };
 		case "CLEAR_ERROR":
@@ -54,23 +70,15 @@ function RegisterForm() {
 	// Hook para la navegación programática.
 	const navigate = useNavigate();
 
-	// Estados locales para los campos del formulario y el control de la UI.
-	// Estado para el nombre del usuario.
-	const [name, setName] = useState("");
-	// Estado para los apellidos del usuario.
-	const [surname, setSurname] = useState("");
-	// Estado para el teléfono del usuario.
-	const [phone, setPhone] = useState("");
-	// Estado para el correo electrónico del usuario.
-	const [mail, setMail] = useState("");
-	// Estado para la contraseña del usuario.
-	const [password, setPassword] = useState("");
-	// Estado para la confirmación de la contraseña.
-	const [samePassword, setSamePassword] = useState("");
 	// Usamos useReducer para gestionar el estado del formulario.
 	const [formState, formDispatch] = useReducer(registerReducer, initialState);
+	const { values } = formState;
 	// Ref para la alerta de error, para poder mover el foco a ella.
 	const errorAlertRef = useRef(null);
+
+	const handleInputChange = (field, value) => {
+		formDispatch({ type: "UPDATE_FIELD", payload: { field, value } });
+	};
 
 	/**
 	 * Maneja el envío del formulario de registro. Realiza el registro del usuario, lo loguea automáticamente y lo redirige a
@@ -81,11 +89,12 @@ function RegisterForm() {
 		e.preventDefault();
 		// Inicia el estado de carga y limpia errores previos.
 		formDispatch({ type: "REGISTER_START" });
+		const { name, surname, phone, mail, password } = values;
 		try {
 			// Intenta registrar al nuevo usuario con los datos proporcionados.
 			await registerUser(name, surname, phone, mail, password);
 			// Si el registro es exitoso, intenta loguear al usuario automáticamente.
-			const loginData = await userLogin(mail, password);
+			const loginData = await userLogin(values.mail, values.password);
 
 			// Despacha la acción de login para actualizar el estado de Redux con la información del usuario y el token.
 			loginDispatch(
@@ -114,6 +123,7 @@ function RegisterForm() {
 	 * formulario cumplen con las validaciones.
 	 */
 	useEffect(() => {
+		const { name, surname, phone, mail, password, samePassword } = values;
 		const isValid =
 			validateName(name) &&
 			validateSurname(surname) &&
@@ -122,7 +132,7 @@ function RegisterForm() {
 			validatePassword(password) &&
 			validSamePassword(password, samePassword);
 		formDispatch({ type: "SET_VALIDITY", payload: isValid });
-	}, [name, surname, phone, mail, password, samePassword]);
+	}, [values]);
 
 	/**
 	 * Efecto para mover el foco a la alerta de error cuando esta aparece.
@@ -132,6 +142,71 @@ function RegisterForm() {
 			errorAlertRef.current.focus();
 		}
 	}, [formState.error]);
+
+	// Configuración de los campos del formulario para renderizarlos dinámicamente.
+	const formFieldsConfig = [
+		[
+			{
+				id: "formGridName",
+				name: "Nombre",
+				field: "name",
+				validationFunction: validateName,
+				autocomplete: "given-name",
+				errorMessage: "El nombre no puede estar vacío.",
+			},
+			{
+				id: "formGridSurname",
+				name: "Apellidos",
+				field: "surname",
+				validationFunction: validateSurname,
+				autocomplete: "family-name",
+				errorMessage: "Los apellidos no pueden estar vacíos.",
+			},
+		],
+		[
+			{
+				id: "formGridPhone",
+				name: "Teléfono",
+				field: "phone",
+				inputType: "tel",
+				validationFunction: validatePhone,
+				autocomplete: "tel",
+				errorMessage: "El formato del teléfono no es válido (9 dígitos).",
+			},
+			{
+				id: "formGridEmail",
+				name: "Correo electrónico",
+				field: "mail",
+				inputType: "email",
+				validationFunction: validateMail,
+				autocomplete: "email",
+				errorMessage: "El formato del correo electrónico no es válido.",
+			},
+		],
+		[
+			{
+				id: "password",
+				name: "Contraseña",
+				field: "password",
+				inputType: "password",
+				validationFunction: validatePassword,
+				autocomplete: "new-password",
+				ariaDescribedBy: "password-requirements",
+				errorMessage: "La contraseña no cumple los requisitos.",
+			},
+			{
+				id: "confirm-password",
+				name: "Repite la contraseña",
+				field: "samePassword",
+				inputType: "password",
+				// La validación de este campo depende del valor de la contraseña.
+				validationFunction: (value) =>
+					validSamePassword(values.password, value),
+				autocomplete: "new-password",
+				errorMessage: "Las contraseñas no coinciden.",
+			},
+		],
+	];
 
 	return (
 		<>
@@ -151,89 +226,23 @@ function RegisterForm() {
 				aria-busy={formState.isLoading}
 				onSubmit={submit}
 			>
-				<Row>
-					{/* Campo para el nombre */}
-					<Col xs={12} md={6}>
-						<ValidatedFormGroup
-							id="formGridName"
-							name="Nombre"
-							inputToChange={setName}
-							validationFunction={validateName}
-							value={name}
-							message={true}
-							autocomplete="given-name"
-						/>
-					</Col>
-					{/* Campo para los apellidos */}
-					<Col xs={12} md={6}>
-						<ValidatedFormGroup
-							id="formGridSurname"
-							name="Apellidos"
-							inputToChange={setSurname}
-							validationFunction={validateSurname}
-							value={surname}
-							message={true}
-							autocomplete="family-name"
-						/>
-					</Col>
-				</Row>
-				<Row>
-					{/* Campo para el teléfono */}
-					<Col xs={12} md={6}>
-						<ValidatedFormGroup
-							id="formGridPhone"
-							name="Teléfono"
-							inputType="tel"
-							inputToChange={setPhone}
-							validationFunction={validatePhone}
-							value={phone}
-							message={true}
-							autocomplete="tel"
-						/>
-					</Col>
-					{/* Campo para el correo electrónico */}
-					<Col xs={12} md={6}>
-						<ValidatedFormGroup
-							id="formGridEmail"
-							name="Correo electrónico"
-							inputType="email"
-							inputToChange={setMail}
-							validationFunction={validateMail}
-							value={mail}
-							message={true}
-							autocomplete="email"
-						/>
-					</Col>
-				</Row>
-				<Row>
-					{/* Campo para la contraseña */}
-					<Col xs={12} md={6}>
-						<ValidatedFormGroup
-							id="password"
-							name="Contraseña"
-							inputType="password"
-							inputToChange={setPassword}
-							validationFunction={validatePassword}
-							value={password}
-							message={true}
-							autocomplete="new-password"
-							ariaDescribedBy="password-requirements"
-						/>
-					</Col>
-					{/* Campo para la confirmación de contraseña */}
-					<Col xs={12} md={6}>
-						<ValidatedFormGroup
-							id="confirm-password" // ID para el campo de confirmación de contraseña.
-							name="Repite la contraseña"
-							inputType="password"
-							inputToChange={setSamePassword}
-							validationFunction={(value) => validSamePassword(password, value)}
-							value={samePassword}
-							message={true}
-							autocomplete="new-password"
-						/>
-					</Col>
-				</Row>
+				{formFieldsConfig.map((row, rowIndex) => (
+					// eslint-disable-next-line react/no-array-index-key
+					<Row key={`form-row-${rowIndex}`}>
+						{row.map((field) => (
+							<Col xs={12} md={6} key={field.id}>
+								<ValidatedFormGroup
+									{...field}
+									value={values[field.field]}
+									inputToChange={(value) =>
+										handleInputChange(field.field, value)
+									}
+									message={true}
+								/>
+							</Col>
+						))}
+					</Row>
+				))}
 				{/* Mensaje informativo sobre los requisitos de la contraseña. */}
 				<ul id="password-requirements" className={`${styles.infoMessage} mb-3`}>
 					<li>

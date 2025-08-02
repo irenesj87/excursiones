@@ -126,6 +126,7 @@ export function LoginForm() {
 					value={mail}
 					message={true}
 					autocomplete="email"
+					errorMessage="El formato del correo electrónico no es válido."
 				/>
 				<ValidatedFormGroup
 					id="formLoginPassword"
@@ -136,6 +137,7 @@ export function LoginForm() {
 					value={password}
 					message={true}
 					autocomplete="current-password"
+					errorMessage="La contraseña no puede estar vacía."
 				/>
 				<div className="mt-5 pt-3">
 					<Row className="justify-content-sm-end">
