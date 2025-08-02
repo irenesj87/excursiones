@@ -10,7 +10,7 @@ Para ejecutar este proyecto, es necesario tener en funcionamiento tanto el **bac
 
 -   Node.js (v16 o superior)
 -   `npm` (incluido con Node.js)
--   `git`
+-   `git` (recomendado para clonar los repositorios)
 
 ### 1. Configuración del Backend (`testserver`)
 
@@ -31,7 +31,7 @@ El servidor es responsable de gestionar los datos de usuarios y excursiones.
     ```bash
     npm start
     ```
-    > [!NOTE]
+    > [!IMPORTANT]
     > Mantén esta terminal abierta mientras trabajas con la aplicación.
 
 ### 2. Configuración del Frontend (`excursiones`)
