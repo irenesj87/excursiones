@@ -28,6 +28,5 @@
 }
 
 .mailIconLink:hover {
-	transform: scale(1.15);
 	background-color: #f0f0f0; /* Un gris muy claro para el hover */
 }

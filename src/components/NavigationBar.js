@@ -109,7 +109,7 @@ function NavigationBarComponent({
 			<FaSun className={styles.themeIcon} />
 		);
 
-	const renderTooltip = (props) => (
+	const themeTooltip = (props) => (
 		<Tooltip id="button-tooltip" {...props}>
 			{mode === "light" ? "Cambiar a modo oscuro" : "Cambiar a modo claro"}
 		</Tooltip>
@@ -190,7 +190,7 @@ function NavigationBarComponent({
 				y justify-content-end alinea los items hijos al final del contenedor. */}
 				{/* order-lg-3: para posicionarlo correctamente en breakpoints grandes */}
 				<div className="d-flex align-items-center justify-content-end ms-auto ms-md-0 order-md-3 order-lg-3">
-					<OverlayTrigger placement="bottom" overlay={renderTooltip}>
+					<OverlayTrigger placement="bottom" overlay={themeTooltip}>
 						<Button
 							className={`${styles.themeToggleBtn} me-2`}
 							id="toggleButton"
