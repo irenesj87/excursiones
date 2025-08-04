@@ -23,17 +23,17 @@ function ExcursionCardSkeleton({ isLoggedIn = false, isJoined = false }) {
 						{/* Placeholder para la zona */}
 						<div className={cardStyles.detailItem}>
 							<Skeleton circle width={20} height={20} />
-							<Skeleton width={95} />
+							<Skeleton width={84} />
 						</div>
 						{/* Placeholder para la dificultad */}
 						<div className={cardStyles.detailItem}>
 							<Skeleton circle width={20} height={20} />
-							<Skeleton width={50} />
+							<Skeleton width={42} />
 						</div>
 						{/* Placeholder para el tiempo */}
 						<div className={cardStyles.detailItem}>
 							<Skeleton circle width={20} height={20} />
-							<Skeleton width={45} />
+							<Skeleton width={44} />
 						</div>
 					</div>
 				</div>

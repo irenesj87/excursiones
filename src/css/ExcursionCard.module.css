@@ -6,6 +6,12 @@
 	border: none;
 	border-radius: 12px;
 	box-shadow: var(--excursion-card-shadow);
+	/* Añade un outline para la accesibilidad del teclado */
+	outline-offset: 2px;
+}
+
+.excursionItemCard:focus-visible {
+	outline: 2px solid var(--focus-outline-color);
 }
 
 .excursionItemCard .card-body {

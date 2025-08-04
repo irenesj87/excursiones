@@ -52,6 +52,10 @@ function ExcursionCardComponent({
 		}
 	}, [id, onJoin, isJoining]);
 
+	// Genera un ID único para el título, que se usará para la accesibilidad.
+	// Reemplaza espacios y caracteres especiales para crear un ID válido.
+	const titleId = `excursion-title-${id}`;
+
 	const difficultyClassMap = {
 		Baja: styles.difficultyLow,
 		Media: styles.difficultyMedium,
@@ -60,13 +64,19 @@ function ExcursionCardComponent({
 
 	return (
 		<Card
+			tabIndex={0}
+			role="group"
+			aria-labelledby={titleId}
 			className={cn(styles.excursionItemCard, "h-100 w-100", {
 				[styles.isJoinedCard]: isJoined,
 			})}
 		>
 			<Card.Body className="d-flex flex-column">
 				<div>
-					<Card.Title className={`${styles.excursionTitle} mb-3`}>
+					<Card.Title
+						id={titleId}
+						className={`${styles.excursionTitle} mb-3`}
+					>
 						{name}
 					</Card.Title>
 
@@ -76,12 +86,10 @@ function ExcursionCardComponent({
 							text={area}
 							label="Zona"
 						/>
-						<div
-							className={styles.detailItem}
-							title={`Dificultad: ${difficulty}`}
+						<ExcursionDetailItem
+							text={difficulty}
+							label="Dificultad"
 						>
-							{/* Etiqueta oculta para accesibilidad */}
-							<span className="visually-hidden">Dificultad: </span>
 							<span
 								className={cn(
 									styles.difficultyIndicator,
@@ -90,7 +98,7 @@ function ExcursionCardComponent({
 								aria-hidden="true"
 							/>
 							<span>{difficulty}</span>
-						</div>
+						</ExcursionDetailItem>
 						<ExcursionDetailItem
 							IconComponent={FiClock}
 							text={time}
@@ -111,7 +119,7 @@ function ExcursionCardComponent({
 								<Button
 									onClick={handleJoin}
 									className={styles.joinButton}
-									disabled={isJoining}
+									aria-disabled={isJoining}
 								>
 									{isJoining ? (
 										<>

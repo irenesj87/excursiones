@@ -326,6 +326,12 @@ html.dark body {
 	transition: none;
 }
 
+/* Estilos para botones deshabilitados de forma accesible.
+   Se mantienen en el DOM y son enfocables, pero visualmente parecen inactivos. */
+.btn[aria-disabled="true"] {
+	opacity: 0.65;
+	pointer-events: none; /* Evita clics y efectos hover */
+}
 /* Estilos comunes para la barra de navegación */
 .customNavbar {
 	padding-top: 1.2rem;

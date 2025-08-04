@@ -60,6 +60,10 @@ export function LoginForm() {
 	 */
 	const submit = async (e) => {
 		e.preventDefault();
+		// Guarda para prevenir envíos múltiples si el botón está deshabilitado o ya se está cargando.
+		if (formState.isButtonDisabled || formState.isLoading) {
+			return;
+		}
 		formDispatch({ type: "LOGIN_START" });
 
 		try {
@@ -149,7 +153,7 @@ export function LoginForm() {
 							<Button
 								variant={formState.isButtonDisabled ? "secondary" : "success"}
 								type="submit"
-								disabled={formState.isButtonDisabled || formState.isLoading}
+								aria-disabled={formState.isButtonDisabled || formState.isLoading}
 								className="w-100"
 							>
 								{formState.isLoading ? (

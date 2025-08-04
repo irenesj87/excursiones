@@ -50,32 +50,22 @@
 	box-shadow: none;
 }
 
-.loginLink {
-	display: inline-block;
-	padding: 0.375rem 0.75rem;
-	font-weight: 400;
+.navButton {
+	/* Forzamos los colores para que anulen los estilos por defecto de Nav.Link */
+	color: white !important;
+	background-color: var(--bs-success) !important;
+	/* Forzamos el padding de un botón estándar para anular el de Nav.Link */
+	padding: 0.375rem 0.75rem !important;
+	border: 1px solid var(--bs-success) !important;
+	/* Anula el line-height por defecto de Nav.Link para que coincida con el de un botón estándar. */
 	line-height: 1.5;
-	text-align: center;
-	text-decoration: none;
-	vertical-align: middle;
-	cursor: pointer;
-	user-select: none;
-	border-radius: 0.375rem;
-	background-color: var(--primary-color);
-	color: white;
-	border-color: var(--primary-color);
-	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
 }
 
-.loginLink:hover,
-.loginLink:focus {
-	color: white;
-}
-
-.loginLink:hover {
-	background-color: #2e4c34;
-	border-color: #2e4c34;
-	box-shadow: none;
+.navButton:hover {
+	/* Usamos los colores de hover de Bootstrap para consistencia */
+	color: white !important;
+	background-color: #157347 !important; /* Color de hover de .btn-success */
+	border: 1px solid #146c43 !important;
 }
 
 .authNavItems {

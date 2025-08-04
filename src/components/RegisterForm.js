@@ -87,6 +87,10 @@ function RegisterForm() {
 	 */
 	const submit = async (e) => {
 		e.preventDefault();
+		// Guarda para prevenir envíos múltiples si el botón está deshabilitado o ya se está cargando.
+		if (formState.isButtonDisabled || formState.isLoading) {
+			return;
+		}
 		// Inicia el estado de carga y limpia errores previos.
 		formDispatch({ type: "REGISTER_START" });
 		const { name, surname, phone, mail, password } = values;
@@ -249,15 +253,13 @@ function RegisterForm() {
 					id="password-requirements"
 					className={`${styles.infoMessage} mb-3`}
 				>
-					<p className="mb-1 fw-normal">
-						La contraseña debe cumplir las siguientes condiciones:
-					</p>
+					<p className="mb-1 fw-normal">Tu contraseña debe contener al menos:</p>
 					{/* ps-3 añade un poco de sangría a la lista para mejorar la legibilidad */}
 					<ul className="mb-0 ps-3 fw-normal">
-						<li>Contener al menos 8 caracteres.</li>
-						<li>Contener al menos una letra.</li>
-						<li>Contener al menos un número.</li>
-						<li>Contener al menos un carácter especial (ej: @$!%*?&.,_-).</li>
+						<li>8 caracteres.</li>
+						<li>Una letra.</li>
+						<li>Un número.</li>
+						<li>Un carácter especial (ej: @$!%*?&.,_-).</li>
 					</ul>
 				</div>
 
@@ -269,7 +271,9 @@ function RegisterForm() {
 							<Button
 								variant={formState.isButtonDisabled ? "secondary" : "success"}
 								type="submit"
-								disabled={formState.isButtonDisabled || formState.isLoading}
+								aria-disabled={
+									formState.isButtonDisabled || formState.isLoading
+								}
 								className="w-100" // w-100 hace que el botón ocupe el ancho de su Col padre
 							>
 								{formState.isLoading ? (

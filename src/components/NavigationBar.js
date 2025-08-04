@@ -42,6 +42,7 @@ function NavigationBarComponent({
 	const handleCloseOffcanvas = () => setShowOffcanvas(false);
 	// Abre el componente Offcanvas.
 	const handleShowOffcanvas = () => setShowOffcanvas(true);
+	
 	/**
 	 * Variable que guarda el modo de tema actual (claro u oscuro) del estado de Redux. Se inicializa con la preferencia del
 	 * sistema o un valor guardado en localStorage.
@@ -121,7 +122,7 @@ function NavigationBarComponent({
 	const NoLoggedItems = (
 		<>
 			<Nav.Link
-				className={`${styles.registerLink} me-3`}
+				className={`${styles.navLink} ${styles.registerLink} me-3`}
 				as={Link}
 				to="/registerPage"
 				onClick={handleCloseOffcanvas}
@@ -129,10 +130,10 @@ function NavigationBarComponent({
 				Regístrate
 			</Nav.Link>
 			<Nav.Link
-				className={styles.loginLink}
 				as={Link}
 				to="/loginPage"
 				onClick={handleCloseOffcanvas}
+				className={`btn btn-success ${styles.navButton}`}
 			>
 				Inicia sesión
 			</Nav.Link>

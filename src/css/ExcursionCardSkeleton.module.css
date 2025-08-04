@@ -6,4 +6,5 @@
 	background-color: var(--excursion-card-bg);
 	box-shadow: var(--excursion-card-shadow);
 	border-radius: 12px;
+	border: none;
 }
