@@ -38,8 +38,9 @@ export function validatePhone(phone) {
 export function validateMail(mail) {
 	/**
 	 * Expresión regular simplificada para la validación de email.
-	 * Se han eliminado los casos para emails con IPs (ej: usuario@[192.168.1.1]) y partes locales entre comillas
-	 * (ej: "nombre con espacios"@dominio.com) para reducir la complejidad y evitar posibles ataques ReDoS.
+	 * No se dejan poner emails con IPs (ej: usuario@[192.168.1.1]) y partes locales entre comillas
+	 * (ej: "nombre con espacios"@dominio.com) para reducir la complejidad y evitar posibles ataques ReDoS, algo que sí está 
+	 * permitido en el estándar para correos electrónicos.
 	 */
 	const validMail =
 		/^([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)@(([a-zA-Z\-\d]+\.)+[a-zA-Z]{2,})$/;
@@ -48,26 +49,42 @@ export function validateMail(mail) {
 
 /**
  * Valida la fortaleza de una contraseña.
- * Devuelve `true` si es válida, o un `string` con el error específico si no lo es.
+ * Retorna `true` si es válida, o un `string` con el error específico si no lo es.
  * @param {string} password - La contraseña a validar.
  * @returns {true|string} - Retorna `true` si la contraseña es válida, o un mensaje de error.
  */
 export function validatePassword(password) {
-	if (password.length < 8) {
-		return "Debe tener al menos 8 caracteres.";
-	}
-	if (!/[A-Za-z]/.test(password)) {
-		return "Debe contener al menos una letra.";
-	}
-	if (!/\d/.test(password)) {
-		return "Debe contener al menos un número.";
-	}
-	if (!/[@$!%*?&.,_-]/.test(password)) {
-		return "Debe contener un carácter especial (ej: @$!%*?&.,_-).";
-	}
-	// Comprueba que no haya caracteres no permitidos.
-	if (/[^A-Za-z\d@$!%*?&.,_-]/.test(password)) {
-		return "Contiene caracteres no permitidos.";
+	// Se definen los requisitos de la contraseña en una estructura de datos.
+	// Esto hace que la función sea más declarativa y fácil de mantener.
+	const requirements = [
+		{
+			isValid: password.length >= 8,
+			message: "Debe tener al menos 8 caracteres.",
+		},
+		{
+			isValid: /[A-Za-z]/.test(password),
+			message: "Debe contener al menos una letra.",
+		},
+		{
+			isValid: /\d/.test(password),
+			message: "Debe contener al menos un número.",
+		},
+		{
+			isValid: /[@$!%*?&.,_-]/.test(password),
+			message: "Debe contener un carácter especial (ej: @$!%*?&.,_-).",
+		},
+		{
+			// Comprueba que no haya caracteres no permitidos.
+			isValid: !/[^A-Za-z\d@$!%*?&.,_-]/.test(password),
+			message: "Contiene caracteres no permitidos.",
+		},
+	];
+
+	// Itera sobre los requisitos y retorna el primer mensaje de error que encuentre.
+	for (const requirement of requirements) {
+		if (!requirement.isValid) {
+			return requirement.message;
+		}
 	}
 	return true;
 }

@@ -77,7 +77,7 @@ function LandingPageUserProfile({ onClickCloseCollapsible }) {
 				onClick={logOut}
 				className={styles.logoutButton}
 			>
-				Cerrar sesión
+				Cierra sesión
 			</Button>
 		</>
 	);

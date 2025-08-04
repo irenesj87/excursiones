@@ -343,7 +343,7 @@ function UserInfoForm() {
 					</div>
 				)}
 				{isEditing && (
-					<div className="mt-auto border-top pt-3">
+					<div className="mt-auto pt-3">
 						<Row className="justify-content-center justify-content-sm-end gx-2">
 							{/* En xs, los botones ocupan el ancho completo y se apilan. En sm+, se muestran en línea. */}
 							<Col xs={12} sm="auto" className="mb-2 mb-sm-0">

@@ -111,7 +111,7 @@ function NavigationBarComponent({
 
 	const themeTooltip = (props) => (
 		<Tooltip id="button-tooltip" {...props}>
-			{mode === "light" ? "Cambiar a modo oscuro" : "Cambiar a modo claro"}
+			{mode === "light" ? "Cambia a modo oscuro" : "Cambia a modo claro"}
 		</Tooltip>
 	);
 
@@ -126,7 +126,7 @@ function NavigationBarComponent({
 				to="/registerPage"
 				onClick={handleCloseOffcanvas}
 			>
-				Crear cuenta
+				Regístrate
 			</Nav.Link>
 			<Nav.Link
 				className={styles.loginLink}
@@ -134,7 +134,7 @@ function NavigationBarComponent({
 				to="/loginPage"
 				onClick={handleCloseOffcanvas}
 			>
-				Iniciar sesión
+				Inicia sesión
 			</Nav.Link>
 		</>
 	);
@@ -196,7 +196,7 @@ function NavigationBarComponent({
 							id="toggleButton"
 							onClick={toggleTheme}
 							aria-label={
-								mode === "light" ? "Activar modo oscuro" : "Activar modo claro"
+								mode === "light" ? "Activa el modo oscuro" : "Activa el modo claro"
 							}
 						>
 							{icon}

@@ -193,6 +193,17 @@ html.dark body {
 		border-color: #e8f5e9;
 	}
 
+	/* Estilos para el enlace del 'switcher' en las páginas de formulario (Login/Register) en modo oscuro */
+	/* Se usa un selector de atributo para apuntar a la clase generada por CSS Modules desde FormPageLayout.module.css */
+	[class*="switcherLink"] {
+		color: var(--heading-color);
+	}
+
+	[class*="switcherLink"]:hover {
+		/* Cambia al color de texto principal en hover para unificar la experiencia */
+		color: var(--text-color);
+	}
+
 	/* --- Estilos para los filtros --- */
 	.accordion-button,
 	.accordion-body {
