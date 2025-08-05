@@ -97,7 +97,7 @@ const Layout = () => {
 	// Ref para registrar el momento en que comienza una búsqueda de excursiones.
 	const fetchStartTimeRef = useRef(null);
 
-	// Funciones para cerrar el Offcanvas de filtros.
+	// Función para cerrar el Offcanvas de filtros.
 	const handleCloseFilters = () => setShowFilters(false);
 	// Función para abrir el Offcanvas de filtros.
 	const handleShowFilters = () => setShowFilters(true);
@@ -106,8 +106,7 @@ const Layout = () => {
 	 * useReducer: Es un hook de React, alternativa a useSate, que se usa cuando el estado es más complejo y tiene varias
 	 * cosas interrelacionadas entre sí, en este caso, los datos, el estado de carga y los errores.
 	 *
-	 * Estado para la gestión de datos de excursiones, usando un reducer para mayor claridad. Este es el objeto que define
-	 * el estado inicial.
+	 * Estado para la gestión de datos de excursiones. Este es el objeto que define el estado inicial.
 	 */
 	const excursionsInitialState = {
 		data: [],
@@ -117,7 +116,7 @@ const Layout = () => {
 
 	/**
 	 * Función reductora. Recibe el estado actual (state) y un objeto (action) que describe qué ha sucedido y retorna un
-	 * nuevo estado
+	 * nuevo estado.
 	 */
 	const excursionsReducer = (
 		/** @type {any} */ state,
@@ -154,12 +153,14 @@ const Layout = () => {
 	 */
 	const handleExcursionsFetchSuccess = useCallback(
 		(/** @type {any[]} */ excursions) => {
-			const elapsedTime = Date.now() - (fetchStartTimeRef.current || Date.now());
+			const elapsedTime =
+				Date.now() - (fetchStartTimeRef.current || Date.now());
 			const minDisplayTime = 500; // 500ms
 			const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
 
 			setTimeout(
-				() => excursionsDispatch({ type: "FETCH_SUCCESS", payload: excursions }),
+				() =>
+					excursionsDispatch({ type: "FETCH_SUCCESS", payload: excursions }),
 				remainingTime
 			);
 		},
@@ -168,14 +169,14 @@ const Layout = () => {
 
 	/**
 	 * Estado para saber si la comprobación inicial de autenticación del usuario ha terminado. Esto evita que cuando el
-	 * usuario esté logueado vea un parpadeo de los botones
+	 * usuario esté logueado vea un parpadeo de los botones.
 	 */
 	const [isAuthCheckComplete, setIsAuthCheckComplete] = useState(false);
 
 	/**
 	 * useEffect que controla el token en sessionStorage. Se guarda el token actual en sessionStorage y se loguea al
 	 * usuario de nuevo en caso de que se refresque la página. Con esto el usuario no perderá su sesión, es decir, se
-	 * queda logueado
+	 * queda logueado.
 	 */
 	useEffect(() => {
 		const verifyAuthStatus = async () => {
@@ -187,7 +188,7 @@ const Layout = () => {
 				const data = await verifyToken(sessionToken);
 				// Si el servicio retorna datos, el token es válido.
 				if (data) {
-					// Actualiza el estado de la Redux store poniendo al usuario como logueado
+					// Actualiza el estado de la Redux store poniendo al usuario como logueado.
 					loginDispatch(
 						login({
 							user: data.user,
@@ -250,7 +251,8 @@ const Layout = () => {
 	 */
 	const handleExcursionsFetchEnd = useCallback((/** @type {any} */ error) => {
 		if (error) {
-			const elapsedTime = Date.now() - (fetchStartTimeRef.current || Date.now());
+			const elapsedTime =
+				Date.now() - (fetchStartTimeRef.current || Date.now());
 			const minDisplayTime = 500;
 			const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
 
