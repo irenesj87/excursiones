@@ -26,7 +26,7 @@ import styles from "../../css/Layout.module.css";
 
 /**
  * Carga perezosa para componentes de ruta. Su propósito es asegurar que cuando un componente se carga de forma perezosa,
- * el indicador de carga (como por ejemplo un "esqueleto" o skeleton) se muestre al usuario durante un tiempo mínimo, que
+ * el indicador de carga (como por ejemplo, un "esqueleto" o skeleton) se muestre al usuario durante un tiempo mínimo, que
  * por defecto es de 500 milisegundos. Resuelve un problema común de experiencia de usuario llamado parpadeo (flickering).
  * @param {() => Promise<any>} factory - La función de importación dinámica.
  * @param {number} [minTime=500] - El tiempo mínimo de carga en milisegundos.
@@ -56,7 +56,7 @@ const UserPage = lazyWithMinTime(() => import("../UserPage"));
 
 /**
  * La memoización es una técnica de optimización donde se cachean los resultados para que no se tenga que renderizar otra
- * vez una función o un componente. Así se mejoran los tiempos de ejecución de la página.
+ * vez una función o componente. Así, se mejoran los tiempos de ejecución de la página.
  */
 const Footer = memo(OriginalFooter);
 
@@ -94,7 +94,8 @@ const Layout = () => {
 	const loginDispatch = useDispatch();
 	// Estado para controlar la visibilidad del menú Offcanvas de filtros en breakpoints pequeños.
 	const [showFilters, setShowFilters] = useState(false);
-	// Ref para registrar el momento en que comienza una búsqueda de excursiones.
+	// Ref para registrar el momento en que comienza una búsqueda de excursiones. useRef se utiliza para almacenar un valor que
+	// cambia pero que no causa re-renderizados cuando lo hace.
 	const fetchStartTimeRef = useRef(null);
 
 	// Función para cerrar el Offcanvas de filtros.
@@ -149,22 +150,33 @@ const Layout = () => {
 	);
 
 	/**
-	 * Callback para manejar una carga exitosa de excursiones, actualizando el estado.
+	 * Despacha una acción al reducer de excursiones, asegurando que el estado de carga se muestre por un tiempo mínimo.
+	 * Esto evita el "parpadeo" de la interfaz de usuario cuando las cargas son muy rápidas.
+	 * @param {object} action - La acción a despachar (ej. { type: "FETCH_SUCCESS", payload: data }).
 	 */
-	const handleExcursionsFetchSuccess = useCallback(
-		(/** @type {any[]} */ excursions) => {
+	const dispatchWithMinDisplayTime = useCallback(
+		(action) => {
 			const elapsedTime =
 				Date.now() - (fetchStartTimeRef.current || Date.now());
 			const minDisplayTime = 500; // 500ms
 			const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
 
-			setTimeout(
-				() =>
-					excursionsDispatch({ type: "FETCH_SUCCESS", payload: excursions }),
-				remainingTime
-			);
+			setTimeout(() => excursionsDispatch(action), remainingTime);
 		},
-		[]
+		[excursionsDispatch]
+	);
+
+	/**
+	 * Callback para manejar una carga exitosa de excursiones, actualizando el estado.
+	 */
+	const handleExcursionsFetchSuccess = useCallback(
+		(/** @type {any[]} */ excursions) => {
+			dispatchWithMinDisplayTime({
+				type: "FETCH_SUCCESS",
+				payload: excursions,
+			});
+		},
+		[dispatchWithMinDisplayTime]
 	);
 
 	/**
@@ -249,19 +261,14 @@ const Layout = () => {
 	 * Callback para indicar el fin de una operación de fetch de excursiones. Establece isLoading a false y guarda
 	 * el error si lo hay.
 	 */
-	const handleExcursionsFetchEnd = useCallback((/** @type {any} */ error) => {
-		if (error) {
-			const elapsedTime =
-				Date.now() - (fetchStartTimeRef.current || Date.now());
-			const minDisplayTime = 500;
-			const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
-
-			setTimeout(
-				() => excursionsDispatch({ type: "FETCH_ERROR", payload: error }),
-				remainingTime
-			);
-		}
-	}, []);
+	const handleExcursionsFetchEnd = useCallback(
+		(/** @type {any} */ error) => {
+			if (error) {
+				dispatchWithMinDisplayTime({ type: "FETCH_ERROR", payload: error });
+			}
+		},
+		[dispatchWithMinDisplayTime]
+	);
 
 	// El componente Excursions recibirá isLoading y error para manejar su propia UI.
 	const excursionsContent = (
