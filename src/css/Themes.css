@@ -21,6 +21,14 @@ html.light body {
 	color: #1a2b1e; /* Verde muy oscuro, casi negro, para texto principal */
 	--register-link-color: #1a2b1e;
 	--register-link-border-color: #1a2b1e;
+
+	/* --- Variables para el botón de Login --- */
+	--login-btn-text: #ffffff;
+	--login-btn-bg: var(--primary-color);
+	--login-btn-border: var(--primary-color);
+	--login-btn-bg-hover: #253c29; /* Tono más oscuro de --primary-color */
+	--login-btn-border-hover: #253c29;
+
 	--logout-bg-color: #6c757d; /* Gris secundario de Bootstrap */
 	--logout-bg-color-hover: #5c636a; /* Gris secundario más oscuro de Bootstrap */
 	--logout-text-color: #ffffff; /* Texto blanco para contraste en fondo oscuro */
@@ -76,15 +84,13 @@ html.light body {
 	/* --- Accesibilidad --- */
 	--focus-outline-color: var(--accent-color);
 
-	.accordion-button,
-	.accordion-body {
+	.accordion-button, .accordion-body {
 		background-color: #f7f9f7;
 		color: #1a2b1e;
+	}
 
-		&::after {
-			/* Define la imagen de fondo para el icono del acordeón en modo claro */
-			background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%231a2b1e'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
-		}
+	.accordion-button::after {
+		background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%231a2b1e'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
 	}
 
 	.offcanvas-header {
@@ -95,19 +101,6 @@ html.light body {
 
 	.offcanvas-body {
 		background-color: #ffffff;
-	}
-
-	/* Botón para mostrar filtros en breakpoints xs */
-	.filtersToggleButton {
-		color: var(--filters-toggle-btn-color);
-		border-color: var(--filters-toggle-btn-border);
-		background-color: transparent;
-	}
-
-	.filtersToggleButton:hover {
-		color: var(--filters-toggle-btn-color-hover);
-		background-color: var(--filters-toggle-btn-bg-hover);
-		border-color: var(--filters-toggle-btn-border-hover);
 	}
 }
 
@@ -126,6 +119,14 @@ html.dark body {
 	--accent-color: #f39c12; /* Naranja para alertas, se mantiene por su buen contraste */
 	--register-link-color: #e8f5e9;
 	--register-link-border-color: #a3b8a8; /* Borde más sutil */
+
+	/* --- Variables para el botón de Login --- */
+	--login-btn-text: #1a2b1e; /* Texto oscuro para contraste en botón brillante */
+	--login-btn-bg: var(--heading-color);
+	--login-btn-border: var(--heading-color);
+	--login-btn-bg-hover: #8BC34A; /* Tono más oscuro de --heading-color */
+	--login-btn-border-hover: #8BC34A;
+
 	--logout-bg-color: rgb(80, 73, 73);
 	--logout-bg-color-hover: rgb(100, 93, 93);
 	--logout-text-color: #e8f5e9; /* Texto claro para contraste en fondo oscuro */
@@ -205,14 +206,13 @@ html.dark body {
 	}
 
 	/* --- Estilos para los filtros --- */
-	.accordion-button,
-	.accordion-body {
+	.accordion-button, .accordion-body {
 		background-color: #1a2b1e;
 		color: #e8f5e9;
-		&::after {
-			/* Define la imagen de fondo para el icono del acordeón en modo oscuro */
-			background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23e8f5e9'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
-		}
+	}
+
+	.accordion-button::after {
+		background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23e8f5e9'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
 	}
 
 	.accordion-item {
@@ -242,7 +242,6 @@ html.dark body {
 		background-color: #213426;
 		color: #e8f5e9;
 		border: 1px solid var(--separator-color);
-		transition: none;
 	}
 
 	.form-control::placeholder {
@@ -300,18 +299,6 @@ html.dark body {
 	.offcanvas-body {
 		background-color: var(--filter-container-bg);
 	}
-
-	/* Botón para mostrar filtros en breakpoints xs */
-	.filtersToggleButton {
-		color: var(--filters-toggle-btn-color);
-		border-color: var(--filters-toggle-btn-border);
-		background-color: transparent;
-	}
-
-	.filtersToggleButton:hover {
-		color: var(--filters-toggle-btn-color-hover);
-		background-color: var(--filters-toggle-btn-bg-hover);
-	}
 }
 
 /* ======================================== */
@@ -331,6 +318,19 @@ html.dark body {
 .btn[aria-disabled="true"] {
 	opacity: 0.65;
 	pointer-events: none; /* Evita clics y efectos hover */
+}
+
+/* Botón para mostrar filtros en breakpoints xs (común a ambos temas) */
+.filtersToggleButton {
+	color: var(--filters-toggle-btn-color);
+	border: 1px solid var(--filters-toggle-btn-border);
+	background-color: transparent;
+}
+
+.filtersToggleButton:hover {
+	color: var(--filters-toggle-btn-color-hover);
+	background-color: var(--filters-toggle-btn-bg-hover);
+	border-color: var(--filters-toggle-btn-border-hover);
 }
 /* Estilos comunes para la barra de navegación */
 .customNavbar {
@@ -376,13 +376,6 @@ html.dark
 	.nav-link:not([class*="loginLink"]):not([class*="logoutLink"]) {
 	color: #e8f5e9;
 }
-
-/* Estilos específicos para los enlaces de login y logout dentro del Offcanvas (común a ambos temas) */
-.offcanvas-body .nav-link[class*="loginLink"],
-.offcanvas-body .nav-link[class*="logoutLink"] {
-	color: white; /* Asegura que el texto sea blanco sobre el fondo verde/gris oscuro */
-}
-
 /* Estilo para los paneles de contenido principales, como los de las páginas de formulario */
 .contentPane {
 	/* Usa variables de tema para adaptarse al modo claro/oscuro */

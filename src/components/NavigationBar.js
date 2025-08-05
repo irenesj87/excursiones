@@ -133,7 +133,7 @@ function NavigationBarComponent({
 				as={Link}
 				to="/loginPage"
 				onClick={handleCloseOffcanvas}
-				className={`btn btn-success ${styles.navButton}`}
+				className={`btn btn-success ${styles.navButton} loginLink`}
 			>
 				Inicia sesión
 			</Nav.Link>
