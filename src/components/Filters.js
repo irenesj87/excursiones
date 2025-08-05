@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FiltersList from "./FiltersList";
 import { clearAllFilters } from "../slicers/filterSlice";
-import { FiMapPin, FiBarChart, FiClock, FiX } from "react-icons/fi";
+import { FiMapPin, FiBarChart, FiClock, FiTrash2 } from "react-icons/fi";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Filters.module.css";
 
@@ -79,11 +79,11 @@ function FiltersComponent({ showTitle = true }) {
 				<Button
 					variant={hasActiveFilters ? "danger" : "secondary"}
 					onClick={handleClearFilters}
-					className="w-100"
+					className="w-100 d-flex align-items-center justify-content-center"
 					aria-label="Limpiar todos los filtros"
 					aria-disabled={!hasActiveFilters}
 				>
-					<FiX aria-hidden="true" className="me-2" />
+					<FiTrash2 aria-hidden="true" className="me-2" />
 					<span>Limpiar Filtros</span>
 				</Button>
 			</footer>
