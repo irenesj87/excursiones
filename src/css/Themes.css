@@ -81,6 +81,14 @@ html.light body {
 	--theme-toggle-btn-border-color: var(--separator-color);
 	--theme-toggle-btn-bg-hover: rgba(0, 0, 0, 0.05);
 
+	/* --- Variables para Footer --- */
+	--footer-bg: var(--primary-color);
+	--footer-text-color: #ffffff;
+	--footer-border-top: var(--separator-color);
+	--footer-icon-bg: #ffffff;
+	--footer-icon-color: var(--primary-color);
+	--footer-icon-bg-hover: #f0f0f0;
+
 	/* --- Accesibilidad --- */
 	--focus-outline-color: var(--accent-color);
 
@@ -175,6 +183,14 @@ html.dark body {
 	--theme-toggle-btn-color: #e8f5e9;
 	--theme-toggle-btn-border-color: #3a5a40;
 	--theme-toggle-btn-bg-hover: rgba(255, 255, 255, 0.1);
+
+	/* --- Variables para Footer --- */
+	--footer-bg: #1a2b1e; /* Coincide con el fondo del body y la navbar */
+	--footer-text-color: var(--text-color); /* #e8f5e9 */
+	--footer-border-top: var(--separator-color); /* #3a5a40 */
+	--footer-icon-bg: #3a5a40; /* Coincide con el borde y las píldoras de filtro */
+	--footer-icon-color: var(--text-color); /* #e8f5e9 */
+	--footer-icon-bg-hover: #4f7659; /* Coincide con el hover de las píldoras de filtro */
 
 	/* --- Accesibilidad --- */
 	--focus-outline-color: var(--accent-color);

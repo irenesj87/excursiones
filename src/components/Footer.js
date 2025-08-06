@@ -19,6 +19,7 @@ const mailTooltip = (
 
 /**
  * Componente del pie de página que muestra información de contacto y derechos de autor.
+ * Se adapta al tema claro/oscuro de la aplicación.
  * @returns {React.ReactElement} El componente del pie de página.
  */
 function Footer() {
