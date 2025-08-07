@@ -4,7 +4,8 @@ import styles from "../css/FilterError.module.css";
 
 /**
  * Componente para mostrar un mensaje de error cuando falla la carga de los filtros.
- * @param {{ message?: string }} props
+ * @param {object} props
+ * @param {string} [props.message="No se pudieron cargar los filtros."] - El mensaje de error a mostrar.
  * @returns {React.ReactElement}
  */
 function FilterError({ message = "No se pudieron cargar los filtros." }) {

@@ -14,7 +14,7 @@ const currentYear = new Date().getFullYear();
  * @returns {React.ReactElement} El componente Tooltip.
  */
 const mailTooltip = (
-	<Tooltip id="mail-tooltip">Envíanos un correo electrónico</Tooltip>
+	<Tooltip id="mail-tooltip">Envíanos un correo</Tooltip>
 );
 
 /**

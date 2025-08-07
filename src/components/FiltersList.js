@@ -11,7 +11,8 @@ import styles from "../css/FiltersList.module.css";
 
 /**
  * Componente que muestra una lista de filtros para una categoría específica (ej. área, dificultad, tiempo).
- * @param {{ filterName: string }} props - Las propiedades del componente.
+ * @param {object} props - Las propiedades del componente.
+ * @param {string} props.filterName - El nombre de la categoría de filtro (ej. "area").
  */
 function FiltersListComponent({ filterName }) {
 	// Estado que almacena la lista de filtros obtenidos del servidor.

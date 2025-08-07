@@ -6,7 +6,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 /**
  * Componente que muestra un esqueleto de carga para una ExcursionCard.
- * @param {{ isLoggedIn?: boolean, isJoined?: boolean }} props
+ * @param {object} props
+ * @param {boolean} [props.isLoggedIn=false] - Indica si el usuario ha iniciado sesión.
+ * @param {boolean} [props.isJoined=false] - Indica si el usuario ya está apuntado a una excursión.
  */
 function ExcursionCardSkeleton({ isLoggedIn = false, isJoined = false }) {
 	return (

@@ -8,7 +8,9 @@ import styles from "../css/FiltersListCheckbox.module.css";
 
 /**
  * Componente que renderiza una única opción de filtro como una "píldora" interactiva.
- * @param {{filterName: string, filter: string}} props
+ * @param {object} props
+ * @param {string} props.filterName - El nombre de la categoría de filtro (ej. "area").
+ * @param {string} props.filter - El valor específico del filtro (ej. "Picos de Europa").
  * @returns {React.ReactElement}
  */
 function FiltersListCheckboxComponent({ filterName, filter }) {

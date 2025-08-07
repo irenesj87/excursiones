@@ -2,15 +2,94 @@ import { memo, useMemo, useCallback, useState, useEffect, useRef } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { SkeletonTheme } from "react-loading-skeleton";
-import { FiSearch } from "react-icons/fi";
+import { FiSearch, FiAlertCircle } from "react-icons/fi";
 import { updateUser } from "../slicers/loginSlice";
-import ExcursionCard from "components/ExcursionCard";
+import ExcursionCard from "./ExcursionCard";
 import ExcursionCardSkeleton from "./ExcursionCardSkeleton";
+import { joinExcursion as joinExcursionService } from "../services/excursionService";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Excursions.module.css";
 
 /** @typedef {import('types.js').RootState} RootState */
 /** @typedef {import('types.js').Excursion} Excursion */
+
+/**
+ * @typedef {object} ExcursionsLoadingProps
+ * @property {boolean} isLoggedIn - Indica si el usuario ha iniciado sesión.
+ * @property {'light' | 'dark'} props.mode - El modo de tema actual.
+ */
+
+/**
+ * Componente para mostrar el esqueleto mientras las excursiones se cargan.
+ * @param {ExcursionsLoadingProps} props
+ */
+const ExcursionsLoadingComponent = ({ isLoggedIn, mode }) => {
+	const baseColor = mode === "dark" ? "#2d3748" : "#e0e0e0";
+	const highlightColor = mode === "dark" ? "#444" : "#f5f5f5";
+
+	return (
+		<SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
+			<div className={styles.excursionsContainer}>
+				<h2 className={styles.title}>Próximas excursiones</h2>
+				<div role="status" aria-live="polite" className="visually-hidden">
+					Cargando excursiones...
+				</div>
+				<Row as="ul" className="gx-4 gy-5 list-unstyled">
+					{Array.from({ length: 8 }).map((_, index) => (
+						<Col
+							as="li"
+							xs={12}
+							md={6}
+							lg={4}
+							xl={3}
+							// eslint-disable-next-line react/no-array-index-key
+							key={`skeleton-card-${index}`}
+							className="d-flex"
+						>
+							<ExcursionCardSkeleton isLoggedIn={isLoggedIn} />
+						</Col>
+					))}
+				</Row>
+			</div>
+		</SkeletonTheme>
+	);
+};
+const ExcursionsLoading = memo(ExcursionsLoadingComponent);
+
+/**
+ * Componente para mostrar un mensaje de error si ha habido algún problema en la carga de las excursiones.
+ * @param {ExcursionsErrorProps} props
+ * @typedef {object} ExcursionsErrorProps
+ * @property {Error | null} error - El objeto de error.
+ */
+const ExcursionsErrorComponent = ({ error }) => (
+	<div className={`${styles.excursionsContainer} ${styles.centeredStatus}`}>
+		<div role="alert" className={styles.messageNotFound}>
+			<FiAlertCircle className={styles.messageIcon} aria-hidden="true" />
+			<p className={styles.primaryMessage}>
+				{error.message ||
+					"Lo sentimos, ha ocurrido un error al cargar las excursiones."}
+			</p>
+		</div>
+	</div>
+);
+const ExcursionsError = memo(ExcursionsErrorComponent);
+
+/** Componente para cuando no se encuentran resultados. */
+const NoExcursionsFoundComponent = () => (
+	<div className={`${styles.excursionsContainer} ${styles.centeredStatus}`}>
+		<div role="status" className={styles.messageNotFound}>
+			<FiSearch className={styles.messageIcon} aria-hidden="true" />
+			<p className={styles.primaryMessage}>
+				No se encontraron excursiones con esas características.
+			</p>
+			<p className={styles.secondaryMessage}>
+				Prueba a cambiar los filtros para mejorar tu búsqueda.
+			</p>
+		</div>
+	</div>
+);
+const NoExcursionsFound = memo(NoExcursionsFoundComponent);
 
 /**
  * Componente que sirve para mostrar la lista de excursiones disponibles.
@@ -21,7 +100,11 @@ import styles from "../css/Excursions.module.css";
  */
 function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	// Se obtiene el estado del loginReducer y el objeto usuario
-	const { login: isLoggedIn, user } = useSelector(
+	const {
+		login: isLoggedIn,
+		user,
+		token,
+	} = useSelector(
 		/** @param {RootState} state */
 		(state) => state.loginReducer
 	);
@@ -67,42 +150,29 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	 */
 	const joinExcursion = useCallback(
 		async (excursionId) => {
-			const auxUserMail = user?.mail;
-			if (!auxUserMail) return; // Si no hay correo de usuario, la función termina
-			// Llama a la API con un usuario específico y una excursión específica
-			const url = `http://localhost:3001/users/${auxUserMail}/excursions/${excursionId}`;
-			/** @type {RequestInit} */
-			const options = {
-				method: "PUT",
-				mode: "cors",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + window.sessionStorage["token"],
-				},
-				body: JSON.stringify({ id: excursionId }),
-			};
-
 			try {
-				const response = await fetch(url, options);
-				if (!response.ok) {
-					throw new Error("No estás autorizado/a para hacer esta operación");
-				}
-				const data = await response.json();
-				loginDispatch(updateUser({ user: data }));
+				const updatedUser = await joinExcursionService(
+					user?.mail,
+					excursionId,
+					token
+				);
+				loginDispatch(updateUser({ user: updatedUser }));
 			} catch (error) {
 				console.error("Error al unirse a la excursión:", error);
 				// Relanzamos el error para que el componente que llama (ExcursionCard) pueda manejarlo.
 				throw error;
 			}
 		},
-		[user?.mail, loginDispatch]
+		// `token` se añade como dependencia para asegurar que la función tiene la versión más reciente.
+		[user?.mail, token, loginDispatch]
 	);
 
 	/**
 	 * Componentes de las tarjetas de excursión, memoizados para optimizar el rendimiento, ya que el mapear un array a componentes
 	 * puede ser costoso si hay muchas excursiones.
 	 * Cada tarjeta recibe las propiedades necesarias y se encarga de mostrar la información de la excursión.
-	 * Además, se comprueba si el usuario ha iniciado sesión y si ya está apuntado a la excursión para mostrar el botón de unirse o no.
+	 * Además, se comprueba si el usuario ha iniciado sesión y si ya está apuntado a la excursión para mostrar el botón de unirse o
+	 * no.
 	 */
 	const excursionComponents = useMemo(
 		() =>
@@ -130,79 +200,21 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 		[displayedExcursions, isLoggedIn, user?.excursions, joinExcursion]
 	);
 
-	// Si hay un error, mostrar un mensaje
-	if (error) {
-		return (
-			<div className={`${styles.excursionsContainer} ${styles.centeredStatus}`}>
-				{/* Usamos role="alert" para que el error sea anunciado inmediatamente por los lectores de pantalla */}
-				<div role="alert" className={styles.messageNotFound}>
-					<p className={styles.primaryMessage}>
-						{error.message ||
-							"Lo sentimos, ha ocurrido un error al cargar las excursiones."}
-					</p>
-				</div>
-			</div>
-		);
-	}
-
 	// --- Lógica de Renderizado Condicional ---
 
-	// 1. Si estamos cargando y no hay excursiones previas que mostrar (carga inicial), mostramos los esqueletos para evitar salto de layout.
+	if (error) {
+		return <ExcursionsError error={error} />;
+	}
+
 	if (isLoading && displayedExcursions.length === 0) {
-		const baseColor = mode === "dark" ? "#2d3748" : "#e0e0e0";
-		const highlightColor = mode === "dark" ? "#444" : "#f5f5f5";
-
-		return (
-			<SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
-				<div className={styles.excursionsContainer}>
-					<h2 className={styles.title}>Próximas excursiones</h2>
-					{/* Anunciamos el estado de carga a los lectores de pantalla de forma no intrusiva */}
-					<div role="status" aria-live="polite" className="visually-hidden">
-						Cargando excursiones...
-					</div>
-					<Row className="gx-4 gy-5">
-						{/* Mostramos 8 placeholders para dar una idea de la estructura */}
-						{Array.from({ length: 8}).map((_, index) => (
-							<Col
-								xs={12}
-								md={6}
-								lg={4}
-								xl={3}
-								// eslint-disable-next-line react/no-array-index-key
-								key={`skeleton-card-${index}`}
-								className="d-flex"
-							>
-								<ExcursionCardSkeleton isLoggedIn={isLoggedIn} />
-							</Col>
-						))}
-					</Row>
-				</div>
-			</SkeletonTheme>
-		);
+		return <ExcursionsLoading isLoggedIn={isLoggedIn} mode={mode} />;
 	}
 
-	// 2. Si la carga ha finalizado y el resultado de la búsqueda (`excursionData`) está vacío,
-	// mostramos el mensaje "no encontrado". Se comprueba `excursionData` en lugar de `displayedExcursions`
-	// para evitar el parpadeo del mensaje durante la transición de carga a resultados.
 	if (!isLoading && excursionData.length === 0) {
-		return (
-			<div className={`${styles.excursionsContainer} ${styles.centeredStatus}`}>
-				{/* Usamos role="status" para que el mensaje se anuncie de forma no intrusiva */}
-				<div role="status" className={styles.messageNotFound}>
-					<FiSearch className={styles.messageIcon} aria-hidden="true" />
-					<p className={styles.primaryMessage}>
-						No hemos encontrado ninguna excursión con esas características.
-					</p>
-					<p className={styles.secondaryMessage}>
-						Prueba a cambiar los filtros para ampliar la búsqueda.
-					</p>
-				</div>
-			</div>
-		);
+		return <NoExcursionsFound />;
 	}
 
-	// 3. Por defecto, mostrar las excursiones. Durante una búsqueda, se mostrarán las
-	// antiguas mientras se cargan las nuevas, manteniendo el layout estable.
+	// Por defecto, mostrar las excursiones.
 	return (
 		<div className={styles.excursionsContainer}>
 			{/* Este elemento anuncia los resultados de los filtros a los lectores de pantalla sin ser visible. */}
@@ -210,10 +222,6 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 				{announcement}
 			</div>
 			<h2 className={styles.title}>Próximas excursiones</h2>
-			{/* Usamos una lista (ul) para agrupar las tarjetas de excursiones, lo que es semánticamente correcto.
-			    La prop 'as' en Row y Col (dentro de excursionComponents) se encarga de renderizar los elementos HTML correctos.
-			    'list-unstyled' de Bootstrap elimina los estilos por defecto de la lista.
-			 */}
 			<Row as="ul" className="gx-4 gy-5 list-unstyled">
 				{excursionComponents}
 			</Row>

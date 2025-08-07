@@ -11,8 +11,9 @@ import styles from "../css/Filters.module.css";
 
 /**
  * Componente para renderizar los filtros de búsqueda (zona, dificultad, tiempo estimado)
+ * @param {object} props - Propiedades del componente.
+ * @param {boolean} [props.showTitle=true] - Controla si se muestra el título.
  * @returns {React.ReactElement} El componente para los filtros
- * @param {{showTitle?: boolean}} props - Propiedades del componente. `showTitle` controla si se muestra el título.
  */
 const filterSections = [
 	{
