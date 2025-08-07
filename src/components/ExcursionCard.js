@@ -1,5 +1,5 @@
 import { memo, useCallback, useState } from "react";
-import { Card, Button, Spinner } from "react-bootstrap";
+import { Card, Button, Spinner, Alert } from "react-bootstrap";
 import ExcursionDetailItem from "./ExcursionDetailItem";
 import { FiMapPin, FiClock, FiCheckCircle } from "react-icons/fi";
 import cn from "classnames";
@@ -12,7 +12,7 @@ import styles from "../css/ExcursionCard.module.css";
  * @param {object} props
  * @param {boolean} props.isJoined - Indica si el usuario se ha apuntado a la excursión.
  * @param {boolean} props.isJoining - Muestra si la acción de unirse está en progreso.
- * @param {() => void} props.onJoin - Callback to execute when the join button is clicked.
+ * @param {() => void} props.onJoin - Callback que se ejecuta cuando se cliquea el botón para apuntarse.
  * @returns {React.ReactElement}
  */
 const JoinButton = ({ isJoined, isJoining, onJoin }) => {
@@ -76,6 +76,7 @@ function ExcursionCardComponent({
 	onJoin,
 }) {
 	const [isJoining, setIsJoining] = useState(false);
+	const [joinError, setJoinError] = useState(null);
 	/*
 	 * Crea un 'handler' para el evento 'click' que llama a la función `onJoin` con el ID de la excursión.
 	 * Se usa `useCallback` para memoizar la función y evitar que se recree en cada renderizado, optimizando el rendimiento.
@@ -83,12 +84,17 @@ function ExcursionCardComponent({
 	 */
 	const handleJoin = useCallback(async () => {
 		setIsJoining(true);
+		setJoinError(null); // Limpiar errores previos al reintentar
 		try {
 			// Llama a la función onJoin (si existe) pasándole el id de la excursión.
 			await onJoin?.(id);
 			// Si tiene éxito, el componente padre actualizará `isJoined`, y el estado `isJoining` de este componente
 			// desaparecerá al no renderizarse más el botón.
 		} catch (error) {
+			console.error("Error al unirse a la excursión en la tarjeta:", error);
+			setJoinError(
+				error.message || "No se pudo completar la acción. Inténtalo de nuevo."
+			);
 			// Si hay un error, restablecemos el estado del botón para que el usuario pueda intentarlo de nuevo.
 			setIsJoining(false);
 		}
@@ -144,6 +150,17 @@ function ExcursionCardComponent({
 				</div>
 				{isLoggedIn && (
 					<div className={`${styles.cardActionArea} mt-auto pt-3`}>
+						{joinError && (
+							<Alert
+								variant="danger"
+								onClose={() => setJoinError(null)}
+								dismissible
+								className="mb-2 small"
+								role="alert"
+							>
+								{joinError}
+							</Alert>
+						)}
 						<JoinButton
 							isJoined={isJoined}
 							isJoining={isJoining}

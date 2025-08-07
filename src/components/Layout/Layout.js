@@ -6,6 +6,7 @@ import NavigationBar from "../NavigationBar";
 import Filters from "../Filters";
 import Excursions from "../Excursions";
 import OriginalFooter from "../Footer"; // Se renombra la importación original para que no haya conflictos
+import ProtectedRoute from "../ProtectedRoute";
 import RegisterPageSkeleton from "../RegisterPageSkeleton";
 import LoginPageSkeleton from "../LoginPageSkeleton";
 import UserPageSkeleton from "../UserPageSkeleton";
@@ -162,11 +163,12 @@ const Layout = () => {
 							<Route
 								path="userPage"
 								element={
-									<LazyRouteWrapper
-										PageComponent={UserPage}
-										SkeletonComponent={UserPageSkeleton}
-										isAuthCheckComplete={isAuthCheckComplete}
-									/>
+									<ProtectedRoute isAuthCheckComplete={isAuthCheckComplete}>
+										<LazyRouteWrapper
+											PageComponent={UserPage}
+											SkeletonComponent={UserPageSkeleton}
+										/>
+									</ProtectedRoute>
 								}
 							/>
 						</Routes>

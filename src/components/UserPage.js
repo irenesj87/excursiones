@@ -1,41 +1,15 @@
 import { Row, Col } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
-import UserInfoForm from "./UserInfoForm"; 
-import UserPageSkeleton from "./UserPageSkeleton"; 
+import UserInfoForm from "./UserInfoForm";
 import "bootstrap/dist/css/bootstrap.css";
 
 import styles from "../css/UserPage.module.css";
 
 /** @typedef {import('types.js').RootState} RootState */
 
-/**
- * Componente que representa la página de perfil del usuario.
- * @param {object} props - Las propiedades del componente.
- * @param {boolean} props.isAuthCheckComplete - Indica si la comprobación de autenticación ha finalizado.
+/** Componente que representa la página de perfil del usuario.
+ *  La lógica de protección de esta ruta se maneja en el componente `ProtectedRoute`.
  */
-function UserPage({ isAuthCheckComplete }) {
-	// useSelector que indica si el usuario está logueado y proporciona la información del usuario.
-	const { login: isLoggedIn } = useSelector(
-		/** @param {RootState} state */
-		(state) => state.loginReducer
-	);
-
-	// --- Lógica de Renderizado Secuencial ---
-
-	// 1. Si la comprobación de autenticación inicial aún no ha terminado, mostramos
-	// el esqueleto. Esto actúa como una barrera para prevenir que se ejecute
-	// lógica con un estado de autenticación incompleto.
-	if (!isAuthCheckComplete) {
-		return <UserPageSkeleton />;
-	}
-
-	// 2. Una vez que ha cargado, si el usuario no está logueado, lo redirigimos.
-	if (!isLoggedIn) {
-		return <Navigate replace to="/" />;
-	}
-
-	// 3. Si todas las comprobaciones han pasado, mostramos el contenido final de la página.
+function UserPage() {
 	return (
 		// Se añade `h-100` a la Row y `d-flex flex-column` a la Col para asegurar que el layout
 		// ocupe toda la altura disponible y que el contenido se organice verticalmente.

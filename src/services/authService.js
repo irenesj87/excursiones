@@ -14,23 +14,17 @@ export const verifyToken = async (token) => {
 		return null; // No hay token, no hay nada que verificar.
 	}
 
-	// Es mejor práctica enviar el token en el header de autorización.
-	// const url = `${API_BASE_URL}/verify`; // Endpoint de ejemplo
-	// const options = {
-	// 	method: "GET",
-	// 	headers: {
-	// 		"Content-Type": "application/json",
-	// 		Authorization: `Bearer ${token}`,
-	// 	},
-	// };
-
-	// Usando la implementación actual con el token en la URL
-	const url = `${API_BASE_URL}/token/${token}`;
+	// El endpoint del backend para verificar el token (ej. /verify, /auth/status)
+	// debe estar preparado para recibir el token en el header.
+	const url = `${API_BASE_URL}/token/verify`; // Endpoint para verificar el token
 	/** @type {RequestInit} */
 	const options = {
 		method: "GET",
 		mode: "cors",
-		headers: { "Content-Type": "application/json" },
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
 	};
 
 	const response = await fetch(url, options);
