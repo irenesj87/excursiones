@@ -16,6 +16,11 @@ import LazyRouteWrapper from "../../utils/LazyRouteWrapper";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../../css/Layout.module.css";
 
+/**
+ * Lazy loading de los componentes RegisterPage, LoginPage y UserPage.
+ * Se utiliza `lazyWithMinTime` para optimizar la carga de estos componentes.
+ * Esta función permite que los componentes se carguen de manera perezosa, mejorando el rendimiento de la aplicación.
+ */
 const RegisterPage = lazyWithMinTime(() => import("../RegisterPage"));
 const LoginPage = lazyWithMinTime(() => import("../LoginPage"));
 const UserPage = lazyWithMinTime(() => import("../UserPage"));
@@ -27,8 +32,8 @@ const UserPage = lazyWithMinTime(() => import("../UserPage"));
 const Footer = memo(OriginalFooter);
 
 /**
- * Componente principal del layout de la aplicación.
- * Gestiona el estado de las excursiones, la autenticación del usuario y la estructura general de la página.
+ * Componente principal de la aplicación. Gestiona el estado de las excursiones, la autenticación del usuario y la
+ * estructura general de la página.
  * @returns {React.ReactElement} El layout
  */
 const Layout = () => {
@@ -40,11 +45,12 @@ const Layout = () => {
 	// Función para abrir el Offcanvas de filtros.
 	const handleShowFilters = () => setShowFilters(true);
 
-	// Hook para manejar la autenticación del usuario y verificar el token.
-	// `isAuthCheckComplete` se usa para controlar cuándo se renderizan las rutas perezosas que requieren autenticación.
+	// Se usa el hook useAuth para saber si ya se ha verificado si el usuario tiene una sesión activa.
 	const { isAuthCheckComplete } = useAuth();
-	// Hook para manejar el estado de las excursiones.
-	// Incluye funciones para iniciar, finalizar y manejar el éxito del fetching de excursiones.
+	// Se usa el hook useExcursions para obtener el estado completo de las excursiones, que contiene los datos, el estado de carga y
+	// los errores.
+	// Además, se obtienen las funciones para manejar ese estado. Lo hacen mediante la actualización de dicho estado de las
+	// excursiones en función de las acciones que se realicen en el componente Excursions.
 	const {
 		excursionsState,
 		handleExcursionsFetchStart,
@@ -52,7 +58,8 @@ const Layout = () => {
 		handleExcursionsFetchEnd,
 	} = useExcursions();
 
-	// El componente Excursions recibirá isLoading y error para manejar su propia UI.
+	// Variable que contiene el componente Excursions. Recibirá los datos, el estado de carga (isLoading) y el estado de error desde
+	// el hook useExcursions.
 	const excursionsContent = (
 		<Excursions
 			excursionData={excursionsState.data}
@@ -63,12 +70,18 @@ const Layout = () => {
 
 	return (
 		<div className={styles.layout}>
+			{/* Componente de navegación al que se le pasan las funciones de manejo de excursiones y el estado de verificación de 
+			    autenticación del usuario como props. Esto permite que la barra de navegación pueda interactuar con el estado de las
+				excursiones y la autenticación del usuario */}
+			{/* La barra de navegación se renderiza en la parte superior de la página y es responsable de la navegación entre las 
+			    diferentes secciones de la aplicación */}
 			<NavigationBar
 				onExcursionsFetchSuccess={handleExcursionsFetchSuccess}
 				onExcursionsFetchStart={handleExcursionsFetchStart}
 				onExcursionsFetchEnd={handleExcursionsFetchEnd}
 				isAuthCheckComplete={isAuthCheckComplete}
 			/>
+			{/* Contenedor principal que alberga el contenido de la página. Utiliza react-bootstrap para el diseño responsivo */}
 			<main className={styles.mainContentWrapper}>
 				<Container fluid className="d-flex flex-column flex-grow-1">
 					<Row className="justify-content-start flex-grow-1 align-items-stretch">
@@ -87,8 +100,8 @@ const Layout = () => {
 										>
 											<Filters />
 										</Col>
-										{/* Contenido principal que incluye el botón para breakpoints pequeños y la lista 
-										    de excursiones */}
+										{/* Contenido principal que incluye el botón para mostrar filtros en breakpoints pequeños y 
+										    la lista de excursiones en cualquier breakpoint*/}
 										<Col
 											xs={12}
 											md={8}
@@ -108,8 +121,8 @@ const Layout = () => {
 												</Button>
 											</div>
 											{excursionsContent}
-											{/* Menú Offcanvas para los filtros en breakpoints pequeños. Es independiente 
-											del de navegación. */}
+											{/* Menú Offcanvas para los filtros en breakpoints pequeños. Es independiente del de 
+											 navegación. */}
 											<Offcanvas
 												show={showFilters}
 												onHide={handleCloseFilters}
