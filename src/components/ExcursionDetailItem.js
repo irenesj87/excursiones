@@ -10,7 +10,12 @@ import styles from "../css/ExcursionCard.module.css";
  * @param {React.ReactNode} [props.children] - Nodos hijos para renderizar contenido personalizado en lugar del texto.
  * @returns {React.ReactElement}
  */
-function ExcursionDetailItemComponent({ IconComponent, text, label, children }) {
+function ExcursionDetailItemComponent({
+	IconComponent,
+	text,
+	label,
+	children,
+}) {
 	// Si no hay texto ni hijos para mostrar, no renderizamos nada.
 	if (!text && !children) {
 		return null;
@@ -20,12 +25,7 @@ function ExcursionDetailItemComponent({ IconComponent, text, label, children }) 
 	const title = label && text ? `${label}: ${text}` : text || label;
 
 	return (
-		<div
-			className={styles.detailItem}
-			title={title}
-			tabIndex={0}
-			role="button"
-		>
+		<div className={styles.detailItem} title={title}>
 			{/* El icono es decorativo y se oculta a los lectores de pantalla. */}
 			{IconComponent && (
 				<IconComponent className={styles.detailIcon} aria-hidden="true" />
