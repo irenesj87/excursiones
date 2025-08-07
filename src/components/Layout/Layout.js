@@ -1,54 +1,20 @@
-import React, {
-	useState,
-	useEffect,
-	useCallback,
-	lazy,
-	Suspense,
-	memo,
-	useRef,
-	useReducer,
-} from "react";
+import React, { useState, memo } from "react";
 import { FiFilter } from "react-icons/fi";
 import { Container, Row, Col, Button, Offcanvas } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { verifyToken } from "../../services/authService";
-import { login, logout } from "../../slicers/loginSlice";
 import NavigationBar from "../NavigationBar";
 import Filters from "../Filters";
 import Excursions from "../Excursions";
 import OriginalFooter from "../Footer"; // Se renombra la importación original para que no haya conflictos
 import RegisterPageSkeleton from "../RegisterPageSkeleton";
 import LoginPageSkeleton from "../LoginPageSkeleton";
-import UserPageSkeleton from "components/UserPageSkeleton";
+import UserPageSkeleton from "../UserPageSkeleton";
+import { useAuth } from "../../hooks/useAuth";
+import { useExcursions } from "../../hooks/useExcursions";
+import { lazyWithMinTime } from "../../utils/lazyWithMinTime";
+import LazyRouteWrapper from "../../utils/LazyRouteWrapper";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../../css/Layout.module.css";
-
-/**
- * Carga perezosa para componentes de ruta. Su propósito es asegurar que cuando un componente se carga de forma perezosa,
- * el indicador de carga (como por ejemplo, un "esqueleto" o skeleton) se muestre al usuario durante un tiempo mínimo, que
- * por defecto es de 500 milisegundos. Resuelve un problema común de experiencia de usuario llamado parpadeo (flickering).
- * @param {() => Promise<any>} factory - La función de importación dinámica.
- * @param {number} [minTime=500] - El tiempo mínimo de carga en milisegundos.
- * @returns {React.LazyExoticComponent<any>}
- */
-const lazyWithMinTime = (factory, minTime = 500) => {
-	return lazy(() =>
-		// Promise.all espera a que todas las promesas de su array se completen. Por lo tanto, no continuará hasta que
-		// el componente se haya cargado, y además, hayan pasado los 500 milisegundos.
-		Promise.all([
-			// Esta es la función que importa el componente (ej. () => import("../RegisterPage"))
-			factory(),
-			// Al mismo tiempo, crea una segunda promesa que simplemente espera el tiempo definido en minTime usando setTimeout.
-			new Promise((resolve) => setTimeout(resolve, minTime)),
-			/**
-			 * Una vez que ambas condiciones se cumplen, Promise.all retorna un array con los resultados de ambas
-			 * promesas. Esta línea se encarga de extraer y retornar únicamente el resultado de la primera promesa
-			 * (el módulo del componente), que es lo que lazy de React necesita para funcionar.
-			 */
-		]).then(([moduleExports]) => moduleExports)
-	);
-};
 
 const RegisterPage = lazyWithMinTime(() => import("../RegisterPage"));
 const LoginPage = lazyWithMinTime(() => import("../LoginPage"));
@@ -61,214 +27,30 @@ const UserPage = lazyWithMinTime(() => import("../UserPage"));
 const Footer = memo(OriginalFooter);
 
 /**
- * Componente wrapper para simplificar la renderización de rutas con carga perezosa.
- * @param {{
- *   PageComponent: React.ComponentType<any>;
- *   SkeletonComponent: React.ComponentType<any>;
- *   [key: string]: any;
- * }} props - Las propiedades del componente, que incluyen el componente de página, un esqueleto y cualquier otra prop a pasar.
- * @returns {React.ReactElement} Componente para simplificar la carga perezosa.
- */
-const LazyRouteWrapper = ({ PageComponent, SkeletonComponent, ...rest }) => {
-	// El skeleton se muestra inmediatamente
-	const fallback = <SkeletonComponent />;
-
-	return (
-		<Col xs={12}>
-			{/**
-			 * Suspense muestra el `fallback` (el skeleton) mientras espera que el componente perezoso se cargue.
-			 */}
-			<Suspense fallback={fallback}>
-				<PageComponent {...rest} />
-			</Suspense>
-		</Col>
-	);
-};
-
-/**
  * Componente principal del layout de la aplicación.
  * Gestiona el estado de las excursiones, la autenticación del usuario y la estructura general de la página.
- * @returns {React.ReactElement} El Layout
+ * @returns {React.ReactElement} El layout
  */
 const Layout = () => {
-	const loginDispatch = useDispatch();
 	// Estado para controlar la visibilidad del menú Offcanvas de filtros en breakpoints pequeños.
 	const [showFilters, setShowFilters] = useState(false);
-	// Ref para registrar el momento en que comienza una búsqueda de excursiones. useRef se utiliza para almacenar un valor que
-	// cambia pero que no causa re-renderizados cuando lo hace.
-	const fetchStartTimeRef = useRef(null);
 
 	// Función para cerrar el Offcanvas de filtros.
 	const handleCloseFilters = () => setShowFilters(false);
 	// Función para abrir el Offcanvas de filtros.
 	const handleShowFilters = () => setShowFilters(true);
 
-	/**
-	 * useReducer: Es un hook de React, alternativa a useSate, que se usa cuando el estado es más complejo y tiene varias
-	 * cosas interrelacionadas entre sí, en este caso, los datos, el estado de carga y los errores.
-	 *
-	 * Estado para la gestión de datos de excursiones. Este es el objeto que define el estado inicial.
-	 */
-	const excursionsInitialState = {
-		data: [],
-		isLoading: true,
-		error: null,
-	};
-
-	/**
-	 * Función reductora. Recibe el estado actual (state) y un objeto (action) que describe qué ha sucedido y retorna un
-	 * nuevo estado.
-	 */
-	const excursionsReducer = (
-		/** @type {any} */ state,
-		/** @type {{ type: any; payload: any; }} */ action
-	) => {
-		switch (action.type) {
-			case "FETCH_START":
-				return { ...state, isLoading: true, error: null };
-			case "FETCH_SUCCESS":
-				return { ...state, isLoading: false, data: action.payload };
-			case "FETCH_ERROR":
-				return { ...state, isLoading: false, error: action.payload, data: [] }; // Limpiar datos en caso de error
-			default:
-				throw new Error(`Acción no soportada: ${action.type}`);
-		}
-	};
-
-	// Aquí se utiliza el hook useReducer
-	/**
-	 * excursionsReducer: Función que gestiona la lógica
-	 * excursionsState: Es el objeto que contiene el estado actual. En cualquier momento, se puede leer
-	 * excursionsState.data, excursionsState.isLoading o excursionsState.error para saber qué está pasando.
-	 * excursionsDispatch: Es una función que usas para "despachar" o enviar acciones al reducer. Por ejemplo, para iniciar
-	 * la carga de datos, llama a excursionsDispatch({ type: "FETCH_START" }). Esto haría que el reducer ejecute el código
-	 * del case "FETCH_START"
-	 */
-	const [excursionsState, excursionsDispatch] = useReducer(
-		excursionsReducer,
-		excursionsInitialState
-	);
-
-	/**
-	 * Despacha una acción al reducer de excursiones, asegurando que el estado de carga se muestre por un tiempo mínimo.
-	 * Esto evita el "parpadeo" de la interfaz de usuario cuando las cargas son muy rápidas.
-	 * @param {object} action - La acción a despachar (ej. { type: "FETCH_SUCCESS", payload: data }).
-	 */
-	const dispatchWithMinDisplayTime = useCallback(
-		(action) => {
-			const elapsedTime =
-				Date.now() - (fetchStartTimeRef.current || Date.now());
-			const minDisplayTime = 500; // 500ms
-			const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
-
-			setTimeout(() => excursionsDispatch(action), remainingTime);
-		},
-		[excursionsDispatch]
-	);
-
-	/**
-	 * Callback para manejar una carga exitosa de excursiones, actualizando el estado.
-	 */
-	const handleExcursionsFetchSuccess = useCallback(
-		(/** @type {any[]} */ excursions) => {
-			dispatchWithMinDisplayTime({
-				type: "FETCH_SUCCESS",
-				payload: excursions,
-			});
-		},
-		[dispatchWithMinDisplayTime]
-	);
-
-	/**
-	 * Estado para saber si la comprobación inicial de autenticación del usuario ha terminado. Esto evita que cuando el
-	 * usuario esté logueado vea un parpadeo de los botones.
-	 */
-	const [isAuthCheckComplete, setIsAuthCheckComplete] = useState(false);
-
-	/**
-	 * useEffect que controla el token en sessionStorage. Se guarda el token actual en sessionStorage y se loguea al
-	 * usuario de nuevo en caso de que se refresque la página. Con esto el usuario no perderá su sesión, es decir, se
-	 * queda logueado.
-	 */
-	useEffect(() => {
-		const verifyAuthStatus = async () => {
-			const startTime = Date.now();
-			// Obtiene el token de sesión del almacenamiento del navegador.
-			const sessionToken = sessionStorage.getItem("token");
-			try {
-				// Usamos el servicio de autenticación. Este ya maneja el caso de que no haya token.
-				const data = await verifyToken(sessionToken);
-				// Si el servicio retorna datos, el token es válido.
-				if (data) {
-					// Actualiza el estado de la Redux store poniendo al usuario como logueado.
-					loginDispatch(
-						login({
-							user: data.user,
-							token: data.token,
-						})
-					);
-				}
-				// Si 'data' es null (porque no había token), no se hace nada y el usuario permanece en el estado inicial
-				// (deslogueado).
-			} catch (error) {
-				console.error(
-					"Error en la verificación del estado de autenticación:",
-					error.message
-				);
-				// Si hubo un error (ej. token inválido), deslogueamos al usuario.
-				loginDispatch(logout());
-				sessionStorage.removeItem("token");
-			} finally {
-				const elapsedTime = Date.now() - startTime;
-				const minDisplayTime = 500; // Tiempo mínimo de espera en milisegundos
-				const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
-				// Espera el tiempo restante para asegurar que el esqueleto se muestre al menos 500 ms
-				setTimeout(() => {
-					setIsAuthCheckComplete(true);
-				}, remainingTime);
-			}
-		};
-		verifyAuthStatus();
-	}, [loginDispatch]);
-
-	/**
-	 * useCallback: Memoriza una función. Esto significa que React guarda una versión de esa función y la reutiliza en los
-	 * siguientes renderizados del componente, en lugar de crear una función completamente nueva cada vez. Solo volverá a
-	 * crear la función si alguna de sus "dependencias" han cambiado.
-	 *
-	 * 1. Evita re-renderizados innecesarios en componentes hijos: Si pasas una función como prop a un componente hijo que
-	 * está optimizado con React.memo, ese componente hijo volverá a renderizarse cada vez que el padre lo haga, incluso si
-	 * nada ha cambiado visualmente. Esto ocurre porque, sin useCallback, la función que pasas es técnicamente un "nuevo"
-	 * objeto en cada renderizado. useCallback asegura que el componente hijo reciba exactamente la misma instancia de la
-	 * función, y React.memo puede entonces determinar correctamente que no necesita volver a renderizarse.
-	 *
-	 * 2. Estabiliza dependencias en otros Hooks (como useEffect): Si usas una función dentro de un useEffect y la incluyes
-	 * en su array de dependencias, el efecto se ejecutará en cada renderizado si la función no está envuelta en useCallback.
-	 * Esto puede causar bucles infinitos o ejecuciones innecesarias de código costoso (como peticiones a una API).
-	 *
-	 * En resumen, se utiliza cuando se pasan funciones como props a componentes hijos optimizados (React.memo) o cuando
-	 * una función sea una dependencia de otro Hook como useEffect, useMemo o incluso otro useCallback.
-	 *
-	 * Callback para indicar el inicio de una operación de fetch de excursiones. Establece isLoading a true y
-	 * resetea error.
-	 */
-	const handleExcursionsFetchStart = useCallback(() => {
-		fetchStartTimeRef.current = Date.now();
-		excursionsDispatch({ type: "FETCH_START" });
-	}, []);
-
-	/**
-	 * Callback para indicar el fin de una operación de fetch de excursiones. Establece isLoading a false y guarda
-	 * el error si lo hay.
-	 */
-	const handleExcursionsFetchEnd = useCallback(
-		(/** @type {any} */ error) => {
-			if (error) {
-				dispatchWithMinDisplayTime({ type: "FETCH_ERROR", payload: error });
-			}
-		},
-		[dispatchWithMinDisplayTime]
-	);
+	// Hook para manejar la autenticación del usuario y verificar el token.
+	// `isAuthCheckComplete` se usa para controlar cuándo se renderizan las rutas perezosas que requieren autenticación.
+	const { isAuthCheckComplete } = useAuth();
+	// Hook para manejar el estado de las excursiones.
+	// Incluye funciones para iniciar, finalizar y manejar el éxito del fetching de excursiones.
+	const {
+		excursionsState,
+		handleExcursionsFetchStart,
+		handleExcursionsFetchSuccess,
+		handleExcursionsFetchEnd,
+	} = useExcursions();
 
 	// El componente Excursions recibirá isLoading y error para manejar su propia UI.
 	const excursionsContent = (

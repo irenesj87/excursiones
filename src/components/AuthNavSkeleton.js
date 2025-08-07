@@ -7,7 +7,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 /**
  * Componente que muestra un esqueleto de carga para los botones de autenticación en la barra de navegación.
- * Se utiliza para reservar espacio y evitar saltos de layout (layout shift) mientras se verifica el estado de autenticación del usuario.
+ * Se utiliza para reservar espacio y evitar saltos de layout (layout shift) mientras se verifica el estado de autenticación del 
+ * usuario.
  * @returns {React.ReactElement}
  */
 function AuthNavSkeleton() {
