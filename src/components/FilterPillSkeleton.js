@@ -12,7 +12,13 @@ function FilterPillSkeleton() {
 	// 'baseline', lo que causa un desajuste entre un esqueleto (sin texto) y una píldora real (con texto).
 	// 'middle' alinea el centro vertical del esqueleto con el centro del texto de los elementos adyacentes,
 	// logrando una alineación visualmente perfecta y manteniendo el espaciado correcto entre filas.
-	return <Skeleton height={38} borderRadius={20} style={{ verticalAlign: "middle" }} />;
+	return (
+		<Skeleton
+			height={38}
+			borderRadius={20}
+			style={{ verticalAlign: "middle" }}
+		/>
+	);
 }
 
 export default FilterPillSkeleton;
