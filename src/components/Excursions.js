@@ -21,7 +21,7 @@ import styles from "../css/Excursions.module.css";
  * @property {'light' | 'dark'} mode - El modo de tema actual.
  */
 const ExcursionsLoadingComponent = ({ isLoggedIn, mode }) => {
-	const baseColor = mode === "dark" ? "#2d3748" : "#e0e0e0";
+	const baseColor = mode === "dark" ? "#202020" : "#e0e0e0";
 	const highlightColor = mode === "dark" ? "#444" : "#f5f5f5";
 
 	return (
