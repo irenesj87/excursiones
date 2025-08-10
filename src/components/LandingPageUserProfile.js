@@ -1,7 +1,7 @@
 import React from "react";
 import { Nav, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../slicers/loginSlice";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/LandingPageUserProfile.module.css";
@@ -17,6 +17,7 @@ import styles from "../css/LandingPageUserProfile.module.css";
  */
 function LandingPageUserProfile({ onClickCloseCollapsible }) {
 	const logoutDispatch = useDispatch();
+	const navigate = useNavigate();
 	const { token } = useSelector(
 		/** @param {RootState} state */
 		(state) => state.loginReducer
@@ -58,6 +59,7 @@ function LandingPageUserProfile({ onClickCloseCollapsible }) {
 			// El usuario se desloguea...
 			logoutDispatch(logout());
 			// ...y su token se elimina
+			navigate("/");
 			delete sessionStorage["token"];
 		}
 	};
@@ -66,8 +68,8 @@ function LandingPageUserProfile({ onClickCloseCollapsible }) {
 		<>
 			<Nav.Link
 				className={`${styles.profileLink} me-3`}
-				as={Link}
-				to="/UserPage"
+				as={NavLink}
+				to="/userPage"
 				onClick={onClickCloseCollapsible}
 			>
 				Tu perfil

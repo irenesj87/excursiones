@@ -8,7 +8,7 @@ import {
 	Tooltip,
 	OverlayTrigger,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
@@ -123,14 +123,14 @@ function NavigationBarComponent({
 		<>
 			<Nav.Link
 				className={`${styles.navLink} ${styles.registerLink} me-3`}
-				as={Link}
+				as={NavLink}
 				to="/registerPage"
 				onClick={handleCloseOffcanvas}
 			>
 				Regístrate
 			</Nav.Link>
 			<Nav.Link
-				as={Link}
+				as={NavLink}
 				to="/loginPage"
 				onClick={handleCloseOffcanvas}
 				className={`btn btn-success ${styles.navButton} loginLink`}

@@ -1,6 +1,7 @@
 import React, { useState, memo } from "react";
 import { FiFilter } from "react-icons/fi";
-import { Container, Row, Col, Button, Offcanvas } from "react-bootstrap";
+import { Container, Row, Col, Button, Offcanvas, Badge } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import NavigationBar from "../NavigationBar";
 import Filters from "../Filters";
@@ -16,6 +17,8 @@ import { lazyWithMinTime } from "../../utils/lazyWithMinTime";
 import LazyRouteWrapper from "../../utils/LazyRouteWrapper";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../../css/Layout.module.css";
+
+/** @typedef {import('../../types').RootState} RootState */
 
 /**
  * Lazy loading de los componentes RegisterPage, LoginPage y UserPage.
@@ -58,6 +61,19 @@ const Layout = () => {
 		handleExcursionsFetchSuccess,
 		handleExcursionsFetchEnd,
 	} = useExcursions();
+
+	const { area, difficulty, time } = useSelector(
+		/** @param {RootState} state */
+		(state) => state.filterReducer
+	);
+
+	// Calcula el número total de filtros activos.
+	const activeFilterCount =
+		area.length + difficulty.length + time.length;
+
+	// Texto para el contador de filtros.
+	const filterCountText = activeFilterCount === 1 ? "seleccionado" : "seleccionados";
+
 
 	// Variable que contiene el componente Excursions. Recibirá los datos, el estado de carga (isLoading) y el estado de error desde
 	// el hook useExcursions.
@@ -118,7 +134,14 @@ const Layout = () => {
 													className="filtersToggleButton"
 												>
 													<FiFilter className="me-2" />
-													<span>Mostrar Filtros</span>
+													<span>
+														Mostrar Filtros
+														{activeFilterCount > 0 && (
+															<Badge pill bg={null} className={`${styles.filterBadge} ms-2`}>
+																{activeFilterCount} {filterCountText}
+															</Badge>
+														)}
+													</span>
 												</Button>
 											</div>
 											{excursionsContent}

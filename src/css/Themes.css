@@ -341,9 +341,12 @@ html.dark body {
 	color: var(--filters-toggle-btn-color);
 	border: 1px solid var(--filters-toggle-btn-border);
 	background-color: transparent;
+	transition: none;
 }
 
-.filtersToggleButton:hover {
+/* Se añade :active para que el botón y su contenido reaccionen al click */
+.filtersToggleButton:hover,
+.filtersToggleButton:active {
 	color: var(--filters-toggle-btn-color-hover);
 	background-color: var(--filters-toggle-btn-bg-hover);
 	border-color: var(--filters-toggle-btn-border-hover);
@@ -392,6 +395,21 @@ html.dark
 	.nav-link:not([class*="loginLink"]):not([class*="logoutLink"]) {
 	color: #e8f5e9;
 }
+
+/* Estilos para el botón de Iniciar Sesión dentro del Offcanvas */
+/* Se necesita una regla más específica para sobrescribir el color de texto por defecto de los .nav-link en el offcanvas */
+.offcanvas-body .nav-link.loginLink {
+	color: var(--login-btn-text);
+	background-color: var(--login-btn-bg);
+	border-color: var(--login-btn-border);
+}
+
+.offcanvas-body .nav-link.loginLink:hover {
+	color: var(--login-btn-text);
+	background-color: var(--login-btn-bg-hover);
+	border-color: var(--login-btn-border-hover);
+}
+
 /* Estilo para los paneles de contenido principales, como los de las páginas de formulario */
 .contentPane {
 	/* Usa variables de tema para adaptarse al modo claro/oscuro */

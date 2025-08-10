@@ -198,8 +198,8 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 						xs={12}
 						md={6}
 						lg={4}
-						xl={3}
 						key={excursion.id}
+						xl={3}
 						className="d-flex" // d-flex para que las cards se estiren y ocupen toda la altura
 					>
 						<ExcursionCard

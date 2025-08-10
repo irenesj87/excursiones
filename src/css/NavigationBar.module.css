@@ -50,6 +50,13 @@
 	box-shadow: none;
 }
 
+/* Estilo para el NavLink activo */
+.navLink.active {
+	background-color: var(--filter-pill-bg-hover);
+	border-color: var(--filter-pill-border-hover);
+	color: var(--text-color);
+}
+
 .navButton {
 	/* Forzamos los colores para que anulen los estilos por defecto de Nav.Link */
 	color: var(--login-btn-text, white);
