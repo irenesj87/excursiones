@@ -1,50 +1,51 @@
-import { useState, useEffect } from "react";
+import { useEffect, useReducer } from "react";
 import { useDispatch } from "react-redux";
 import { verifyToken } from "../services/authService";
 import { login, logout } from "../slicers/loginSlice";
+import { useMinDisplayTime } from "./useMinDisplayTime";
+
+const authInitialState = {
+	isAuthCheckComplete: false,
+};
+
+const authReducer = (state, action) => {
+	if (action.type === "AUTH_CHECK_COMPLETE") {
+		return { ...state, isAuthCheckComplete: true };
+	}
+	return state;
+};
 
 /**
  * Hook para manejar la autenticación del usuario. Verifica el token de sessionStorage en la carga inicial y actualiza la
  * Redux store.
- * @returns {{isAuthCheckComplete: boolean}} Un objeto que contiene el estado de la autenticación.
+ * @returns {{isAuthCheckComplete: boolean}} Un objeto que indica si la comprobación de autenticación ha finalizado.
  */
 export const useAuth = () => {
-	const dispatch = useDispatch();
-	const [isAuthCheckComplete, setIsAuthCheckComplete] = useState(false);
+	const reduxDispatch = useDispatch();
+	const [state, authDispatch] = useReducer(authReducer, authInitialState);
+	const { startTiming, dispatchWithMinDisplayTime } =
+		useMinDisplayTime(authDispatch);
 
 	useEffect(() => {
 		const verifyAuthStatus = async () => {
-			/**
-			 * Registra el tiempo de inicio para calcular el tiempo transcurrido y asegurar que el esqueleto se muestre
-			 * durante un tiempo mínimo.
-			 */
-			const startTime = Date.now();
+			startTiming();
 			const sessionToken = sessionStorage.getItem("token");
 			try {
 				const data = await verifyToken(sessionToken);
-				if (data) {
-					dispatch(login({ user: data.user, token: data.token }));
-				}
+				reduxDispatch(login({ user: data.user, token: data.token }));
 			} catch (error) {
 				console.error(
 					"Error en la verificación del estado de autenticación:",
 					error.message
 				);
-				dispatch(logout());
+				reduxDispatch(logout());
 				sessionStorage.removeItem("token");
 			} finally {
-				/**
-				 * Calcula el tiempo restante para cumplir con el `minDisplayTime` y retrasa la actualización del estado
-				 * para evitar un parpadeo rápido del esqueleto.
-				 */
-				const elapsedTime = Date.now() - startTime;
-				const minDisplayTime = 500;
-				const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
-				setTimeout(() => setIsAuthCheckComplete(true), remainingTime);
+				dispatchWithMinDisplayTime({ type: "AUTH_CHECK_COMPLETE" });
 			}
 		};
 		verifyAuthStatus();
-	}, [dispatch]);
+	}, [reduxDispatch, startTiming, dispatchWithMinDisplayTime]);
 
-	return { isAuthCheckComplete };
+	return { isAuthCheckComplete: state.isAuthCheckComplete };
 };

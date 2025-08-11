@@ -1,4 +1,5 @@
-import { useReducer, useCallback, useRef } from "react";
+import { useReducer, useCallback } from "react";
+import { useMinDisplayTime } from "./useMinDisplayTime";
 
 const excursionsInitialState = {
 	data: [],
@@ -38,28 +39,18 @@ export const useExcursions = () => {
 		excursionsReducer,
 		excursionsInitialState
 	);
-	const fetchStartTimeRef = useRef(null);
-
-	/**
-	 * Despacha una acción después de un tiempo mínimo de visualización.
-	 * Esto asegura que los esqueletos de carga se muestren durante un tiempo perceptible, evitando parpadeos rápidos.
-	 */
-	const dispatchWithMinDisplayTime = useCallback((action) => {
-		const elapsedTime = Date.now() - (fetchStartTimeRef.current || Date.now());
-		const minDisplayTime = 500; // 500ms
-		const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
-
-		setTimeout(() => excursionsDispatch(action), remainingTime);
-	}, []); // excursionsDispatch is stable
+	const { startTiming, dispatchWithMinDisplayTime } = useMinDisplayTime(
+		excursionsDispatch,
+		500
+	);
 
 	/**
 	 * Inicia el proceso de carga de excursiones.
-	 * Registra el tiempo de inicio para calcular el tiempo mínimo de visualización.
 	 */
 	const handleExcursionsFetchStart = useCallback(() => {
-		fetchStartTimeRef.current = Date.now();
+		startTiming();
 		excursionsDispatch({ type: "FETCH_START" });
-	}, []);
+	}, [startTiming]);
 
 	/**
 	 * Maneja el éxito de la carga de excursiones.
@@ -78,7 +69,7 @@ export const useExcursions = () => {
 
 	/**
 	 * Maneja el final de la carga de excursiones, incluyendo errores.
-	 * Despacha la acción de error si existe, después de un tiempo mínimo de visualización.
+	 * Despacha la acción de error si existe.
 	 */
 	const handleExcursionsFetchEnd = useCallback(
 		(error) => {

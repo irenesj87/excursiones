@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FiltersList from "./FiltersList";
@@ -15,6 +15,7 @@ import styles from "../css/Filters.module.css";
  * @param {boolean} [props.showTitle=true] - Controla si se muestra el título.
  * @returns {React.ReactElement} El componente para los filtros
  */
+// Definimos las secciones de filtros con sus nombres, títulos e iconos.
 const filterSections = [
 	{
 		name: "area",
@@ -51,11 +52,11 @@ function FiltersComponent({ showTitle = true }) {
 	 * Maneja el evento de click para limpiar todos los filtros. Despacha la acción `clearAllFilters` al store de Redux.
 	 * @returns {void}
 	 */
-	const handleClearFilters = () => {	
+	const handleClearFilters = useCallback(() => {
 		if (hasActiveFilters) {
 			dispatch(clearAllFilters());
 		}
-	};
+	}, [dispatch, hasActiveFilters]);
 
 	return (
 		// El contenedor principal usa flexbox para posicionar el footer abajo.
@@ -74,7 +75,6 @@ function FiltersComponent({ showTitle = true }) {
 					</section>
 				))}
 			</div>
-
 			{/* El footer se mantiene en la parte inferior */}
 			<footer className={styles.filtersFooter}>
 				<Button
@@ -93,5 +93,4 @@ function FiltersComponent({ showTitle = true }) {
 }
 
 const Filters = memo(FiltersComponent);
-
 export default Filters;

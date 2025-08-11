@@ -93,7 +93,7 @@ const Layout = () => {
 			{/* La barra de navegación se renderiza en la parte superior de la página y es responsable de la navegación entre las 
 			    diferentes secciones de la aplicación */}
 			<NavigationBar
-				onExcursionsFetchSuccess={handleExcursionsFetchSuccess}
+				onFetchSuccess={handleExcursionsFetchSuccess}
 				onExcursionsFetchStart={handleExcursionsFetchStart}
 				onExcursionsFetchEnd={handleExcursionsFetchEnd}
 				isAuthCheckComplete={isAuthCheckComplete}

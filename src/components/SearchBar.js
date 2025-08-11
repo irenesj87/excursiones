@@ -10,12 +10,12 @@ import styles from "../css/SearchBar.module.css";
 /**
  * Componente que maneja la barra de búsqueda y la aplicación de filtros para las excursiones.
  * @param {object} props - Las propiedades del componente.
- * @param {(excursions: any[]) => void} props.setExcursions - Función para actualizar el estado de la lista de excursiones en el componente padre.
+ * @param {(excursions: any[]) => void} props.onFetchSuccess - Función para actualizar el estado de la lista de excursiones en el componente padre.
  * @param {() => void} props.onFetchStart - Callback que se ejecuta al iniciar la búsqueda de excursiones.
  * @param {(error: Error | null) => void} props.onFetchEnd - Callback que se ejecuta al finalizar la búsqueda de excursiones.
  * @param {string} props.id - ID único para el input de búsqueda, útil para accesibilidad y múltiples instancias.
  */
-function SearchBar({ setExcursions, onFetchStart, onFetchEnd, id }) {
+function SearchBar({ onFetchSuccess, onFetchStart, onFetchEnd, id }) {
 	// Estado para el texto de búsqueda inmediato del input.
 	const [search, setSearch] = useState("");
 	// Estado para el texto de búsqueda "debounced" (retrasado) que se usará en la API.
@@ -88,14 +88,14 @@ function SearchBar({ setExcursions, onFetchStart, onFetchEnd, id }) {
 			// Convierte la respuesta a JSON.
 			const data = await response.json();
 			// Actualiza el estado de las excursiones en el componente padre.
-			setExcursions(data);
+			onFetchSuccess(data);
 			// Llama a onFetchEnd con null para indicar que la carga terminó sin errores.
 			onFetchEnd?.(null);
 		} catch (error) {
 			// Si ocurre un error durante la petición, lo muestra en la consola.
 			console.error("Fetch error in SearchBar: ", error);
 			// Opcionalmente, vacía la lista de excursiones en caso de error.
-			setExcursions([]);
+			onFetchSuccess([]);
 			// Llama a onFetchEnd con el objeto de error para que el componente padre pueda manejarlo.
 			onFetchEnd?.(error);
 		}
@@ -104,7 +104,7 @@ function SearchBar({ setExcursions, onFetchStart, onFetchEnd, id }) {
 		area,
 		difficulty,
 		time,
-		setExcursions,
+		onFetchSuccess,
 		onFetchStart,
 		onFetchEnd,
 	]);
