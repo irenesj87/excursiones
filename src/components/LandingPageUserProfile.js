@@ -42,7 +42,7 @@ function LandingPageUserProfile({ onClickCloseCollapsible }) {
 			// Capturamos errores de red o del servidor, pero aún así deslogueamos en el cliente.
 			// Esto asegura que el usuario no quede en un estado inconsistente.
 			console.error(
-				"Server logout failed, proceeding with client-side logout:",
+				"Falló el logout en el servidor, se procede al logout en el lado del cliente:",
 				error
 			);
 		} finally {
