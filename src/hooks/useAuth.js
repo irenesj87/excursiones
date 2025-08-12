@@ -31,12 +31,17 @@ export const useAuth = () => {
 			startTiming();
 			const sessionToken = sessionStorage.getItem("token");
 			try {
-				const data = await verifyToken(sessionToken);
-				reduxDispatch(login({ user: data.user, token: data.token }));
+				const authData = await verifyToken(sessionToken);
+				// Si el token es válido, authData contendrá el usuario y el token.
+				if (authData) {
+					reduxDispatch(login({ user: authData.user, token: authData.token }));
+				}
+				// Si no hay token, authData será null y no se hace nada; el usuario no está logueado.
 			} catch (error) {
 				console.error(
 					"Error en la verificación del estado de autenticación:",
-					error.message
+					// Usamos error.message para un log más limpio, ya que el servicio ya formatea el error.
+					error.message 
 				);
 				reduxDispatch(logout());
 				sessionStorage.removeItem("token");

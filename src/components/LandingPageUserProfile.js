@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Nav, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
+import { logoutUser } from "../services/authService";
 import { logout } from "../slicers/loginSlice";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/LandingPageUserProfile.module.css";
@@ -16,53 +17,41 @@ import styles from "../css/LandingPageUserProfile.module.css";
  * @returns {React.ReactElement} Un elemento JSX que representa los enlaces de navegación del usuario.
  */
 function LandingPageUserProfile({ onClickCloseCollapsible }) {
-	const logoutDispatch = useDispatch();
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { token } = useSelector(
 		/** @param {RootState} state */
 		(state) => state.loginReducer
 	);
-	const url = "http://localhost:3001/login";
-	/** @type {RequestInit} */
-	const options = {
-		method: "DELETE",
-		mode: "cors",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${token}`,
-		},
-	};
 
-	/** La función para desloguearse es una petición DELETE. Normalmente una petición de DELETE a un endpoint de login
-	 * se utiliza para invalidar la sesión o el token en el lado del servidor. En muchos casos, puede que el servidor no
-	 * vuelva a mandar ningún dato importante en el cuerpo de una petición DELETE exitosa. Puede que mande un código de estado
-	 * (como 204 No Content) para indicar el éxito.
-	 *
+	/**
 	 * Maneja el proceso de cierre de sesión del usuario.
-	 * Realiza una petición DELETE al servidor para invalidar el token y luego actualiza el estado de Redux y sessionStorage.
+	 * Llama al servicio para invalidar el token en el servidor y luego limpia el estado local
+	 * (Redux y sessionStorage) independientemente del resultado del servidor para garantizar
+	 * que el usuario sea deslogueado en el cliente.
 	 */
-	const logOut = async () => {
-		if (onClickCloseCollapsible) {
-			onClickCloseCollapsible();
-		}
+	const handleLogout = useCallback(async () => {
+		onClickCloseCollapsible?.();
+
 		try {
-			const response = await fetch(url, options);
-			if (!response.ok) {
-				// A pesar del error, procedemos a desloguear al usuario en el cliente.
-				// Es importante registrar el error para depuración.
-				console.error("El logout en el servidor falló:", response.status);
+			// Solo intenta invalidar el token en el servidor si realmente existe.
+			if (token) {
+				await logoutUser(token);
 			}
 		} catch (error) {
-			// Capturamos errores de red y otros problemas, pero aún así deslogueamos en el cliente.
-			console.error("Error durante la petición de logout:", error);
+			// Capturamos errores de red o del servidor, pero aún así deslogueamos en el cliente.
+			// Esto asegura que el usuario no quede en un estado inconsistente.
+			console.error(
+				"Server logout failed, proceeding with client-side logout:",
+				error
+			);
 		} finally {
-			// El usuario se desloguea...
-			logoutDispatch(logout());
-			// ...y su token se elimina
+			// La limpieza del lado del cliente se ejecuta siempre.
+			dispatch(logout());
+			sessionStorage.removeItem("token");
 			navigate("/");
-			delete sessionStorage["token"];
 		}
-	};
+	}, [dispatch, navigate, onClickCloseCollapsible, token]);
 
 	return (
 		<>
@@ -76,7 +65,7 @@ function LandingPageUserProfile({ onClickCloseCollapsible }) {
 			</Nav.Link>
 			<Button
 				variant="secondary"
-				onClick={logOut}
+				onClick={handleLogout}
 				className={styles.logoutButton}
 			>
 				Cierra sesión

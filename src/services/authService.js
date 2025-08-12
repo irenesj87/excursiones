@@ -6,8 +6,8 @@ const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 /**
  * Verifica el estado de autenticación de un usuario validando un token de sesión.
  * @param {string | null} token - El token de sesión a validar.
- * @returns {Promise<{user: object, token: string} | null>} - Un objeto con los datos del usuario y el token si es válido, o null si no hay token.
- * @throws {Error} - Lanza un error si la validación del token falla.
+ * @returns {Promise<{user: object, token: string} | null>} Un objeto con los datos del usuario y el token si es válido, o null si no hay token.
+ * @throws {Error} Lanza un error si la validación del token falla.
  */
 export const verifyToken = async (token) => {
 	if (!token) {
@@ -38,4 +38,35 @@ export const verifyToken = async (token) => {
 	}
 
 	return response.json();
+};
+
+/**
+ * Envía una petición al servidor para invalidar la sesión/token del usuario.
+ * @param {string} token - El token de autenticación del usuario.
+ * @returns {Promise<void>} Una promesa que se resuelve cuando la petición se completa.
+ * @throws {Error} Lanza un error si la respuesta del servidor no es exitosa.
+ */
+export const logoutUser = async (token) => {
+	// Usar un endpoint /logout es más semántico para esta operación.
+	const url = `${API_BASE_URL}/logout`;
+	/** @type {RequestInit} */
+	const options = {
+		method: "DELETE",
+		mode: "cors",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	};
+
+	const response = await fetch(url, options);
+
+	if (!response.ok) {
+		// Intenta obtener un mensaje de error más detallado, pero prepárate para una respuesta sin cuerpo.
+		const errorData = await response.json().catch(() => null);
+		const errorMessage =
+			errorData?.message ||
+			`El cierre de sesión en el servidor falló con estado: ${response.status}`;
+		throw new Error(errorMessage);
+	}
 };
