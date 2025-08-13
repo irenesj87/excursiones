@@ -1,6 +1,32 @@
 const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
 /**
+ * Busca excursiones basadas en un texto y filtros.
+ * @param {string} debouncedSearch - El término de búsqueda de texto.
+ * @param {string[]} area - Filtros de área.
+ * @param {string[]} difficulty - Filtros de dificultad.
+ * @param {string[]} time - Filtros de tiempo.
+ * @returns {Promise<any[]>} Un array de excursiones.
+ */
+export const searchExcursions = async (
+	debouncedSearch,
+	area,
+	difficulty,
+	time
+) => {
+	const params = new URLSearchParams();
+	if (debouncedSearch) params.append("q", debouncedSearch);
+	area.forEach((value) => params.append("area", value));
+	difficulty.forEach((value) => params.append("difficulty", value));
+	time.forEach((value) => params.append("time", value));
+
+	const url = `${API_BASE_URL}/excursions?${params.toString()}`;
+	const response = await fetch(url);
+	if (!response.ok) throw new Error(`Error HTTP ${response.status}`);
+	return response.json();
+};
+
+/**
  * Permite a un usuario unirse a una excursión.
  * @param {string} userMail - El correo del usuario.
  * @param {string | number} excursionId - El ID de la excursión.

@@ -1,7 +1,7 @@
 import { Card } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
-import cardStyles from "../css/ExcursionCard.module.css"; // Se reutiliza el CSS de la tarjeta real
-import skeletonStyles from "../css/ExcursionCardSkeleton.module.css";
+import cardStyles from "../../css/ExcursionCard.module.css"; // Se reutiliza el CSS de la tarjeta real
+import skeletonStyles from "../../css/ExcursionCardSkeleton.module.css";
 import "react-loading-skeleton/dist/skeleton.css";
 
 /**

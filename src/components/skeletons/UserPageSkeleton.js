@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import { SkeletonTheme } from "react-loading-skeleton";
 import UserInfoSkeleton from "./UserInfoSkeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import styles from "../css/UserPage.module.css";
+import styles from "../../css/UserPage.module.css";
 
-/** @typedef {import("../types").RootState} RootState */
+/** @typedef {import("../../types").RootState} RootState */
 
 /**
  * Componente que muestra un esqueleto de carga para la página de perfil de usuario.

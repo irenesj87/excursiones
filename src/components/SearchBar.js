@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useSelector, shallowEqual } from "react-redux";
 import { FiSearch, FiX } from "react-icons/fi";
 import cn from "classnames";
+import { searchExcursions } from "../services/excursionService";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/SearchBar.module.css";
 
@@ -65,28 +66,12 @@ function SearchBar({ onFetchSuccess, onFetchStart, onFetchEnd, id }) {
 		// Llama a la función onFetchStart si se proporcionó, para indicar que la carga de excursiones ha comenzado.
 		onFetchStart?.();
 		try {
-			// Construye los parámetros de la URL de forma segura.
-			// URLSearchParams se encarga de codificar los valores correctamente.
-			const params = new URLSearchParams();
-
-			// Añade el término de búsqueda si existe.
-			if (debouncedSearch) {
-				params.append("q", debouncedSearch);
-			}
-			// Añade cada filtro seleccionado. Para los arrays, se añade una entrada por cada valor.
-			// Esto genera una URL como: &area=Picos%20de%20Europa&area=Pirineos
-			area.forEach((value) => params.append("area", value));
-			difficulty.forEach((value) => params.append("difficulty", value));
-			time.forEach((value) => params.append("time", value));
-
-			const url = `http://localhost:3001/excursions?${params.toString()}`;
-			const response = await fetch(url);
-			// Si la respuesta del servidor no es exitosa (ej. error 404 o 500), lanza un error.
-			if (!response.ok) {
-				throw new Error(`Error HTTP ${response.status} al buscar excursiones.`);
-			}
-			// Convierte la respuesta a JSON.
-			const data = await response.json();
+			const data = await searchExcursions(
+				debouncedSearch,
+				area,
+				difficulty,
+				time
+			);
 			// Actualiza el estado de las excursiones en el componente padre.
 			onFetchSuccess(data);
 			// Llama a onFetchEnd con null para indicar que la carga terminó sin errores.

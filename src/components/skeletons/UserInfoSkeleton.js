@@ -1,6 +1,6 @@
 import { Row, Col, Card, Form } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
-import userInfoStyles from "../css/UserInfoForm.module.css";
+import userInfoStyles from "../../css/UserInfoForm.module.css";
 
 /**
  * Renderiza un esqueleto para la tarjeta de información del usuario.

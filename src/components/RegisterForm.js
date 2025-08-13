@@ -12,7 +12,7 @@ import {
 	validatePassword,
 	validSamePassword,
 } from "../validation/validations.js";
-import { userLogin, registerUser } from "../helpers/helpers.js";
+import { loginUser, registerUser } from "../services/authService.js";
 import ErrorMessageAlert from "./ErrorMessageAlert.js";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/RegisterForm.module.css";
@@ -98,7 +98,7 @@ function RegisterForm() {
 			// Intenta registrar al nuevo usuario con los datos proporcionados.
 			await registerUser(name, surname, phone, mail, password);
 			// Si el registro es exitoso, intenta loguear al usuario automáticamente.
-			const loginData = await userLogin(values.mail, values.password);
+			const loginData = await loginUser(values.mail, values.password);
 
 			// Despacha la acción de login para actualizar el estado de Redux con la información del usuario y el token.
 			loginDispatch(

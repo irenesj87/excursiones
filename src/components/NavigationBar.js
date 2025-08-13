@@ -13,7 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
 import LandingPageUserProfile from "./LandingPageUserProfile";
-import AuthNavSkeleton from "./AuthNavSkeleton";
+import AuthNavSkeleton from "./skeletons/AuthNavSkeleton";
 import { toggleMode, setMode } from "../slicers/themeSlice";
 import { FaMoon, FaSun } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.css";

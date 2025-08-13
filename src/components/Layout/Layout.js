@@ -8,9 +8,9 @@ import Filters from "../Filters";
 import Excursions from "../Excursions";
 import OriginalFooter from "../Footer"; // Se renombra la importación original para que no haya conflictos
 import ProtectedRoute from "../ProtectedRoute";
-import RegisterPageSkeleton from "../RegisterPageSkeleton";
-import LoginPageSkeleton from "../LoginPageSkeleton";
-import UserPageSkeleton from "../UserPageSkeleton";
+import RegisterPageSkeleton from "../skeletons/RegisterPageSkeleton";
+import LoginPageSkeleton from "../skeletons/LoginPageSkeleton";
+import UserPageSkeleton from "../skeletons/UserPageSkeleton";
 import { useAuth } from "../../hooks/useAuth";
 import { useExcursions } from "../../hooks/useExcursions";
 import { lazyWithMinTime } from "../../utils/lazyWithMinTime";

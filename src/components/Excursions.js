@@ -5,7 +5,7 @@ import { SkeletonTheme } from "react-loading-skeleton";
 import { FiSearch, FiAlertCircle } from "react-icons/fi";
 import { updateUser } from "../slicers/loginSlice";
 import ExcursionCard from "./ExcursionCard";
-import ExcursionCardSkeleton from "./ExcursionCardSkeleton";
+import ExcursionCardSkeleton from "./skeletons/ExcursionCardSkeleton";
 import { joinExcursion as joinExcursionService } from "../services/excursionService";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/Excursions.module.css";

@@ -1,5 +1,6 @@
 import { useEffect, useReducer } from "react";
 import { useMinDisplayTime } from "./useMinDisplayTime";
+import { fetchFilters } from "../services/filterService";
 
 /**
  * @typedef {object} FiltersState
@@ -51,23 +52,11 @@ export function useFilters(filterName) {
 			dispatch({ type: "FETCH_INIT" });
 
 			try {
-				const url = `http://localhost:3001/filters?type=${filterName}`;
-				/** @type {RequestInit} */
-				const options = {
-					method: "GET",
-					mode: "cors",
-					headers: { "Content-Type": "application/json" },
-				};
-
-				const response = await fetch(url, options);
-				if (!response.ok) {
-					throw new Error(`Error HTTP ${response.status}`);
-				}
-				const data = await response.json();
+				const data = await fetchFilters(filterName);
 				dispatchWithMinDisplayTime({ type: "FETCH_SUCCESS", payload: data });
-			} catch (err) {
-				console.error(`Error al cargar los filtros para "${filterName}":`, err);
-				dispatchWithMinDisplayTime({ type: "FETCH_FAILURE", payload: err });
+			} catch (error) {
+				console.error(`Error al cargar los filtros para "${filterName}":`, error);
+				dispatchWithMinDisplayTime({ type: "FETCH_FAILURE", payload: error });
 			}
 		};
 

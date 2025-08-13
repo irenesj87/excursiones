@@ -2,6 +2,7 @@ import { useReducer, useEffect, useRef } from "react";
 import { Card, Col, Form, Row, Button, Spinner, Alert } from "react-bootstrap";
 import UserPageInputEdit from "./UserPageInputEdit";
 import { useSelector, useDispatch } from "react-redux";
+import { updateUserInfo } from "../services/userService";
 import { updateUser } from "../slicers/loginSlice";
 import {
 	validateName,
@@ -103,9 +104,6 @@ function UserInfoForm() {
 	const nameInputRef = useRef(null);
 	const alertRef = useRef(null);
 
-	// URL para la petición de actualización de los datos del usuario.
-	const url = `http://localhost:3001/users/${user?.mail}`;
-
 	// Comprueba si el formulario es válido.
 	const isFormValid =
 		validateName(values.name) &&
@@ -161,30 +159,16 @@ function UserInfoForm() {
 	 */
 	const saveEdit = async () => {
 		formDispatch({ type: "SAVE_START" });
-		/** @type {RequestInit} */
-		const options = {
-			method: "PUT",
-			mode: "cors",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: "Bearer " + window.sessionStorage["token"],
-			},
-			body: JSON.stringify({ ...values, mail: user?.mail }),
-		};
-
 		try {
-			const response = await fetch(url, options);
-			if (!response.ok) {
-				const errorData = await response.json().catch(() => ({}));
-				const errorMessage =
-					errorData.message || "No se pudieron guardar los cambios.";
-				throw new Error(errorMessage);
-			}
-			const data = await response.json();
+			const updatedUserData = await updateUserInfo(
+				user?.mail,
+				values,
+				window.sessionStorage["token"]
+			);
 			// Actualiza el estado de Redux con los nuevos datos del usuario.
 			loginDispatch(
 				updateUser({
-					user: data,
+					user: updatedUserData,
 				})
 			);
 			formDispatch({ type: "SAVE_SUCCESS" });

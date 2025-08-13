@@ -2,10 +2,10 @@ import { Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import FormPageLayout from "./FormPageLayout";
-import registerFormStyles from "../css/RegisterForm.module.css";
+import FormPageLayout from "../FormPageLayout";
+import registerFormStyles from "../../css/RegisterForm.module.css";
 
-/** @typedef {import("../types").RootState} RootState */
+/** @typedef {import("../../types").RootState} RootState */
 
 /**
  * Esqueleto de carga cuya función es mostrar una versión simplificada y animada del formulario de registro mientras el

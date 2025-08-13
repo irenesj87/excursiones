@@ -5,8 +5,8 @@ import { validateMail, validateName } from "../validation/validations.js";
 import ValidatedFormGroup from "./ValidatedFormGroup";
 import ErrorMessageAlert from "./ErrorMessageAlert.js";
 import { login } from "../slicers/loginSlice";
-import { useDispatch } from "react-redux";
-import { userLogin } from "../helpers/helpers.js";
+import { useDispatch } from "react-redux"; 
+import { loginUser } from "../services/authService.js";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/LoginForm.module.css";
 
@@ -67,7 +67,7 @@ export function LoginForm() {
 		formDispatch({ type: "LOGIN_START" });
 
 		try {
-			const data = await userLogin(mail, password);
+			const data = await loginUser(mail, password);
 			loginDispatch(
 				login({
 					user: data.user,
