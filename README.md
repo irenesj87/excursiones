@@ -1,4 +1,4 @@
-# Proyecto de "Excursiones Juntos" ⛺️
+# Proyecto de "Excursiones Juntos" 🏕️
 
 Aplicación web desarrollada con React para la visualización y gestión de excursiones. Permite a los usuarios registrarse, iniciar sesión, ver un listado de excursiones y apuntarse a ellas.
 
