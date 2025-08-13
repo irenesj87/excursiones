@@ -34,6 +34,11 @@ const filterSections = [
 	},
 ];
 
+/** * Componente principal de los filtros, que utiliza Redux para manejar el estado.
+ * @param {object} props - Propiedades del componente.
+ * @param {boolean} [props.showTitle=true] - Controla si se muestra el título o no.
+ * @returns {React.ReactElement} El componente de filtros.
+ */
 function FiltersComponent({ showTitle = true }) {
 	const dispatch = useDispatch();
 	const { area, difficulty, time } = useSelector(

@@ -7,8 +7,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/ExcursionCard.module.css";
 
 /**
- * Renderiza el botón para unirse a una excursión.
- * Muestra un botón "Apuntarse", un estado de carga o un estado "Apuntado/a".
+ * Renderiza el botón para unirse a una excursión. Muestra un botón "Apuntarse", un estado de carga o un estado "Apuntado/a".
  * @param {object} props
  * @param {boolean} props.isJoined - Indica si el usuario se ha apuntado a la excursión.
  * @param {boolean} props.isJoining - Muestra si la acción de unirse está en progreso.

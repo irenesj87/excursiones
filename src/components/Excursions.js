@@ -164,7 +164,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 		async (excursionId) => {
 			try {
 				// Llamamos al servicio para unirse a la excursión. Este es el que hace la petición al servidor para apuntar al
-				// usuario a la excursión. El 'await' le die a JavaSCript que pause la ejecución de la función 'joinExcursion' hasta
+				// usuario a la excursión. El 'await' le die a JavaScript que pause la ejecución de la función 'joinExcursion' hasta
 				// que 'joinExcursionService' termine y retorne una respuesta o un error.
 				// Si la petición es exitosa, 'updateUser' contendrá la info actualizada del usuario (con la nueva excursión en su
 				// lista), y se actualizará el estado del usuario en Redux, lo que hará que los componentes que dependen de este

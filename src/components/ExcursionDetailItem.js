@@ -36,6 +36,6 @@ function ExcursionDetailItemComponent({
 		</div>
 	);
 }
-// Se utiliza memo para evitar renderizados innecesarios si las props no han cambiado.
+
 const ExcursionDetailItem = memo(ExcursionDetailItemComponent);
 export default ExcursionDetailItem;
