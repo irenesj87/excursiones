@@ -173,8 +173,12 @@ function UserInfoForm() {
 			);
 			formDispatch({ type: "SAVE_SUCCESS" });
 		} catch (error) {
-			console.error(error);
-			formDispatch({ type: "SAVE_FAILURE", payload: error.message });
+			console.error("Error técnico al actualizar el perfil:", error);
+			formDispatch({
+				type: "SAVE_FAILURE",
+				payload:
+					"No se pudo actualizar tu información. Por favor, comprueba tu conexión o inténtalo de nuevo más tarde.",
+			});
 		}
 	};
 

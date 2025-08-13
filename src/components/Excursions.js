@@ -178,9 +178,12 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 				loginDispatch(updateUser({ user: updatedUser }));
 				// Si hay un error, se captura y se maneja en el componente ExcursionCard, que es el que llama esta función.
 			} catch (error) {
-				console.error("Error al unirse a la excursión:", error);
-				// Relanzamos el error para que el componente que llama (ExcursionCard) pueda manejarlo.
-				throw error;
+				console.error("Error técnico al unirse a la excursión:", error);
+				// Relanzamos un nuevo error con un mensaje más amigable para el usuario.
+				// Este error será capturado y mostrado por el componente ExcursionCard.
+				throw new Error(
+					"No ha sido posible apuntarse a la excursión. Por favor, inténtalo de nuevo más tarde."
+				);
 			}
 		},
 		// `token` se añade como dependencia para asegurar que la función tiene la versión más reciente.
