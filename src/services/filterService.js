@@ -16,9 +16,11 @@ export const fetchFilters = async (filterName) => {
 
 	const response = await fetch(url, options);
 	if (!response.ok) {
-		throw new Error(
-			`Error HTTP ${response.status} al cargar filtros de ${filterName}`
-		);
+		const errorData = await response.json().catch(() => ({}));
+		const errorMessage =
+			errorData.message ||
+			`Error al cargar filtros de ${filterName}: ${response.status}`;
+		throw new Error(errorMessage);
 	}
 	return response.json();
 };

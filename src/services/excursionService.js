@@ -22,7 +22,12 @@ export const searchExcursions = async (
 
 	const url = `${API_BASE_URL}/excursions?${params.toString()}`;
 	const response = await fetch(url);
-	if (!response.ok) throw new Error(`Error HTTP ${response.status}`);
+	if (!response.ok) {
+		const errorData = await response.json().catch(() => ({}));
+		const errorMessage =
+			errorData.message || `Error al buscar excursiones: ${response.status}`;
+		throw new Error(errorMessage);
+	}
 	return response.json();
 };
 

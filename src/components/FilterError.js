@@ -5,10 +5,12 @@ import styles from "../css/FilterError.module.css";
 /**
  * Componente para mostrar un mensaje de error cuando falla la carga de los filtros.
  * @param {object} props
- * @param {string} [props.message="No se pudieron cargar los filtros."] - El mensaje de error a mostrar.
+ * @param {Error | null} [props.error] - El objeto de error.
  * @returns {React.ReactElement}
  */
-function FilterError({ message = "No se pudieron cargar los filtros." }) {
+function FilterError({ error }) {
+	const message =
+		error?.message || "No se pudieron cargar los filtros. Inténtalo de nuevo.";
 	return (
 		<div className={styles.errorContainer} role="alert">
 			<FiAlertTriangle className={styles.errorIcon} aria-hidden="true" />

@@ -78,19 +78,24 @@ function SearchBar({ onFetchSuccess, onFetchStart, onFetchEnd, id }) {
 			onFetchEnd?.(null);
 		} catch (error) {
 			// Si ocurre un error durante la petición, lo muestra en la consola.
+			// Logueamos el error original para depuración.
 			console.error("Error técnico al buscar excursiones:", error);
 			// Opcionalmente, vacía la lista de excursiones en caso de error.
 			onFetchSuccess([]);
-			// Creamos un nuevo error con un mensaje más amigable para el usuario.
-			/**
-			 * @type {Error & {secondaryMessage?: string}}
-			 */
-			const userFriendlyError = new Error("No se han podido cargar las excursiones.");
-			// Añadimos un mensaje secundario para dar más contexto al usuario.
-			// Esta propiedad personalizada será leída por el componente de error.
-			userFriendlyError.secondaryMessage =
-				"Por favor, comprueba tu conexión o inténtalo de nuevo más tarde.";
-			// Pasamos el error amigable a la UI para que se muestre.
+
+			// Si es un error de conexión, podemos añadir un log más específico para el desarrollador.
+			if (error instanceof TypeError && error.message === "Failed to fetch") {
+				console.error("Pista para el desarrollador: El servidor de la API no parece estar respondiendo. ¿Está en marcha? Revisa también la configuración de CORS.");
+			}
+
+			// Creamos un error genérico y amigable para mostrar siempre en la UI.
+			/** @type {Error & {secondaryMessage?: string}} */
+			const userFriendlyError = new Error(
+				"No se han podido cargar las excursiones."
+			);
+			userFriendlyError.secondaryMessage = "Por favor, comprueba tu conexión o inténtalo de nuevo más tarde.";
+
+			// Pasamos el error amigable a la UI para que se muestre
 			onFetchEnd?.(userFriendlyError);
 		}
 	}, [

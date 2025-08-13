@@ -1,5 +1,4 @@
 import React, { useState, memo } from "react";
-import { FiFilter } from "react-icons/fi";
 import { Container, Row, Col, Button, Offcanvas, Badge } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
@@ -15,6 +14,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useExcursions } from "../../hooks/useExcursions";
 import { lazyWithMinTime } from "../../utils/lazyWithMinTime";
 import LazyRouteWrapper from "../../utils/LazyRouteWrapper";
+import { FiFilter } from "react-icons/fi";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../../css/Layout.module.css";
 
@@ -53,8 +53,8 @@ const Layout = () => {
 	const { isAuthCheckComplete } = useAuth();
 	// Se usa el hook useExcursions para obtener el estado completo de las excursiones, que contiene los datos, el estado de carga y
 	// los errores.
-	// Además, se obtienen las funciones para manejar ese estado. Lo hacen mediante la actualización de dicho estado de las
-	// excursiones en función de las acciones que se realicen en el componente Excursions.
+	// Además, se obtienen las funciones para manejar ese estado. Lo hacen mediante la actualización de dicho estado en función de
+	// las acciones que se realicen en el componente Excursions.
 	const {
 		excursionsState,
 		handleExcursionsFetchStart,
@@ -62,18 +62,19 @@ const Layout = () => {
 		handleExcursionsFetchEnd,
 	} = useExcursions();
 
+	// Se obtienen los filtros activos del estado global de Redux. Estos filtros se usan para filtrar las excursiones que se muestran
+	// en la lista de excursiones.
 	const { area, difficulty, time } = useSelector(
 		/** @param {RootState} state */
 		(state) => state.filterReducer
 	);
 
 	// Calcula el número total de filtros activos.
-	const activeFilterCount =
-		area.length + difficulty.length + time.length;
+	const activeFilterCount = area.length + difficulty.length + time.length;
 
-	// Texto para el contador de filtros.
-	const filterCountText = activeFilterCount === 1 ? "seleccionado" : "seleccionados";
-
+	// Texto para el contador de filtros en el botón de 'Mostrar Filtros' que aparece en brakpoints muy pequeños.
+	const filterCountText =
+		activeFilterCount === 1 ? "seleccionado" : "seleccionados";
 
 	// Variable que contiene el componente Excursions. Recibirá los datos, el estado de carga (isLoading) y el estado de error desde
 	// el hook useExcursions.
@@ -137,7 +138,11 @@ const Layout = () => {
 													<span>
 														Mostrar Filtros
 														{activeFilterCount > 0 && (
-															<Badge pill bg={null} className={`${styles.filterBadge} ms-2`}>
+															<Badge
+																pill
+																bg={null}
+																className={`${styles.filterBadge} ms-2`}
+															>
 																{activeFilterCount} {filterCountText}
 															</Badge>
 														)}

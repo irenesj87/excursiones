@@ -56,7 +56,7 @@ function FiltersListComponent({ filterName }) {
 	 * Muestra un mensaje de error si la carga de filtros falla.
 	 */
 	if (error) {
-		return <FilterError />;
+		return <FilterError error={error} />;
 	}
 
 	// Muestra la lista de filtros una vez que la carga ha terminado y no hay errores.
