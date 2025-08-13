@@ -5,7 +5,7 @@ import { validateMail, validateName } from "../validation/validations.js";
 import ValidatedFormGroup from "./ValidatedFormGroup";
 import ErrorMessageAlert from "./ErrorMessageAlert.js";
 import { login } from "../slicers/loginSlice";
-import { useDispatch } from "react-redux"; 
+import { useDispatch } from "react-redux";
 import { loginUser } from "../services/authService.js";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/LoginForm.module.css";
@@ -81,7 +81,8 @@ export function LoginForm() {
 			console.error("Login failed:", error);
 			formDispatch({
 				type: "LOGIN_FAILURE",
-				payload: error.message || "Error al iniciar sesión.",
+				payload:
+					"No se pudo iniciar sesión. Por favor, comprueba tu conexión o inténtalo de nuevo más tarde.",
 			});
 		}
 	};
@@ -153,7 +154,9 @@ export function LoginForm() {
 							<Button
 								variant={formState.isButtonDisabled ? "secondary" : "success"}
 								type="submit"
-								aria-disabled={formState.isButtonDisabled || formState.isLoading}
+								aria-disabled={
+									formState.isButtonDisabled || formState.isLoading
+								}
 								className="w-100"
 							>
 								{formState.isLoading ? (

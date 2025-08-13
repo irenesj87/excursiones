@@ -58,16 +58,22 @@ const ExcursionsLoading = memo(ExcursionsLoadingComponent);
  * Se renderiza cuando la carga de excursiones falla.
  * @param {ExcursionsErrorProps} props
  * @typedef {object} ExcursionsErrorProps
- * @property {Error | null} error - El objeto de error que contiene el mensaje a mostrar.
+ * @property {(Error & { secondaryMessage?: string }) | null} error - El objeto de error que contiene el mensaje a mostrar.
  */
 const ExcursionsErrorComponent = ({ error }) => (
 	<div className={`${styles.excursionsContainer} ${styles.centeredStatus}`}>
 		<div role="alert" className={styles.messageNotFound}>
-			<FiAlertCircle className={styles.messageIcon} aria-hidden="true" />
+			<FiAlertCircle
+				className={`${styles.messageIcon} text-danger`}
+				aria-hidden="true"
+			/>
 			<p className={styles.primaryMessage}>
 				{error?.message ||
 					"Lo sentimos, ha ocurrido un error al cargar las excursiones."}
 			</p>
+			{error?.secondaryMessage && (
+				<p className={styles.secondaryMessage}>{error.secondaryMessage}</p>
+			)}
 		</div>
 	</div>
 );
@@ -99,7 +105,7 @@ const NoExcursionsFound = memo(NoExcursionsFoundComponent);
  * @typedef {object} ExcursionsProps
  * @property {Excursion[]} [excursionData=[]] - Array de excursiones a mostrar.
  * @property {boolean} isLoading - Indica si los datos de las excursiones se están cargando.
- * @property {Error | null} error - Objeto de error si ha ocurrido un problema al cargar las excursiones.
+ * @property {(Error & { secondaryMessage?: string }) | null} error - Objeto de error si ha ocurrido un problema al cargar las excursiones.
  */
 function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	// Se obtiene el estado del loginReducer y el objeto usuario

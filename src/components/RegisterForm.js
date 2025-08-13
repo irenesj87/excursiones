@@ -114,10 +114,11 @@ function RegisterForm() {
 			// Redirige al usuario a la página principal.
 			navigate("/");
 		} catch (error) {
-			console.error("Registration or login failed:", error);
+			console.error("Fallo en el registro o login:", error);
 			formDispatch({
 				type: "REGISTER_FAILURE",
-				payload: error.message || "Error al registrarse.",
+				payload:
+					"No se pudo completar el registro. Por favor, comprueba tu conexión o inténtalo de nuevo más tarde.",
 			});
 		}
 	};
@@ -253,7 +254,9 @@ function RegisterForm() {
 					id="password-requirements"
 					className={`${styles.infoMessage} mb-3`}
 				>
-					<p className="mb-1 fw-normal">Tu contraseña debe contener al menos:</p>
+					<p className="mb-1 fw-normal">
+						Tu contraseña debe contener al menos:
+					</p>
 					{/* ps-3 añade un poco de sangría a la lista para mejorar la legibilidad */}
 					<ul className="mb-0 ps-3 fw-normal">
 						<li>8 caracteres.</li>

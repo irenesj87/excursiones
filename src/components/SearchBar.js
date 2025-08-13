@@ -13,7 +13,7 @@ import styles from "../css/SearchBar.module.css";
  * @param {object} props - Las propiedades del componente.
  * @param {(excursions: any[]) => void} props.onFetchSuccess - Función para actualizar el estado de la lista de excursiones en el componente padre.
  * @param {() => void} props.onFetchStart - Callback que se ejecuta al iniciar la búsqueda de excursiones.
- * @param {(error: Error | null) => void} props.onFetchEnd - Callback que se ejecuta al finalizar la búsqueda de excursiones.
+ * @param {(error: (Error & { secondaryMessage?: string }) | null) => void} props.onFetchEnd - Callback que se ejecuta al finalizar la búsqueda de excursiones.
  * @param {string} props.id - ID único para el input de búsqueda, útil para accesibilidad y múltiples instancias.
  */
 function SearchBar({ onFetchSuccess, onFetchStart, onFetchEnd, id }) {
@@ -78,11 +78,20 @@ function SearchBar({ onFetchSuccess, onFetchStart, onFetchEnd, id }) {
 			onFetchEnd?.(null);
 		} catch (error) {
 			// Si ocurre un error durante la petición, lo muestra en la consola.
-			console.error("Fetch error in SearchBar: ", error);
+			console.error("Error técnico al buscar excursiones:", error);
 			// Opcionalmente, vacía la lista de excursiones en caso de error.
 			onFetchSuccess([]);
-			// Llama a onFetchEnd con el objeto de error para que el componente padre pueda manejarlo.
-			onFetchEnd?.(error);
+			// Creamos un nuevo error con un mensaje más amigable para el usuario.
+			/**
+			 * @type {Error & {secondaryMessage?: string}}
+			 */
+			const userFriendlyError = new Error("No se han podido cargar las excursiones.");
+			// Añadimos un mensaje secundario para dar más contexto al usuario.
+			// Esta propiedad personalizada será leída por el componente de error.
+			userFriendlyError.secondaryMessage =
+				"Por favor, comprueba tu conexión o inténtalo de nuevo más tarde.";
+			// Pasamos el error amigable a la UI para que se muestre.
+			onFetchEnd?.(userFriendlyError);
 		}
 	}, [
 		debouncedSearch,
