@@ -152,7 +152,11 @@ export function LoginForm() {
 					<Row className="justify-content-sm-end">
 						<Col xs={12} sm="auto">
 							<Button
-								variant={formState.isButtonDisabled ? "secondary" : "success"}
+								variant={
+									formState.isButtonDisabled || formState.isLoading
+										? "secondary"
+										: "success"
+								}
 								type="submit"
 								aria-disabled={
 									formState.isButtonDisabled || formState.isLoading

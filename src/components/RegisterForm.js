@@ -272,7 +272,11 @@ function RegisterForm() {
 						{/* sm="auto" hace que la Col se ajuste al contenido en breakpoints 'sm' y mayores */}
 						<Col xs={12} sm="auto">
 							<Button
-								variant={formState.isButtonDisabled ? "secondary" : "success"}
+								variant={
+									formState.isButtonDisabled || formState.isLoading
+										? "secondary"
+										: "success"
+								}
 								type="submit"
 								aria-disabled={
 									formState.isButtonDisabled || formState.isLoading

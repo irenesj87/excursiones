@@ -19,7 +19,8 @@ function FiltersListCheckboxComponent({ filterName, filter }) {
 	// Obtenemos los filtros seleccionados para esta categoría (ej. 'area') desde Redux
 	const selectedFilters = useSelector(
 		/** @param {RootState} state */
-		(state) => state.filterReducer[filterName], shallowEqual
+		(state) => state.filterReducer[filterName],
+		shallowEqual
 	);
 
 	// El filtro está seleccionado si su valor está incluido en el array del estado de Redux
@@ -42,16 +43,24 @@ function FiltersListCheckboxComponent({ filterName, filter }) {
 	const id = `filter-${filterName}-${filter.replace(/\s+/g, "-")}`;
 
 	return (
-		<button
-			type="button"
-			role="checkbox"
-			aria-checked={isChecked}
-			onClick={handleToggle}
-			id={id}
-			className={`${styles.filterPill} ${isChecked ? styles.checked : ""}`}
-		>
-			{filter}
-		</button>
+		// Usamos un fragmento para agrupar el input y la etiqueta sin añadir un div extra al DOM.
+		<>
+			<input
+				type="checkbox"
+				id={id}
+				name={filterName}
+				value={filter}
+				checked={isChecked}
+				onChange={handleToggle}
+				className={styles.visuallyHidden}
+			/>
+			<label
+				htmlFor={id}
+				className={`${styles.filterPill} ${isChecked ? styles.checked : ""}`}
+			>
+				{filter}
+			</label>
+		</>
 	);
 }
 

@@ -4,6 +4,9 @@
 :root {
 	/* --- Variables para componentes específicos que no dependen del tema --- */
 	--filter-clear-btn-color-hover: #dc3545; /* Color de peligro de Bootstrap */
+	/* Paleta de colores base para reutilización */
+	--white: #fff;
+	--black: #000;
 }
 
 /* ======================================== */
@@ -12,8 +15,9 @@
 html.light body {
 	transition: none;
 	/* --- Paleta principal --- */
-	--primary-color: #315036;
-	--accent-color: #c05600;
+	--primary-color: #315036; /* Verde principal */
+	/* Naranja más oscuro para que el texto blanco tenga suficiente contraste (WCAG AA) */
+	--accent-color: #833800;
 	--heading-color: var(--primary-color);
 
 	/* Paleta de verdes para el modo claro */
@@ -91,6 +95,12 @@ html.light body {
 
 	/* --- Accesibilidad --- */
 	--focus-outline-color: var(--accent-color);
+
+	/* --- Indicadores de Dificultad (Bootstrap Overrides) --- */
+	/* Se definen para asegurar consistencia y contraste */
+	--bs-success: var(--primary-color); /* #315036 */
+	--bs-warning: var(--accent-color); /* #c05600 */
+	--bs-danger: #d32f2f; /* Un rojo más oscuro para mejor contraste con texto blanco */
 
 	.accordion-button, .accordion-body {
 		background-color: #f7f9f7;
@@ -194,6 +204,12 @@ html.dark body {
 
 	/* --- Accesibilidad --- */
 	--focus-outline-color: var(--accent-color);
+
+	/* --- Indicadores de Dificultad (Bootstrap Overrides) --- */
+	/* Colores adaptados para no ser tan estridentes en fondo oscuro y mantener contraste */
+	--bs-success: var(--heading-color); /* #9CCC65 */
+	--bs-warning: var(--accent-color); /* #f39c12 */
+	--bs-danger: #ef5350; /* Un rojo más suave y brillante */
 
 	/* --- Estilos para la barra de navegación --- */
 	.customNavbar {
@@ -332,8 +348,8 @@ html.dark body {
 /* Estilos para botones deshabilitados de forma accesible.
    Se mantienen en el DOM y son enfocables, pero visualmente parecen inactivos. */
 .btn[aria-disabled="true"] {
-	opacity: 0.65;
-	pointer-events: none; /* Evita clics y efectos hover */
+	opacity: 0.65; /* Reduce la opacidad para indicar visualmente que está inactivo */
+	cursor: not-allowed; /* Cambia el cursor para indicar que no es clickeable */
 }
 
 /* Botón para mostrar filtros en breakpoints xs (común a ambos temas) */

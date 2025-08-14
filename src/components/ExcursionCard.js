@@ -18,7 +18,7 @@ const JoinButton = ({ isJoined, isJoining, onJoin }) => {
 	if (isJoined) {
 		return (
 			<div className="d-grid d-md-flex justify-content-center justify-content-md-end">
-				<div className={styles.joinedStatus}>
+				<div className={styles.joinedStatus} role="status" aria-live="polite">
 					<FiCheckCircle /> <span>Apuntado/a</span>
 				</div>
 			</div>
@@ -77,11 +77,12 @@ function ExcursionCardComponent({
 	const [isJoining, setIsJoining] = useState(false);
 	const [joinError, setJoinError] = useState(null);
 	/*
-	 * Crea un 'handler' para el evento 'click' que llama a la función `onJoin` con el ID de la excursión.
+	 * Crea un 'handler' que llama a la función `onJoin` con el ID de la excursión.
 	 * Se usa `useCallback` para memoizar la función y evitar que se recree en cada renderizado, optimizando el rendimiento.
 	 * El botón se deshabilita durante la carga para prevenir múltiples clicks.
 	 */
 	const handleJoin = useCallback(async () => {
+		if (isJoining) return; // Evita múltiples ejecuciones si ya está en proceso
 		setIsJoining(true);
 		setJoinError(null); // Limpiar errores previos al reintentar
 		try {
@@ -97,7 +98,7 @@ function ExcursionCardComponent({
 			// Si hay un error, restablecemos el estado del botón para que el usuario pueda intentarlo de nuevo.
 			setIsJoining(false);
 		}
-	}, [id, onJoin]);
+	}, [id, onJoin, isJoining]); // El botón es el único elemento que puede iniciar la acción de unirse.
 
 	// Genera un ID único para el título, que se usará para la accesibilidad.
 	// Reemplaza espacios y caracteres especiales para crear un ID válido.
@@ -109,10 +110,20 @@ function ExcursionCardComponent({
 		Alta: styles.difficultyHigh,
 	};
 
+	// El texto de la insignia de dificultad siempre será claro para unificar el diseño.
+	// Los colores de fondo se ajustan en Themes.css para garantizar el contraste.
+	const difficultyTextColorClass = {
+		Baja: styles.difficultyTextLight,
+		Media: styles.difficultyTextLight,
+		Alta: styles.difficultyTextLight,
+	};
+
 	return (
 		<Card
-			tabIndex={0}
 			role="group"
+			// La tarjeta es programáticamente enfocable con el teclado para mejorar la accesibilidad,
+			// para que todos los usuarios puedan navegar por el contenido.
+			tabIndex={0}
 			aria-labelledby={titleId}
 			className={cn(styles.excursionItemCard, "h-100 w-100", {
 				[styles.isJoinedCard]: isJoined,
@@ -131,14 +142,14 @@ function ExcursionCardComponent({
 							label="Zona"
 						/>
 						<ExcursionDetailItem text={difficulty} label="Dificultad">
-							<span
+							<div
 								className={cn(
-									styles.difficultyIndicator,
+									styles.difficultyBadge,
 									difficultyClassMap[difficulty]
 								)}
-								aria-hidden="true"
-							/>
-							<span>{difficulty}</span>
+							>
+								<span className={difficultyTextColorClass[difficulty]}>{difficulty}</span>
+							</div>
 						</ExcursionDetailItem>
 						<ExcursionDetailItem
 							IconComponent={FiClock}

@@ -158,6 +158,11 @@ function UserInfoForm() {
 	 * Guarda la información del usuario en el servidor. Realiza una petición PUT para actualizar los datos del usuario.
 	 */
 	const saveEdit = async () => {
+		// Guarda para prevenir envíos múltiples si el botón está deshabilitado.
+		if (!isFormValid || !isFormChanged || isLoading) {
+			return;
+		}
+
 		formDispatch({ type: "SAVE_START" });
 		try {
 			const updatedUserData = await updateUserInfo(
@@ -350,7 +355,9 @@ function UserInfoForm() {
 									}
 									onClick={saveEdit}
 									className={`${styles.saveButton} w-100`}
-									disabled={!isFormValid || !isFormChanged || isLoading}
+									aria-disabled={
+										!isFormValid || !isFormChanged || isLoading
+									}
 								>
 									{isLoading ? (
 										<Spinner

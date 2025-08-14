@@ -20,11 +20,11 @@
 	flex-direction: column;
 }
 
+/* Título de la tarjeta */
 .excursionTitle {
-	font-size: 1.5rem;
-	font-weight: 600;
-	color: var(--excursion-card-title-color);
+	font-size: 1.2rem;
 	margin-bottom: 0.5rem;
+	color: var(--excursion-card-title-color);
 }
 
 .areaIcon {
@@ -60,11 +60,19 @@
 	font-size: 1.2rem;
 }
 
-.difficultyIndicator {
-	width: 12px;
-	height: 12px;
-	border-radius: 50%;
+.difficultyBadge {
 	display: inline-block;
+	padding: 0.25em 0.6em;
+	border-radius: 1em;
+	font-size: 0.85rem;
+	font-weight: 600;
+	line-height: 1;
+	text-align: center;
+}
+
+/* Clases para el color del texto de la dificultad */
+.difficultyTextLight {
+	color: var(--white);
 }
 
 .difficultyLow {

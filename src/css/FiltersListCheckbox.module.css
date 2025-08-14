@@ -1,3 +1,15 @@
+/* Clase para ocultar elementos visualmente pero mantenerlos accesibles para lectores de pantalla */
+.visuallyHidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+
 .filterPill {
 	background: none;
 	font: inherit;
@@ -11,13 +23,13 @@
 	background-color: var(--filter-pill-bg);
 	border: 1px solid var(--filter-pill-border);
 	border-radius: 50px;
-	cursor: pointer;
 	user-select: none; /* Evita que el texto se pueda seleccionar */
 	text-align: center;
+	cursor: pointer; /* Añadimos cursor pointer al ser una etiqueta */
 }
 
 /* Efecto al pasar el ratón por encima */
-.filterPill:hover{
+.filterPill:hover {
 	background-color: var(--filter-pill-bg-hover);
 	border-color: var(--filter-pill-border-hover);
 }
@@ -38,8 +50,9 @@
 	border-color: var(--filter-pill-border-checked);
 }
 
-/* Estilo para el foco del botón (accesibilidad con teclado) */
-.filterPill:focus-visible {
-	outline: 2px solid var(--primary-color);
+/* Estilo para el foco del input (accesibilidad con teclado) */
+/* Usamos la clase local y la variable de foco global para consistencia */
+.visuallyHidden:focus-visible + .filterPill {
+	outline: 2px solid var(--focus-outline-color);
 	outline-offset: 2px;
 }

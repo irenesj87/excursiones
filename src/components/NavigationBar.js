@@ -135,7 +135,7 @@ function NavigationBarComponent({
 				onClick={handleCloseOffcanvas}
 				// Usamos Link en lugar de NavLink porque este botón no necesita un estado "activo".
 				// Esto evita el conflicto de estilos con la clase 'active' y soluciona el error de tipos que reporta Sonar.
-				className={`btn btn-success ${styles.navButton} loginLink`}
+				className={`btn ${styles.navButton} loginLink`}
 			>
 				Inicia sesión
 			</Nav.Link>
