@@ -22,7 +22,9 @@
 
 /* Título de la tarjeta */
 .excursionTitle {
-	font-size: 1.2rem;
+	font-size: 1.4rem;
+	font-weight: 600;
+	text-transform: uppercase;
 	margin-bottom: 0.5rem;
 	color: var(--excursion-card-title-color);
 }
@@ -42,7 +44,6 @@
 
 .excursionDetails {
 	margin-bottom: 1rem;
-	font-size: 0.95rem;
 	display: flex;
 	flex-wrap: wrap;
 	gap: 1rem;
