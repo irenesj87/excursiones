@@ -14,7 +14,7 @@ import Logo from "./Logo";
 import SearchBar from "./SearchBar";
 import LandingPageUserProfile from "./LandingPageUserProfile";
 import AuthNavSkeleton from "./skeletons/AuthNavSkeleton";
-import { toggleMode, setMode } from "../slicers/themeSlice";
+import { toggleMode } from "../slicers/themeSlice";
 import { FaMoon, FaSun } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/NavigationBar.module.css";
@@ -57,29 +57,6 @@ function NavigationBarComponent({
 		/** @param {RootState} state */
 		(state) => state.loginReducer
 	);
-
-	useEffect(() => {
-		// Intenta obtener el modo de tema guardado previamente en el almacenamiento local del navegador.
-		const savedMode = localStorage.getItem("themeMode");
-		// Comprueba si el sistema operativo del usuario prefiere el modo oscuro.
-		// window.matchMedia es una API que permite verificar si un documento coincide con una media query.
-		// "(prefers-color-scheme: dark)" es la media query que detecta la preferencia de tema oscuro del sistema.
-		const prefersDark =
-			window.matchMedia &&
-			window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-		// Variable para almacenar el modo inicial que se aplicará.
-		let initialMode;
-		if (savedMode === "light" || savedMode === "dark") {
-			initialMode = savedMode;
-		} else if (prefersDark) {
-			initialMode = "dark";
-		} else {
-			initialMode = "light";
-		}
-		// Despacha la acción para establecer el modo de tema en el estado de Redux.
-		dispatch(setMode(initialMode));
-	}, [dispatch]);
 
 	// Efecto para aplicar la clase del tema al HTML y guardar en localStorage
 	useEffect(() => {

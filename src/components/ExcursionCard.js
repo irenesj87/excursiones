@@ -98,7 +98,7 @@ function ExcursionCardComponent({
 			// Si hay un error, restablecemos el estado del botón para que el usuario pueda intentarlo de nuevo.
 			setIsJoining(false);
 		}
-	}, [id, onJoin, isJoining]); // El botón es el único elemento que puede iniciar la acción de unirse.
+	}, [id, onJoin, isJoining]);
 
 	// Genera un ID único para el título, que se usará para la accesibilidad.
 	// Reemplaza espacios y caracteres especiales para crear un ID válido.
@@ -108,14 +108,6 @@ function ExcursionCardComponent({
 		Baja: styles.difficultyLow,
 		Media: styles.difficultyMedium,
 		Alta: styles.difficultyHigh,
-	};
-
-	// El texto de la insignia de dificultad siempre será claro para unificar el diseño.
-	// Los colores de fondo se ajustan en Themes.css para garantizar el contraste.
-	const difficultyTextColorClass = {
-		Baja: styles.difficultyTextLight,
-		Media: styles.difficultyTextLight,
-		Alta: styles.difficultyTextLight,
 	};
 
 	return (
@@ -148,7 +140,7 @@ function ExcursionCardComponent({
 									difficultyClassMap[difficulty]
 								)}
 							>
-								<span className={difficultyTextColorClass[difficulty]}>{difficulty}</span>
+								<span className={styles.difficultyTextLight}>{difficulty}</span>
 							</div>
 						</ExcursionDetailItem>
 						<ExcursionDetailItem
