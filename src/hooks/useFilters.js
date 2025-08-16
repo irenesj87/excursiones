@@ -47,31 +47,47 @@ export function useFilters(filterName) {
 	);
 
 	useEffect(() => {
+		let isMounted = true; // Flag para rastrear el estado de montaje
+
 		const fetchData = async () => {
 			startTiming();
 			dispatch({ type: "FETCH_INIT" });
 
 			try {
 				const data = await fetchFilters(filterName);
-				dispatchWithMinDisplayTime({ type: "FETCH_SUCCESS", payload: data });
+				if (isMounted) {
+					dispatchWithMinDisplayTime({ type: "FETCH_SUCCESS", payload: data });
+				}
 			} catch (error) {
 				// Logueamos el error original para depuración.
-				console.error(`Error al cargar los filtros para "${filterName}":`, error);
+				console.error(
+					`Error al cargar los filtros para "${filterName}":`,
+					error
+				);
 
 				// Si es un error de conexión, podemos añadir un log más específico para el desarrollador.
 				if (error instanceof TypeError && error.message === "Failed to fetch") {
-					console.error("Pista para el desarrollador: El servidor de la API no parece estar respondiendo. ¿Está en marcha?");
+					console.error(
+						"Pista para el desarrollador: El servidor de la API no parece estar respondiendo. ¿Está en marcha?"
+					);
 				}
-
-				// Creamos un error genérico y amigable para mostrar siempre en la UI.
-				const finalError = new Error(
-					"No se pudieron cargar los filtros."
-				);
-				dispatchWithMinDisplayTime({ type: "FETCH_FAILURE", payload: finalError });
+				if (isMounted) {
+					// Creamos un error genérico y amigable para mostrar siempre en la UI.
+					const finalError = new Error("No se pudieron cargar los filtros.");
+					dispatchWithMinDisplayTime({
+						type: "FETCH_FAILURE",
+						payload: finalError,
+					});
+				}
 			}
 		};
 
 		fetchData();
+
+		// Función de limpieza que se ejecuta al desmontar
+		return () => {
+			isMounted = false;
+		};
 	}, [filterName, dispatchWithMinDisplayTime, startTiming]);
 
 	return state;

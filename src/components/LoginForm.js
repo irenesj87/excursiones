@@ -79,10 +79,19 @@ export function LoginForm() {
 			navigate("/UserPage");
 		} catch (error) {
 			console.error("Login failed:", error);
+			let errorMessage;
+			// Si es un error de red, mostramos un mensaje específico.
+			if (error instanceof TypeError && error.message === "Failed to fetch") {
+				errorMessage =
+					"No se pudo conectar con el servidor. Por favor, comprueba tu conexión e inténtalo de nuevo.";
+			} else {
+				// Para otros errores (ej. 401 Unauthorized), usamos el mensaje del servidor.
+				errorMessage =
+					error.message || "Ocurrió un error inesperado. Inténtalo de nuevo.";
+			}
 			formDispatch({
 				type: "LOGIN_FAILURE",
-				payload:
-					"No se pudo iniciar sesión. Por favor, comprueba tu conexión o inténtalo de nuevo más tarde.",
+				payload: errorMessage,
 			});
 		}
 	};

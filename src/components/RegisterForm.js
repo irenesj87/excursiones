@@ -115,10 +115,20 @@ function RegisterForm() {
 			navigate("/");
 		} catch (error) {
 			console.error("Fallo en el registro o login:", error);
+			let errorMessage;
+			// Si es un error de red, mostramos un mensaje específico.
+			if (error instanceof TypeError && error.message === "Failed to fetch") {
+				errorMessage =
+					"No se pudo conectar con el servidor. Por favor, comprueba tu conexión e inténtalo de nuevo.";
+			} else {
+				// Para otros errores (ej. 409 Conflict), usamos el mensaje del servidor.
+				errorMessage =
+					error.message ||
+					"No se pudo completar el registro. Inténtalo de nuevo más tarde.";
+			}
 			formDispatch({
 				type: "REGISTER_FAILURE",
-				payload:
-					"No se pudo completar el registro. Por favor, comprueba tu conexión o inténtalo de nuevo más tarde.",
+				payload: errorMessage,
 			});
 		}
 	};
