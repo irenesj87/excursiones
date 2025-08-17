@@ -1,10 +1,9 @@
 /* ======================================== */
-/* --- VARIABLES GLOBALES (NO DEPENDEN DEL TEMA) --- */
+/* 1. VARIABLES GLOBALES (NO DEPENDEN DEL TEMA) */
 /* ======================================== */
 :root {
-	/* --- Variables para componentes específicos que no dependen del tema --- */
+	/* Paleta de colores base y variables que no cambian con el tema */
 	--filter-clear-btn-color-hover: #dc3545; /* Color de peligro de Bootstrap */
-	/* Paleta de colores base para reutilización */
 	--white: #fff;
 	--black: #000;
 }
@@ -13,79 +12,67 @@
 /* --- ESTILOS PARA MODO CLARO --- */
 /* ======================================== */
 html.light body {
-	transition: none;
-	/* --- Paleta principal --- */
+	/* --- Paleta y Colores Base --- */
 	--primary-color: #315036; /* Verde principal */
-	/* Naranja más oscuro para que el texto blanco tenga suficiente contraste (WCAG AA) */
-	--accent-color: #833800;
+	--accent-color: #833800; /* Naranja oscuro para contraste (WCAG AA) */
 	--heading-color: var(--primary-color);
+	--body-bg: #f7f9f7; /* Blanco con un sutil tinte verde */
+	background-color: var(--body-bg);
 
-	/* Paleta de verdes para el modo claro */
-	background-color: #f7f9f7; /* Blanco con un sutil tinte verde */
-	color: #1a2b1e; /* Verde muy oscuro, casi negro, para texto principal */
-	--register-link-color: #1a2b1e;
-	--register-link-border-color: #1a2b1e;
+	/* --- Texto --- */
+	--text-color: #1a2b1e; /* Verde muy oscuro, casi negro */
+	color: var(--text-color);
+	--text-secondary: #5c7f67; /* Verde-grisáceo */
 
-	/* --- Variables para el botón de Login --- */
+	/* --- Bordes y Separadores --- */
+	--separator-color: #dce3dd; /* Verde-grisáceo muy claro */
+
+	/* --- Botones y Enlaces --- */
 	--login-btn-text: #ffffff;
 	--login-btn-bg: var(--primary-color);
 	--login-btn-border: var(--primary-color);
 	--login-btn-bg-hover: #253c29; /* Tono más oscuro de --primary-color */
 	--login-btn-border-hover: #253c29;
 
+	--register-link-color: #1a2b1e;
+	--register-link-border-color: #1a2b1e;
+
 	--logout-bg-color: #6c757d; /* Gris secundario de Bootstrap */
 	--logout-bg-color-hover: #5c636a; /* Gris secundario más oscuro de Bootstrap */
 	--logout-text-color: #ffffff; /* Texto blanco para contraste en fondo oscuro */
 
-	--text-color: #1a2b1e;
-	/* Variables de color para texto genérico */
-	--text-secondary: #5c7f67; /* Verde-grisáceo para texto secundario */
+	--theme-toggle-btn-color: var(--text-secondary);
+	--theme-toggle-btn-border-color: var(--separator-color);
+	--theme-toggle-btn-bg-hover: rgba(0, 0, 0, 0.05);
 
-	/* Color para bordes y separadores principales */
-	--separator-color: #dce3dd; /* Verde-grisáceo muy claro */
-
-	/* --- Variables para ExcursionCard --- */
+	/* --- Tarjetas (ExcursionCard, UserInfo) --- */
 	--excursion-card-bg: #ffffff; /* Blanco puro para que las tarjetas resalten */
-	--excursion-card-joined-status-text: var(
-		--bs-success
-	); /* Verde oscuro de Bootstrap */
-	--excursion-card-title-color: #1a2b1e;
 	--excursion-card-shadow: 0 5px 15px rgba(49, 80, 54, 0.08);
+	--excursion-card-title-color: #1a2b1e;
 	--excursion-card-icon-color: var(--primary-color);
+	--excursion-card-joined-status-text: var(--bs-success);
 
-	/* --- Estilos para la barra de navegación --- */
-	.customNavbar {
-		background-color: #f7f9f7;
-		color: #1a2b1e;
-	}
+	/* --- Filtros --- */
+	--filter-container-bg: #ffffff;
+	--filter-title-color: #1a2b1e;
 
-	/* --- Estilos para filtros --- */
 	--filters-toggle-btn-color: #5c7f67;
 	--filters-toggle-btn-border: #dce3dd;
 	--filters-toggle-btn-bg-hover: #e2e6ea;
 	--filters-toggle-btn-color-hover: #315036;
 	--filters-toggle-btn-border-hover: #dce3dd;
 
-	--filter-container-bg: #ffffff;
 	--filter-pill-bg: #f1f3f5;
 	--filter-pill-text: #495057;
 	--filter-pill-border: #dee2e6;
 	--filter-pill-bg-hover: #e9ecef;
 	--filter-pill-border-hover: #adb5bd;
-	--filter-pill-shadow-checked: 0 2px 5px rgba(0, 0, 0, 0.1);
-	--filter-title-color: #1a2b1e;
-
-	/* --- Variables para Píldoras de Filtros Seleccionadas --- */
 	--filter-pill-bg-checked: var(--primary-color);
 	--filter-pill-text-checked: #ffffff;
 	--filter-pill-border-checked: var(--primary-color);
+	--filter-pill-shadow-checked: 0 2px 5px rgba(0, 0, 0, 0.1);
 
-	/* --- Variables para Botón de Tema --- */
-	--theme-toggle-btn-color: var(--text-secondary);
-	--theme-toggle-btn-border-color: var(--separator-color);
-	--theme-toggle-btn-bg-hover: rgba(0, 0, 0, 0.05);
-
-	/* --- Variables para Footer --- */
+	/* --- Footer --- */
 	--footer-bg: var(--primary-color);
 	--footer-text-color: #ffffff;
 	--footer-border-top: var(--separator-color);
@@ -93,108 +80,81 @@ html.light body {
 	--footer-icon-color: var(--primary-color);
 	--footer-icon-bg-hover: #f0f0f0;
 
-	/* --- Accesibilidad --- */
-	--focus-outline-color: var(--accent-color);
-
 	/* --- Indicadores de Dificultad (Bootstrap Overrides) --- */
 	/* Se definen para asegurar consistencia y contraste */
 	--bs-success: var(--primary-color); /* #315036 */
 	--bs-warning: var(--accent-color); /* #c05600 */
 	--bs-danger: #d32f2f; /* Un rojo más oscuro para mejor contraste con texto blanco */
 
-	.accordion-button, .accordion-body {
-		background-color: #f7f9f7;
-		color: #1a2b1e;
-	}
-
-	.accordion-button::after {
-		background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%231a2b1e'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
-	}
-
-	.offcanvas-header {
-		background-color: #f7f9f7;
-		color: var(--primary-color);
-		border-bottom: 1px solid var(--separator-color);
-	}
-
-	.offcanvas-body {
-		background-color: #ffffff;
-	}
+	/* --- Accesibilidad --- */
+	--focus-outline-color: var(--accent-color);
 }
 
 /* ======================================== */
-/* --- ESTILOS PARA MODO OSCURO --- */
+/* 3. TEMA OSCURO (DARK) */
 /* ======================================== */
 html.dark body {
-	transition: none; /* Eliminar transición para el body en cambio de tema */
-	/* --- Paleta principal --- */
-	--primary-color: #315036; /* Mantenemos el verde principal para consistencia en elementos como headers */
+	/* --- Paleta y Colores Base --- */
+	--primary-color: #315036; /* Verde principal (mantenido para consistencia en headers) */
+	--accent-color: #f39c12; /* Naranja para alertas */
+	--heading-color: #9ccc65; /* Verde más brillante para contraste */
+	--body-bg: #1a2b1e; /* Verde muy oscuro para el fondo */
+	background-color: var(--body-bg);
 
-	/* Paleta de verdes oscuros "Bosque Profundo" */
-	background-color: #1a2b1e; /* Verde muy oscuro para el fondo */
-	color: #e8f5e9; /* Blanco verdoso muy claro para el texto principal */
-	--heading-color: #9CCC65; /* Verde más brillante para mejorar contraste y accesibilidad */
-	--accent-color: #f39c12; /* Naranja para alertas, se mantiene por su buen contraste */
-	--register-link-color: #e8f5e9;
-	--register-link-border-color: #a3b8a8; /* Borde más sutil */
+	/* --- Texto --- */
+	--text-color: #e8f5e9; /* Blanco verdoso muy claro */
+	color: var(--text-color);
+	--text-secondary: #a3b8a8; /* Verde-grisáceo */
 
-	/* --- Variables para el botón de Login --- */
+	/* --- Bordes y Separadores --- */
+	--separator-color: #3a5a40; /* Verde oscuro */
+
+	/* --- Botones y Enlaces --- */
 	--login-btn-text: #1a2b1e; /* Texto oscuro para contraste en botón brillante */
 	--login-btn-bg: var(--heading-color);
 	--login-btn-border: var(--heading-color);
-	--login-btn-bg-hover: #8BC34A; /* Tono más oscuro de --heading-color */
-	--login-btn-border-hover: #8BC34A;
+	--login-btn-bg-hover: #8bc34a; /* Tono más oscuro de --heading-color */
+	--login-btn-border-hover: #8bc34a;
+
+	--register-link-color: #e8f5e9;
+	--register-link-border-color: #a3b8a8; /* Borde más sutil */
 
 	--logout-bg-color: rgb(80, 73, 73);
 	--logout-bg-color-hover: rgb(100, 93, 93);
 	--logout-text-color: #e8f5e9; /* Texto claro para contraste en fondo oscuro */
 
-	--text-color: #e8f5e9;
-	/* Variables de color para texto genérico */
+	--theme-toggle-btn-color: #e8f5e9;
+	--theme-toggle-btn-border-color: #3a5a40;
+	--theme-toggle-btn-bg-hover: rgba(255, 255, 255, 0.1);
 
-	--text-secondary: #a3b8a8; /* Verde-grisáceo para texto secundario */
-
-	/* Color para bordes y separadores principales */
-	--separator-color: #3a5a40; /* Verde oscuro para bordes */
-
-	/* --- Variables para ExcursionCard --- */
+	/* --- Tarjetas (ExcursionCard, UserInfo) --- */
 	--excursion-card-bg: #213426; /* Verde un poco más claro que el fondo */
-	--excursion-card-joined-status-text: var(
-		--heading-color
-	); /* Verde brillante para contraste */
-	--excursion-card-title-color: #e8f5e9;
 	--excursion-card-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+	--excursion-card-title-color: #e8f5e9;
 	--excursion-card-icon-color: var(--heading-color);
+	--excursion-card-joined-status-text: var(--heading-color);
 
-	/* --- Variables para Botones de Filtros --- */
+	/* --- Filtros --- */
+	--filter-container-bg: #213426;
+	--filter-title-color: #e8f5e9;
+
 	--filters-toggle-btn-color: #e8f5e9;
 	--filters-toggle-btn-border: #a3b8a8;
 	--filters-toggle-btn-bg-hover: rgba(255, 255, 255, 0.1);
 	--filters-toggle-btn-color-hover: #e8f5e9;
 	--filters-toggle-btn-border-hover: #a3b8a8;
 
-	/* --- Variables para Píldoras de Filtros Seleccionadas --- */
-	--filter-pill-bg-checked: var(--heading-color); /* Verde brillante */
-	--filter-pill-text-checked: #1a2b1e; /* Texto oscuro para máximo contraste */
-	--filter-pill-border-checked: var(--heading-color);
-
-	/* --- Variables para Filtros --- */
-	--filter-container-bg: #213426; /* Verde un poco más claro que el fondo, como las tarjetas */
-	--filter-container-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 	--filter-pill-bg: #3a5a40; /* Verde oscuro para píldoras no seleccionadas */
 	--filter-pill-text: #e8f5e9;
 	--filter-pill-border: #4f7659;
 	--filter-pill-bg-hover: #4f7659;
 	--filter-pill-border-hover: #6a994e;
+	--filter-pill-bg-checked: var(--heading-color); /* Verde brillante */
+	--filter-pill-text-checked: #1a2b1e; /* Texto oscuro para máximo contraste */
+	--filter-pill-border-checked: var(--heading-color);
 	--filter-pill-shadow-checked: 0 2px 8px rgba(0, 0, 0, 0.4);
-	--filter-title-color: #e8f5e9;
 
-	/* --- Variables para Botón de Tema --- */
-	--theme-toggle-btn-color: #e8f5e9;
-	--theme-toggle-btn-border-color: #3a5a40;
-	--theme-toggle-btn-bg-hover: rgba(255, 255, 255, 0.1);
-
-	/* --- Variables para Footer --- */
+	/* --- Footer --- */
 	--footer-bg: #1a2b1e; /* Coincide con el fondo del body y la navbar */
 	--footer-text-color: var(--text-color); /* #e8f5e9 */
 	--footer-border-top: var(--separator-color); /* #3a5a40 */
@@ -202,146 +162,31 @@ html.dark body {
 	--footer-icon-color: var(--text-color); /* #e8f5e9 */
 	--footer-icon-bg-hover: #4f7659; /* Coincide con el hover de las píldoras de filtro */
 
-	/* --- Accesibilidad --- */
-	--focus-outline-color: var(--accent-color);
-
 	/* --- Indicadores de Dificultad (Bootstrap Overrides) --- */
 	/* Colores adaptados para no ser tan estridentes en fondo oscuro y mantener contraste */
 	--bs-success: var(--heading-color); /* #9CCC65 */
 	--bs-warning: var(--accent-color); /* #f39c12 */
 	--bs-danger: #ef5350; /* Un rojo más suave y brillante */
 
-	/* --- Estilos para la barra de navegación --- */
-	.customNavbar {
-		background-color: #1a2b1e;
-		color: #e8f5e9;
-		border-bottom: 1px solid var(--separator-color);
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25); /* Sombra sutil para dar profundidad */
-	}
-
-	/* Estilos de hover para el enlace de registro en la barra de navegación */
-	.customNavbar .nav-link[class*="registerLink"]:hover {
-		background-color: rgb(255, 255, 255, 0.1);
-		color: var(--register-link-color);
-		border-color: #e8f5e9;
-	}
-
-	/* Estilos para el enlace del 'switcher' en las páginas de formulario (Login/Register) en modo oscuro */
-	/* Se usa un selector de atributo para apuntar a la clase generada por CSS Modules desde FormPageLayout.module.css */
-	[class*="switcherLink"] {
-		color: var(--heading-color);
-	}
-
-	[class*="switcherLink"]:hover {
-		/* Cambia al color de texto principal en hover para unificar la experiencia */
-		color: var(--text-color);
-	}
-
-	/* --- Estilos para los filtros --- */
-	.accordion-button, .accordion-body {
-		background-color: #1a2b1e;
-		color: #e8f5e9;
-	}
-
-	.accordion-button::after {
-		background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23e8f5e9'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>");
-	}
-
-	.accordion-item {
-		border-bottom: 1px solid var(--separator-color);
-		background-color: #1a2b1e;
-	}
-
-	/* Establece el color de fondo y el borde inferior del encabezado de la tarjeta */
-	.card-header {
-		border-bottom: 1px solid var(--separator-color);
-	}
-
-	/* Cambia el color del borde superior dentro de las tarjetas para que coincida con el tema oscuro */
-	.card-body .border-top {
-		/* Usamos !important para sobrescribir los estilos por defecto de Bootstrap */
-		border-top-color: var(--separator-color) !important;
-	}
-
-	/* Establece el color de texto del texto de la tarjeta */
-	.card-text {
-		color: #e8f5e9;
-	}
-
-	/* --- Estilos para los Form.Control --- */
-	.form-control {
-		/* Establece el color de fondo, color de texto, borde y elimina la transición para los controles de formulario */
-		background-color: #213426;
-		color: #e8f5e9;
-		border: 1px solid var(--separator-color);
-	}
-
-	.form-control::placeholder {
-		color: #a3b8a8;
-	}
-
-	.form-control:disabled,
-	.form-control[readonly] {
-		/* Establece el color de fondo, color de texto y borde para controles de formulario deshabilitados o de solo lectura */
-		background-color: #1a2b1e;
-		color: #a3b8a8;
-		border: 1px solid var(--separator-color);
-	}
-
-	/* Establece el color de texto para controles de formulario de texto sin formato de solo lectura */
-	.form-control-plaintext[readonly] {
-		color: #e8f5e9;
-	}
-
-	/* --- Estilos para Paginación --- */
-	.pagination {
-		--bs-pagination-color: #e8f5e9;
-		--bs-pagination-bg: #213426;
-		--bs-pagination-border-color: var(--separator-color);
-		--bs-pagination-hover-color: #e8f5e9;
-		/* Un fondo ligeramente diferente para el hover */
-		--bs-pagination-hover-bg: #3a5a40;
-		--bs-pagination-hover-border-color: #3a5a40;
-		--bs-pagination-focus-color: #e8f5e9;
-		--bs-pagination-focus-bg: #4f7659; /* Un poco más oscuro para el foco */
-		/* Sombra de foco genérica, ya que --primary-color-rgb no está definido */
-		--bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(130, 138, 145, 0.25);
-
-		--bs-pagination-active-color: #1a2b1e; /* Texto oscuro para el elemento activo */
-		--bs-pagination-active-bg: var(--heading-color);
-		--bs-pagination-active-border-color: var(--heading-color);
-
-		--bs-pagination-disabled-color: #a3b8a8;
-		/* Mismo fondo que el normal para deshabilitados, pero con texto atenuado */
-		--bs-pagination-disabled-bg: #213426;
-		--bs-pagination-disabled-border-color: var(--separator-color);
-	}
-
-	.offcanvas-header {
-		background-color: #1a2b1e;
-		color: #e8f5e9;
-		border-bottom: 1px solid var(--separator-color);
-
-		/* Invierte los colores del botón de cierre para que sea visible en modo oscuro */
-		.btn-close {
-			filter: invert(1) grayscale(100%) brightness(200%); /* Keep the white close button */
-		}
-	}
-
-	.offcanvas-body {
-		background-color: var(--filter-container-bg);
-	}
+	/* --- Accesibilidad --- */
+	--focus-outline-color: var(--accent-color);
 }
 
 /* ======================================== */
-/* --- ESTILOS GLOBALES (No dependen del tema) --- */
+/* 4. ESTILOS DE COMPONENTES (DEPENDEN DEL TEMA) */
 /* ======================================== */
 
-/* Elimina la transición para varios componentes de Bootstrap en ambos temas */
+/* --- Estilos Globales --- */
+/* Elimina transiciones por defecto para evitar parpadeos al cambiar de tema */
 .form-control,
 .page-link,
 .accordion-button,
 .accordion-body {
+	transition: none;
+}
+
+/* Elimina la transición del body para evitar parpadeos al cambiar de tema */
+body {
 	transition: none;
 }
 
@@ -352,36 +197,51 @@ html.dark body {
 	cursor: not-allowed; /* Cambia el cursor para indicar que no es clickeable */
 }
 
-/* Botón para mostrar filtros en breakpoints xs (común a ambos temas) */
-.filtersToggleButton {
+/* --- Barra de Navegación --- */
+.customNavbar {
+	padding-top: 1.2rem;
+	padding-bottom: 1.2rem;
+	width: 100%;
+	background-color: var(--body-bg);
+	color: var(--text-color, #1a2b1e);
+	border-bottom: 1px solid var(--separator-color);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* --- Offcanvas (Filtros) --- */
+/* Botón para mostrar filtros en breakpoints pequeños */
+/* Se usa .btn para aumentar la especificidad y sobreescribir los estilos por defecto de Bootstrap */
+.btn.filtersToggleButton {
 	color: var(--filters-toggle-btn-color);
 	border: 1px solid var(--filters-toggle-btn-border);
 	background-color: transparent;
 	transition: none;
 }
 
-/* Se añade :active para que el botón y su contenido reaccionen al click */
-.filtersToggleButton:hover,
-.filtersToggleButton:active {
+/* Se añade :active y se mantiene la especificidad con .btn para que el botón y su contenido reaccionen al click */
+.btn.filtersToggleButton:hover,
+.btn.filtersToggleButton:active {
 	color: var(--filters-toggle-btn-color-hover);
 	background-color: var(--filters-toggle-btn-bg-hover);
 	border-color: var(--filters-toggle-btn-border-hover);
 }
-/* Estilos comunes para la barra de navegación */
-.customNavbar {
-	padding-top: 1.2rem;
-	padding-bottom: 1.2rem;
-	width: 100%;
-}
 
-/* Estilos comunes para el Offcanvas */
+/* --- Offcanvas (Menú) --- */
 .offcanvas-header {
 	font-weight: bolder;
 	padding: 1rem 1.25rem;
+	background-color: var(--body-bg);
+	color: var(--text-color, #1a2b1e);
+	border-bottom: 1px solid var(--separator-color);
 }
 
+/* Invierte el color del botón de cierre en modo oscuro para que sea visible */
+html.dark .offcanvas-header .btn-close {
+	filter: invert(1) grayscale(100%) brightness(200%);
+}
 .offcanvas-body {
 	padding: 1rem 0;
+	background-color: var(--excursion-card-bg, #ffffff);
 }
 
 .offcanvas-body .nav-link {
@@ -396,23 +256,12 @@ html.dark body {
 	transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
-/* En el modo claro, el color del texto del enlace se hereda del body */
-/* Excluimos los botones de login/logout para que no hereden el color del texto */
-html.light
-	.offcanvas-body
-	.nav-link:not([class*="loginLink"]):not([class*="logoutLink"]) {
-	color: inherit;
+/* Color de texto para enlaces normales en el offcanvas */
+.offcanvas-body .nav-link:not([class*="loginLink"]):not([class*="logoutLink"]) {
+	color: var(--text-color);
 }
 
-/* En el modo oscuro, el color del texto del enlace es el principal del tema oscuro */
-/* Excluimos los botones de login/logout para que no hereden el color del texto */
-html.dark
-	.offcanvas-body
-	.nav-link:not([class*="loginLink"]):not([class*="logoutLink"]) {
-	color: #e8f5e9;
-}
-
-/* Estilos para el botón de Iniciar Sesión dentro del Offcanvas */
+/* Estilos para el botón de 'Iniciar Sesión' dentro del Offcanvas */
 /* Se necesita una regla más específica para sobrescribir el color de texto por defecto de los .nav-link en el offcanvas */
 .offcanvas-body .nav-link.loginLink {
 	color: var(--login-btn-text);
@@ -446,4 +295,41 @@ html.dark
 		margin-top: 1rem;
 		margin-bottom: 1.5rem;
 	}
+}
+
+/* --- Formularios (Inputs, etc.) --- */
+.form-control {
+	background-color: var(--excursion-card-bg);
+	color: var(--text-color);
+	border: 1px solid var(--separator-color);
+}
+
+.form-control::placeholder {
+	color: var(--text-secondary);
+}
+
+/* Sobrescribe el estilo de foco de Bootstrap para que sea consistente con el :focus-visible global */
+.form-control:focus {
+	color: var(--text-color);
+	background-color: var(--excursion-card-bg);
+	border-color: var(
+		--separator-color
+	); /* Mantenemos el color de borde normal */
+	/* Se elimina el box-shadow por defecto de Bootstrap para que el outline de :focus-visible sea el único indicador */
+	box-shadow: none;
+}
+
+/* Estilos para inputs deshabilitados o de solo lectura, para que se adapten al tema */
+/* Se excluyen los de tipo 'plaintext' para que no tengan fondo */
+.form-control:disabled:not(.form-control-plaintext),
+.form-control[readonly]:not(.form-control-plaintext) {
+	background-color: var(--excursion-card-bg);
+	color: var(--text-secondary);
+	/* Reseteamos la opacidad que Bootstrap aplica por defecto a los campos deshabilitados */
+	opacity: 1;
+}
+
+/* Estilos específicos para los inputs de tipo 'plaintext' */
+.form-control-plaintext {
+	color: var(--text-color);
 }

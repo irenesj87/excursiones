@@ -17,6 +17,7 @@
 	margin: 0 0 2rem;
 	padding-bottom: 0.75rem;
 	border-bottom: 1px solid var(--separator-color);
+	color: var(--filter-title-color);
 }
 
 .filterSection:not(:last-child) {

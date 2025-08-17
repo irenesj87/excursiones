@@ -91,7 +91,7 @@ const NoExcursionsFoundComponent = () => (
 				No se encontraron excursiones con esas características.
 			</p>
 			<p className={styles.secondaryMessage}>
-				Prueba a cambiar los filtros para mejorar tu búsqueda.
+				Prueba a cambiar los filtros para refinar tu búsqueda.
 			</p>
 		</div>
 	</div>

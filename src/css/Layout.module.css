@@ -48,6 +48,17 @@ html {
 }
 
 /*
+ * En modo oscuro, se ajustan los colores del badge para que sean consistentes con el texto del botón (claro sobre fondo oscuro).
+ * Se usa :global() para apuntar a la clase del tema desde el módulo CSS.
+*/
+:global(html.dark) .filterBadge {
+	background-color: var(--heading-color);
+	color: var(
+		--login-btn-text
+	); /* Se usa el mismo color de texto que el botón de login para asegurar contraste */
+}
+
+/*
  * Cuando el botón de filtros está activo (presionado), se invierten los colores del badge
  * para que coincida con el comportamiento del texto del botón.
  * Se usa :global() para apuntar a la clase global del botón desde el módulo CSS.
