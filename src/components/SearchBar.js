@@ -88,12 +88,12 @@ function SearchBar({ onFetchSuccess, onFetchStart, onFetchEnd, id }) {
 				console.error("Pista para el desarrollador: El servidor de la API no parece estar respondiendo. ¿Está en marcha? Revisa también la configuración de CORS.");
 			}
 
-			// Creamos un error genérico y amigable para mostrar siempre en la UI.
 			/** @type {Error & {secondaryMessage?: string}} */
+			// Creamos un error amigable para la UI, intentando usar el mensaje del error original.
 			const userFriendlyError = new Error(
-				"No se han podido cargar las excursiones."
+				error.message || "No se han podido cargar las excursiones."
 			);
-			userFriendlyError.secondaryMessage = "Por favor, comprueba tu conexión o inténtalo de nuevo más tarde.";
+			userFriendlyError.secondaryMessage = "Por favor, inténtalo de nuevo más tarde o revisa tu conexión a internet.";
 
 			// Pasamos el error amigable a la UI para que se muestre
 			onFetchEnd?.(userFriendlyError);

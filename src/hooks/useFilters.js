@@ -72,8 +72,10 @@ export function useFilters(filterName) {
 					);
 				}
 				if (isMounted) {
-					// Creamos un error genérico y amigable para mostrar siempre en la UI.
-					const finalError = new Error("No se pudieron cargar los filtros.");
+					// Creamos un error amigable para la UI, intentando usar el mensaje del error original.
+					const finalError = new Error(
+						error.message || "No se pudieron cargar los filtros."
+					);
 					dispatchWithMinDisplayTime({
 						type: "FETCH_FAILURE",
 						payload: finalError,

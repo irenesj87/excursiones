@@ -64,13 +64,13 @@ const Layout = () => {
 
 	// Se obtienen los filtros activos del estado global de Redux. Estos filtros se usan para filtrar las excursiones que se muestran
 	// en la lista de excursiones.
-	const { area, difficulty, time } = useSelector(
+	const activeFilterCount = useSelector(
 		/** @param {RootState} state */
-		(state) => state.filterReducer
+		(state) =>
+			state.filterReducer.area.length +
+			state.filterReducer.difficulty.length +
+			state.filterReducer.time.length
 	);
-
-	// Calcula el número total de filtros activos.
-	const activeFilterCount = area.length + difficulty.length + time.length;
 
 	// Texto para el contador de filtros en el botón de 'Mostrar Filtros' que aparece en brakpoints muy pequeños.
 	const filterCountText =
