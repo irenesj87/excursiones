@@ -1,16 +1,15 @@
 import { Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import FormPageLayout from "../FormPageLayout";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import FormPageLayout from "../FormPageLayout";
 import registerFormStyles from "../../css/RegisterForm.module.css";
 
 /** @typedef {import("../../types").RootState} RootState */
 
 /**
- * Esqueleto de carga cuya función es mostrar una versión simplificada y animada del formulario de registro mientras el
- * componente real (RegisterForm.js) se está cargando. Esto mejora la experiencia del usuario porque ve una estructura
- * familiar en lugar de una pantalla en blanco. Se adapta al modo claro/oscuro de la aplicación.
+ * Esqueleto de carga cuya función es mostrar una versión simplificada del formulario de registro mientras el componente real
+ * (RegisterForm.js) se está cargando.
  */
 function RegisterPageSkeleton() {
 	const mode = useSelector(
@@ -19,11 +18,14 @@ function RegisterPageSkeleton() {
 	);
 
 	// Define los colores del esqueleto según el tema para una experiencia visual consistente.
-	// Para el modo claro, se ha aumentado el contraste entre el color base y el de resaltado
-	// para que la animación sea más perceptible, similar a como se ve en el modo oscuro.
 	const baseColor = mode === "dark" ? "#202020" : "#e0e0e0";
 	const highlightColor = mode === "dark" ? "#444" : "#f5f5f5";
 
+	/**
+	 * Renderiza un marcador de posición para los campos de entrada del formulario.
+	 * @param {string} labelWidth - Ancho del marcador de posición del texto de la etiqueta.
+	 * @returns {React.ReactElement} Marcador de posición para el campo de entrada.
+	 */
 	const renderInputPlaceholder = (labelWidth) => (
 		<div className="mb-3">
 			<Skeleton width={labelWidth} containerClassName="d-block mb-2" />
@@ -32,6 +34,7 @@ function RegisterPageSkeleton() {
 	);
 
 	return (
+		// Utiliza FormPageLayout para mantener la estructura del formulario de registro.
 		<FormPageLayout
 			title="Bienvenido/a"
 			subtitle="Crea tu cuenta para empezar a explorar."
@@ -69,16 +72,24 @@ function RegisterPageSkeleton() {
 						</Col>
 					</Row>
 
-					{/* Esqueleto para el mensaje informativo de la contraseña, imitando la nueva estructura. */}
+					{/* Esqueleto para el mensaje informativo de la contraseña. */}
 					<div className={`${registerFormStyles.infoMessage} mb-3`}>
 						<p className="mb-1 fw-normal">
 							<Skeleton width="70%" />
 						</p>
 						<ul className="mb-0 ps-3 fw-normal">
-							<li><Skeleton width="40%" /></li>
-							<li><Skeleton width="35%" /></li>
-							<li><Skeleton width="35%" /></li>
-							<li><Skeleton width="60%" /></li>
+							<li>
+								<Skeleton width="40%" />
+							</li>
+							<li>
+								<Skeleton width="35%" />
+							</li>
+							<li>
+								<Skeleton width="35%" />
+							</li>
+							<li>
+								<Skeleton width="60%" />
+							</li>
 						</ul>
 					</div>
 

@@ -20,7 +20,7 @@ function LoginPageSkeleton() {
 	const baseColor = mode === "dark" ? "#202020" : "#e0e0e0";
 	const highlightColor = mode === "dark" ? "#444" : "#f5f5f5";
 
-	/** Renderiza un placeholder para un campo de formulario (label + input). */
+	/** Renderiza un placeholder para un campo de formulario (etiqueta(label) + input). */
 	const renderInputPlaceholder = () => (
 		<div className="mb-3">
 			<Skeleton width="40%" containerClassName="d-block mb-2" />
@@ -29,6 +29,7 @@ function LoginPageSkeleton() {
 	);
 
 	return (
+		// Utiliza FormPageLayout para mantener la estructura de la página de inicio de sesión.
 		<FormPageLayout
 			title="Inicia sesión"
 			colWidth="3"
@@ -50,10 +51,10 @@ function LoginPageSkeleton() {
 							<Col xs={12} sm="auto">
 								{/*
 							  Para el esqueleto del botón, necesitamos un comportamiento responsivo:
-							  - En breakpoints pequeños (xs), debe ocupar el 100% del ancho (como el botón real).
-							  - En breakpoints más grandes (sm+), debe tener un ancho fijo para simular el botón.
+							  - En breakpoints pequeños 'xs', debe ocupar el 100% del ancho (como el botón real).
+							  - En breakpoints más grandes, debe tener un ancho fijo para simular el botón.
 							  - La clase `w-100` asegura el ancho completo, y el `min-width` en el estilo evita que la columna 
-							  `sm="auto"` colapse en breakpoints grandes.
+							    `sm="auto"` colapse en breakpoints grandes.
 							*/}
 								<Skeleton
 									height={38}

@@ -3,7 +3,7 @@ import Skeleton from "react-loading-skeleton";
 import userInfoStyles from "../../css/UserInfoForm.module.css";
 
 /**
- * Renderiza un esqueleto para la tarjeta de información del usuario.
+ * Renderiza un esqueleto para la tarjeta de información del usuario de la página de usuario.
  * @returns {React.ReactElement}
  */
 function UserInfoSkeleton() {
@@ -15,7 +15,6 @@ function UserInfoSkeleton() {
 			<Card.Body className={`${userInfoStyles.cardBody} d-flex flex-column`}>
 				<div>
 					{/* Simula la fila de Correo (solo texto) */}
-					{/* Se añade 'align-items-center' para que el esqueleto se alinee visualmente como el componente real */}
 					<Row className="mb-3 gx-2 align-items-center">
 						<Form.Label column sm={3} className="text-sm-end fw-bold">
 							<Skeleton width="80%" />
