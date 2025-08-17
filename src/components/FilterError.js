@@ -15,7 +15,7 @@ function FilterError({ error }) {
 		<div className={styles.errorContainer} role="alert">
 			<FiAlertTriangle className={styles.errorIcon} aria-hidden="true" />
 			<p className={styles.errorMessage}>
-				{/* El prefijo "Error: " está oculto visualmente pero es leído por los lectores de pantalla para dar más contexto. */}
+				{/* El prefijo "Error: " está oculto pero es leído por los lectores de pantalla para dar más contexto. */}
 				<span className="visually-hidden">Error: </span>
 				{message}
 			</p>
