@@ -23,27 +23,22 @@ import styles from "../../css/Layout.module.css";
 /**
  * Lazy loading de los componentes RegisterPage, LoginPage y UserPage.
  * Se utiliza `lazyWithMinTime` para optimizar la carga de estos componentes.
- * Esta función permite que los componentes se carguen de manera perezosa, mejorando el rendimiento de la aplicación.
  */
 const RegisterPage = lazyWithMinTime(() => import("../RegisterPage"));
 const LoginPage = lazyWithMinTime(() => import("../LoginPage"));
 const UserPage = lazyWithMinTime(() => import("../UserPage"));
 
-/**
- * La memoización es una técnica de optimización donde se cachean los resultados para que no se tenga que renderizar otra
- * vez una función o componente. Así, se mejoran los tiempos de ejecución de la página.
- */
+// Componente Footer memoizado para evitar re-renderizados innecesarios.
 const Footer = memo(OriginalFooter);
 
 /**
- * Componente principal de la aplicación. Gestiona el estado de las excursiones, la autenticación del usuario y la
- * estructura general de la página.
+ * Componente principal de la aplicación. Gestiona el estado de las excursiones, la autenticación del usuario y la estructura
+ * general de la página.
  * @returns {React.ReactElement} El layout
  */
 const Layout = () => {
 	// Estado para controlar la visibilidad del menú Offcanvas de filtros en breakpoints pequeños.
 	const [showFilters, setShowFilters] = useState(false);
-
 	// Función para cerrar el Offcanvas de filtros.
 	const handleCloseFilters = () => setShowFilters(false);
 	// Función para abrir el Offcanvas de filtros.
@@ -51,10 +46,9 @@ const Layout = () => {
 
 	// Se usa el hook useAuth para saber si ya se ha verificado si el usuario tiene una sesión activa.
 	const { isAuthCheckComplete } = useAuth();
+
 	// Se usa el hook useExcursions para obtener el estado completo de las excursiones, que contiene los datos, el estado de carga y
 	// los errores.
-	// Además, se obtienen las funciones para manejar ese estado. Lo hacen mediante la actualización de dicho estado en función de
-	// las acciones que se realicen en el componente Excursions.
 	const {
 		excursionsState,
 		handleExcursionsFetchStart,
@@ -72,7 +66,7 @@ const Layout = () => {
 			state.filterReducer.time.length
 	);
 
-	// Texto para el contador de filtros en el botón de 'Mostrar Filtros' que aparece en brakpoints muy pequeños.
+	// Texto para el contador de filtros en el botón de 'Mostrar Filtros' que aparece en breakpoints 'xs'.
 	const filterCountText =
 		activeFilterCount === 1 ? "seleccionado" : "seleccionados";
 
@@ -91,8 +85,6 @@ const Layout = () => {
 			{/* Componente de navegación al que se le pasan las funciones de manejo de excursiones y el estado de verificación de 
 			    autenticación del usuario como props. Esto permite que la barra de navegación pueda interactuar con el estado de las
 				excursiones y la autenticación del usuario */}
-			{/* La barra de navegación se renderiza en la parte superior de la página y es responsable de la navegación entre las 
-			    diferentes secciones de la aplicación */}
 			<NavigationBar
 				onFetchSuccess={handleExcursionsFetchSuccess}
 				onExcursionsFetchStart={handleExcursionsFetchStart}
@@ -118,7 +110,7 @@ const Layout = () => {
 										>
 											<Filters />
 										</Col>
-										{/* Contenido principal que incluye el botón para mostrar filtros en breakpoints pequeños y 
+										{/* Contenido principal que incluye el botón para mostrar filtros en breakpoints 'xs' y 
 										    la lista de excursiones en cualquier breakpoint*/}
 										<Col
 											xs={12}
@@ -127,7 +119,7 @@ const Layout = () => {
 											xl={10}
 											className="d-flex flex-column position-relative"
 										>
-											{/* Botón para mostrar filtros (visible solo hasta 'md') */}
+											{/* Botón para mostrar filtros (visible hasta 'md') */}
 											<div className="d-grid d-md-none mt-3 mb-1">
 												<Button
 													variant="outline-secondary"
@@ -150,13 +142,13 @@ const Layout = () => {
 												</Button>
 											</div>
 											{excursionsContent}
-											{/* Menú Offcanvas para los filtros en breakpoints pequeños. Es independiente del de 
+											{/* Menú Offcanvas para los filtros en breakpoints hasta 'md'. Es independiente del de 
 											 navegación. */}
 											<Offcanvas
 												show={showFilters}
 												onHide={handleCloseFilters}
 												placement="start"
-												className="d-md-none" // Asegura que el componente solo se active en breakpoints pequeños
+												className="d-md-none" // Asegura que el componente solo se active en breakpoints hasta 'md'
 											>
 												<Offcanvas.Header closeButton>
 													<Offcanvas.Title>Filtros</Offcanvas.Title>
@@ -191,6 +183,21 @@ const Layout = () => {
 							<Route
 								path="userPage"
 								element={
+									// ProtectedRoute asegura que el usuario esté autenticado antes de acceder a UserPage, es decir,
+									// restringe el acceso. Esto lo hace revisando el estado de autenticación del usuario (que se 
+									// gestiona con Redux en loginSlice).
+									// Este componente tiene tres propósitos:
+									// 1. Evita mostrar una página "rota": Impide que un usuario no autenticado vea una página de
+									//    perfil vacía o con errores, ya que un usuario no autenticado (alguien que no ha iniciado
+									//    sesión) podría escribir /userPage en el navegador y llegar a la página. Sin embargo, como
+									//    no hay datos de usuario en el estado de Redux (state.loginReducer.user sería null), la
+									//    página de perfil se mostraría vacía o con errores, pero nunca mostraría los datos de otro
+									//    usuario. Su función aquí es mejorar la experiencia de usuario y mantener la lógica de 
+									//    acceso.
+									// 2. Gestiona el flujo de autenticación: Si un usuario no logueado intenta acceder a /userPage,
+									//    lo redirige de forma limpia a la página de inicio de sesión (/loginPage).
+									// 3. Redirección inteligente: Guarda la página que el usuario intentaba visitar para que, una
+									//    vez que inicie sesión, pueda ser redirigido de vuelta a su perfil automáticamente.
 									<ProtectedRoute isAuthCheckComplete={isAuthCheckComplete}>
 										<LazyRouteWrapper
 											PageComponent={UserPage}
