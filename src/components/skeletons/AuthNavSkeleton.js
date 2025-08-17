@@ -3,7 +3,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { useSelector } from "react-redux";
 import "react-loading-skeleton/dist/skeleton.css";
 
-/** @typedef {import("../types").RootState} RootState */
+/** @typedef {import("../../types").RootState} RootState */
 
 /**
  * Componente que muestra un esqueleto de carga para los botones de autenticación en la barra de navegación.
