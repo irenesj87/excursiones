@@ -18,7 +18,7 @@ import styles from "../css/Excursions.module.css";
  * @param {ExcursionsLoadingProps} props
  * @typedef {object} ExcursionsLoadingProps
  * @property {boolean} isLoggedIn - Indica si el usuario ha iniciado sesión.
- * @property {'light' | 'dark'} mode - El modo de tema actual.
+ * @property {'light' | 'dark'} mode - El modo de tema actual (claro u oscuro).
  */
 const ExcursionsLoadingComponent = ({ isLoggedIn, mode }) => {
 	const baseColor = mode === "dark" ? "#202020" : "#e0e0e0";
@@ -51,11 +51,11 @@ const ExcursionsLoadingComponent = ({ isLoggedIn, mode }) => {
 		</SkeletonTheme>
 	);
 };
+
 const ExcursionsLoading = memo(ExcursionsLoadingComponent);
 
 /**
- * Componente que muestra un mensaje de error con un icono.
- * Se renderiza cuando la carga de excursiones falla.
+ * Componente que muestra un mensaje de error con un icono. Se renderiza cuando la carga de excursiones falla.
  * @param {ExcursionsErrorProps} props
  * @typedef {object} ExcursionsErrorProps
  * @property {(Error & { secondaryMessage?: string }) | null} error - El objeto de error que contiene el mensaje a mostrar.
@@ -77,11 +77,11 @@ const ExcursionsErrorComponent = ({ error }) => (
 		</div>
 	</div>
 );
+
 const ExcursionsError = memo(ExcursionsErrorComponent);
 
 /**
- * Componente que muestra un mensaje cuando no se encuentran excursiones
- * que coincidan con los criterios de búsqueda.
+ * Componente que muestra un mensaje cuando no se encuentran excursiones que coincidan con los criterios de búsqueda.
  */
 const NoExcursionsFoundComponent = () => (
 	<div className={`${styles.excursionsContainer} ${styles.centeredStatus}`}>
@@ -96,6 +96,7 @@ const NoExcursionsFoundComponent = () => (
 		</div>
 	</div>
 );
+
 const NoExcursionsFound = memo(NoExcursionsFoundComponent);
 
 /**
@@ -137,7 +138,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 		if (!isLoading) {
 			setDisplayedExcursions(excursionData);
 
-			// Solo anunciar en cargas posteriores a la inicial (ej. al aplicar filtros)
+			// Sólo anunciar en cargas posteriores a la inicial (ej. al aplicar filtros)
 			if (!isInitialLoad.current) {
 				if (excursionData.length > 0) {
 					const plural =
@@ -148,7 +149,6 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 				// Si no hay resultados, el componente de "no encontrado" ya se anuncia.
 			}
 			// Si es la primera carga, no anunciamos nada para evitar ruido al cargar el componente.
-			// Esto es útil para evitar que los lectores de pantalla lean el mensaje de "cargando" al inicio.
 			// Después de la primera carga, se establece isInitialLoad a false para que los siguientes cambios sí se anuncien.
 			if (isInitialLoad.current) {
 				isInitialLoad.current = false;
@@ -164,8 +164,8 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 		async (excursionId) => {
 			try {
 				// Llamamos al servicio para unirse a la excursión. Este es el que hace la petición al servidor para apuntar al
-				// usuario a la excursión. El 'await' le die a JavaScript que pause la ejecución de la función 'joinExcursion' hasta
-				// que 'joinExcursionService' termine y retorne una respuesta o un error.
+				// usuario a la excursión. El 'await' le dice a JavaScript que pause la ejecución de la función 'joinExcursion'
+				// hasta que 'joinExcursionService' termine y retorne una respuesta o un error.
 				// Si la petición es exitosa, 'updateUser' contendrá la info actualizada del usuario (con la nueva excursión en su
 				// lista), y se actualizará el estado del usuario en Redux, lo que hará que los componentes que dependen de este
 				// estado se re-rendericen automáticamente con la información actualizada, (por ejemplo, el botón 'Apuntarse'
@@ -228,7 +228,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	if (error) {
 		return <ExcursionsError error={error} />;
 	}
-	// Si se está cargando y no hay excursiones para mostrar, mostrar el esqueleto de carga.
+	// Si las excursiones se están cargando y no hay excursiones, mostrar el esqueleto de carga.
 	if (isLoading && displayedExcursions.length === 0) {
 		return <ExcursionsLoading isLoggedIn={isLoggedIn} mode={mode} />;
 	}
@@ -252,4 +252,5 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 }
 
 const Excursions = memo(ExcursionsComponent);
+
 export default Excursions;
