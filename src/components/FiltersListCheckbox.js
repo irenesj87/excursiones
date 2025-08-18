@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleFilter } from "../slicers/filterSlice";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "../css/FiltersListCheckbox.module.css";
@@ -19,8 +19,7 @@ function FiltersListCheckboxComponent({ filterName, filter }) {
 	// Obtenemos los filtros seleccionados para esta categoría (ej. 'area') desde Redux
 	const selectedFilters = useSelector(
 		/** @param {RootState} state */
-		(state) => state.filterReducer[filterName],
-		shallowEqual
+		(state) => state.filterReducer[filterName]
 	);
 
 	// El filtro está seleccionado si su valor está incluido en el array del estado de Redux
