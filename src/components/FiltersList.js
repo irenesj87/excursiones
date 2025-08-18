@@ -72,4 +72,5 @@ function FiltersListComponent({ filterName }) {
 }
 
 const FiltersList = memo(FiltersListComponent);
+
 export default FiltersList;
