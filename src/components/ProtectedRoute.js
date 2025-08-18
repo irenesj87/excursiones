@@ -26,9 +26,10 @@ const ProtectedRoute = ({ children, isAuthCheckComplete }) => {
 		return <Navigate to="/loginPage" state={{ from: location }} replace />;
 	}
 
-	// En los demás casos (la comprobación está en curso, o ha finalizado y el usuario está logueado),
-	// se renderiza el contenido hijo. El componente `LazyRouteWrapper` (que es el hijo) se encargará
-	// de mostrar el esqueleto de carga mientras el componente de la página se carga.
+	// Si la comprobación de autenticación aún no ha finalizado, o si ha finalizado y el usuario está
+	// autenticado, se renderiza el contenido hijo.
+	// Mientras la comprobación está en curso, el componente hijo (`LazyRouteWrapper`) mostrará
+	// un esqueleto de carga, evitando una pantalla en blanco.
 	return children;
 };
 
