@@ -9,12 +9,6 @@ import styles from "../css/Filters.module.css";
 
 /** @typedef {import('../types').RootState} RootState */
 
-/**
- * Componente para renderizar los filtros de búsqueda (zona, dificultad, tiempo estimado)
- * @param {object} props - Propiedades del componente.
- * @param {boolean} [props.showTitle=true] - Controla si se muestra el título.
- * @returns {React.ReactElement} El componente para los filtros
- */
 // Definimos las secciones de filtros con sus nombres, títulos e iconos.
 const filterSections = [
 	{
@@ -34,7 +28,8 @@ const filterSections = [
 	},
 ];
 
-/** * Componente principal de los filtros, que utiliza Redux para manejar el estado.
+/** * Componente principal de los filtros que renderiza el tipo de los filtros de búsqueda (zona, dificultad, tiempo estimado).
+ * Utiliza Redux para manejar el estado.
  * @param {object} props - Propiedades del componente.
  * @param {boolean} [props.showTitle=true] - Controla si se muestra el título o no.
  * @returns {React.ReactElement} El componente de filtros.
@@ -49,6 +44,7 @@ function FiltersComponent({ showTitle = true }) {
 	/**
 	 * Comprueba si hay algún filtro activo para habilitar/deshabilitar el botón de limpiar filtros.
 	 * @type {boolean}
+	 * @description Retorna `true` si hay al menos un filtro activo, de lo contrario `false`.
 	 */
 	const hasActiveFilters =
 		area.length > 0 || difficulty.length > 0 || time.length > 0;
@@ -98,4 +94,5 @@ function FiltersComponent({ showTitle = true }) {
 }
 
 const Filters = memo(FiltersComponent);
+
 export default Filters;
