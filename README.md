@@ -6,22 +6,22 @@ Aplicación web desarrollada con React para la visualización y gestión de excu
 
 ### Frontend
 
--   **⚛️ React:** Librería principal para construir la interfaz de usuario.
--   **🔄 Redux:** Para la gestión centralizada del estado de la aplicación (login, tema, etc.).
--   **🎨 React Bootstrap y Bootstrap:** Para los componentes de la UI y el sistema de rejilla.
--   **💅 CSS Modules:** Para estilos encapsulados y específicos de cada componente, evitando colisiones.
--   **✨ React Icons:** Para el uso de iconos SVG de forma sencilla.
--   **💀 React Loading Skeleton:** Para mostrar esqueletos de carga que mejoran la experiencia de usuario.
+-   **React:** Librería principal para construir la interfaz de usuario.
+-   **Redux:** Para la gestión centralizada del estado de la aplicación (login, tema, etc.).
+-   **React Bootstrap:** Para los componentes de la UI y el sistema de rejilla.
+-   **CSS Modules:** Para estilos encapsulados y específicos de cada componente, evitando colisiones.
+-   **React Icons:** Para el uso de iconos SVG de forma sencilla.
+-   **React Loading Skeleton:** Para mostrar esqueletos de carga que mejoran la experiencia de usuario.
 
 ### Backend (Servidor de ejemplo)
 
--   **🟢 Node.js:** Entorno de ejecución para el servidor de datos (`testserver`).
+-   **Node.js:** Entorno de ejecución para el servidor de datos (`testserver`).
 
 ### Herramientas de Desarrollo
 
--   **📦 npm:** Gestor de paquetes.
--   **🌿 Nodemon:** Para el reinicio automático del servidor de desarrollo.
--   **🐙 Git:** Sistema de control de versiones.
+-   **npm:** Gestor de paquetes.
+-   **Nodemon:** Para el reinicio automático del servidor de desarrollo.
+-   **Git:** Sistema de control de versiones.
 
 ## 🚀 Puesta en Marcha 
 
