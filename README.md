@@ -79,3 +79,25 @@ En el directorio `excursiones`, puedes ejecutar los siguientes comandos:
 - `npm start`: Inicia la aplicación en modo de desarrollo.
 - `npm test`: Lanza el corredor de pruebas.
 - `npm run build`: Compila la aplicación para producción.
+
+
+## 🛠️ Tecnologías Utilizadas
+
+### Frontend
+
+-   **React:** Librería principal para construir la interfaz de usuario.
+-   **Redux:** Para la gestión centralizada del estado de la aplicación (login, tema, etc.).
+-   **React Bootstrap:** Para los componentes de la UI y el sistema de rejilla.
+-   **CSS Modules:** Para estilos encapsulados y específicos de cada componente, evitando colisiones.
+-   **React Icons:** Para el uso de iconos SVG de forma sencilla.
+-   **React Loading Skeleton:** Para mostrar esqueletos de carga que mejoran la experiencia de usuario.
+
+### Backend (Servidor de ejemplo)
+
+-   **Node.js:** Entorno de ejecución para el servidor de datos (`testserver`).
+
+### Herramientas de Desarrollo
+
+-   **npm:** Gestor de paquetes.
+-   **Nodemon:** Para el reinicio automático del servidor de desarrollo.
+-   **Git:** Sistema de control de versiones.
