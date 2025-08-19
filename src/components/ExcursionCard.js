@@ -123,7 +123,11 @@ function ExcursionCardComponent({
 		>
 			<Card.Body className="d-flex flex-column">
 				<div>
-					<Card.Title id={titleId} className={`${styles.excursionTitle} mb-3`}>
+					<Card.Title
+						as="h3"
+						id={titleId}
+						className={`${styles.excursionTitle} mb-3`}
+					>
 						{name}
 					</Card.Title>
 

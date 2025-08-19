@@ -102,7 +102,8 @@ const Layout = () => {
 								element={
 									<>
 										{/* Columna de filtros visible a partir de 'md' en adelante */}
-										<Col
+										<Col // Se convierte en <aside> para mejorar la semántica
+											as="aside"
 											md={4}
 											lg={3}
 											xl={2}
@@ -184,7 +185,7 @@ const Layout = () => {
 								path="userPage"
 								element={
 									// ProtectedRoute asegura que el usuario esté autenticado antes de acceder a UserPage, es decir,
-									// restringe el acceso. Esto lo hace revisando el estado de autenticación del usuario (que se 
+									// restringe el acceso. Esto lo hace revisando el estado de autenticación del usuario (que se
 									// gestiona con Redux en loginSlice).
 									// Este componente tiene tres propósitos:
 									// 1. Evita mostrar una página "rota": Impide que un usuario no autenticado vea una página de
@@ -192,7 +193,7 @@ const Layout = () => {
 									//    sesión) podría escribir /userPage en el navegador y llegar a la página. Sin embargo, como
 									//    no hay datos de usuario en el estado de Redux (state.loginReducer.user sería null), la
 									//    página de perfil se mostraría vacía o con errores, pero nunca mostraría los datos de otro
-									//    usuario. Su función aquí es mejorar la experiencia de usuario y mantener la lógica de 
+									//    usuario. Su función aquí es mejorar la experiencia de usuario y mantener la lógica de
 									//    acceso.
 									// 2. Gestiona el flujo de autenticación: Si un usuario no logueado intenta acceder a /userPage,
 									//    lo redirige de forma limpia a la página de inicio de sesión (/loginPage).

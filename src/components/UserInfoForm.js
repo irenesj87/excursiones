@@ -238,7 +238,9 @@ function UserInfoForm() {
 
 	return (
 		<Card className={`${styles.profileCard} w-100 flex-grow-1`}>
-			<Card.Header className={styles.cardHeader}>Datos Personales</Card.Header>
+			<Card.Header as="h3" className={styles.cardHeader}>
+				Datos Personales
+			</Card.Header>
 			<Card.Body className={`${styles.cardBody} d-flex flex-column`}>
 				{/*
 				 * Contenedor para alertas de éxito y error.
