@@ -1,12 +1,12 @@
-# Proyecto de "Excursiones Juntos" 🏔️
+# 🏔️ Proyecto de "Excursiones Juntos" 
 
 Aplicación web desarrollada con React para la visualización y gestión de excursiones. Permite a los usuarios registrarse, iniciar sesión, ver un listado de excursiones y apuntarse a ellas.
 
-## Puesta en Marcha
+## 🚀 Puesta en Marcha 
 
 Para ejecutar este proyecto, es necesario tener en funcionamiento tanto el **backend** (servidor de datos) como el **frontend** (esta aplicación).
 
-### Requisitos Previos
+### ✅ Requisitos Previos
 
 - **Node.js (v16 o superior):** Es el entorno de ejecución para JavaScript. `npm` (Node Package Manager) se instala automáticamente con Node.js.
 
@@ -72,7 +72,7 @@ Esta es la aplicación de React que interactúa con el usuario.
 
 Ahora la aplicación frontend debería estar conectada al backend y funcionando correctamente en tu navegador.
 
-## Scripts Disponibles
+## 📝 Scripts Disponibles
 
 En el directorio `excursiones`, puedes ejecutar los siguientes comandos:
 
