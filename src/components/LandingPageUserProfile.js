@@ -10,7 +10,8 @@ import styles from "../css/LandingPageUserProfile.module.css";
 /** @typedef {import('types.js').RootState} RootState */
 
 /**
- * Componente que muestra los enlaces de navegación para un usuario logueado, incluyendo un enlace al perfil y un botón para cerrar sesión.
+ * Componente que muestra los enlaces de navegación para un usuario logueado, incluyendo un enlace al perfil y un botón para cerrar 
+ * sesión.
  * Permite cerrar un menú colapsable (Offcanvas) si se proporciona la función `onClickCloseCollapsible`.
  * @param {object} props - Las propiedades del componente.
  * @param {() => void} [props.onClickCloseCollapsible] - Función para cerrar el menú colapsable (Offcanvas) en breakpoints pequeños.
@@ -26,13 +27,11 @@ function LandingPageUserProfile({ onClickCloseCollapsible }) {
 
 	/**
 	 * Maneja el proceso de cierre de sesión del usuario.
-	 * Llama al servicio para invalidar el token en el servidor y luego limpia el estado local
-	 * (Redux y sessionStorage) independientemente del resultado del servidor para garantizar
-	 * que el usuario sea deslogueado en el cliente.
+	 * Llama al servicio para invalidar el token en el servidor y luego limpia el estado local (Redux y sessionStorage) 
+	 * independientemente del resultado del servidor para garantizar que el usuario sea deslogueado en el cliente.
 	 */
 	const handleLogout = useCallback(async () => {
 		onClickCloseCollapsible?.();
-
 		try {
 			// Solo intenta invalidar el token en el servidor si realmente existe.
 			if (token) {

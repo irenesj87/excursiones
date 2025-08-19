@@ -25,14 +25,44 @@ const initialState = {
 // El reducer centraliza toda la lógica de actualización del estado del formulario.
 function loginReducer(state, action) {
 	switch (action.type) {
+		/**
+		 * Esta acción se despacha justo cuando el usuariopulsa el botón 'Enviar'. Su propósito es poner la interfaz en modo carga.
+		 * isLoading: true: Le dice al componente que ha empezado una operación asíncrona (la llamada a la API de login). Esto hace
+		 * que el botón de envío muestre un spinner y se desactive para prevenir múltiples envíos.
+		 * error: null: Limpia cualquier mensaje de error que pudiera existir de un intento de login anterior. Así, si el usuario
+		 * se equivocó, corrigió los datos y vuelve a intentarlo, no verá el mensaje de error anterior.
+		 */
 		case "LOGIN_START":
 			return { ...state, isLoading: true, error: null };
+		/**
+		 * Se despacha cuando la llamada a la API(loginUser) ha terminado con éxito y los datos de usuario ya se han guardado en Redux
+		 * y sessionStorage.
+		 * isLoading: false: Detiene el estado de carga. Indica que la operación asíncrona ha finalizado.
+		 */
 		case "LOGIN_SUCCESS":
 			return { ...state, isLoading: false };
+		/**
+		 * Se despacha si la llamada a la API falla (por ejemplo, por credenciales incorrectas, un error del servidor o un problema de red).
+		 * isLoading: false: Detiene el estado de carga, ya que la operación ha finalizado.
+		 * error: action.payload: Guarda el mensaje de error en el estado. El payload es el mensaje que se ha preparado en el bloque
+		 * catch del submit. Esto provoca que el componente <ErrorMessageAlert> se renderice y muestre el error al usuario.
+		 */
 		case "LOGIN_FAILURE":
 			return { ...state, isLoading: false, error: action.payload };
+		/**
+		 * Se despacha cada vez que el usuario escribe en los campos de correo o contraseña, gracias al useEffect que vigila esos
+		 * cambios.
+		 * isButtonDisabled: !action.payload: El payload de esta acción es un booleano(isValid) que indica si ambos campos son válidos.
+		 * La acción actualiza isButtonDisabled al valor contrario. Si los campos son válidos (isValid es true), el botón se habilita
+		 * (isButtonDisabled se pone a false). Si no lo son, se deshabilita (isButtonDisabled se pone a true).
+		 */
 		case "SET_VALIDITY":
 			return { ...state, isButtonDisabled: !action.payload };
+		/**
+		 * Se despacha cuando el usuario cierra manualmente la alerta de error haciendo click en la "x".
+		 * error: null: Limpia el mensaje de error del estado, lo que hace que el componente <ErrorMessageAlert> deje de
+		 * renderizarse.
+		 */
 		case "CLEAR_ERROR":
 			return { ...state, error: null };
 		default:
@@ -48,7 +78,6 @@ export function LoginForm() {
 	const navigate = useNavigate();
 	const [mail, setMail] = useState("");
 	const [password, setPassword] = useState("");
-
 	// Usamos useReducer para gestionar el estado del formulario.
 	const [formState, formDispatch] = useReducer(loginReducer, initialState);
 	// Ref para la alerta de error, para poder mover el foco a ella.
@@ -65,7 +94,6 @@ export function LoginForm() {
 			return;
 		}
 		formDispatch({ type: "LOGIN_START" });
-
 		try {
 			const data = await loginUser(mail, password);
 			loginDispatch(
@@ -74,8 +102,10 @@ export function LoginForm() {
 					token: data.token,
 				})
 			);
+			// Guarda el token en sessionStorage para persistencia de la sesión.
 			window.sessionStorage["token"] = data.token;
 			formDispatch({ type: "LOGIN_SUCCESS" });
+			// Redirige al usuario a la página de usuario después de un inicio de sesión exitoso.
 			navigate("/UserPage");
 		} catch (error) {
 			console.error("Login failed:", error);
@@ -101,9 +131,8 @@ export function LoginForm() {
 	 * El botón se habilita solo si el correo electrónico y la contraseña cumplen con las validaciones.
 	 */
 	useEffect(() => {
-		// Para el login, solo validamos que los campos no estén vacíos. La validación de la contraseña
-		// la realiza el servidor. Reutilizamos `validateName` para la contraseña, ya que su única
-		// función es comprobar que el campo no esté vacío.
+		// Para el login, solo validamos que los campos no estén vacíos. La validación de la contraseña la realiza el servidor.
+		// Reutilizamos `validateName` para la contraseña, ya que su única función es comprobar que el campo no esté vacío.
 		const isValid =
 			validateMail(mail) === true && validateName(password) === true;
 		formDispatch({ type: "SET_VALIDITY", payload: isValid });

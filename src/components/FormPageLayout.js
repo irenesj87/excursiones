@@ -5,7 +5,6 @@ import styles from "../css/FormPageLayout.module.css";
 /**
  * Componente que proporciona un diseño de página reutilizable para formularios.
  * Centra el contenido del formulario en una tarjeta, adaptándose a diferentes breakpoints.
- * Layout reutilizable para páginas con formularios centrados (Login, Registro).
  * @param {object} props - Las propiedades del componente.
  * @param {string} props.title - El título principal que se mostrará en la tarjeta.
  * @param {string} [props.subtitle] - Un subtítulo opcional para dar más contexto.
@@ -24,11 +23,12 @@ function FormPageLayout({
 	switcherLinkText,
 	switcherLinkTo,
 }) {
-	// Genera un ID único para el título, que se usará para la accesibilidad.
-	// Reemplaza espacios y caracteres especiales para crear un ID válido.
+	// Genera un ID único para el título, que se usará para la accesibilidad.Reemplaza espacios y caracteres especiales para crear
+	// un ID válido.
 	const titleId = `form-layout-title-${title
 		.toLowerCase()
 		.replace(/[\s/]/g, "-")}`;
+
 	/**
 	 * Renderiza el layout del formulario.
 	 * @returns {JSX.Element} El componente de layout del formulario.
@@ -47,7 +47,7 @@ function FormPageLayout({
 						</Card.Body>
 						{switcherPrompt && switcherLinkText && switcherLinkTo && (
 							<Card.Footer className={`${styles.switcher} d-lg-none`}>
-								{switcherPrompt}{" "}
+								{switcherPrompt}
 								<Link to={switcherLinkTo} className={styles.switcherLink}>
 									{switcherLinkText}
 								</Link>
