@@ -9,6 +9,7 @@
 .cardHeader {
 	background-color: var(--primary-color);
 	color: white;
+	font-size: 1.1rem; /* Ajustamos el tamaño para que no sea tan grande */
 	text-transform: uppercase;
 	font-weight: bold;
 	padding: 1rem 1.25rem;

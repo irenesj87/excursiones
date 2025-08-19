@@ -9,7 +9,7 @@ import userInfoStyles from "../../css/UserInfoForm.module.css";
 function UserInfoSkeleton() {
 	return (
 		<Card className={`${userInfoStyles.profileCard} w-100 flex-grow-1`}>
-			<Card.Header className={userInfoStyles.cardHeader}>
+			<Card.Header as="h3" className={userInfoStyles.cardHeader}>
 				Datos Personales
 			</Card.Header>
 			<Card.Body className={`${userInfoStyles.cardBody} d-flex flex-column`}>
