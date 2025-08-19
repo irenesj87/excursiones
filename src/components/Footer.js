@@ -13,9 +13,7 @@ const currentYear = new Date().getFullYear();
  * Componente de Tooltip para el icono de correo electrónico.
  * @returns {React.ReactElement} El componente Tooltip.
  */
-const mailTooltip = (
-	<Tooltip id="mail-tooltip">Envíanos un correo</Tooltip>
-);
+const mailTooltip = <Tooltip id="mail-tooltip">Envíanos un correo</Tooltip>;
 
 /**
  * Componente del pie de página que muestra información de contacto y derechos de autor.
@@ -34,10 +32,10 @@ function Footer() {
 					<MdMail />
 				</a>
 			</OverlayTrigger>
-			<p className={styles.footerText}>
+			<small className={styles.footerText}>
 				© Excursiones Juntos 2021 - {currentYear}. Todos los derechos
 				reservados.
-			</p>
+			</small>
 		</footer>
 	);
 }
