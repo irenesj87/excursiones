@@ -16,20 +16,20 @@ const ProtectedRoute = ({ children, isAuthCheckComplete }) => {
 		/** @param {RootState} state */
 		(state) => state.loginReducer
 	);
+	// Se obtiene la ubicación actual para redirigir al usuario después de iniciar sesión.
 	const location = useLocation();
 
-	// Si la comprobación de autenticación ha finalizado y el usuario no está logueado,
-	// se le redirige a la página de login.
-	// Se guarda la ubicación actual (`from: location`) para que, después de iniciar sesión,
-	// se pueda redirigir al usuario de vuelta a la página que intentaba visitar.
+	// Si la comprobación de autenticación ha finalizado y el usuario no está logueado, se le redirige a la página de login.
+	// Se guarda la ubicación actual (`from: location`) para que, después de iniciar sesión, se pueda redirigir al usuario de vuelta
+	// a la página que intentaba visitar.
 	if (isAuthCheckComplete && !isLoggedIn) {
 		return <Navigate to="/loginPage" state={{ from: location }} replace />;
 	}
 
-	// Si la comprobación de autenticación aún no ha finalizado, o si ha finalizado y el usuario está
-	// autenticado, se renderiza el contenido hijo.
-	// Mientras la comprobación está en curso, el componente hijo (`LazyRouteWrapper`) mostrará
-	// un esqueleto de carga, evitando una pantalla en blanco.
+	// Si la comprobación de autenticación aún no ha finalizado, o si ha finalizado y el usuario está autenticado, se renderiza el
+	// contenido hijo.
+	// Mientras la comprobación está en curso, el componente hijo (`LazyRouteWrapper`) mostrará un esqueleto de carga, evitando una
+	// pantalla en blanco.
 	return children;
 };
 
