@@ -42,7 +42,7 @@ function NavigationBarComponent({
 	const handleCloseOffcanvas = () => setShowOffcanvas(false);
 	// Abre el componente Offcanvas.
 	const handleShowOffcanvas = () => setShowOffcanvas(true);
-	
+
 	/**
 	 * Variable que guarda el modo de tema actual (claro u oscuro) del estado de Redux. Se inicializa con la preferencia del
 	 * sistema o un valor guardado en localStorage.
@@ -61,18 +61,18 @@ function NavigationBarComponent({
 	// Efecto para aplicar la clase del tema al HTML y guardar en localStorage
 	useEffect(() => {
 		if (mode === "light" || mode === "dark") {
-			const root = document.documentElement; // Seleccionar la etiqueta <html>
-			/**
-			 * Asegurarse de que la etiqueta <html> no tiene las clases 'light' y 'dark' aplicadas antes que el código añada
-			 * la correcta basada en 'mode'
-			 */
+			// Se selecciona la etiqueta <html>
+			const root = document.documentElement;
+
+			// Se asegura de que la etiqueta <html> no tiene las clases 'light' y 'dark' aplicadas antes que el código añada
+			// la correcta basada en 'mode'
 			root.classList.remove("light", "dark");
 			// Añade la clase 'mode' ('light' o 'dark') a <html>
 			root.classList.add(mode);
 			// Actualiza la variable 'mode' en localStorage
 			localStorage.setItem("themeMode", mode);
 		}
-	}, [mode]); // Este useEffect se ejecutará cada vez que la variable 'mode' cambie
+	}, [mode]);
 
 	// Alterna el modo de tema (claro/oscuro) despachando la acción `toggleMode`.
 	const toggleTheme = () => {
@@ -87,6 +87,7 @@ function NavigationBarComponent({
 			<FaSun className={styles.themeIcon} />
 		);
 
+	// Tooltip que muestra el texto adecuado según el modo actual
 	const themeTooltip = (props) => (
 		<Tooltip id="button-tooltip" {...props}>
 			{mode === "light" ? "Cambia a modo oscuro" : "Cambia a modo claro"}
@@ -94,7 +95,7 @@ function NavigationBarComponent({
 	);
 
 	/**
-	 * Componente que muestra los enlaces de navegación para usuarios no logueados (Registrarse, Iniciar sesión).
+	 * Componente que muestra los enlaces de navegación para usuarios no logueados (Regístrate, Inicia sesión).
 	 */
 	const NoLoggedItems = (
 		<>
@@ -110,8 +111,6 @@ function NavigationBarComponent({
 				as={Link}
 				to="/loginPage"
 				onClick={handleCloseOffcanvas}
-				// Usamos Link en lugar de NavLink porque este botón no necesita un estado "activo".
-				// Esto evita el conflicto de estilos con la clase 'active' y soluciona el error de tipos que reporta Sonar.
 				className={`btn ${styles.navButton} loginLink`}
 			>
 				Inicia sesión
@@ -120,7 +119,7 @@ function NavigationBarComponent({
 	);
 
 	/**
-	 * Componente que muestra los enlaces de navegación para usuarios logueados (Perfil, Cerrar sesión).
+	 * Componente que muestra los enlaces de navegación para usuarios logueados (Tu perfil, Cierra sesión).
 	 */
 	const LoggedItems = (
 		<LandingPageUserProfile onClickCloseCollapsible={handleCloseOffcanvas} />
@@ -129,6 +128,8 @@ function NavigationBarComponent({
 	// Renderiza el contenido de autenticación apropiado (links o esqueleto)
 	let authNavContent;
 	if (isAuthCheckComplete) {
+		// Si la comprobación de autenticación ha finalizado, muestra los enlaces correspondientes
+		// dependiendo de si el usuario está logueado o no.
 		authNavContent = isLoggedIn ? LoggedItems : NoLoggedItems;
 	} else {
 		// Muestra un esqueleto mientras se verifica la autenticación para evitar saltos de layout
@@ -176,7 +177,9 @@ function NavigationBarComponent({
 							id="toggleButton"
 							onClick={toggleTheme}
 							aria-label={
-								mode === "light" ? "Activa el modo oscuro" : "Activa el modo claro"
+								mode === "light"
+									? "Activa el modo oscuro"
+									: "Activa el modo claro"
 							}
 						>
 							{icon}
@@ -233,4 +236,5 @@ function NavigationBarComponent({
 }
 
 const NavigationBar = memo(NavigationBarComponent);
+
 export default NavigationBar;
