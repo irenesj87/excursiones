@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 
-/** @typedef {import("../types").RootState} RootState */
+/** @typedef {import("../../types").RootState} RootState */
 
 /**
  * Componente que protege rutas, redirigiendo a la página de login si el usuario no está autenticado.

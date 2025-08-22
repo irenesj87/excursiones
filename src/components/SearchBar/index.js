@@ -2,9 +2,9 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useSelector, shallowEqual } from "react-redux";
 import { FiSearch, FiX } from "react-icons/fi";
 import cn from "classnames";
-import { searchExcursions } from "../services/excursionService";
+import { searchExcursions } from "../../services/excursionService";
 import "bootstrap/dist/css/bootstrap.css";
-import styles from "../css/SearchBar.module.css";
+import styles from "./SearchBar.module.css";
 
 /** @typedef {import('types.js').RootState} RootState */
 

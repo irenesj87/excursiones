@@ -1,4 +1,4 @@
-import styles from "../css/Logo.module.css";
+import styles from "./Logo.module.css";
 
 /**
  * Componente que renderiza el logo de la aplicación, incluyendo un icono de montaña y el texto "Excursiones Juntos".

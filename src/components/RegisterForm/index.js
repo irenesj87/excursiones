@@ -3,7 +3,7 @@ import { Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../slicers/loginSlice.js";
-import ValidatedFormGroup from "../ValidatedFormGroup.js";
+import ValidatedFormGroup from "../ValidatedFormGroup/index.js";
 import {
 	validateName,
 	validateSurname,

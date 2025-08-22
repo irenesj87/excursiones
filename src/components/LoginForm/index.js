@@ -2,7 +2,7 @@ import { useEffect, useState, useReducer, useRef } from "react";
 import { Row, Col, Button, Form, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { validateMail, validateName } from "../../validation/validations.js";
-import ValidatedFormGroup from "../ValidatedFormGroup";
+import ValidatedFormGroup from "../ValidatedFormGroup/index.js";
 import ErrorMessageAlert from "../ErrorMessageAlert";
 import { login } from "../../slicers/loginSlice";
 import { useDispatch } from "react-redux";

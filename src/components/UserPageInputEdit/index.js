@@ -1,7 +1,7 @@
 import { forwardRef, useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
-import styles from "../css/UserPageInputEdit.module.css";
+import styles from "./UserPageInputEdit.module.css";
 
 /**
  * @typedef {object} UserPageInputEditProps

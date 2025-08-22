@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
-import styles from "../css/ValidatedFormGroup.module.css";
+import styles from "./ValidatedFormGroup.module.css";
 
 /**
  * Componente reutilizable para un campo de formulario con validación integrada.
