@@ -13,20 +13,26 @@ import styles from "../css/SearchBar.module.css";
  * @param {object} props - Las propiedades del componente.
  * @param {(excursions: any[]) => void} props.onFetchSuccess - Función para actualizar el estado de la lista de excursiones en el componente padre.
  * @param {() => void} props.onFetchStart - Callback que se ejecuta al iniciar la búsqueda de excursiones.
- * @param {(error: (Error & { secondaryMessage?: string }) | null) => void} props.onFetchEnd - Callback que se ejecuta al finalizar la búsqueda de excursiones.
+ * @param {(error: (Error & { secondaryMessage?: string }) | null) => void} props.onFetchEnd - Callback que se ejecuta al finalizar la búsqueda de excursiones
  * @param {string} props.id - ID único para el input de búsqueda, útil para accesibilidad y múltiples instancias.
+ * @param {string} props.searchValue - El término de búsqueda actual.
+ * @param {(value: string) => void} props.onSearchChange - Callback para actualizar el término de búsqueda.
  */
-function SearchBar({ onFetchSuccess, onFetchStart, onFetchEnd, id }) {
-	// Estado para el texto de búsqueda inmediato del input.
-	const [search, setSearch] = useState("");
+function SearchBar({
+	onFetchSuccess,
+	onFetchStart,
+	onFetchEnd,
+	id,
+	searchValue,
+	onSearchChange,
+}) {
 	// Estado para el texto de búsqueda "debounced" (retrasado) que se usará en la API.
-	const [debouncedSearch, setDebouncedSearch] = useState(search);
+	const [debouncedSearch, setDebouncedSearch] = useState(searchValue);
 	// Ref para el input de búsqueda para poder enfocarlo programáticamente.
 	const searchInputRef = useRef(null);
 	// Selector de Redux que obtiene los filtros de área, dificultad y tiempo del estado `filterReducer`.
 	const { area, difficulty, time } = useSelector(
-		/** @param {RootState} state */
-		(state) => state.filterReducer,
+		/** @param {RootState} state */ (state) => state.filterReducer,
 		shallowEqual
 	);
 	/**
@@ -34,15 +40,15 @@ function SearchBar({ onFetchSuccess, onFetchStart, onFetchEnd, id }) {
 	 * @param {React.ChangeEvent<HTMLInputElement>} event - El evento de cambio del input.
 	 */
 	// Función que maneja el cambio en el input de búsqueda, actualizando el estado `search`.
-	const introKeyPressed = (event) => {
-		setSearch(event.target.value);
+	const handleSearchChange = (event) => {
+		onSearchChange(event.target.value);
 	};
 
 	/**
 	 * Limpia el contenido del input de búsqueda y da el foco al mismo.
 	 */
 	const handleClearSearch = () => {
-		setSearch("");
+		onSearchChange("");
 		// Damos el foco al input para mejorar la experiencia de usuario.
 		searchInputRef.current?.focus();
 	};
@@ -51,11 +57,11 @@ function SearchBar({ onFetchSuccess, onFetchStart, onFetchEnd, id }) {
 	// Solo actualiza `debouncedSearch` cuando el usuario deja de teclear por 500ms.
 	useEffect(() => {
 		const timerId = setTimeout(() => {
-			setDebouncedSearch(search);
+			setDebouncedSearch(searchValue);
 		}, 500); // Un debounce de 500ms es una buena práctica.
 
 		return () => clearTimeout(timerId);
-	}, [search]);
+	}, [searchValue]);
 
 	/**
 	 * Función memoizada con useCallback para realizar la petición de búsqueda de excursiones.
@@ -131,10 +137,10 @@ function SearchBar({ onFetchSuccess, onFetchStart, onFetchEnd, id }) {
 				className={cn("form-control", styles.searchInput)}
 				type="search"
 				placeholder="Busca excursiones..."
-				value={search}
-				onChange={introKeyPressed}
+				value={searchValue}
+				onChange={handleSearchChange}
 			/>
-			{search && (
+			{searchValue && (
 				<button
 					type="button"
 					className={styles.clearButton}

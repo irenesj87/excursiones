@@ -1,0 +1,38 @@
+.navbarContainer {
+	border-bottom: 1px solid var(--separator-color);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.themeToggleBtn {
+	background-color: transparent;
+	transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+	color: var(--theme-toggle-btn-color);
+	border: none;
+	padding: 3px 6px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+}
+
+.themeIcon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.2rem; /* Tamaño base del icono */
+}
+
+.themeToggleBtn:hover {
+	background-color: transparent;
+	color: var(--theme-toggle-btn-color); /* Mantenemos el color del icono */
+}
+
+.authNavItems {
+	min-height: 40px;
+	min-width: 227.86px;
+	justify-content: flex-start;
+}
+
+.offcanvasMenu {
+	max-width: 300px;
+}

@@ -1,4 +1,4 @@
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect, memo, useCallback } from "react";
 import {
 	Nav,
 	Navbar,
@@ -8,22 +8,21 @@ import {
 	Tooltip,
 	OverlayTrigger,
 } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import Logo from "./Logo";
-import SearchBar from "./SearchBar";
-import LandingPageUserProfile from "./LandingPageUserProfile";
-import AuthNavSkeleton from "./skeletons/AuthNavSkeleton";
-import { toggleMode } from "../slicers/themeSlice";
+import Logo from "../Logo";
+import AuthNav from "../AuthNav";
+import SearchBar from "../SearchBar";
+import { toggleMode } from "../../slicers/themeSlice";
 import { FaMoon, FaSun } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.css";
-import styles from "../css/NavigationBar.module.css";
-import "../css/Themes.css";
+import styles from "./NavigationBar.module.css";
+import "../../css/Themes.css";
 
 /** @typedef {import('types.js').RootState} RootState */
 
 /**
- * Componente de la barra de navegación.
+ * Componente para la barra de navegación.
  * @param {object} props - Las propiedades del componente.
  * @param {(excursions: any[]) => void} props.onFetchSuccess - Función para actualizar el estado de la lista de excursiones.
  * @param {boolean} props.isAuthCheckComplete - Indica si la comprobación de autenticación ha finalizado.
@@ -36,11 +35,19 @@ function NavigationBarComponent({
 	onExcursionsFetchStart,
 	onExcursionsFetchEnd,
 }) {
-	// Estado de la visibilidad del Offcanvas (menú lateral).
+	/**
+	 * Estado para el término de búsqueda, compartido entre las dos barras de búsqueda (móvil y escritorio).
+	 * @type {[string, React.Dispatch<React.SetStateAction<string>>]}
+	 */
+	const [searchTerm, setSearchTerm] = useState("");
+	/**
+	 * Estado para controlar la visibilidad del componente Offcanvas (menú lateral).
+	 * @type {[boolean, React.Dispatch<React.SetStateAction<boolean>>]}
+	 */
 	const [showOffcanvas, setShowOffcanvas] = useState(false);
-	// Cierra el componente Offcanvas.
+	/** Cierra el menú Offcanvas. */
 	const handleCloseOffcanvas = () => setShowOffcanvas(false);
-	// Abre el componente Offcanvas.
+	/** Abre el menú Offcanvas. */
 	const handleShowOffcanvas = () => setShowOffcanvas(true);
 
 	/**
@@ -57,13 +64,14 @@ function NavigationBarComponent({
 		/** @param {RootState} state */
 		(state) => state.loginReducer
 	);
-
-	// Efecto para aplicar la clase del tema al HTML y guardar en localStorage
+	/**
+	 * Efecto que se ejecuta cuando el `mode` (tema) cambia.
+	 * Aplica la clase CSS correspondiente al elemento `<html>` y guarda la preferencia en `localStorage`.
+	 */
 	useEffect(() => {
 		if (mode === "light" || mode === "dark") {
 			// Se selecciona la etiqueta <html>
 			const root = document.documentElement;
-
 			// Se asegura de que la etiqueta <html> no tiene las clases 'light' y 'dark' aplicadas antes que el código añada
 			// la correcta basada en 'mode'
 			root.classList.remove("light", "dark");
@@ -74,69 +82,46 @@ function NavigationBarComponent({
 		}
 	}, [mode]);
 
-	// Alterna el modo de tema (claro/oscuro) despachando la acción `toggleMode`.
+	/**
+	 * Alterna el modo de tema (claro/oscuro).
+	 */
 	const toggleTheme = () => {
 		dispatch(toggleMode());
 	};
 
-	// Renderizado condicional para el icono
+	/**
+	 * Icono para el botón de cambio de tema, varía según el modo actual.
+	 */
 	const icon =
 		mode === "light" ? (
+			//Icono de luna para el modo claro, sugiriendo cambio a oscuro.
 			<FaMoon className={styles.themeIcon} />
 		) : (
+			//Icono de sol para el modo oscuro, sugiriendo cambio a claro.
 			<FaSun className={styles.themeIcon} />
 		);
 
-	// Tooltip que muestra el texto adecuado según el modo actual
-	const themeTooltip = (props) => (
-		<Tooltip id="button-tooltip" {...props}>
-			{mode === "light" ? "Cambia a modo oscuro" : "Cambia a modo claro"}
-		</Tooltip>
-	);
-
 	/**
-	 * Componente que muestra los enlaces de navegación para usuarios no logueados (Regístrate, Inicia sesión).
+	 * Renderiza el Tooltip para el botón de cambio de tema.
+	 * Se memoiza con `useCallback` para evitar que se recree en cada renderizado,
+	 * a menos que el `mode` cambie.
+	 * @param {object} props - Propiedades inyectadas por OverlayTrigger.
+	 * @returns {React.ReactElement}
 	 */
-	const NoLoggedItems = (
-		<>
-			<Nav.Link
-				className={`${styles.navLink} ${styles.registerLink} me-3`}
-				as={NavLink}
-				to="/registerPage"
-				onClick={handleCloseOffcanvas}
-			>
-				Regístrate
-			</Nav.Link>
-			<Nav.Link
-				as={Link}
-				to="/loginPage"
-				onClick={handleCloseOffcanvas}
-				className={`btn ${styles.navButton} loginLink`}
-			>
-				Inicia sesión
-			</Nav.Link>
-		</>
+	const renderThemeTooltip = useCallback(
+		(props) => (
+			<Tooltip id="button-tooltip" {...props}>
+				{mode === "light" ? "Cambia a modo oscuro" : "Cambia a modo claro"}
+			</Tooltip>
+		),
+		[mode]
 	);
-
-	/**
-	 * Componente que muestra los enlaces de navegación para usuarios logueados (Tu perfil, Cierra sesión).
-	 */
-	const LoggedItems = (
-		<LandingPageUserProfile onClickCloseCollapsible={handleCloseOffcanvas} />
-	);
-
-	// Renderiza el contenido de autenticación apropiado (links o esqueleto)
-	let authNavContent;
-	if (isAuthCheckComplete) {
-		// Si la comprobación de autenticación ha finalizado, muestra los enlaces correspondientes
-		// dependiendo de si el usuario está logueado o no.
-		authNavContent = isLoggedIn ? LoggedItems : NoLoggedItems;
-	} else {
-		// Muestra un esqueleto mientras se verifica la autenticación para evitar saltos de layout
-		authNavContent = <AuthNavSkeleton />;
-	}
 
 	return (
+		/**
+		 * Componente principal de la barra de navegación.
+		 * Utiliza `Navbar` de `react-bootstrap` para crear una barra de navegación responsiva.
+		 */
 		<Navbar
 			expand="lg"
 			className={`customNavbar ${styles.navbarContainer}`}
@@ -162,6 +147,8 @@ function NavigationBarComponent({
 							id="searchBar-md-lg"
 							onFetchStart={onExcursionsFetchStart}
 							onFetchEnd={onExcursionsFetchEnd}
+							searchValue={searchTerm}
+							onSearchChange={setSearchTerm}
 						/>
 					</div>
 				</div>
@@ -171,7 +158,10 @@ function NavigationBarComponent({
 				y justify-content-end alinea los items hijos al final del contenedor. */}
 				{/* order-lg-3: para posicionarlo correctamente en breakpoints grandes */}
 				<div className="d-flex align-items-center justify-content-end ms-auto ms-md-0 order-md-3 order-lg-3">
-					<OverlayTrigger placement="bottom" overlay={themeTooltip}>
+					<OverlayTrigger
+						placement="bottom"
+						overlay={renderThemeTooltip}
+					>
 						<Button
 							className={`${styles.themeToggleBtn} me-2`}
 							id="toggleButton"
@@ -191,7 +181,11 @@ function NavigationBarComponent({
 					<Nav
 						className={`${styles.authNavItems} d-none d-lg-flex flex-row align-items-center`}
 					>
-						{authNavContent}
+						<AuthNav
+							isAuthCheckComplete={isAuthCheckComplete}
+							isLoggedIn={isLoggedIn}
+							onCloseOffcanvas={handleCloseOffcanvas}
+						/>
 					</Nav>
 					{/* Toggle Offcanvas (Hamburguesa) */}
 					<Navbar.Toggle
@@ -209,10 +203,11 @@ function NavigationBarComponent({
 						id="searchBar-sm"
 						onFetchStart={onExcursionsFetchStart}
 						onFetchEnd={onExcursionsFetchEnd}
+						searchValue={searchTerm}
+						onSearchChange={setSearchTerm}
 					/>
 				</div>
 				{/* --- Final de contenedor de la derecha --- */}
-
 				{/* --- Componente Offcanvas --- */}
 				<Offcanvas
 					show={showOffcanvas}
@@ -227,7 +222,13 @@ function NavigationBarComponent({
 						<Offcanvas.Title>Menú</Offcanvas.Title>
 					</Offcanvas.Header>
 					<Offcanvas.Body>
-						<Nav className="d-flex flex-column">{authNavContent}</Nav>
+						<Nav className="d-flex flex-column">
+							<AuthNav
+								isAuthCheckComplete={isAuthCheckComplete}
+								isLoggedIn={isLoggedIn}
+								onCloseOffcanvas={handleCloseOffcanvas}
+							/>
+						</Nav>
 					</Offcanvas.Body>
 				</Offcanvas>
 			</Container>
