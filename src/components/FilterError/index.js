@@ -1,6 +1,6 @@
 import React from "react";
 import { FiAlertTriangle } from "react-icons/fi";
-import styles from "../css/FilterError.module.css";
+import styles from "./FilterError.module.css";
 
 /**
  * Componente para mostrar un mensaje de error cuando falla la carga de los filtros.

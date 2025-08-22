@@ -1,13 +1,13 @@
 import { memo, useCallback } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import FiltersList from "./FiltersList";
-import { clearAllFilters } from "../slicers/filterSlice";
+import FiltersList from "../FiltersList";
+import { clearAllFilters } from "../../slicers/filterSlice";
 import { FiMapPin, FiBarChart, FiClock, FiTrash2 } from "react-icons/fi";
 import "bootstrap/dist/css/bootstrap.css";
-import styles from "../css/Filters.module.css";
+import styles from "./Filters.module.css";
 
-/** @typedef {import('../types').RootState} RootState */
+/** @typedef {import('../../types').RootState} RootState */
 
 // Definimos las secciones de filtros con sus nombres, títulos e iconos.
 const filterSections = [

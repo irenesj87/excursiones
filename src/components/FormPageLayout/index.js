@@ -1,6 +1,6 @@
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import styles from "../css/FormPageLayout.module.css";
+import styles from "./FormPageLayout.module.css";
 
 /**
  * Componente que proporciona un diseño de página reutilizable para formularios.

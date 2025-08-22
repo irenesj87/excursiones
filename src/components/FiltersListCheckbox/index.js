@@ -1,10 +1,10 @@
 import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleFilter } from "../slicers/filterSlice";
+import { toggleFilter } from "../../slicers/filterSlice";
 import "bootstrap/dist/css/bootstrap.css";
-import styles from "../css/FiltersListCheckbox.module.css";
+import styles from "./FiltersListCheckbox.module.css";
 
-/** @typedef {import("../types").RootState} RootState */
+/** @typedef {import("../../types").RootState} RootState */
 
 /**
  * Componente que renderiza una única opción de filtro como una "píldora" interactiva.

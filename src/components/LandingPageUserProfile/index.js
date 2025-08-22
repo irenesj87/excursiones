@@ -2,10 +2,10 @@ import React, { useCallback } from "react";
 import { Nav, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { logoutUser } from "../services/authService";
-import { logout } from "../slicers/loginSlice";
+import { logoutUser } from "../../services/authService";
+import { logout } from "../../slicers/loginSlice";
 import "bootstrap/dist/css/bootstrap.css";
-import styles from "../css/LandingPageUserProfile.module.css";
+import styles from "./LandingPageUserProfile.module.css";
 
 /** @typedef {import('types.js').RootState} RootState */
 

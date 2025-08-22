@@ -1,14 +1,14 @@
 import { memo } from "react";
 import { useSelector } from "react-redux";
 import { SkeletonTheme } from "react-loading-skeleton";
-import FiltersListCheckbox from "./FiltersListCheckbox";
+import FiltersListCheckbox from "../FiltersListCheckbox";
 import FilterPillSkeleton from "./FilterPillSkeleton";
-import FilterError from "./FilterError";
-import { useFilters } from "../hooks/useFilters";
+import FilterError from "../FilterError";
+import { useFilters } from "../../hooks/useFilters";
 import "bootstrap/dist/css/bootstrap.css";
-import styles from "../css/FiltersList.module.css";
+import styles from "./FiltersList.module.css";
 
-/** @typedef {import("../types").RootState} RootState */
+/** @typedef {import("../../types").RootState} RootState */
 
 /**
  * Componente que muestra una lista de filtros para una categoría específica (ej. área, dificultad, tiempo).
