@@ -1,10 +1,10 @@
 import { memo, useCallback, useState } from "react";
 import { Card, Button, Spinner, Alert } from "react-bootstrap";
-import ExcursionDetailItem from "./ExcursionDetailItem";
+import ExcursionDetailItem from "../ExcursionDetailItem";
 import { FiMapPin, FiClock, FiCheckCircle } from "react-icons/fi";
 import cn from "classnames";
 import "bootstrap/dist/css/bootstrap.css";
-import styles from "../css/ExcursionCard.module.css";
+import styles from "./ExcursionCard.module.css";
 
 /**
  * Renderiza el botón para unirse a una excursión. Muestra un botón "Apuntarse", un estado de carga o un estado "Apuntado/a".

@@ -2,8 +2,8 @@ import { useEffect, useReducer, useRef } from "react";
 import { Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login } from "../slicers/loginSlice.js";
-import ValidatedFormGroup from "./ValidatedFormGroup.js";
+import { login } from "../../slicers/loginSlice.js";
+import ValidatedFormGroup from "../ValidatedFormGroup.js";
 import {
 	validateName,
 	validateSurname,
@@ -11,11 +11,11 @@ import {
 	validateMail,
 	validatePassword,
 	validSamePassword,
-} from "../validation/validations.js";
-import { loginUser, registerUser } from "../services/authService.js";
-import ErrorMessageAlert from "./ErrorMessageAlert.js";
+} from "../../validation/validations.js";
+import { loginUser, registerUser } from "../../services/authService.js";
+import ErrorMessageAlert from "../ErrorMessageAlert/index.js";
 import "bootstrap/dist/css/bootstrap.css";
-import styles from "../css/RegisterForm.module.css";
+import styles from "./RegisterForm.module.css";
 
 // Estado inicial para el reducer del formulario.
 const initialState = {

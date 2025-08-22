@@ -7,16 +7,16 @@ import Filters from "../Filters";
 import Excursions from "../Excursions";
 import OriginalFooter from "../Footer"; // Se renombra la importación original para que no haya conflictos
 import ProtectedRoute from "../ProtectedRoute";
-import RegisterPageSkeleton from "../skeletons/RegisterPageSkeleton";
-import LoginPageSkeleton from "../skeletons/LoginPageSkeleton";
-import UserPageSkeleton from "../skeletons/UserPageSkeleton";
+import RegisterPageSkeleton from "../RegisterPage/RegisterPageSkeleton";
+import LoginPageSkeleton from "../LoginPage/LoginPageSkeleton";
+import UserPageSkeleton from "../UserPage/UserPageSkeleton";
 import { useAuth } from "../../hooks/useAuth";
 import { useExcursions } from "../../hooks/useExcursions";
 import { lazyWithMinTime } from "../../utils/lazyWithMinTime";
 import LazyRouteWrapper from "../../utils/LazyRouteWrapper";
 import { FiFilter } from "react-icons/fi";
 import "bootstrap/dist/css/bootstrap.css";
-import styles from "../../css/Layout.module.css";
+import styles from "./Layout.module.css";
 
 /** @typedef {import('../../types').RootState} RootState */
 

@@ -2,7 +2,7 @@ import { memo } from "react";
 import { useSelector } from "react-redux";
 import { SkeletonTheme } from "react-loading-skeleton";
 import FiltersListCheckbox from "./FiltersListCheckbox";
-import FilterPillSkeleton from "./skeletons/FilterPillSkeleton";
+import FilterPillSkeleton from "./FilterPillSkeleton";
 import FilterError from "./FilterError";
 import { useFilters } from "../hooks/useFilters";
 import "bootstrap/dist/css/bootstrap.css";

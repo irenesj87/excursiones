@@ -1,16 +1,16 @@
 import { useReducer, useEffect, useRef } from "react";
 import { Card, Col, Form, Row, Button, Spinner, Alert } from "react-bootstrap";
-import UserPageInputEdit from "./UserPageInputEdit";
+import UserPageInputEdit from "../UserPageInputEdit";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUserInfo } from "../services/userService";
-import { updateUser } from "../slicers/loginSlice";
+import { updateUserInfo } from "../../services/userService";
+import { updateUser } from "../../slicers/loginSlice";
 import {
 	validateName,
 	validateSurname,
 	validatePhone,
-} from "../validation/validations";
+} from "../../validation/validations";
 import "bootstrap/dist/css/bootstrap.css";
-import styles from "../css/UserInfoForm.module.css";
+import styles from "./UserInfoForm.module.css";
 
 /** @typedef {import('types.js').RootState} RootState */
 

@@ -1,7 +1,7 @@
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import { MdMail } from "react-icons/md";
 import "bootstrap/dist/css/bootstrap.css";
-import styles from "../css/Footer.module.css";
+import styles from "./Footer.module.css";
 
 /**
  * Obtiene el año actual para mostrar en el pie de página.

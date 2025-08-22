@@ -1,7 +1,7 @@
 import { Nav } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import LandingPageUserProfile from "../LandingPageUserProfile";
-import AuthNavSkeleton from "../skeletons/AuthNavSkeleton";
+import AuthNavSkeleton from "./AuthNavSkeleton";
 import styles from "./AuthNav.module.css";
 
 /**

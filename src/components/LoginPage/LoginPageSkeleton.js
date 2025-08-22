@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import FormPageLayout from "../FormPageLayout";
-import loginFormStyles from "../../css/LoginForm.module.css";
+import loginFormStyles from "../LoginForm/LoginForm.module.css";
 
 /** @typedef {import('../../types').RootState} RootState */
 

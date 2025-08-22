@@ -1,5 +1,5 @@
 import { memo } from "react";
-import styles from "../css/ExcursionCard.module.css";
+import styles from "../ExcursionCard/ExcursionCard.module.css";
 
 /**
  * Componente para mostrar un detalle específico de una excursión (ej. dificultad, tiempo).

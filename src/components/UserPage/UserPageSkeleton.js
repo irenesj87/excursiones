@@ -1,9 +1,9 @@
 import { Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { SkeletonTheme } from "react-loading-skeleton";
-import UserInfoSkeleton from "./UserInfoSkeleton";
+import UserInfoSkeleton from "../UserInfoForm/UserInfoSkeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import styles from "../../css/UserPage.module.css";
+import styles from "./UserPage.module.css";
 
 /** @typedef {import("../../types").RootState} RootState */
 
