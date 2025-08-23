@@ -39,7 +39,7 @@ export function validateMail(mail) {
 	/**
 	 * Expresión regular simplificada para la validación de email.
 	 * No se dejan poner emails con IPs (ej: usuario@[192.168.1.1]) y partes locales entre comillas
-	 * (ej: "nombre con espacios"@dominio.com) para reducir la complejidad y evitar posibles ataques ReDoS, algo que sí está 
+	 * (ej: "nombre con espacios"@dominio.com) para reducir la complejidad y evitar posibles ataques ReDoS, algo que sí está
 	 * permitido en el estándar para correos electrónicos.
 	 */
 	const validMail =
@@ -95,7 +95,7 @@ export function validatePassword(password) {
  * @param {string} samePassword - La contraseña de confirmación.
  * @returns {true|string} - Retorna `true` si ambas contraseñas son iguales y válidas, o un `string` con el mensaje de error.
  */
-export function validSamePassword(password, samePassword) {
+export function validateSamePassword(password, samePassword) {
 	const passwordValidationResult = validatePassword(samePassword);
 	if (passwordValidationResult !== true) {
 		return passwordValidationResult; // Retorna el error específico de la validación de la contraseña.

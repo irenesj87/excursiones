@@ -44,16 +44,16 @@ export const joinExcursion = async (userMail, excursionId, token) => {
 		throw new Error("Usuario no autenticado o información faltante.");
 	}
 
-	const url = `${API_BASE_URL}/users/${userMail}/excursions/${excursionId}`;
+	const url = `${API_BASE_URL}/users/${userMail}/excursions`;
 	/** @type {RequestInit} */
 	const options = {
-		method: "PUT",
+		method: "POST",
 		mode: "cors",
 		headers: {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${token}`,
 		},
-		body: JSON.stringify({ id: excursionId }),
+		body: JSON.stringify({ excursionId }),
 	};
 
 	const response = await fetch(url, options);

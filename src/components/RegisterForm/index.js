@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef } from "react";
+import { useEffect, useReducer, useRef, useMemo } from "react";
 import { Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -10,9 +10,9 @@ import {
 	validatePhone,
 	validateMail,
 	validatePassword,
-	validSamePassword,
+	validateSamePassword,
 } from "../../validation/validations.js";
-import { loginUser, registerUser } from "../../services/authService.js";
+import { registerUser } from "../../services/authService.js";
 import ErrorMessageAlert from "../ErrorMessageAlert/index.js";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "./RegisterForm.module.css";
@@ -95,20 +95,18 @@ function RegisterForm() {
 		formDispatch({ type: "REGISTER_START" });
 		const { name, surname, phone, mail, password } = values;
 		try {
-			// Intenta registrar al nuevo usuario con los datos proporcionados.
-			await registerUser(name, surname, phone, mail, password);
-			// Si el registro es exitoso, intenta loguear al usuario automáticamente.
-			const loginData = await loginUser(values.mail, values.password);
+			// La función registerUser ahora devuelve directamente los datos de sesión.
+			const sessionData = await registerUser(name, surname, phone, mail, password);
 
 			// Despacha la acción de login para actualizar el estado de Redux con la información del usuario y el token.
 			loginDispatch(
 				login({
-					user: loginData.user,
-					token: loginData.token,
+					user: sessionData.user,
+					token: sessionData.token,
 				})
 			);
 			// Guarda el token en sessionStorage para persistencia de la sesión.
-			window.sessionStorage["token"] = loginData.token;
+			window.sessionStorage["token"] = sessionData.token;
 			// Indica que el proceso ha finalizado con éxito.
 			formDispatch({ type: "REGISTER_SUCCESS" });
 			// Redirige al usuario a la página principal.
@@ -134,23 +132,6 @@ function RegisterForm() {
 	};
 
 	/**
-	 * Efecto que habilita o deshabilita el botón de envío del formulario basado en la validez de todos los campos. El botón se habilita solo si todos los campos del
-	 * formulario cumplen con las validaciones.
-	 */
-	useEffect(() => {
-		const { name, surname, phone, mail, password, samePassword } = values;
-		// Se comprueba explícitamente que el resultado de cada validación sea `true`.
-		const isValid =
-			validateName(name) === true &&
-			validateSurname(surname) === true &&
-			validatePhone(phone) === true &&
-			validateMail(mail) === true &&
-			validatePassword(password) === true &&
-			validSamePassword(password, samePassword) === true;
-		formDispatch({ type: "SET_VALIDITY", payload: isValid });
-	}, [values]);
-
-	/**
 	 * Efecto para mover el foco a la alerta de error cuando esta aparece.
 	 */
 	useEffect(() => {
@@ -160,7 +141,10 @@ function RegisterForm() {
 	}, [formState.error]);
 
 	// Configuración de los campos del formulario para renderizarlos dinámicamente.
-	const formFieldsConfig = [
+	// Se usa useMemo para evitar que se recalcule en cada renderizado, optimizando el rendimiento.
+	// Solo se recalculará si `values.password` cambia, que es la única dependencia externa.
+	const formFieldsConfig = useMemo(
+		() => [
 		[
 			{
 				id: "formGridName",
@@ -208,21 +192,34 @@ function RegisterForm() {
 				validationFunction: validatePassword,
 				autocomplete: "new-password",
 				ariaDescribedBy: "password-requirements",
-				errorMessage: "La contraseña no cumple los requisitos.",
 			},
 			{
 				id: "confirm-password",
 				name: "Repite la contraseña",
 				field: "samePassword",
 				inputType: "password",
-				// La validación de este campo depende del valor de la contraseña.
+				// La validación de este campo depende del valor de la contraseña, por eso se define aquí.
 				validationFunction: (value) =>
-					validSamePassword(values.password, value),
+					validateSamePassword(values.password, value),
 				autocomplete: "new-password",
-				errorMessage: "Las contraseñas no coinciden.",
 			},
 		],
-	];
+		],
+		[values.password]
+	);
+
+	/**
+	 * Efecto que habilita o deshabilita el botón de envío del formulario basado en la validez de todos los campos.
+	 * Itera sobre la configuración de los campos para validar el formulario de forma declarativa.
+	 */
+	useEffect(() => {
+		// Itera sobre todos los campos definidos en la configuración para determinar si el formulario es válido.
+		const isFormValid = formFieldsConfig
+			.flat() // Aplana el array de arrays en uno solo.
+			.every((field) => field.validationFunction(values[field.field]) === true);
+
+		formDispatch({ type: "SET_VALIDITY", payload: isFormValid });
+	}, [values, formFieldsConfig]);
 
 	return (
 		<>
