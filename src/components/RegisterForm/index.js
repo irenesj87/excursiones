@@ -19,6 +19,7 @@ import styles from "./RegisterForm.module.css";
 
 // Estado inicial para el reducer del formulario.
 const initialState = {
+	// Objeto que almacena el valor de cada campo del formulario
 	values: {
 		name: "",
 		surname: "",
@@ -27,8 +28,12 @@ const initialState = {
 		password: "",
 		samePassword: "",
 	},
+	// Indica si se está mandando una petición al servidor. Se usa para mostrar un Spinner de carga.
 	isLoading: false,
+	// Almacena un mensaje de error si algo falla o null si no hay errores.
 	error: null,
+	// Booleano que controla si el botón de "Enviar" está habilitado o no. Se inicializa en tru porque el formulario está vacío, y
+	// por tanto, no es válido.
 	isButtonDisabled: true,
 };
 
@@ -39,12 +44,16 @@ const initialState = {
  */
 function registerReducer(state, action) {
 	switch (action.type) {
+		// Se activa al pulsar "Enviar". Pone isLoading a true y limpia errores anteriores.
 		case "REGISTER_START":
 			return { ...state, isLoading: true, error: null };
+		// Se activa si el registro y el login son exitosos. Pone isLoading a false.
 		case "REGISTER_SUCCESS":
 			return { ...state, isLoading: false };
+		// Se activa si algo falla. Pone isLoading a false y guarda el mensaje de error en el estado.
 		case "REGISTER_FAILURE":
 			return { ...state, isLoading: false, error: action.payload };
+		// Se activa cada vez que el usuario escribe en un campo. Actualiza el valor del campo correspondiente en el objeto values.
 		case "UPDATE_FIELD":
 			return {
 				...state,
@@ -53,8 +62,11 @@ function registerReducer(state, action) {
 					[action.payload.field]: action.payload.value,
 				},
 			};
+		// Se activa después de cada cabio en los campos. Habilita o deshabilita el botón de envío según si el formulario es válido
+		// o no.
 		case "SET_VALIDITY":
 			return { ...state, isButtonDisabled: !action.payload };
+		// Se activa cuando el usuario cierra la alerta de error. Limpia el mensaje de error del estado.
 		case "CLEAR_ERROR":
 			return { ...state, error: null };
 		default:
@@ -69,13 +81,19 @@ function RegisterForm() {
 	const loginDispatch = useDispatch();
 	// Hook para la navegación programática.
 	const navigate = useNavigate();
-
 	// Usamos useReducer para gestionar el estado del formulario.
 	const [formState, formDispatch] = useReducer(registerReducer, initialState);
+	// Extrae values del objeto formState usando desestructuración para un acceso más fácil.
 	const { values } = formState;
 	// Ref para la alerta de error, para poder mover el foco a ella.
 	const errorAlertRef = useRef(null);
 
+	/**
+	 * Función que se pasa a cada campo del formulario. Cuando cambia, llama a formDispatch con la acción UPDATE_FIELD para
+	 * actualizar el estado.
+	 * @param {string} field - El nombre del campo a actualizar.
+	 * @param {string} value - El nuevo valor del campo.
+	 */
 	const handleInputChange = (field, value) => {
 		formDispatch({ type: "UPDATE_FIELD", payload: { field, value } });
 	};
@@ -95,8 +113,14 @@ function RegisterForm() {
 		formDispatch({ type: "REGISTER_START" });
 		const { name, surname, phone, mail, password } = values;
 		try {
-			// La función registerUser ahora devuelve directamente los datos de sesión.
-			const sessionData = await registerUser(name, surname, phone, mail, password);
+			// La función registerUser retorna directamente los datos de sesión.
+			const sessionData = await registerUser(
+				name,
+				surname,
+				phone,
+				mail,
+				password
+			);
 
 			// Despacha la acción de login para actualizar el estado de Redux con la información del usuario y el token.
 			loginDispatch(
@@ -145,65 +169,65 @@ function RegisterForm() {
 	// Solo se recalculará si `values.password` cambia, que es la única dependencia externa.
 	const formFieldsConfig = useMemo(
 		() => [
-		[
-			{
-				id: "formGridName",
-				name: "Nombre",
-				field: "name",
-				validationFunction: validateName,
-				autocomplete: "given-name",
-				errorMessage: "El nombre no puede estar vacío.",
-			},
-			{
-				id: "formGridSurname",
-				name: "Apellidos",
-				field: "surname",
-				validationFunction: validateSurname,
-				autocomplete: "family-name",
-				errorMessage: "Los apellidos no pueden estar vacíos.",
-			},
-		],
-		[
-			{
-				id: "formGridPhone",
-				name: "Teléfono",
-				field: "phone",
-				inputType: "tel",
-				validationFunction: validatePhone,
-				autocomplete: "tel",
-				errorMessage: "El formato del teléfono no es válido.",
-			},
-			{
-				id: "formGridEmail",
-				name: "Correo electrónico",
-				field: "mail",
-				inputType: "email",
-				validationFunction: validateMail,
-				autocomplete: "email",
-				errorMessage: "El formato del correo electrónico no es válido.",
-			},
-		],
-		[
-			{
-				id: "password",
-				name: "Contraseña",
-				field: "password",
-				inputType: "password",
-				validationFunction: validatePassword,
-				autocomplete: "new-password",
-				ariaDescribedBy: "password-requirements",
-			},
-			{
-				id: "confirm-password",
-				name: "Repite la contraseña",
-				field: "samePassword",
-				inputType: "password",
-				// La validación de este campo depende del valor de la contraseña, por eso se define aquí.
-				validationFunction: (value) =>
-					validateSamePassword(values.password, value),
-				autocomplete: "new-password",
-			},
-		],
+			[
+				{
+					id: "formGridName",
+					name: "Nombre",
+					field: "name",
+					validationFunction: validateName,
+					autocomplete: "given-name",
+					errorMessage: "El nombre no puede estar vacío.",
+				},
+				{
+					id: "formGridSurname",
+					name: "Apellidos",
+					field: "surname",
+					validationFunction: validateSurname,
+					autocomplete: "family-name",
+					errorMessage: "Los apellidos no pueden estar vacíos.",
+				},
+			],
+			[
+				{
+					id: "formGridPhone",
+					name: "Teléfono",
+					field: "phone",
+					inputType: "tel",
+					validationFunction: validatePhone,
+					autocomplete: "tel",
+					errorMessage: "El formato del teléfono no es válido.",
+				},
+				{
+					id: "formGridEmail",
+					name: "Correo electrónico",
+					field: "mail",
+					inputType: "email",
+					validationFunction: validateMail,
+					autocomplete: "email",
+					errorMessage: "El formato del correo electrónico no es válido.",
+				},
+			],
+			[
+				{
+					id: "password",
+					name: "Contraseña",
+					field: "password",
+					inputType: "password",
+					validationFunction: validatePassword,
+					autocomplete: "new-password",
+					ariaDescribedBy: "password-requirements",
+				},
+				{
+					id: "confirm-password",
+					name: "Repite la contraseña",
+					field: "samePassword",
+					inputType: "password",
+					// La validación de este campo depende del valor de la contraseña, por eso se define aquí.
+					validationFunction: (value) =>
+						validateSamePassword(values.password, value),
+					autocomplete: "new-password",
+				},
+			],
 		],
 		[values.password]
 	);
