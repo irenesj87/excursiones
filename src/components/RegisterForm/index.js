@@ -239,7 +239,15 @@ function RegisterForm() {
 	useEffect(() => {
 		// Itera sobre todos los campos definidos en la configuración para determinar si el formulario es válido.
 		const isFormValid = formFieldsConfig
-			.flat() // Aplana el array de arrays en uno solo.
+			/**
+			 * formFieldsConfig es un array de arrays, así que flat() lo convierte en un único array con todos los objetos de
+			 * configuración de los campos.
+			 */
+			.flat()
+			/**
+			 * Recorre el array y ejecuta la función que se le pasa para cada elemento. Retorna true sólo si la función retorna
+			 * true para todos los elementos. Si encuentra un solo elemento que no cumple la condición, se detiene y retorna false.
+			 */
 			.every((field) => field.validationFunction(values[field.field]) === true);
 
 		formDispatch({ type: "SET_VALIDITY", payload: isFormValid });
