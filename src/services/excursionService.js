@@ -40,6 +40,10 @@ export const searchExcursions = async (
  * @throws {Error} - Lanza un error si la operación falla.
  */
 export const joinExcursion = async (userMail, excursionId, token) => {
+	// La validación del ID debe ser explícita para permitir el ID 0.
+	if (excursionId === null || excursionId === undefined) {
+		throw new Error("El ID de la excursión es requerido.");
+	}
 	if (!userMail || !token) {
 		throw new Error("Usuario no autenticado o información faltante.");
 	}
