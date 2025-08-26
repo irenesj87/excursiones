@@ -29,12 +29,12 @@ function ExcursionCardSkeleton({ isLoggedIn = false }) {
 						{/* Placeholder para la dificultad */}
 						<div className={cardStyles.detailItem}>
 							<Skeleton circle width={20} height={20} />
-							<Skeleton width={42} />
+							<Skeleton width={56} />
 						</div>
 						{/* Placeholder para el tiempo */}
 						<div className={cardStyles.detailItem}>
 							<Skeleton circle width={20} height={20} />
-							<Skeleton width={44} />
+							<Skeleton width={58} />
 						</div>
 					</div>
 				</div>

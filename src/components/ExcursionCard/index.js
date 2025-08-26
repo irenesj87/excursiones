@@ -104,12 +104,6 @@ function ExcursionCardComponent({
 	// Reemplaza espacios y caracteres especiales para crear un ID válido.
 	const titleId = `excursion-title-${id}`;
 
-	const difficultyClassMap = {
-		Baja: styles.difficultyLow,
-		Media: styles.difficultyMedium,
-		Alta: styles.difficultyHigh,
-	};
-
 	return (
 		<Card
 			role="group"
@@ -138,14 +132,12 @@ function ExcursionCardComponent({
 							label="Zona"
 						/>
 						<ExcursionDetailItem text={difficulty} label="Dificultad">
-							<div
+							<span
 								className={cn(
-									styles.difficultyBadge,
-									difficultyClassMap[difficulty]
+									"badge-difficulty",
+									`badge-difficulty--${difficulty.toLowerCase()}`
 								)}
-							>
-								<span className={styles.difficultyTextLight}>{difficulty}</span>
-							</div>
+							>{difficulty}</span>
 						</ExcursionDetailItem>
 						<ExcursionDetailItem
 							IconComponent={FiClock}

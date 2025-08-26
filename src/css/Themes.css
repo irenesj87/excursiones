@@ -333,3 +333,55 @@ html.dark .offcanvas-header .btn-close {
 .form-control-plaintext {
 	color: var(--text-color);
 }
+
+/* ======================================== */
+/* 5. INSIGNIAS DE DIFICULTAD (BADGES)      */
+/* ======================================== */
+
+.badge-difficulty {
+	padding: 0.35em 0.65em;
+	font-size: 0.875em;
+	font-weight: 700;
+	line-height: 1;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: 0.375rem;
+	transition: none;
+}
+
+/* --- Modo Claro (por defecto) --- */
+
+/* Baja */
+.badge-difficulty--baja {
+	color: #004d40;
+	background-color: #e0f2f1;
+}
+
+/* Media */
+.badge-difficulty--media {
+	color: #c76700;
+	background-color: #fff8e1;
+}
+
+/* Alta */
+.badge-difficulty--alta {
+	color: #b71c1c;
+	background-color: #ffeeee;
+}
+
+/* --- Modo Oscuro --- */
+html.dark .badge-difficulty--baja {
+	color: #e0f2f1;
+	background-color: #004d40;
+}
+
+html.dark .badge-difficulty--media {
+	color: #000000;
+	background-color: #ff8f00;
+}
+
+html.dark .badge-difficulty--alta {
+	color: #ffebee;
+	background-color: #b71c1c;
+}
