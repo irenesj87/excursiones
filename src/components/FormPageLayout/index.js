@@ -48,6 +48,7 @@ function FormPageLayout({
 						{switcherPrompt && switcherLinkText && switcherLinkTo && (
 							<Card.Footer className={`${styles.switcher} d-lg-none`}>
 								{switcherPrompt}
+								{" "}
 								<Link to={switcherLinkTo} className={styles.switcherLink}>
 									{switcherLinkText}
 								</Link>
