@@ -36,6 +36,7 @@ html.light body {
 
 	--register-link-color: #1a2b1e;
 	--register-link-border-color: #1a2b1e;
+	--switcher-link-color: var(--primary-color);
 
 	--logout-bg-color: #6c757d; /* Gris secundario de Bootstrap */
 	--logout-bg-color-hover: #5c636a; /* Gris secundario más oscuro de Bootstrap */
@@ -118,6 +119,7 @@ html.dark body {
 
 	--register-link-color: #e8f5e9;
 	--register-link-border-color: #a3b8a8; /* Borde más sutil */
+	--switcher-link-color: var(--heading-color);
 
 	--logout-bg-color: rgb(80, 73, 73);
 	--logout-bg-color-hover: rgb(100, 93, 93);

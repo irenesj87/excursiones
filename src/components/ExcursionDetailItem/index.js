@@ -1,4 +1,5 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import styles from "../ExcursionCard/ExcursionCard.module.css";
 
 /**
@@ -16,24 +17,41 @@ function ExcursionDetailItemComponent({
 	label,
 	children,
 }) {
+	/**
+	 * Renderiza el Tooltip para el detalle de la excursión.
+	 * Se memoiza con `useCallback` para evitar que se recree en cada renderizado.
+	 * @param {object} props - Propiedades inyectadas por OverlayTrigger.
+	 * @returns {React.ReactElement}
+	 */
+	const renderTooltip = useCallback(
+		(props) => {
+			const tooltipText = label && text ? `${label}: ${text}` : text || label;
+			// No renderiza el tooltip si no hay texto que mostrar.
+			if (!tooltipText) return <></>;
+			return (
+				<Tooltip id={`tooltip-${label}`} {...props}>
+					{tooltipText}
+				</Tooltip>
+			);
+		},
+		[label, text]
+	);
+
 	// Si no hay texto ni hijos para mostrar, no renderizamos nada.
 	if (!text && !children) {
 		return null;
 	}
 
-	// Crea un texto de título completo para el tooltip del navegador.
-	const title = label && text ? `${label}: ${text}` : text || label;
-
 	return (
-		<div className={styles.detailItem} title={title}>
-			{/* El icono es decorativo y se oculta a los lectores de pantalla. */}
-			{IconComponent && (
-				<IconComponent className={styles.detailIcon} aria-hidden="true" />
-			)}
-			{/* La etiqueta se muestra solo a los lectores de pantalla para dar contexto. */}
-			{label && <span className="visually-hidden">{`${label}: `}</span>}
-			{children || <span>{text}</span>}
-		</div>
+		<OverlayTrigger placement="top" overlay={renderTooltip}>
+			<div className={styles.detailItem}>
+				{IconComponent && (
+					<IconComponent className={styles.detailIcon} aria-hidden="true" />
+				)}
+				{label && <span className="visually-hidden">{`${label}: `}</span>}
+				{children || <span>{text}</span>}
+			</div>
+		</OverlayTrigger>
 	);
 }
 

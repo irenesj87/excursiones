@@ -47,7 +47,7 @@
 
 .switcherLink {
 	font-weight: 600;
-	color: var(--bs-link-color);
+	color: var(--switcher-link-color, var(--bs-link-color));
 	text-decoration: none;
 }
 

@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import { MdMail } from "react-icons/md";
 import "bootstrap/dist/css/bootstrap.css";
@@ -10,20 +11,28 @@ import styles from "./Footer.module.css";
 const currentYear = new Date().getFullYear();
 
 /**
- * Componente de Tooltip para el icono de correo electrónico.
- * @returns {React.ReactElement} El componente Tooltip.
- */
-const mailTooltip = <Tooltip id="mail-tooltip">Envíanos un correo</Tooltip>;
-
-/**
  * Componente del pie de página que muestra información de contacto y derechos de autor.
  * Se adapta al tema claro/oscuro de la aplicación.
  * @returns {React.ReactElement} El componente del pie de página.
  */
 function Footer() {
+	/**
+	 * Renderiza el Tooltip para el icono de correo.
+	 * Se memoiza con `useCallback` para evitar que se recree en cada renderizado.
+	 * @param {object} props - Propiedades inyectadas por OverlayTrigger.
+	 * @returns {React.ReactElement}
+	 */
+	const renderMailTooltip = useCallback(
+		(props) => (
+			<Tooltip id="mail-tooltip" {...props}>
+				Envíanos un correo
+			</Tooltip>
+		),
+		[]
+	);
 	return (
 		<footer className={styles.footer} role="contentinfo">
-			<OverlayTrigger placement="top" overlay={mailTooltip}>
+			<OverlayTrigger placement="top" overlay={renderMailTooltip}>
 				<a
 					href="mailto:excursionesjuntos@gmail.com"
 					className={styles.mailIconLink}
