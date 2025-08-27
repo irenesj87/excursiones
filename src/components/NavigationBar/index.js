@@ -8,7 +8,6 @@ import {
 	Tooltip,
 	OverlayTrigger,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Logo from "../Logo";
 import AuthNav from "../AuthNav";
@@ -95,10 +94,10 @@ function NavigationBarComponent({
 	const icon =
 		mode === "light" ? (
 			//Icono de luna para el modo claro, sugiriendo cambio a oscuro.
-			<FaMoon className={styles.themeIcon} />
+			<FaMoon className={styles.themeIcon} data-testid="fa-moon-icon" />
 		) : (
 			//Icono de sol para el modo oscuro, sugiriendo cambio a claro.
-			<FaSun className={styles.themeIcon} />
+			<FaSun className={styles.themeIcon} data-testid="fa-sun-icon" />
 		);
 
 	/**
@@ -131,12 +130,10 @@ function NavigationBarComponent({
 			<Container fluid>
 				{/* Agrupados con d-flex */}
 				<div className="d-flex flex-wrap align-items-center">
-					<Navbar.Brand
-						as={Link}
-						to="/"
-						onClick={handleCloseOffcanvas}
-						aria-label="Excursiones Juntos, página de inicio"
-					>
+					{/* Se eliminan las props 'as', 'to' y 'aria-label' para evitar un enlace anidado,
+					ya que el componente Logo ya es un enlace. Se mantiene 'onClick' para
+					que el menú lateral se cierre al pulsar el logo. */}
+					<Navbar.Brand onClick={handleCloseOffcanvas}>
 						<Logo />
 					</Navbar.Brand>
 				</div>
