@@ -187,7 +187,7 @@ function NavigationBarComponent({
 					{/* Toggle Offcanvas (Hamburguesa) */}
 					<Navbar.Toggle
 						aria-controls="offcanvasNavbar"
-						aria-label="Abrir menú de navegación"
+						label="Abrir menú de navegación"
 						onClick={handleShowOffcanvas}
 						className="d-lg-none"
 					/>
@@ -214,6 +214,7 @@ function NavigationBarComponent({
 					scroll={true}
 					className={styles.offcanvasMenu}
 					backdrop={true}
+					aria-label="Menú"
 				>
 					<Offcanvas.Header closeButton closeLabel="Cerrar menú">
 						<Offcanvas.Title>Menú</Offcanvas.Title>
