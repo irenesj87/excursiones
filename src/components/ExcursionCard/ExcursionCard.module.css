@@ -77,16 +77,21 @@
 	color: var(--white);
 }
 
+/* Se añade una clase para el texto oscuro para garantizar el contraste en badges claros. */
+.difficultyTextDark {
+	color: #1a202c; /* Un color oscuro muy legible */
+}
+
 .difficultyLow {
-	background-color: var(--bs-success); /* Verde */
+	background-color: #00875a; /* Verde esmeralda accesible */
 }
 
 .difficultyMedium {
-	background-color: var(--bs-warning); /* Amarillo */
+	background-color: #f59e0b; /* Amarillo/naranja vibrante */
 }
 
 .difficultyHigh {
-	background-color: var(--bs-danger); /* Rojo */
+	background-color: #e53e3e; /* Rojo intenso pero accesible */
 }
 
 .joinedStatus {

@@ -10,7 +10,7 @@ import { Alert } from "react-bootstrap";
 function ErrorMessageAlert({ message, onClose }) {
 	return (
 		<Alert variant="danger" onClose={onClose} dismissible>
-			<Alert.Heading>Error</Alert.Heading>
+			<Alert.Heading as="h2">Error</Alert.Heading>
 			{message}
 		</Alert>
 	);

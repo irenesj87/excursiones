@@ -132,12 +132,23 @@ function ExcursionCardComponent({
 							label="Zona"
 						/>
 						<ExcursionDetailItem text={difficulty} label="Dificultad">
+							{/* Mapea la dificultad a la clase CSS y asegura el contraste del texto. */}
 							<span
-								className={cn(
-									"badge-difficulty",
-									`badge-difficulty--${difficulty.toLowerCase()}`
-								)}
-							>{difficulty}</span>
+								className={cn(styles.difficultyBadge, {
+									[styles.difficultyLow]: difficulty.toLowerCase() === "baja",
+									[styles.difficultyMedium]:
+										difficulty.toLowerCase() === "media",
+									[styles.difficultyHigh]: difficulty.toLowerCase() === "alta",
+									// Para 'Baja' y 'Alta', usamos texto claro.
+									[styles.difficultyTextLight]:
+										difficulty.toLowerCase() !== "media",
+									// Para 'Media', forzamos el uso de texto oscuro para garantizar el contraste.
+									[styles.difficultyTextDark]:
+										difficulty.toLowerCase() === "media",
+								})}
+							>
+								{difficulty}
+							</span>
 						</ExcursionDetailItem>
 						<ExcursionDetailItem
 							IconComponent={FiClock}

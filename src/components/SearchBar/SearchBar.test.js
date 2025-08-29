@@ -9,7 +9,7 @@ import { searchExcursions } from "../../services/excursionService";
 // Le decimos a Jest que reemplace el módulo real con nuestra versión mock.
 jest.mock("../../services/excursionService");
 
-// Hacemos un type cast de la función importada para que el editor de código (y TypeScript)
+// Hacemos un type cast de la función importada para que el editor de código
 // sepa que es un mock de Jest y reconozca los métodos como `.mockResolvedValue`.
 const mockedSearchExcursions =
 	/** @type {jest.MockedFunction<typeof searchExcursions>} */ (
@@ -84,7 +84,7 @@ describe("SearchBar Component", () => {
 	});
 
 	// Test 3: Limpiar la búsqueda
-	test("limpia el campo de búsqueda y se centra and en el click del botón de limpieza", () => {
+	test("limpia el campo de búsqueda y se centra en el click del botón de limpieza", () => {
 		// Renderizamos con un valor inicial para que el botón de limpiar aparezca
 		render(
 			<Provider store={store}>
