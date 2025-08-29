@@ -26,8 +26,10 @@ describe("Logo Component", () => {
 	test("renderiza correctamente el texto del logo", () => {
 		renderWithRouter(<Logo />);
 
-		const logoText = screen.getByText(/Excursiones Juntos/i); // Busca el texto del logo (insensible a mayúsculas/minúsculas)
-		expect(logoText).toBeInTheDocument(); // Verifica que el texto esté en el documento
+		// Busca el texto del logo (insensible a mayúsculas/minúsculas)
+		const logoText = screen.getByText(/Excursiones Juntos/i);
+		// Verifica que el texto esté en el documento
+		expect(logoText).toBeInTheDocument();
 	});
 
 	/**
@@ -35,9 +37,11 @@ describe("Logo Component", () => {
 	 */
 	test("el logo es un enlace que apunta a la página de inicio", () => {
 		renderWithRouter(<Logo />);
-
-		const logoLink = screen.getByRole("link", { name: /Excursiones Juntos/i }); // Busca un elemento de enlace con el texto del logo
-		expect(logoLink).toBeInTheDocument(); // Verifica que el enlace esté en el documento
-		expect(logoLink).toHaveAttribute("href", "/"); // Verifica que el atributo 'href' del enlace sea "/"
+		// Busca un elemento de enlace con el texto del logo
+		const logoLink = screen.getByRole("link", { name: /Excursiones Juntos/i }); 
+		// Verifica que el enlace esté en el documento
+		expect(logoLink).toBeInTheDocument(); 
+		// Verifica que el atributo 'href' del enlace sea "/"
+		expect(logoLink).toHaveAttribute("href", "/"); 
 	});
 });
