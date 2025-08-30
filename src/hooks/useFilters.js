@@ -72,10 +72,19 @@ export function useFilters(filterName) {
 					);
 				}
 				if (isMounted) {
-					// Creamos un error amigable para la UI, intentando usar el mensaje del error original.
-					const finalError = new Error(
-						error.message || "No se pudieron cargar los filtros."
-					);
+					/** @type {Error & {secondaryMessage?: string}} */
+					let finalError;
+					if (error instanceof TypeError && error.message === "Failed to fetch") {
+						finalError = new Error("Error de conexión");
+						finalError.secondaryMessage =
+							"No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.";
+					} else {
+						// Para otros errores, usamos el mensaje que venga del servidor.
+						finalError = new Error(
+							error.message || "No se pudieron cargar los filtros."
+						);
+					}
+
 					dispatchWithMinDisplayTime({
 						type: "FETCH_FAILURE",
 						payload: finalError,

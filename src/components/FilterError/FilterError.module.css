@@ -21,3 +21,11 @@
 	font-weight: 500;
 	color: var(--text-color);
 }
+
+.secondaryMessage {
+	margin: 0;
+	font-size: 0.8rem;
+	font-weight: 400;
+	color: var(--text-secondary);
+	padding-top: 0.1rem;
+}
