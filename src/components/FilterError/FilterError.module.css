@@ -10,9 +10,15 @@
 }
 
 .errorIcon {
-	color: var(--filter-clear-btn-color-hover); 
+	color: var(--filter-clear-btn-color-hover);
 	font-size: 1.1rem;
 	flex-shrink: 0; /* Evita que el icono se encoja */
+}
+
+/* En modo oscuro, el color por defecto del icono no tiene suficiente contraste.
+   Usamos la variable --bs-danger del tema oscuro, que es un rojo más brillante. */
+:global(html.dark) .errorIcon {
+	color: var(--bs-danger);
 }
 
 .errorMessage {

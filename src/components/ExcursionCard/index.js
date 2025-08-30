@@ -7,6 +7,29 @@ import "bootstrap/dist/css/bootstrap.css";
 import styles from "./ExcursionCard.module.css";
 
 /**
+ * Determina las clases CSS para el badge de dificultad.
+ * @param {string} difficultyLevel - El nivel de dificultad ("Baja", "Media", "Alta").
+ * @returns {string} Una cadena de clases CSS.
+ */
+const getDifficultyClasses = (difficultyLevel) => {
+	const lowerCaseDifficulty = difficultyLevel.toLowerCase();
+	const classMap = {
+		baja: styles.difficultyLow,
+		media: styles.difficultyMedium,
+		alta: styles.difficultyHigh,
+	};
+
+	return cn(
+		styles.difficultyBadge,
+		classMap[lowerCaseDifficulty], // Aplica la clase de color de fondo
+		{
+			[styles.difficultyTextLight]: lowerCaseDifficulty !== "media", // Texto claro para Baja/Alta
+			[styles.difficultyTextDark]: lowerCaseDifficulty === "media", // Texto oscuro para Media
+		}
+	);
+};
+
+/**
  * Renderiza el botón para unirse a una excursión. Muestra un botón "Apuntarse", un estado de carga o un estado "Apuntado/a".
  * @param {object} props
  * @param {boolean} props.isJoined - Indica si el usuario se ha apuntado a la excursión.
@@ -133,20 +156,7 @@ function ExcursionCardComponent({
 						/>
 						<ExcursionDetailItem text={difficulty} label="Dificultad">
 							{/* Mapea la dificultad a la clase CSS y asegura el contraste del texto. */}
-							<span
-								className={cn(styles.difficultyBadge, {
-									[styles.difficultyLow]: difficulty.toLowerCase() === "baja",
-									[styles.difficultyMedium]:
-										difficulty.toLowerCase() === "media",
-									[styles.difficultyHigh]: difficulty.toLowerCase() === "alta",
-									// Para 'Baja' y 'Alta', usamos texto claro.
-									[styles.difficultyTextLight]:
-										difficulty.toLowerCase() !== "media",
-									// Para 'Media', forzamos el uso de texto oscuro para garantizar el contraste.
-									[styles.difficultyTextDark]:
-										difficulty.toLowerCase() === "media",
-								})}
-							>
+							<span className={getDifficultyClasses(difficulty)}>
 								{difficulty}
 							</span>
 						</ExcursionDetailItem>
@@ -182,13 +192,6 @@ function ExcursionCardComponent({
 	);
 }
 
-/**
- * Componente memoizado para la tarjeta de excursión.
- *
- * `memo` se utiliza para optimizar el rendimiento, evitando renderizados innecesarios
- * si las propiedades (`props`) del componente no han cambiado. Esto es especialmente útil
- * en listas donde muchos elementos pueden ser renderizados.
- */
 const ExcursionCard = memo(ExcursionCardComponent);
 
 export default ExcursionCard;

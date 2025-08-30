@@ -6,7 +6,7 @@ import styles from "../ExcursionCard/ExcursionCard.module.css";
  * Componente para mostrar un detalle específico de una excursión (ej. dificultad, tiempo).
  * @param {object} props - Las propiedades del componente.
  * @param {React.ElementType} [props.IconComponent] - El componente de icono a renderizar.
- * @param {string} props.text - El valor del detalle a mostrar (ej. "Media", "4h").
+ * @param {string} [props.text] - El valor del detalle a mostrar (ej. "Media", "4 horas").
  * @param {string} props.label - Etiqueta descriptiva para accesibilidad y tooltips (ej. "Dificultad").
  * @param {React.ReactNode} [props.children] - Nodos hijos para renderizar contenido personalizado en lugar del texto.
  * @returns {React.ReactElement}
@@ -46,7 +46,11 @@ function ExcursionDetailItemComponent({
 		<OverlayTrigger placement="top" overlay={renderTooltip}>
 			<div className={styles.detailItem}>
 				{IconComponent && (
-					<IconComponent className={styles.detailIcon} aria-hidden="true" />
+					<IconComponent
+						className={styles.detailIcon}
+						aria-hidden="true"
+						data-testid="detail-item-icon"
+					/>
 				)}
 				{label && <span className="visually-hidden">{`${label}: `}</span>}
 				{children || <span>{text}</span>}
