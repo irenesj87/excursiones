@@ -20,6 +20,9 @@ Aplicación web desarrollada con React para la visualización y gestión de excu
 ### Herramientas de Desarrollo
 
 -   **npm:** Gestor de paquetes.
+-   **Jest:** Framework de pruebas para JavaScript.
+-   **React Testing Library:** Para escribir tests de componentes React que simulan la interacción del usuario.
+-   **@testing-library/jest-dom:** Añade matchers personalizados para Jest para probar el estado del DOM.
 -   **Nodemon:** Para el reinicio automático del servidor de desarrollo.
 -   **Git:** Sistema de control de versiones.
 

@@ -15,7 +15,11 @@ function FilterError({ error }) {
 
 	return (
 		<div className={styles.errorContainer} role="alert">
-			<FiAlertTriangle className={styles.errorIcon} aria-hidden="true" />
+			<FiAlertTriangle
+				className={styles.errorIcon}
+				aria-hidden="true"
+				data-testid="alert-icon"
+			/>
 			<div>
 				<p className={styles.errorMessage}>
 					<span className="visually-hidden">Error: </span>
