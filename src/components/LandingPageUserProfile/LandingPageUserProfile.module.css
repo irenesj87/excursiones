@@ -25,10 +25,3 @@
 	outline: none;
 	box-shadow: none;
 }
-
-@media (max-width: 991.98px) {
-	.logoutButton {
-		width: 95%;
-		margin: 0.6rem auto 0; /* top | horizontal auto | bottom */
-	}
-}

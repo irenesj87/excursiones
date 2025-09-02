@@ -26,7 +26,7 @@ const AuthNav = ({ isAuthCheckComplete, isLoggedIn, onCloseOffcanvas }) => {
 	return (
 		<>
 			<Nav.Link
-				className={`${styles.navLink} ${styles.registerLink} me-3`}
+				className={`${styles.navLink} ${styles.registerLink} me-lg-3`}
 				as={NavLink}
 				to="/registerPage"
 				onClick={onCloseOffcanvas}

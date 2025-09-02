@@ -69,3 +69,20 @@ html {
 	color: var(--filters-toggle-btn-color-hover);
 	border-color: var(--filters-toggle-btn-border-hover);
 }
+
+/* --- Offcanvas (Filtros) --- */
+/* Botón para mostrar filtros en breakpoints pequeños */
+/* Se usa .btn para aumentar la especificidad y sobreescribir los estilos por defecto de Bootstrap */
+.filtersToggleButton {
+	color: var(--filters-toggle-btn-color);
+	border: 1px solid var(--filters-toggle-btn-border);
+	background-color: transparent;
+	transition: none;
+}
+
+.filtersToggleButton:hover,
+.filtersToggleButton:active {
+	color: var(--filters-toggle-btn-color-hover);
+	background-color: var(--filters-toggle-btn-bg-hover);
+	border-color: var(--filters-toggle-btn-border-hover);
+}

@@ -37,7 +37,7 @@ function FormPageLayout({
 		<Container as="main" fluid className={`${styles.container} h-100`}>
 			<Row className="justify-content-center align-items-center h-100">
 				<Col xs={12} md={9} lg={8} xl={colWidth}>
-					<Card className="contentPane" role="region" aria-labelledby={titleId}>
+					<Card className={styles.contentPane} role="region" aria-labelledby={titleId}>
 						<Card.Body>
 							<Card.Title as="h2" id={titleId} className={styles.cardTitle}>
 								{title}

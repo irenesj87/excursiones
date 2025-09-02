@@ -55,7 +55,7 @@ function LandingPageUserProfile({ onClickCloseCollapsible }) {
 	return (
 		<>
 			<Nav.Link
-				className={`${styles.profileLink} me-3`}
+				className={`${styles.profileLink} me-lg-3`}
 				as={NavLink}
 				to="/userPage"
 				onClick={onClickCloseCollapsible}
@@ -65,7 +65,7 @@ function LandingPageUserProfile({ onClickCloseCollapsible }) {
 			<Button
 				variant="secondary"
 				onClick={handleLogout}
-				className={styles.logoutButton}
+				className="logoutLink"
 			>
 				Cierra sesión
 			</Button>

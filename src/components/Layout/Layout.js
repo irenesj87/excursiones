@@ -124,8 +124,8 @@ const Layout = () => {
 											<div className="d-grid d-md-none mt-3 mb-1">
 												<Button
 													variant="outline-secondary"
-													onClick={handleShowFilters}
-													className="filtersToggleButton"
+													onClick={handleShowFilters} // prettier-ignore
+													className={styles.filtersToggleButton}
 												>
 													<FiFilter className="me-2" />
 													<span>

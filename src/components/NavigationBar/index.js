@@ -122,8 +122,8 @@ function NavigationBarComponent({
 		 * Utiliza `Navbar` de `react-bootstrap` para crear una barra de navegación responsiva.
 		 */
 		<Navbar
-			expand="lg"
-			className={`customNavbar ${styles.navbarContainer}`}
+			expand="lg" // prettier-ignore
+			className={`${styles.customNavbar} ${styles.navbarContainer}`}
 			variant={mode}
 			sticky="top"
 		>
@@ -186,10 +186,10 @@ function NavigationBarComponent({
 					</Nav>
 					{/* Toggle Offcanvas (Hamburguesa) */}
 					<Navbar.Toggle
-						aria-controls="offcanvasNavbar"
-						label="Abrir menú de navegación"
-						onClick={handleShowOffcanvas}
-						className="d-lg-none"
+						aria-controls="offcanvasNavbar" // prettier-ignore
+						label="Abrir menú de navegación" // prettier-ignore
+						onClick={handleShowOffcanvas} // prettier-ignore
+						className={`d-lg-none ${styles.navbarToggler}`}
 					/>
 				</div>
 				{/* Barra de búsqueda (En breakpoints pequeños ocupa toda la anchura) */}
@@ -220,7 +220,7 @@ function NavigationBarComponent({
 						<Offcanvas.Title>Menú</Offcanvas.Title>
 					</Offcanvas.Header>
 					<Offcanvas.Body>
-						<Nav className="d-flex flex-column">
+						<Nav className="d-flex flex-column pt-2">
 							<AuthNav
 								isAuthCheckComplete={isAuthCheckComplete}
 								isLoggedIn={isLoggedIn}

@@ -54,3 +54,16 @@
 .switcherLink:hover {
 	text-decoration: underline;
 }
+
+.contentPane {
+	/* Usa variables de tema para adaptarse al modo claro/oscuro */
+	background-color: var(
+		--excursion-card-bg
+	); /* Reutilizamos el fondo de las tarjetas */
+	color: var(--text-color);
+	border: 1px solid var(--separator-color);
+	border-radius: 0.5rem;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	padding: 2rem;
+}
