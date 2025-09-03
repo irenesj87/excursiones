@@ -2,9 +2,12 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import AuthNav from "./index";
 
-// Mock de los componentes hijos para aislar AuthNav en las pruebas.
-jest.mock("./AuthNavSkeleton", () => () => (
-	<div data-testid="auth-nav-skeleton" />
+// Mock de los componentes esqueleto y de navegación para aislar AuthNav en las pruebas.
+jest.mock("../UserNav/UserNavSkeleton", () => () => (
+	<div data-testid="user-nav-skeleton" />
+));
+jest.mock("../GuestNav/GuestNavSkeleton", () => () => (
+	<div data-testid="guest-nav-skeleton" />
 ));
 jest.mock("../UserNav", () => ({ onCloseOffcanvas }) => (
 	<button type="button" data-testid="user-nav" onClick={onCloseOffcanvas} />
@@ -23,22 +26,50 @@ describe("AuthNav Component", () => {
 		mockOnClose.mockClear();
 	});
 
-	// Test para el estado de carga
-	test("muestra el esqueleto de carga cuando la comprobación de autenticación no ha finalizado", () => {
-		render(
-			<AuthNav
-				isAuthCheckComplete={false}
-				isLoggedIn={false}
-				onCloseOffcanvas={mockOnClose}
-			/>
-		);
+	// Tests para el estado de carga (cuando isAuthCheckComplete es false)
+	describe("cuando la comprobación de autenticación no ha finalizado", () => {
+		let getItemSpy;
 
-		// Verificamos que el esqueleto se renderiza
-		expect(screen.getByTestId("auth-nav-skeleton")).toBeInTheDocument();
+		beforeEach(() => {
+			// Mockeamos sessionStorage para controlar el estado "likelyLoggedIn"
+			getItemSpy = jest.spyOn(Storage.prototype, "getItem");
+		});
 
-		// Verificamos que los componentes de navegación no se muestran
-		expect(screen.queryByTestId("guest-nav")).not.toBeInTheDocument();
-		expect(screen.queryByTestId("user-nav")).not.toBeInTheDocument();
+		afterEach(() => {
+			getItemSpy.mockRestore();
+		});
+
+		test("muestra GuestNavSkeleton si no hay token en sessionStorage", () => {
+			getItemSpy.mockReturnValue(null);
+			render(
+				<AuthNav
+					isAuthCheckComplete={false}
+					isLoggedIn={false}
+					onCloseOffcanvas={mockOnClose}
+				/>
+			);
+
+			// Verificamos que se renderiza el esqueleto de invitado
+			expect(screen.getByTestId("guest-nav-skeleton")).toBeInTheDocument();
+			expect(screen.queryByTestId("user-nav-skeleton")).not.toBeInTheDocument();
+		});
+
+		test("muestra UserNavSkeleton si hay un token en sessionStorage", () => {
+			getItemSpy.mockReturnValue("fake-token");
+			render(
+				<AuthNav
+					isAuthCheckComplete={false}
+					isLoggedIn={false}
+					onCloseOffcanvas={mockOnClose}
+				/>
+			);
+
+			// Verificamos que se renderiza el esqueleto de usuario
+			expect(screen.getByTestId("user-nav-skeleton")).toBeInTheDocument();
+			expect(
+				screen.queryByTestId("guest-nav-skeleton")
+			).not.toBeInTheDocument();
+		});
 	});
 
 	// Test para el estado de "invitado" (no logueado)
@@ -57,7 +88,8 @@ describe("AuthNav Component", () => {
 
 		// Verificamos que no se renderizan los otros componentes
 		expect(screen.queryByTestId("user-nav")).not.toBeInTheDocument();
-		expect(screen.queryByTestId("auth-nav-skeleton")).not.toBeInTheDocument();
+		expect(screen.queryByTestId("guest-nav-skeleton")).not.toBeInTheDocument();
+		expect(screen.queryByTestId("user-nav-skeleton")).not.toBeInTheDocument();
 	});
 
 	// Test para el estado de "usuario logueado"
@@ -76,6 +108,7 @@ describe("AuthNav Component", () => {
 
 		// Verificamos que no se renderizan los otros componentes
 		expect(screen.queryByTestId("guest-nav")).not.toBeInTheDocument();
-		expect(screen.queryByTestId("auth-nav-skeleton")).not.toBeInTheDocument();
+		expect(screen.queryByTestId("guest-nav-skeleton")).not.toBeInTheDocument();
+		expect(screen.queryByTestId("user-nav-skeleton")).not.toBeInTheDocument();
 	});
 });
