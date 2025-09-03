@@ -5,19 +5,19 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../services/authService";
 import { logout } from "../../slicers/loginSlice";
 import "bootstrap/dist/css/bootstrap.css";
-import styles from "./LandingPageUserProfile.module.css";
+import styles from "./UserNav.module.css";
 
 /** @typedef {import('types.js').RootState} RootState */
 
 /**
- * Componente que muestra los enlaces de navegación para un usuario logueado, incluyendo un enlace al perfil y un botón para cerrar 
+ * Componente que muestra los enlaces de navegación para un usuario logueado, incluyendo un enlace al perfil y un botón para cerrar
  * sesión.
- * Permite cerrar un menú colapsable (Offcanvas) si se proporciona la función `onClickCloseCollapsible`.
+ * Permite cerrar un menú colapsable (Offcanvas) si se proporciona la función `onCloseOffcanvas`.
  * @param {object} props - Las propiedades del componente.
- * @param {() => void} [props.onClickCloseCollapsible] - Función para cerrar el menú colapsable (Offcanvas) en breakpoints pequeños.
+ * @param {() => void} [props.onCloseOffcanvas] - Función para cerrar el menú colapsable (Offcanvas) en breakpoints pequeños.
  * @returns {React.ReactElement} Un elemento JSX que representa los enlaces de navegación del usuario.
  */
-function LandingPageUserProfile({ onClickCloseCollapsible }) {
+function UserNav({ onCloseOffcanvas }) {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { token } = useSelector(
@@ -27,11 +27,11 @@ function LandingPageUserProfile({ onClickCloseCollapsible }) {
 
 	/**
 	 * Maneja el proceso de cierre de sesión del usuario.
-	 * Llama al servicio para invalidar el token en el servidor y luego limpia el estado local (Redux y sessionStorage) 
+	 * Llama al servicio para invalidar el token en el servidor y luego limpia el estado local (Redux y sessionStorage)
 	 * independientemente del resultado del servidor para garantizar que el usuario sea deslogueado en el cliente.
 	 */
 	const handleLogout = useCallback(async () => {
-		onClickCloseCollapsible?.();
+		onCloseOffcanvas?.();
 		try {
 			// Solo intenta invalidar el token en el servidor si realmente existe.
 			if (token) {
@@ -50,7 +50,7 @@ function LandingPageUserProfile({ onClickCloseCollapsible }) {
 			sessionStorage.removeItem("token");
 			navigate("/");
 		}
-	}, [dispatch, navigate, onClickCloseCollapsible, token]);
+	}, [dispatch, navigate, onCloseOffcanvas, token]);
 
 	return (
 		<>
@@ -58,19 +58,15 @@ function LandingPageUserProfile({ onClickCloseCollapsible }) {
 				className={`${styles.profileLink} me-lg-3`}
 				as={NavLink}
 				to="/userPage"
-				onClick={onClickCloseCollapsible}
+				onClick={onCloseOffcanvas}
 			>
 				Tu perfil
 			</Nav.Link>
-			<Button
-				variant="secondary"
-				onClick={handleLogout}
-				className="logoutLink"
-			>
+			<Button variant="secondary" onClick={handleLogout} className="logoutLink">
 				Cierra sesión
 			</Button>
 		</>
 	);
 }
 
-export default LandingPageUserProfile;
+export default UserNav;
