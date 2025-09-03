@@ -16,7 +16,7 @@
 }
 
 .registerLink:hover {
-	background-color: rgba(0, 0, 0, 0.05);
+	background-color: var(--theme-toggle-btn-bg-hover);
 	outline: none;
 	box-shadow: none;
 }

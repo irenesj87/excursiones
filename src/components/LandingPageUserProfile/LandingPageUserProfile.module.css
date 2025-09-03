@@ -17,11 +17,14 @@
 }
 
 .profileLink:hover {
-	color: var(--register-link-color);
-	background-color: rgba(0, 0, 0, 0.05);
-	border-color: var(
-		--register-link-border-color
-	);
+	background-color: var(--theme-toggle-btn-bg-hover);
 	outline: none;
 	box-shadow: none;
+}
+
+/* Estilo para el NavLink activo, igual que en AuthNav */
+.profileLink.active {
+	background-color: var(--filter-pill-bg-hover);
+	border-color: var(--filter-pill-border-hover);
+	color: var(--text-color);
 }
