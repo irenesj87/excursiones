@@ -1,8 +1,9 @@
-import { memo, useCallback, useState } from "react";
+import { memo } from "react";
 import { Card, Button, Spinner, Alert } from "react-bootstrap";
 import ExcursionDetailItem from "../ExcursionDetailItem";
 import { FiMapPin, FiClock, FiCheckCircle } from "react-icons/fi";
 import cn from "classnames";
+import { useJoinExcursion } from "../../hooks/useJoinExcursion";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "./ExcursionCard.module.css";
 
@@ -97,31 +98,10 @@ function ExcursionCardComponent({
 	isJoined,
 	onJoin,
 }) {
-	const [isJoining, setIsJoining] = useState(false);
-	const [joinError, setJoinError] = useState(null);
-	/*
-	 * Crea un 'handler' que llama a la función `onJoin` con el ID de la excursión.
-	 * Se usa `useCallback` para memoizar la función y evitar que se recree en cada renderizado, optimizando el rendimiento.
-	 * El botón se deshabilita durante la carga para prevenir múltiples clicks.
-	 */
-	const handleJoin = useCallback(async () => {
-		if (isJoining) return; // Evita múltiples ejecuciones si ya está en proceso
-		setIsJoining(true);
-		setJoinError(null); // Limpiar errores previos al reintentar
-		try {
-			// Llama a la función onJoin (si existe) pasándole el id de la excursión.
-			await onJoin?.(id);
-			// Si tiene éxito, el componente padre actualizará `isJoined`, y el estado `isJoining` de este componente
-			// desaparecerá al no renderizarse más el botón.
-		} catch (error) {
-			console.error("Error al unirse a la excursión en la tarjeta:", error);
-			setJoinError(
-				error.message || "No se pudo completar la acción. Inténtalo de nuevo."
-			);
-			// Si hay un error, restablecemos el estado del botón para que el usuario pueda intentarlo de nuevo.
-			setIsJoining(false);
-		}
-	}, [id, onJoin, isJoining]);
+	// La lógica para unirse a la excursión se encapsula en un hook personalizado.
+	// Esto limpia el componente, haciéndolo puramente presentacional.
+	const { isJoining, joinError, handleJoin, clearError } =
+		useJoinExcursion(onJoin);
 
 	// Genera un ID único para el título, que se usará para la accesibilidad.
 	// Reemplaza espacios y caracteres especiales para crear un ID válido.
@@ -172,7 +152,7 @@ function ExcursionCardComponent({
 						{joinError && (
 							<Alert
 								variant="danger"
-								onClose={() => setJoinError(null)}
+								onClose={clearError}
 								dismissible
 								className="mb-2 small"
 								role="alert"
@@ -183,7 +163,7 @@ function ExcursionCardComponent({
 						<JoinButton
 							isJoined={isJoined}
 							isJoining={isJoining}
-							onJoin={handleJoin}
+							onJoin={() => handleJoin(id)}
 						/>
 					</div>
 				)}
