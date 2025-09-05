@@ -3,7 +3,7 @@ import { Card, Col, Form, Row, Button, Spinner, Alert } from "react-bootstrap";
 import UserPageInputEdit from "../UserPageInputEdit";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUserInfo } from "../../services/userService";
-import { updateUser } from "../../slicers/loginSlice";
+import { updateUser } from "../../slices/loginSlice";
 import {
 	validateName,
 	validateSurname,
@@ -357,9 +357,7 @@ function UserInfoForm() {
 									}
 									onClick={saveEdit}
 									className={`${styles.saveButton} w-100`}
-									aria-disabled={
-										!isFormValid || !isFormChanged || isLoading
-									}
+									aria-disabled={!isFormValid || !isFormChanged || isLoading}
 								>
 									{isLoading ? (
 										<Spinner

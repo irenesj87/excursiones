@@ -1,10 +1,10 @@
 import { memo, useMemo, useCallback, useState, useEffect, useRef } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser } from "../../slicers/loginSlice";
+import { updateUser } from "../../slices/loginSlice";
 import ExcursionCard from "../ExcursionCard";
 import { joinExcursion as joinExcursionService } from "../../services/excursionService";
-import ExcursionsLoading from "./ExcursionsLoading";
+import ExcursionsLoading from "./ExcursionLoading";
 import ExcursionsError from "./ExcursionsError";
 import NoExcursionsFound from "./NoExcursionsFound";
 import "bootstrap/dist/css/bootstrap.css";

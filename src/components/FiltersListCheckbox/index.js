@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleFilter } from "../../slicers/filterSlice";
+import { toggleFilter } from "../../slices/filterSlice";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "./FiltersListCheckbox.module.css";
 

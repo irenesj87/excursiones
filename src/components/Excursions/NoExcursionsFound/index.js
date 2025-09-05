@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { FiSearch } from "react-icons/fi";
-import styles from "./Excursions.module.css";
+import styles from "./NoExcursionsFound.module.css";
 
 /**
  * Componente que muestra un mensaje cuando no se encuentran excursiones que coincidan con los criterios de búsqueda.

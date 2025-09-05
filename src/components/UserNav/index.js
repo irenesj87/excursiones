@@ -3,7 +3,7 @@ import { Nav, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../services/authService";
-import { logout } from "../../slicers/loginSlice";
+import { logout } from "../../slices/loginSlice";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "./UserNav.module.css";
 

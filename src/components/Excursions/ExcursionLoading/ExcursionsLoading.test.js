@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import ExcursionsLoading from "./ExcursionsLoading";
+import ExcursionsLoading from ".";
 
 // Mock del hook useSkeletonTheme, ya que no es relevante para la lógica de este componente.
 // Su propio test ya se encarga de verificar su funcionamiento.
@@ -12,7 +12,7 @@ jest.mock("../../hooks/useSkeletonTheme", () => ({
 }));
 
 // Mock del componente hijo para aislar el test y verificar que recibe las props correctas.
-jest.mock("../ExcursionCard/ExcursionCardSkeleton", () => {
+jest.mock("../../ExcursionCard/ExcursionCardSkeleton", () => {
 	// eslint-disable-next-line react/prop-types
 	const MockedSkeleton = ({ isLoggedIn }) => (
 		<div data-testid="skeleton-card">isLoggedIn: {isLoggedIn.toString()}</div>

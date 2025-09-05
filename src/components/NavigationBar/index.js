@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Logo from "../Logo";
 import AuthNav from "../AuthNav";
 import SearchBar from "../SearchBar";
-import { toggleMode } from "../../slicers/themeSlice";
+import { toggleMode } from "../../slices/themeSlice";
 import { FaMoon, FaSun } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "./NavigationBar.module.css";
@@ -155,10 +155,7 @@ function NavigationBarComponent({
 				y justify-content-end alinea los items hijos al final del contenedor. */}
 				{/* order-lg-3: para posicionarlo correctamente en breakpoints grandes */}
 				<div className="d-flex align-items-center justify-content-end ms-auto ms-md-0 order-md-3 order-lg-3">
-					<OverlayTrigger
-						placement="bottom"
-						overlay={renderThemeTooltip}
-					>
+					<OverlayTrigger placement="bottom" overlay={renderThemeTooltip}>
 						<Button
 							className={`${styles.themeToggleBtn} me-2`}
 							id="toggleButton"

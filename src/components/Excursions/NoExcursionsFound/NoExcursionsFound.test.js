@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import NoExcursionsFound from "./NoExcursionsFound";
+import NoExcursionsFound from "./index";
 
 /**
  * Grupo de pruebas para el componente `NoExcursionsFound`.

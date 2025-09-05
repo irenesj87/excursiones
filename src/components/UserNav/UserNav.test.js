@@ -5,7 +5,7 @@ import configureStore from "redux-mock-store";
 import "@testing-library/jest-dom";
 import UserNav from "./index";
 import { logoutUser } from "../../services/authService";
-import { logout } from "../../slicers/loginSlice";
+import { logout } from "../../slices/loginSlice";
 
 // Mock del servicio de autenticación
 jest.mock("../../services/authService");

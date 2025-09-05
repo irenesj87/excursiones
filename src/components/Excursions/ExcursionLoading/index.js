@@ -1,9 +1,9 @@
 import { memo } from "react";
 import { Row, Col } from "react-bootstrap";
 import { SkeletonTheme } from "react-loading-skeleton";
-import { useSkeletonTheme } from "../../hooks/useSkeletonTheme";
-import ExcursionCardSkeleton from "../ExcursionCard/ExcursionCardSkeleton";
-import styles from "./Excursions.module.css";
+import { useSkeletonTheme } from "../../../hooks/useSkeletonTheme";
+import ExcursionCardSkeleton from "../../ExcursionCard/ExcursionCardSkeleton";
+import styles from "./ExcursionsLoading.module.css";
 
 /**
  * Componente para mostrar el esqueleto mientras las excursiones se cargan.

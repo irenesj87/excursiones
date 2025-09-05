@@ -1,7 +1,7 @@
 import { useReducer, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login } from "../slicers/loginSlice";
+import { login } from "../slices/loginSlice";
 
 /**
  * Estado inicial para el reducer del formulario de autenticación.
@@ -88,8 +88,7 @@ export function useAuthFormHandler(
 						"No se pudo conectar con el servidor. Por favor, comprueba tu conexión e inténtalo de nuevo.";
 				} else {
 					errorMessage =
-						error.message ||
-						"Ocurrió un error inesperado. Inténtalo de nuevo.";
+						error.message || "Ocurrió un error inesperado. Inténtalo de nuevo.";
 				}
 				formDispatch({ type: "SUBMIT_FAILURE", payload: errorMessage });
 			}

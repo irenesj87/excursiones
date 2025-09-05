@@ -3,9 +3,9 @@ import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import App from "./App";
-import loginSliceReducer from "./slicers/loginSlice";
-import filterSliceReducer from "./slicers/filterSlice";
-import themeSliceReducer from "./slicers/themeSlice";
+import loginSliceReducer from "./slices/loginSlice";
+import filterSliceReducer from "./slices/filterSlice";
+import themeSliceReducer from "./slices/themeSlice";
 
 /**
  * Función de ayuda para renderizar componentes que dependen de Redux y React Router.

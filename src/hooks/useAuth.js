@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from "react";
 import { useDispatch } from "react-redux";
 import { verifyToken } from "../services/authService";
-import { login, logout } from "../slicers/loginSlice";
+import { login, logout } from "../slices/loginSlice";
 import { useMinDisplayTime } from "./useMinDisplayTime";
 
 /**

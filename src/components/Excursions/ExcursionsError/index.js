@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { FiAlertCircle } from "react-icons/fi";
-import styles from "./Excursions.module.css";
+import styles from "./ExcursionsError.module.css";
 
 /**
  * Componente que muestra un mensaje de error con un icono. Se renderiza cuando la carga de excursiones falla.

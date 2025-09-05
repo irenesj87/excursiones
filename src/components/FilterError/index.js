@@ -1,14 +1,14 @@
-import React from "react";
+import { memo } from "react";
 import { FiAlertTriangle } from "react-icons/fi";
 import styles from "./FilterError.module.css";
 
 /**
  * Componente para mostrar un mensaje de error cuando falla la carga de los filtros.
- * @param {object} props
- * @param {(Error & { secondaryMessage?: string }) | null} [props.error] - El objeto de error.
- * @returns {React.ReactElement}
+ * @param {FilterErrorProps} props
+ * @typedef {object} FilterErrorProps
+ * @property {(Error & { secondaryMessage?: string }) | null} error - El objeto de error.
  */
-function FilterError({ error }) {
+function FilterErrorComponent({ error }) {
 	const message =
 		error?.message || "No se pudieron cargar los filtros. Inténtalo de nuevo.";
 	const secondaryMessage = error?.secondaryMessage;
@@ -32,5 +32,7 @@ function FilterError({ error }) {
 		</div>
 	);
 }
+
+const FilterError = memo(FilterErrorComponent);
 
 export default FilterError;

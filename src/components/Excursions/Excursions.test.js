@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import Excursions from "./index";
 import { joinExcursion as joinExcursionService } from "../../services/excursionService";
-import { updateUser } from "../../slicers/loginSlice";
+import { updateUser } from "../../slices/loginSlice";
 
 // 1. Mock del servicio para unirse a una excursión
 jest.mock("../../services/excursionService");
