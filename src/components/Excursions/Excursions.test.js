@@ -28,7 +28,20 @@ jest.mock("../ExcursionCard", () => ({
 	),
 }));
 
-// 3. Configuración del mock de Redux
+// 3. Mock de los componentes de estado para simplificar los tests de Excursions.
+// Ahora que estos componentes tienen sus propios tests unitarios, podemos mockearlos aquí
+// para centrarnos únicamente en la lógica de Excursions (es decir, que renderice el
+// componente correcto según el estado).
+jest.mock("./ExcursionsLoading", () => () => (
+	<div data-testid="excursions-loading" />
+));
+jest.mock("./ExcursionsError", () => ({ error }) => (
+	<div data-testid="excursions-error">{error.message}</div>
+));
+jest.mock("./NoExcursionsFound", () => () => (
+	<div data-testid="no-excursions-found" />
+));
+
 const mockStore = configureStore([]);
 
 describe("Excursions Component", () => {
@@ -57,7 +70,7 @@ describe("Excursions Component", () => {
 	};
 
 	// Test 1: Estado de carga (loading)
-	test("renderiza los skeletons cuando isLoading es true", () => {
+	test("renderiza el componente de carga cuando isLoading es true", () => {
 		renderComponent(
 			{ isLoading: true, excursionData: [], error: null },
 			{
@@ -66,12 +79,11 @@ describe("Excursions Component", () => {
 			}
 		);
 
-		// Buscamos el texto accesible que anuncia la carga
-		expect(screen.getByText("Cargando excursiones...")).toBeInTheDocument();
+		expect(screen.getByTestId("excursions-loading")).toBeInTheDocument();
 	});
 
 	// Test 2: Estado de error
-	test("renderiza un mensaje de error cuando se le da un error", () => {
+	test("renderiza el componente de error cuando se le da un error", () => {
 		const mockError = new Error("Fallo al cargar");
 		renderComponent(
 			{ isLoading: false, excursionData: [], error: mockError },
@@ -81,13 +93,12 @@ describe("Excursions Component", () => {
 			}
 		);
 
-		// El componente de error debe tener un rol 'alert' por accesibilidad
-		expect(screen.getByRole("alert")).toBeInTheDocument();
+		expect(screen.getByTestId("excursions-error")).toBeInTheDocument();
 		expect(screen.getByText("Fallo al cargar")).toBeInTheDocument();
 	});
 
 	// Test 3: Estado sin resultados
-	test("renderiza el mensaje 'no se encontraron excursiones con estas características' cuando no hay datos", () => {
+	test("renderiza el componente 'no se encontraron excursiones' cuando no hay datos", () => {
 		renderComponent(
 			{ isLoading: false, excursionData: [], error: null },
 			{
@@ -96,11 +107,7 @@ describe("Excursions Component", () => {
 			}
 		);
 
-		expect(
-			screen.getByText(
-				"No se encontraron excursiones con esas características."
-			)
-		).toBeInTheDocument();
+		expect(screen.getByTestId("no-excursions-found")).toBeInTheDocument();
 	});
 
 	// Test 4: Estado de éxito (con datos)

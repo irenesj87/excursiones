@@ -50,18 +50,6 @@
 	color: var(--text-color);
 }
 
-.detailItem {
-	display: flex;
-	align-items: center;
-	gap: 0.4rem;
-	font-size: 1.05rem;
-}
-
-.detailIcon {
-	color: var(--excursion-card-icon-color);
-	font-size: 1.2rem;
-}
-
 .difficultyBadge {
 	display: inline-block;
 	padding: 0.25em 0.6em;

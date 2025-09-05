@@ -1,6 +1,7 @@
 import { Card } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
 import cardStyles from "./ExcursionCard.module.css"; // Se reutiliza el CSS de la tarjeta real
+import detailItemStyles from "../ExcursionDetailItem/ExcursionDetailItem.module.css";
 import skeletonStyles from "./ExcursionCardSkeleton.module.css";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -22,17 +23,16 @@ function ExcursionCardSkeleton({ isLoggedIn = false }) {
 					{/* Detalles (Zona, Dificultad, Tiempo) */}
 					<div className={cardStyles.excursionDetails}>
 						{/* Placeholder para la zona */}
-						<div className={cardStyles.detailItem}>
+						<div className={detailItemStyles.detailItem}>
 							<Skeleton circle width={20} height={20} />
 							<Skeleton width={84} />
 						</div>
 						{/* Placeholder para la dificultad */}
-						<div className={cardStyles.detailItem}>
-							<Skeleton circle width={20} height={20} />
-							<Skeleton width={56} />
+						<div className={detailItemStyles.detailItem}>
+							<Skeleton width={76} />
 						</div>
 						{/* Placeholder para el tiempo */}
-						<div className={cardStyles.detailItem}>
+						<div className={detailItemStyles.detailItem}>
 							<Skeleton circle width={20} height={20} />
 							<Skeleton width={58} />
 						</div>

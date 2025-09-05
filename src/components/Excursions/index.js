@@ -1,103 +1,17 @@
 import { memo, useMemo, useCallback, useState, useEffect, useRef } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { SkeletonTheme } from "react-loading-skeleton";
-import { FiSearch, FiAlertCircle } from "react-icons/fi";
 import { updateUser } from "../../slicers/loginSlice";
 import ExcursionCard from "../ExcursionCard";
-import ExcursionCardSkeleton from "../ExcursionCard/ExcursionCardSkeleton";
 import { joinExcursion as joinExcursionService } from "../../services/excursionService";
+import ExcursionsLoading from "./ExcursionsLoading";
+import ExcursionsError from "./ExcursionsError";
+import NoExcursionsFound from "./NoExcursionsFound";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "./Excursions.module.css";
 
 /** @typedef {import('types.js').RootState} RootState */
 /** @typedef {import('types.js').Excursion} Excursion */
-
-/**
- * Componente para mostrar el esqueleto mientras las excursiones se cargan.
- * @param {ExcursionsLoadingProps} props
- * @typedef {object} ExcursionsLoadingProps
- * @property {boolean} isLoggedIn - Indica si el usuario ha iniciado sesión.
- * @property {'light' | 'dark'} mode - El modo de tema actual (claro u oscuro).
- */
-const ExcursionsLoadingComponent = ({ isLoggedIn, mode }) => {
-	const baseColor = mode === "dark" ? "#202020" : "#e0e0e0";
-	const highlightColor = mode === "dark" ? "#444" : "#f5f5f5";
-
-	return (
-		<SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
-			<div className={styles.excursionsContainer}>
-				<h2 className={styles.title}>Próximas excursiones</h2>
-				<div role="status" aria-live="polite" className="visually-hidden">
-					Cargando excursiones...
-				</div>
-				<Row as="ul" className="gx-4 gy-5 list-unstyled">
-					{Array.from({ length: 8 }).map((_, index) => (
-						<Col
-							as="li"
-							xs={12}
-							md={6}
-							lg={4}
-							xl={3}
-							// eslint-disable-next-line react/no-array-index-key
-							key={`skeleton-card-${index}`}
-							className="d-flex"
-						>
-							<ExcursionCardSkeleton isLoggedIn={isLoggedIn} />
-						</Col>
-					))}
-				</Row>
-			</div>
-		</SkeletonTheme>
-	);
-};
-
-const ExcursionsLoading = memo(ExcursionsLoadingComponent);
-
-/**
- * Componente que muestra un mensaje de error con un icono. Se renderiza cuando la carga de excursiones falla.
- * @param {ExcursionsErrorProps} props
- * @typedef {object} ExcursionsErrorProps
- * @property {(Error & { secondaryMessage?: string }) | null} error - El objeto de error que contiene el mensaje a mostrar.
- */
-const ExcursionsErrorComponent = ({ error }) => (
-	<div className={`${styles.excursionsContainer} ${styles.centeredStatus}`}>
-		<div role="alert" className={styles.messageNotFound}>
-			<FiAlertCircle
-				className={`${styles.messageIcon} text-danger`}
-				aria-hidden="true"
-			/>
-			<p className={styles.primaryMessage}>
-				{error?.message ||
-					"Lo sentimos, ha ocurrido un error al cargar las excursiones."}
-			</p>
-			{error?.secondaryMessage && (
-				<p className={styles.secondaryMessage}>{error.secondaryMessage}</p>
-			)}
-		</div>
-	</div>
-);
-
-const ExcursionsError = memo(ExcursionsErrorComponent);
-
-/**
- * Componente que muestra un mensaje cuando no se encuentran excursiones que coincidan con los criterios de búsqueda.
- */
-const NoExcursionsFoundComponent = () => (
-	<div className={`${styles.excursionsContainer} ${styles.centeredStatus}`}>
-		<div role="status" className={styles.messageNotFound}>
-			<FiSearch className={styles.messageIcon} aria-hidden="true" />
-			<p className={styles.primaryMessage}>
-				No se encontraron excursiones con esas características.
-			</p>
-			<p className={styles.secondaryMessage}>
-				Prueba a cambiar los filtros para refinar tu búsqueda.
-			</p>
-		</div>
-	</div>
-);
-
-const NoExcursionsFound = memo(NoExcursionsFoundComponent);
 
 /**
  * Componente principal que orquesta la visualización de la lista de excursiones.
@@ -106,10 +20,11 @@ const NoExcursionsFound = memo(NoExcursionsFoundComponent);
  * @typedef {object} ExcursionsProps
  * @property {Excursion[]} [excursionData=[]] - Array de excursiones a mostrar.
  * @property {boolean} isLoading - Indica si los datos de las excursiones se están cargando.
- * @property {(Error & { secondaryMessage?: string }) | null} error - Objeto de error si ha ocurrido un problema al cargar las excursiones.
+ * @property {(Error & { secondaryMessage?: string }) | null} error - Objeto de error si ha ocurrido un problema al cargar
+ * las excursiones.
  */
 function ExcursionsComponent({ excursionData = [], isLoading, error }) {
-	// Se obtiene el estado del loginReducer y el objeto usuario
+	// Se obtiene el estado del loginReducer, el objeto usuario y el token
 	const {
 		login: isLoggedIn,
 		user,
@@ -118,41 +33,34 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 		/** @param {RootState} state */
 		(state) => state.loginReducer
 	);
-	// Se obtiene el estado del themeReducer para saber el modo (claro u oscuro)
-	const mode = useSelector(
-		/** @param {RootState} state */
-		(state) => state.themeReducer.mode
-	);
 	const loginDispatch = useDispatch();
-	// Estado para las excursiones que se muestran. Esto nos permite mantener los resultados antiguos visibles mientras se cargan
-	// los nuevos datos para evitar que parpadeen o se queden en blanco.
+	// Estado para las excursiones que se muestran. Esto nos permite mantener los resultados antiguos visibles mientras se
+	// cargan los nuevos datos para evitar que parpadeen o se queden en blanco.
 	const [displayedExcursions, setDisplayedExcursions] = useState(excursionData);
 	// Estado para anunciar cambios a los lectores de pantalla.
 	const [announcement, setAnnouncement] = useState("");
-	// Referencia para saber si es la primera carga del componente. Esto nos permite evitar anunciar resultados en la primera carga.
+	// Referencia para saber si es la primera carga del componente. Permite evitar anunciar resultados en la primera carga.
 	const isInitialLoad = useRef(true);
 
 	// Efecto para gestionar qué excursiones se muestran. Se ejecuta cada vez que isLoading o excursionData cambian
 	useEffect(() => {
-		// Si la carga ha terminado, actualizamos las excursiones visibles con los nuevos datos.
-		if (!isLoading) {
-			setDisplayedExcursions(excursionData);
+		// No actualizamos nada mientras los datos se están cargando.
+		// Esto mantiene los resultados antiguos visibles para una mejor UX.
+		if (isLoading) {
+			return;
+		}
 
-			// Sólo anunciar en cargas posteriores a la inicial (ej. al aplicar filtros)
-			if (!isInitialLoad.current) {
-				if (excursionData.length > 0) {
-					const plural =
-						excursionData.length === 1 ? "excursión" : "excursiones";
-					const message = `Búsqueda completada. Se han encontrado ${excursionData.length} ${plural}.`;
-					setAnnouncement(message);
-				}
-				// Si no hay resultados, el componente de "no encontrado" ya se anuncia.
-			}
-			// Si es la primera carga, no anunciamos nada para evitar ruido al cargar el componente.
-			// Después de la primera carga, se establece isInitialLoad a false para que los siguientes cambios sí se anuncien.
-			if (isInitialLoad.current) {
-				isInitialLoad.current = false;
-			}
+		// Cuando la carga finaliza, actualizamos las excursiones mostradas.
+		setDisplayedExcursions(excursionData);
+
+		// Anunciar el resultado de la búsqueda a los lectores de pantalla, pero solo
+		// después de la carga inicial para evitar ruido innecesario.
+		if (isInitialLoad.current) {
+			isInitialLoad.current = false; // Marcar la carga inicial como completada.
+		} else if (excursionData.length > 0) {
+			const plural = excursionData.length === 1 ? "excursión" : "excursiones";
+			const message = `Búsqueda completada. Se han encontrado ${excursionData.length} ${plural}.`;
+			setAnnouncement(message);
 		}
 	}, [isLoading, excursionData]);
 
@@ -163,13 +71,14 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	const joinExcursion = useCallback(
 		async (excursionId) => {
 			try {
-				// Llamamos al servicio para unirse a la excursión. Este es el que hace la petición al servidor para apuntar al
-				// usuario a la excursión. El 'await' le dice a JavaScript que pause la ejecución de la función 'joinExcursion'
-				// hasta que 'joinExcursionService' termine y retorne una respuesta o un error.
-				// Si la petición es exitosa, 'updateUser' contendrá la info actualizada del usuario (con la nueva excursión en su
-				// lista), y se actualizará el estado del usuario en Redux, lo que hará que los componentes que dependen de este
-				// estado se re-rendericen automáticamente con la información actualizada, (por ejemplo, el botón 'Apuntarse'
-				// cambiará a 'Apuntado').
+				/** Llamamos al servicio para unirse a la excursión. Este es el que hace la petición al servidor para apuntar
+				 * al usuario a la excursión. El 'await' le dice a JavaScript que pause la ejecución de la función
+				 * 'joinExcursion'hasta que 'joinExcursionService' termine y retorne una respuesta o un error.
+				 * Si la petición es exitosa, 'updateUser' contendrá la info actualizada del usuario (con la nueva excursión
+				 * en su lista), y se actualizará el estado del usuario en Redux, lo que hará que los componentes que
+				 * dependen de este estado se re-rendericen automáticamente con la información actualizada, (por ejemplo, el
+				 * botón 'Apuntarse' cambiará a 'Apuntado').
+				 */
 				const updatedUser = await joinExcursionService(
 					user?.mail,
 					excursionId,
@@ -191,11 +100,11 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	);
 
 	/**
-	 * Componentes de las tarjetas de excursión, memoizados para optimizar el rendimiento, ya que el mapear un array a componentes
-	 * puede ser costoso si hay muchas excursiones.
+	 * Componentes de las tarjetas de excursión, memoizados para optimizar el rendimiento, ya que el mapear un array a
+	 * componentes puede ser costoso si hay muchas excursiones.
 	 * Cada tarjeta recibe las propiedades necesarias y se encarga de mostrar la información de la excursión.
-	 * Además, se comprueba si el usuario ha iniciado sesión y si ya está apuntado a la excursión para mostrar el botón de unirse o
-	 * no.
+	 * Además, se comprueba si el usuario ha iniciado sesión y si ya está apuntado a la excursión para mostrar el botón
+	 * de unirse o no.
 	 */
 	const excursionComponents = useMemo(
 		() =>
@@ -230,7 +139,7 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	}
 	// Si las excursiones se están cargando y no hay excursiones, mostrar el esqueleto de carga.
 	if (isLoading && displayedExcursions.length === 0) {
-		return <ExcursionsLoading isLoggedIn={isLoggedIn} mode={mode} />;
+		return <ExcursionsLoading isLoggedIn={isLoggedIn} />;
 	}
 	// Si no se está cargando y no hay excursiones, mostrar el componente de "no encontrado".
 	if (!isLoading && excursionData.length === 0) {
@@ -252,5 +161,4 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 }
 
 const Excursions = memo(ExcursionsComponent);
-
 export default Excursions;

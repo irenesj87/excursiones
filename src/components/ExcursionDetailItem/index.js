@@ -1,6 +1,6 @@
 import { memo, useCallback } from "react";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
-import styles from "../ExcursionCard/ExcursionCard.module.css";
+import styles from "./ExcursionDetailItem.module.css";
 
 /**
  * Componente para mostrar un detalle específico de una excursión (ej. dificultad, tiempo).
@@ -25,12 +25,19 @@ function ExcursionDetailItemComponent({
 	 */
 	const renderTooltip = useCallback(
 		(props) => {
-			const tooltipText = label && text ? `${label}: ${text}` : text || label;
-			// No renderiza el tooltip si no hay texto que mostrar.
-			if (!tooltipText) return <></>;
+			// Construye el texto del tooltip, priorizando el formato "label: text".
+			const tooltipContent =
+				label && text ? `${label}: ${text}` : text || label;
+
+			// Si no hay contenido para el tooltip, no se renderiza.
+			// OverlayTrigger no mostrará nada si el overlay es null o un fragmento vacío,
+			// por lo que se retorna un fragmento para ser explícitos.
+			if (!tooltipContent) {
+				return <></>;
+			}
 			return (
 				<Tooltip id={`tooltip-${label}`} {...props}>
-					{tooltipText}
+					{tooltipContent}
 				</Tooltip>
 			);
 		},
