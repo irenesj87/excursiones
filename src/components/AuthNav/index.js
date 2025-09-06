@@ -21,7 +21,7 @@ const getInitialAuthState = () => {
  * @param {object} props
  * @param {boolean} props.isAuthCheckComplete - Si la comprobación de autenticación ha finalizado.
  * @param {boolean} props.isLoggedIn - Si el usuario está logueado.
- * @param {() => void} [props.onCloseMenu] - Función para cerrar el menú Offcanvas al hacer clic en un enlace.
+ * @param {() => void} [props.onCloseMenu] - Función para cerrar el menú al hacer clic en un enlace.
  */
 const AuthNav = ({ isAuthCheckComplete, isLoggedIn, onCloseMenu }) => {
 	// Para evitar el "salto" del esqueleto, no reaccionamos al estado de Redux que cambia
