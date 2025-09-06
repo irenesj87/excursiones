@@ -6,7 +6,6 @@ Aplicación web desarrollada con React para la visualización y gestión de excu
 
 ### Frontend
 
-- **classnames:** Para la gestión dinámica y condicional de clases CSS.
 - **CSS Custom Properties (Variables):** Utilizadas para implementar el sistema de temas (claro/oscuro) de forma eficiente.
 - **CSS Modules:** Para estilos encapsulados y específicos de cada componente.
 - **React:** Librería principal para construir la interfaz de usuario.
