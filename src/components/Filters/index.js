@@ -36,18 +36,19 @@ const filterSections = [
  */
 function FiltersComponent({ showTitle = true }) {
 	const dispatch = useDispatch();
-	const { area, difficulty, time } = useSelector(
-		/** @param {RootState} state */
-		(state) => state.filterReducer
-	);
-
 	/**
 	 * Comprueba si hay algún filtro activo para habilitar/deshabilitar el botón de limpiar filtros.
+	 * Este selector está optimizado para que el componente solo se vuelva a renderizar cuando el valor booleano resultante cambie,
+	 * en lugar de en cada cambio de filtro individual.
 	 * @type {boolean}
-	 * @description Retorna `true` si hay al menos un filtro activo, de lo contrario `false`.
 	 */
-	const hasActiveFilters =
-		area.length > 0 || difficulty.length > 0 || time.length > 0;
+	const hasActiveFilters = useSelector(
+		/** @param {RootState} state */
+		(state) =>
+			state.filterReducer.area.length > 0 ||
+			state.filterReducer.difficulty.length > 0 ||
+			state.filterReducer.time.length > 0
+	);
 
 	/**
 	 * Maneja el evento de click para limpiar todos los filtros. Despacha la acción `clearAllFilters` al store de Redux.
