@@ -19,6 +19,7 @@ Aplicación web desarrollada con React para la visualización y gestión de excu
 ### Backend (Servidor de ejemplo)
 
 - **Node.js:** Entorno de ejecución para el servidor de datos (`testserver`).
+- **Express.js:** Framework utilizado sobre Node.js para construir la API REST, gestionar rutas y middleware.
 
 ### Herramientas de Desarrollo
 
