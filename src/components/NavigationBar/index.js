@@ -43,11 +43,11 @@ function NavigationBarComponent({
 	 * Estado para controlar la visibilidad del componente Offcanvas (menú lateral).
 	 * @type {[boolean, React.Dispatch<React.SetStateAction<boolean>>]}
 	 */
-	const [showOffcanvas, setShowOffcanvas] = useState(false);
-	/** Cierra el menú Offcanvas. */
-	const handleCloseOffcanvas = () => setShowOffcanvas(false);
-	/** Abre el menú Offcanvas. */
-	const handleShowOffcanvas = () => setShowOffcanvas(true);
+	const [showMenu, setShowMenu] = useState(false);
+	/** Cierra el menú lateral (Offcanvas). */
+	const handleCloseMenu = () => setShowMenu(false);
+	/** Abre el menú lateral (Offcanvas). */
+	const handleShowMenu = () => setShowMenu(true);
 
 	/**
 	 * Variable que guarda el modo de tema actual (claro u oscuro) del estado de Redux. Se inicializa con la preferencia del
@@ -133,7 +133,7 @@ function NavigationBarComponent({
 					{/* Se eliminan las props 'as', 'to' y 'aria-label' para evitar un enlace anidado,
 					ya que el componente Logo ya es un enlace. Se mantiene 'onClick' para
 					que el menú lateral se cierre al pulsar el logo. */}
-					<Navbar.Brand onClick={handleCloseOffcanvas}>
+					<Navbar.Brand onClick={handleCloseMenu}>
 						<Logo />
 					</Navbar.Brand>
 				</div>
@@ -178,14 +178,14 @@ function NavigationBarComponent({
 						<AuthNav
 							isAuthCheckComplete={isAuthCheckComplete}
 							isLoggedIn={isLoggedIn}
-							onCloseOffcanvas={handleCloseOffcanvas}
+							onCloseMenu={handleCloseMenu}
 						/>
 					</Nav>
 					{/* Toggle Offcanvas (Hamburguesa) */}
 					<Navbar.Toggle
 						aria-controls="offcanvasNavbar" // prettier-ignore
 						label="Abrir menú de navegación" // prettier-ignore
-						onClick={handleShowOffcanvas} // prettier-ignore
+						onClick={handleShowMenu} // prettier-ignore
 						className={`d-lg-none ${styles.navbarToggler}`}
 					/>
 				</div>
@@ -204,8 +204,8 @@ function NavigationBarComponent({
 				{/* --- Final de contenedor de la derecha --- */}
 				{/* --- Componente Offcanvas --- */}
 				<Offcanvas
-					show={showOffcanvas}
-					onHide={handleCloseOffcanvas}
+					show={showMenu}
+					onHide={handleCloseMenu}
 					placement="end"
 					id="offcanvasNavbar"
 					scroll={true}
@@ -221,7 +221,7 @@ function NavigationBarComponent({
 							<AuthNav
 								isAuthCheckComplete={isAuthCheckComplete}
 								isLoggedIn={isLoggedIn}
-								onCloseOffcanvas={handleCloseOffcanvas}
+								onCloseMenu={handleCloseMenu}
 							/>
 						</Nav>
 					</Offcanvas.Body>
