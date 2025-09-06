@@ -1,10 +1,10 @@
 import { memo } from "react";
-import { useSelector } from "react-redux";
 import { SkeletonTheme } from "react-loading-skeleton";
 import FiltersListCheckbox from "../FiltersListCheckbox";
 import FilterPillSkeleton from "./FilterPillSkeleton";
 import FilterError from "../FilterError";
 import { useFilters } from "../../hooks/useFilters";
+import { useSkeletonTheme } from "../../hooks/useSkeletonTheme";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "./FiltersList.module.css";
 
@@ -19,20 +19,13 @@ import styles from "./FiltersList.module.css";
 function FiltersListComponent({ filterName }) {
 	// Usamos el hook personalizado para obtener los datos y el estado de carga/error.
 	const { data: arrayFilters, isLoading, error } = useFilters(filterName);
-
-	const mode = useSelector(
-		/** @param {RootState} state */
-		(state) => state.themeReducer.mode
-	);
-
-	// Define los colores del esqueleto según el tema.
-	const baseColor = mode === "dark" ? "#202020" : "#e0e0e0";
-	const highlightColor = mode === "dark" ? "#444" : "#f5f5f5";
+	// Usamos el hook personalizado para obtener los colores del esqueleto según el tema.
+	const skeletonThemeProps = useSkeletonTheme();
 
 	// Muestra los esqueletos siempre que isLoading sea true.
 	if (isLoading) {
 		return (
-			<SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
+			<SkeletonTheme {...skeletonThemeProps}>
 				{/* Anunciamos el estado de carga a los lectores de pantalla de forma no intrusiva */}
 				<div role="status" aria-live="polite" className="visually-hidden">
 					Cargando filtros de {filterName}...
@@ -43,7 +36,6 @@ function FiltersListComponent({ filterName }) {
 						<li
 							// eslint-disable-next-line react/no-array-index-key
 							key={`skeleton-pill-${index}`}
-							className={styles.filterItem}
 						>
 							<FilterPillSkeleton />
 						</li>
@@ -63,7 +55,7 @@ function FiltersListComponent({ filterName }) {
 	return (
 		<ul className={styles.filtersGrid}>
 			{arrayFilters.map((filterValue) => (
-				<li key={filterValue} className={styles.filterItem}>
+				<li key={filterValue}>
 					<FiltersListCheckbox filterName={filterName} filter={filterValue} />
 				</li>
 			))}
