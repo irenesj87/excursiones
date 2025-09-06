@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFilter } from "../../slices/filterSlice";
+import cn from "classnames";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "./FiltersListCheckbox.module.css";
 
@@ -55,7 +56,7 @@ function FiltersListCheckboxComponent({ filterName, filter }) {
 			/>
 			<label
 				htmlFor={id}
-				className={`${styles.filterPill} ${isChecked ? styles.checked : ""}`}
+				className={cn(styles.filterPill, { [styles.checked]: isChecked })}
 			>
 				{filter}
 			</label>
