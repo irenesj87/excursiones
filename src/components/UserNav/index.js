@@ -12,12 +12,12 @@ import styles from "./UserNav.module.css";
 /**
  * Componente que muestra los enlaces de navegación para un usuario logueado, incluyendo un enlace al perfil y un botón para cerrar
  * sesión.
- * Permite cerrar un menú colapsable (Offcanvas) si se proporciona la función `onCloseOffcanvas`.
+ * Permite cerrar un menú contenedor (como un Offcanvas o un Dropdown) si se proporciona la función `onCloseMenu`.
  * @param {object} props - Las propiedades del componente.
- * @param {() => void} [props.onCloseOffcanvas] - Función para cerrar el menú colapsable (Offcanvas) en breakpoints pequeños.
+ * @param {() => void} [props.onCloseMenu] - Función para cerrar el menú contenerdor en breakpoints pequeños.
  * @returns {React.ReactElement} Un elemento JSX que representa los enlaces de navegación del usuario.
  */
-function UserNav({ onCloseOffcanvas }) {
+function UserNav({ onCloseMenu }) {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { token } = useSelector(
@@ -31,7 +31,7 @@ function UserNav({ onCloseOffcanvas }) {
 	 * independientemente del resultado del servidor para garantizar que el usuario sea deslogueado en el cliente.
 	 */
 	const handleLogout = useCallback(async () => {
-		onCloseOffcanvas?.();
+		onCloseMenu?.();
 		try {
 			// Solo intenta invalidar el token en el servidor si realmente existe.
 			if (token) {
@@ -50,7 +50,7 @@ function UserNav({ onCloseOffcanvas }) {
 			sessionStorage.removeItem("token");
 			navigate("/");
 		}
-	}, [dispatch, navigate, onCloseOffcanvas, token]);
+	}, [dispatch, navigate, onCloseMenu, token]);
 
 	return (
 		<>
@@ -58,7 +58,7 @@ function UserNav({ onCloseOffcanvas }) {
 				className={`${styles.profileLink} me-lg-3`}
 				as={NavLink}
 				to="/userPage"
-				onClick={onCloseOffcanvas}
+				onClick={onCloseMenu}
 			>
 				Tu perfil
 			</Nav.Link>
