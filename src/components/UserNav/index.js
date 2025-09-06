@@ -14,7 +14,7 @@ import styles from "./UserNav.module.css";
  * sesión.
  * Permite cerrar un menú contenedor (como un Offcanvas o un Dropdown) si se proporciona la función `onCloseMenu`.
  * @param {object} props - Las propiedades del componente.
- * @param {() => void} [props.onCloseMenu] - Función para cerrar el menú contenerdor en breakpoints pequeños.
+ * @param {() => void} [props.onCloseMenu] - Función para cerrar el menú contenedor en breakpoints pequeños.
  * @returns {React.ReactElement} Un elemento JSX que representa los enlaces de navegación del usuario.
  */
 function UserNav({ onCloseMenu }) {
