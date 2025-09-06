@@ -11,7 +11,7 @@ describe("GuestNav Component", () => {
 		const handleClose = jest.fn();
 		render(
 			<BrowserRouter>
-				<GuestNav onCloseOffcanvas={handleClose} />
+				<GuestNav onCloseMenu={handleClose} />
 			</BrowserRouter>
 		);
 

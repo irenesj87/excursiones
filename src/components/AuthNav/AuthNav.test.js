@@ -9,11 +9,11 @@ jest.mock("../UserNav/UserNavSkeleton", () => () => (
 jest.mock("../GuestNav/GuestNavSkeleton", () => () => (
 	<div data-testid="guest-nav-skeleton" />
 ));
-jest.mock("../UserNav", () => ({ onCloseOffcanvas }) => (
-	<button type="button" data-testid="user-nav" onClick={onCloseOffcanvas} />
+jest.mock("../UserNav", () => ({ onCloseMenu }) => (
+	<button type="button" data-testid="user-nav" onClick={onCloseMenu} />
 ));
-jest.mock("../GuestNav", () => ({ onCloseOffcanvas }) => (
-	<button type="button" data-testid="guest-nav" onClick={onCloseOffcanvas} />
+jest.mock("../GuestNav", () => ({ onCloseMenu }) => (
+	<button type="button" data-testid="guest-nav" onClick={onCloseMenu} />
 ));
 
 /**
@@ -45,7 +45,7 @@ describe("AuthNav Component", () => {
 				<AuthNav
 					isAuthCheckComplete={false}
 					isLoggedIn={false}
-					onCloseOffcanvas={mockOnClose}
+					onCloseMenu={mockOnClose}
 				/>
 			);
 
@@ -60,7 +60,7 @@ describe("AuthNav Component", () => {
 				<AuthNav
 					isAuthCheckComplete={false}
 					isLoggedIn={false}
-					onCloseOffcanvas={mockOnClose}
+					onCloseMenu={mockOnClose}
 				/>
 			);
 
@@ -78,7 +78,7 @@ describe("AuthNav Component", () => {
 			<AuthNav
 				isAuthCheckComplete={true}
 				isLoggedIn={false}
-				onCloseOffcanvas={mockOnClose}
+				onCloseMenu={mockOnClose}
 			/>
 		);
 
@@ -98,7 +98,7 @@ describe("AuthNav Component", () => {
 			<AuthNav
 				isAuthCheckComplete={true}
 				isLoggedIn={true}
-				onCloseOffcanvas={mockOnClose}
+				onCloseMenu={mockOnClose}
 			/>
 		);
 

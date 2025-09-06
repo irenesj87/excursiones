@@ -40,13 +40,13 @@ describe("UserNav Component", () => {
 
 	/**
 	 * Prueba que el componente UserNav muestra correctamente los enlaces "Tu perfil" y "Cierra sesión" y que el clic en "Tu perfil"
-	 * invoca `onCloseOffcanvas`.
+	 * invoca `onCloseMenu`.
 	 */
 	test("muestra los enlaces 'Tu perfil' y 'Cierra sesión' y maneja los clics", () => {
 		render(
 			<Provider store={store}>
 				<BrowserRouter>
-					<UserNav onCloseOffcanvas={handleClose} />
+					<UserNav onCloseMenu={handleClose} />
 				</BrowserRouter>
 			</Provider>
 		);
@@ -77,7 +77,7 @@ describe("UserNav Component", () => {
 		render(
 			<Provider store={store}>
 				<BrowserRouter>
-					<UserNav onCloseOffcanvas={handleClose} />
+					<UserNav onCloseMenu={handleClose} />
 				</BrowserRouter>
 			</Provider>
 		);
@@ -117,7 +117,7 @@ describe("UserNav Component", () => {
 		render(
 			<Provider store={store}>
 				<BrowserRouter>
-					<UserNav onCloseOffcanvas={handleClose} />
+					<UserNav onCloseMenu={handleClose} />
 				</BrowserRouter>
 			</Provider>
 		);

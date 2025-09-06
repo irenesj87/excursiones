@@ -21,9 +21,9 @@ const getInitialAuthState = () => {
  * @param {object} props
  * @param {boolean} props.isAuthCheckComplete - Si la comprobación de autenticación ha finalizado.
  * @param {boolean} props.isLoggedIn - Si el usuario está logueado.
- * @param {() => void} props.onCloseOffcanvas - Función para cerrar el menú Offcanvas al hacer clic en un enlace.
+ * @param {() => void} [props.onCloseMenu] - Función para cerrar el menú Offcanvas al hacer clic en un enlace.
  */
-const AuthNav = ({ isAuthCheckComplete, isLoggedIn, onCloseOffcanvas }) => {
+const AuthNav = ({ isAuthCheckComplete, isLoggedIn, onCloseMenu }) => {
 	// Para evitar el "salto" del esqueleto, no reaccionamos al estado de Redux que cambia
 	// durante la comprobación. En su lugar, tomamos una "pista" inicial de sessionStorage.
 	// Si hay un token, es muy probable que el usuario esté logueado, por lo que mostramos
@@ -37,9 +37,9 @@ const AuthNav = ({ isAuthCheckComplete, isLoggedIn, onCloseOffcanvas }) => {
 	}
 
 	return isLoggedIn ? (
-		<UserNav onCloseOffcanvas={onCloseOffcanvas} />
+		<UserNav onCloseMenu={onCloseMenu} />
 	) : (
-		<GuestNav onCloseOffcanvas={onCloseOffcanvas} />
+		<GuestNav onCloseMenu={onCloseMenu} />
 	);
 };
 
