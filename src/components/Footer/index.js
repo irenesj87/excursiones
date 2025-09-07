@@ -31,7 +31,7 @@ function Footer() {
 		[]
 	);
 	return (
-		<footer className={styles.footer} role="contentinfo">
+		<footer className={styles.footer}>
 			<OverlayTrigger placement="top" overlay={renderMailTooltip}>
 				<a
 					href="mailto:excursionesjuntos@gmail.com"

@@ -7,7 +7,7 @@ import styles from "./NoExcursionsFound.module.css";
  */
 const NoExcursionsFoundComponent = () => (
 	<div className={`${styles.excursionsContainer} ${styles.centeredStatus}`}>
-		<div role="status" className={styles.messageNotFound}>
+		<output aria-live="polite" className={styles.messageNotFound}>
 			<FiSearch
 				className={styles.messageIcon}
 				data-testid="search-icon"
@@ -19,7 +19,7 @@ const NoExcursionsFoundComponent = () => (
 			<p className={styles.secondaryMessage}>
 				Prueba a cambiar los filtros para refinar tu búsqueda.
 			</p>
-		</div>
+		</output>
 	</div>
 );
 

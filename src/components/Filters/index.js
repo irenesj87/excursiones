@@ -28,10 +28,13 @@ const filterSections = [
 	},
 ];
 
+/** @typedef {object} FiltersProps
+ * @property {boolean} [showTitle=true] - Controla si se muestra el título o no.
+ */
+
 /** * Componente principal de los filtros que renderiza el tipo de los filtros de búsqueda (zona, dificultad, tiempo estimado).
  * Utiliza Redux para manejar el estado.
- * @param {object} props - Propiedades del componente.
- * @param {boolean} [props.showTitle=true] - Controla si se muestra el título o no.
+ * @param {FiltersProps} props - Propiedades del componente.
  * @returns {React.ReactElement} El componente de filtros.
  */
 function FiltersComponent({ showTitle = true }) {

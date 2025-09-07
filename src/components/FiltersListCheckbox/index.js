@@ -7,11 +7,14 @@ import styles from "./FiltersListCheckbox.module.css";
 
 /** @typedef {import("../../types").RootState} RootState */
 
+/** @typedef {object} FiltersListCheckboxProps
+ * @property {string} filterName - El nombre de la categoría de filtro (ej. "area").
+ * @property {string} filter - El valor específico del filtro (ej. "Picos de Europa").
+ */
+
 /**
  * Componente que renderiza una única opción de filtro como una "píldora" interactiva.
- * @param {object} props
- * @param {string} props.filterName - El nombre de la categoría de filtro (ej. "area").
- * @param {string} props.filter - El valor específico del filtro (ej. "Picos de Europa").
+ * @param {FiltersListCheckboxProps} props
  * @returns {React.ReactElement}
  */
 function FiltersListCheckboxComponent({ filterName, filter }) {

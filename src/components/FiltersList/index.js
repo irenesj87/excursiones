@@ -10,10 +10,13 @@ import styles from "./FiltersList.module.css";
 
 /** @typedef {import("../../types").RootState} RootState */
 
+/** @typedef {object} FiltersListProps
+ * @property {string} filterName - El nombre de la categoría de filtro (ej. "area").
+ */
+
 /**
  * Componente que muestra una lista de filtros para una categoría específica (ej. área, dificultad, tiempo).
- * @param {object} props - Las propiedades del componente.
- * @param {string} props.filterName - El nombre de la categoría de filtro (ej. "area").
+ * @param {FiltersListProps} props - Las propiedades del componente.
  * @return {React.ReactElement} El componente de la lista de filtros.
  */
 function FiltersListComponent({ filterName }) {
@@ -26,10 +29,10 @@ function FiltersListComponent({ filterName }) {
 	if (isLoading) {
 		return (
 			<SkeletonTheme {...skeletonThemeProps}>
-				{/* Anunciamos el estado de carga a los lectores de pantalla de forma no intrusiva */}
-				<div role="status" aria-live="polite" className="visually-hidden">
+				{/* Anunciamos el estado de carga a los lectores de pantalla de forma semántica */}
+				<output aria-live="polite" className="visually-hidden">
 					Cargando filtros de {filterName}...
-				</div>
+				</output>
 				<ul className={styles.filtersGrid} aria-hidden="true">
 					{/* Mostramos 4 esqueletos para simular mejor el contenido real y evitar saltos de layout */}
 					{[...Array(4)].map((_, index) => (

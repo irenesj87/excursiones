@@ -9,13 +9,15 @@ import styles from "./UserNav.module.css";
 
 /** @typedef {import('types.js').RootState} RootState */
 
+/** @typedef {object} UserNavProps
+ * @property {() => void} [onCloseMenu] - Función para cerrar el menú contenedor en breakpoints pequeños.
+ */
+
 /**
  * Componente que muestra los enlaces de navegación para un usuario logueado, incluyendo un enlace al perfil y un botón para cerrar
  * sesión.
  * Permite cerrar un menú contenedor (como un Offcanvas o un Dropdown) si se proporciona la función `onCloseMenu`.
- * @param {object} props - Las propiedades del componente.
- * @param {() => void} [props.onCloseMenu] - Función para cerrar el menú contenedor en breakpoints pequeños.
- * @returns {React.ReactElement} Un elemento JSX que representa los enlaces de navegación del usuario.
+ * @param {UserNavProps} props - Las propiedades del componente.
  */
 function UserNav({ onCloseMenu }) {
 	const dispatch = useDispatch();
