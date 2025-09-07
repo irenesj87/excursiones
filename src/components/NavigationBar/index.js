@@ -1,5 +1,4 @@
 import { useState, useEffect, memo, useCallback } from "react";
-import PropTypes from "prop-types";
 import {
 	Nav,
 	Navbar,
@@ -234,13 +233,6 @@ function NavigationBarComponent({
 		</Navbar>
 	);
 }
-
-NavigationBarComponent.propTypes = {
-	onFetchSuccess: PropTypes.func.isRequired,
-	isAuthCheckComplete: PropTypes.bool.isRequired,
-	onExcursionsFetchStart: PropTypes.func.isRequired,
-	onExcursionsFetchEnd: PropTypes.func.isRequired,
-};
 
 const NavigationBar = memo(NavigationBarComponent);
 

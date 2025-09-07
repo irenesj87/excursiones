@@ -1,5 +1,4 @@
 import { Card } from "react-bootstrap";
-import PropTypes from "prop-types";
 import Skeleton from "react-loading-skeleton";
 import cardStyles from "./ExcursionCard.module.css"; // Se reutiliza el CSS de la tarjeta real
 import detailItemStyles from "../ExcursionDetailItem/ExcursionDetailItem.module.css";
@@ -59,13 +58,5 @@ function ExcursionCardSkeleton({ isLoggedIn = false }) {
 		</Card>
 	);
 }
-
-ExcursionCardSkeleton.propTypes = {
-	isLoggedIn: PropTypes.bool,
-};
-
-ExcursionCardSkeleton.defaultProps = {
-	isLoggedIn: false,
-};
 
 export default ExcursionCardSkeleton;

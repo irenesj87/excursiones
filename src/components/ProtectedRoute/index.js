@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 
@@ -35,11 +34,6 @@ const ProtectedRoute = ({ children, isAuthCheckComplete }) => {
 	// Mientras la comprobación está en curso, el componente hijo (`LazyRouteWrapper`) mostrará un esqueleto de carga, evitando una
 	// pantalla en blanco.
 	return children;
-};
-
-ProtectedRoute.propTypes = {
-	children: PropTypes.node.isRequired,
-	isAuthCheckComplete: PropTypes.bool.isRequired,
 };
 
 export default ProtectedRoute;

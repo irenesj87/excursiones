@@ -1,6 +1,5 @@
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 import styles from "./FormPageLayout.module.css";
 
 /**
@@ -66,23 +65,5 @@ function FormPageLayout(props) {
 		</Container>
 	);
 }
-
-FormPageLayout.propTypes = {
-	title: PropTypes.string.isRequired,
-	subtitle: PropTypes.string,
-	children: PropTypes.node.isRequired,
-	colWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	switcherPrompt: PropTypes.string,
-	switcherLinkText: PropTypes.string,
-	switcherLinkTo: PropTypes.string,
-};
-
-FormPageLayout.defaultProps = {
-	subtitle: null,
-	colWidth: "5",
-	switcherPrompt: null,
-	switcherLinkText: null,
-	switcherLinkTo: null,
-};
 
 export default FormPageLayout;

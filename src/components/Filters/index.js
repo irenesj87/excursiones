@@ -1,5 +1,4 @@
 import { memo, useCallback } from "react";
-import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FiltersList from "../FiltersList";
@@ -97,14 +96,6 @@ function FiltersComponent({ showTitle = true }) {
 		</div>
 	);
 }
-
-FiltersComponent.propTypes = {
-	showTitle: PropTypes.bool,
-};
-
-FiltersComponent.defaultProps = {
-	showTitle: true,
-};
 
 const Filters = memo(FiltersComponent);
 

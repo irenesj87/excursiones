@@ -1,5 +1,4 @@
 import React, { useCallback } from "react";
-import PropTypes from "prop-types";
 import { Nav, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -71,13 +70,5 @@ function UserNav({ onCloseMenu }) {
 		</>
 	);
 }
-
-UserNav.propTypes = {
-	onCloseMenu: PropTypes.func,
-};
-
-UserNav.defaultProps = {
-	onCloseMenu: null,
-};
 
 export default UserNav;

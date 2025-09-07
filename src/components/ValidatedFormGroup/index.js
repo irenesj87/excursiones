@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Form } from "react-bootstrap";
-import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "./ValidatedFormGroup.module.css";
 
@@ -80,24 +79,5 @@ function ValidatedFormGroup(props) {
 		</Form.Group>
 	);
 }
-
-ValidatedFormGroup.propTypes = {
-	id: PropTypes.string.isRequired,
-	name: PropTypes.string.isRequired,
-	inputType: PropTypes.string,
-	inputToChange: PropTypes.func.isRequired,
-	validationFunction: PropTypes.func.isRequired,
-	value: PropTypes.string.isRequired,
-	message: PropTypes.bool.isRequired,
-	errorMessage: PropTypes.string,
-	autocomplete: PropTypes.string.isRequired,
-	ariaDescribedBy: PropTypes.string,
-};
-
-ValidatedFormGroup.defaultProps = {
-	inputType: "text",
-	errorMessage: "",
-	ariaDescribedBy: null,
-};
 
 export default ValidatedFormGroup;

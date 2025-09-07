@@ -1,5 +1,4 @@
 import { Nav } from "react-bootstrap";
-import PropTypes from "prop-types";
 import { Link, NavLink } from "react-router-dom";
 import styles from "./GuestNav.module.css";
 
@@ -32,13 +31,5 @@ const GuestNav = ({ onCloseMenu }) => (
 		</Nav.Link>
 	</>
 );
-
-GuestNav.propTypes = {
-	onCloseMenu: PropTypes.func,
-};
-
-GuestNav.defaultProps = {
-	onCloseMenu: null,
-};
 
 export default GuestNav;

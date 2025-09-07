@@ -1,5 +1,4 @@
 import { memo } from "react";
-import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFilter } from "../../slices/filterSlice";
 import cn from "classnames";
@@ -67,11 +66,6 @@ function FiltersListCheckboxComponent({ filterName, filter }) {
 		</>
 	);
 }
-
-FiltersListCheckboxComponent.propTypes = {
-	filterName: PropTypes.string.isRequired,
-	filter: PropTypes.string.isRequired,
-};
 
 const FiltersListCheckbox = memo(FiltersListCheckboxComponent);
 

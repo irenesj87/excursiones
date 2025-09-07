@@ -1,5 +1,4 @@
 import { memo } from "react";
-import PropTypes from "prop-types";
 import { Card, Button, Spinner, Alert } from "react-bootstrap";
 import ExcursionDetailItem from "../ExcursionDetailItem";
 import { FiMapPin, FiClock, FiCheckCircle } from "react-icons/fi";
@@ -77,12 +76,6 @@ const JoinButton = ({ isJoined, isJoining, onJoin }) => {
 			</Button>
 		</div>
 	);
-};
-
-JoinButton.propTypes = {
-	isJoined: PropTypes.bool.isRequired,
-	isJoining: PropTypes.bool.isRequired,
-	onJoin: PropTypes.func.isRequired,
 };
 
 /** @typedef {object} ExcursionCardProps
@@ -184,21 +177,6 @@ function ExcursionCardComponent({
 		</Card>
 	);
 }
-
-ExcursionCardComponent.propTypes = {
-	id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-	name: PropTypes.string.isRequired,
-	area: PropTypes.string.isRequired,
-	difficulty: PropTypes.string.isRequired,
-	time: PropTypes.string.isRequired,
-	isLoggedIn: PropTypes.bool.isRequired,
-	isJoined: PropTypes.bool.isRequired,
-	onJoin: PropTypes.func,
-};
-
-ExcursionCardComponent.defaultProps = {
-	onJoin: null,
-};
 
 const ExcursionCard = memo(ExcursionCardComponent);
 

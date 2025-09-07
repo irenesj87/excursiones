@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import PropTypes from "prop-types";
 import { useSelector, shallowEqual } from "react-redux";
 import { FiSearch, FiX } from "react-icons/fi";
 import cn from "classnames";
@@ -169,14 +168,5 @@ function SearchBar({
 		</form>
 	);
 }
-
-SearchBar.propTypes = {
-	onFetchSuccess: PropTypes.func.isRequired,
-	onFetchStart: PropTypes.func.isRequired,
-	onFetchEnd: PropTypes.func.isRequired,
-	id: PropTypes.string.isRequired,
-	searchValue: PropTypes.string.isRequired,
-	onSearchChange: PropTypes.func.isRequired,
-};
 
 export default SearchBar;

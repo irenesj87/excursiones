@@ -1,5 +1,4 @@
 import { memo, useCallback } from "react";
-import PropTypes from "prop-types";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import styles from "./ExcursionDetailItem.module.css";
 
@@ -69,19 +68,6 @@ function ExcursionDetailItemComponent({
 		</OverlayTrigger>
 	);
 }
-
-ExcursionDetailItemComponent.propTypes = {
-	IconComponent: PropTypes.elementType,
-	text: PropTypes.string,
-	label: PropTypes.string.isRequired,
-	children: PropTypes.node,
-};
-
-ExcursionDetailItemComponent.defaultProps = {
-	IconComponent: null,
-	text: null,
-	children: null,
-};
 
 const ExcursionDetailItem = memo(ExcursionDetailItemComponent);
 export default ExcursionDetailItem;

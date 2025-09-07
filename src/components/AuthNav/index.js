@@ -1,5 +1,4 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
 import UserNavSkeleton from "../UserNav/UserNavSkeleton";
 import GuestNavSkeleton from "../GuestNav/GuestNavSkeleton";
 import UserNav from "../UserNav";
@@ -44,16 +43,6 @@ const AuthNav = ({ isAuthCheckComplete, isLoggedIn, onCloseMenu }) => {
 	) : (
 		<GuestNav onCloseMenu={onCloseMenu} />
 	);
-};
-
-AuthNav.propTypes = {
-	isAuthCheckComplete: PropTypes.bool.isRequired,
-	isLoggedIn: PropTypes.bool.isRequired,
-	onCloseMenu: PropTypes.func,
-};
-
-AuthNav.defaultProps = {
-	onCloseMenu: null,
 };
 
 export default AuthNav;

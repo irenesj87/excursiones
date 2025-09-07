@@ -1,5 +1,4 @@
 import { memo } from "react";
-import PropTypes from "prop-types";
 import { SkeletonTheme } from "react-loading-skeleton";
 import FiltersListCheckbox from "../FiltersListCheckbox";
 import FilterPillSkeleton from "./FilterPillSkeleton";
@@ -30,10 +29,10 @@ function FiltersListComponent({ filterName }) {
 	if (isLoading) {
 		return (
 			<SkeletonTheme {...skeletonThemeProps}>
-				{/* Anunciamos el estado de carga a los lectores de pantalla de forma no intrusiva */}
-				<div role="status" aria-live="polite" className="visually-hidden">
+				{/* Anunciamos el estado de carga a los lectores de pantalla de forma semántica */}
+				<output aria-live="polite" className="visually-hidden">
 					Cargando filtros de {filterName}...
-				</div>
+				</output>
 				<ul className={styles.filtersGrid} aria-hidden="true">
 					{/* Mostramos 4 esqueletos para simular mejor el contenido real y evitar saltos de layout */}
 					{[...Array(4)].map((_, index) => (
@@ -66,10 +65,6 @@ function FiltersListComponent({ filterName }) {
 		</ul>
 	);
 }
-
-FiltersListComponent.propTypes = {
-	filterName: PropTypes.string.isRequired,
-};
 
 const FiltersList = memo(FiltersListComponent);
 

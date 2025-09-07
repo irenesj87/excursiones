@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Alert } from "react-bootstrap";
 
 /** @typedef {object} ErrorMessageAlertProps
@@ -20,10 +19,5 @@ function ErrorMessageAlert({ message, onClose }) {
 		</Alert>
 	);
 }
-
-ErrorMessageAlert.propTypes = {
-	message: PropTypes.string.isRequired,
-	onClose: PropTypes.func.isRequired,
-};
 
 export default ErrorMessageAlert;
