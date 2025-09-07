@@ -219,16 +219,15 @@ function RegisterForm() {
 								className="w-100" // w-100 hace que el botón ocupe el ancho de su Col padre
 							>
 								{formState.isLoading ? (
-									<>
+									<output>
 										<Spinner
 											as="span"
 											animation="border"
 											size="sm"
-											role="status"
 											aria-hidden="true"
 										/>
 										<span className="visually-hidden">Cargando...</span>
-									</>
+									</output>
 								) : (
 									"Enviar"
 								)}

@@ -95,16 +95,15 @@ export function LoginForm() {
 								className="w-100"
 							>
 								{formState.isLoading ? (
-									<>
+									<output>
 										<Spinner
 											as="span"
 											animation="border"
 											size="sm"
-											role="status"
 											aria-hidden="true"
 										/>
 										<span className="visually-hidden">Cargando...</span>
-									</>
+									</output>
 								) : (
 									"Enviar"
 								)}

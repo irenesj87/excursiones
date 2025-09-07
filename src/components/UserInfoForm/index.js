@@ -248,12 +248,12 @@ function UserInfoForm() {
 				 * - `aria-label` proporciona un nombre accesible al grupo, que es anunciado por los lectores de pantalla al enfocarlo.
 				 * - `ref` y `tabIndex={-1}` permiten que el contenedor sea enfocado programáticamente.
 				 */}
-				<div
-					ref={alertRef}
-					tabIndex={-1}
-					role="group"
-					aria-label={alertContainerAriaLabel}
-				>
+				<fieldset ref={alertRef} tabIndex={-1} className="border-0 p-0 m-0">
+					{alertContainerAriaLabel && (
+						<legend className="visually-hidden">
+							{alertContainerAriaLabel}
+						</legend>
+					)}
 					{successMessage && (
 						<Alert
 							variant="success"
@@ -274,7 +274,7 @@ function UserInfoForm() {
 							{error}
 						</Alert>
 					)}
-				</div>
+				</fieldset>
 
 				{/* Campo de correo electrónico (sólo lectura) */}
 				<Form.Group
@@ -360,13 +360,14 @@ function UserInfoForm() {
 									aria-disabled={!isFormValid || !isFormChanged || isLoading}
 								>
 									{isLoading ? (
-										<Spinner
-											as="span"
-											animation="border"
-											size="sm"
-											role="status"
-											aria-hidden="true"
-										/>
+										<output>
+											<Spinner
+												as="span"
+												animation="border"
+												size="sm"
+												aria-hidden="true"
+											/>
+										</output>
 									) : (
 										"Guardar"
 									)}

@@ -33,7 +33,7 @@ export const filterSlice = createSlice({
 
 			// Comprobamos si filterType es una clave válida en nuestro estado para evitar errores.
 			// Esto satisface al linter (Sonar) y hace el reducer más robusto.
-			if (Object.prototype.hasOwnProperty.call(state, filterType)) {
+			if (Object.hasOwn(state, filterType)) {
 				const filterArray = state[filterType];
 				const index = filterArray.indexOf(value);
 
