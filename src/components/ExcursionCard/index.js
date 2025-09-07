@@ -30,21 +30,24 @@ const getDifficultyClasses = (difficultyLevel) => {
 	);
 };
 
+/** @typedef {object} JoinButtonProps
+ * @property {boolean} isJoined - Indica si el usuario se ha apuntado a la excursión.
+ * @property {boolean} isJoining - Muestra si la acción de unirse está en progreso.
+ * @property {() => void} onJoin - Callback que se ejecuta cuando se cliquea el botón para apuntarse.
+ */
+
 /**
  * Renderiza el botón para unirse a una excursión. Muestra un botón "Apuntarse", un estado de carga o un estado "Apuntado/a".
- * @param {object} props
- * @param {boolean} props.isJoined - Indica si el usuario se ha apuntado a la excursión.
- * @param {boolean} props.isJoining - Muestra si la acción de unirse está en progreso.
- * @param {() => void} props.onJoin - Callback que se ejecuta cuando se cliquea el botón para apuntarse.
+ * @param {JoinButtonProps} props
  * @returns {React.ReactElement}
  */
 const JoinButton = ({ isJoined, isJoining, onJoin }) => {
 	if (isJoined) {
 		return (
 			<div className="d-grid d-md-flex justify-content-center justify-content-md-end">
-				<div className={styles.joinedStatus} role="status" aria-live="polite">
+				<output className={styles.joinedStatus}>
 					<FiCheckCircle /> <span>Apuntado/a</span>
-				</div>
+				</output>
 			</div>
 		);
 	}
@@ -57,16 +60,16 @@ const JoinButton = ({ isJoined, isJoining, onJoin }) => {
 				disabled={isJoining}
 			>
 				{isJoining ? (
-					<>
+					<output className="d-flex align-items-center">
 						<Spinner
 							as="span"
 							animation="border"
 							size="sm"
-							role="status"
 							aria-hidden="true"
+							className="me-2"
 						/>
-						<span className="visually-hidden">Apuntando...</span>
-					</>
+						Apuntando...
+					</output>
 				) : (
 					"Apuntarse"
 				)}
@@ -75,17 +78,20 @@ const JoinButton = ({ isJoined, isJoining, onJoin }) => {
 	);
 };
 
+/** @typedef {object} ExcursionCardProps
+ * @property {string | number} id - El ID de la excursión.
+ * @property {string} name - El nombre de la excursión.
+ * @property {string} area - La zona donde se realiza la excursión.
+ * @property {string} difficulty - La dificultad de la excursión (ej. "Baja", "Media", "Alta").
+ * @property {string} time - El tiempo estimado de la excursión.
+ * @property {boolean} isLoggedIn - Indica si el usuario ha iniciado sesión.
+ * @property {boolean} isJoined - Indica si el usuario ya está apuntado a la excursión.
+ * @property {(id: string | number) => Promise<void>} [onJoin] - Función asíncrona que se ejecuta cuando el usuario se apunta a la excursión. Recibe el ID de la excursión.
+ */
+
 /**
  * Componente para la tarjeta de excursión.
- * @param {object} props - Las propiedades del componente.
- * @param {string | number} props.id - El ID de la excursión.
- * @param {string} props.name - El nombre de la excursión.
- * @param {string} props.area - La zona donde se realiza la excursión.
- * @param {string} props.difficulty - La dificultad de la excursión (ej. "Baja", "Media", "Alta").
- * @param {string} props.time - El tiempo estimado de la excursión.
- * @param {boolean} props.isLoggedIn - Indica si el usuario ha iniciado sesión.
- * @param {boolean} props.isJoined - Indica si el usuario ya está apuntado a la excursión.
- * @param {(id: string | number) => Promise<void>} [props.onJoin] - Función asíncrona que se ejecuta cuando el usuario se apunta a la excursión. Recibe el ID de la excursión.
+ * @param {ExcursionCardProps} props - Las propiedades del componente.
  * @returns {React.ReactElement}
  */
 function ExcursionCardComponent({
@@ -109,7 +115,7 @@ function ExcursionCardComponent({
 
 	return (
 		<Card
-			role="group"
+			as="fieldset"
 			// La tarjeta es programáticamente enfocable con el teclado para mejorar la accesibilidad,
 			// para que todos los usuarios puedan navegar por el contenido.
 			tabIndex={0}
@@ -121,9 +127,9 @@ function ExcursionCardComponent({
 			<Card.Body className="d-flex flex-column">
 				<div>
 					<Card.Title
-						as="h3"
+						as="legend"
 						id={titleId}
-						className={`${styles.excursionTitle} mb-3`}
+						className={`${styles.excursionTitle} mb-3 h3`}
 					>
 						{name}
 					</Card.Title>
