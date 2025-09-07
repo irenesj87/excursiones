@@ -1,4 +1,5 @@
 import { useState, useEffect, memo, useCallback } from "react";
+import PropTypes from "prop-types";
 import {
 	Nav,
 	Navbar,
@@ -20,13 +21,16 @@ import "../../css/Themes.css";
 
 /** @typedef {import('types.js').RootState} RootState */
 
+/** @typedef {object} NavigationBarProps
+ * @property {(excursions: any[]) => void} onFetchSuccess - Función para actualizar el estado de la lista de excursiones.
+ * @property {boolean} isAuthCheckComplete - Indica si la comprobación de autenticación ha finalizado.
+ * @property {() => void} onExcursionsFetchStart - Callback que se ejecuta al iniciar la búsqueda de excursiones.
+ * @property {(error: Error | null) => void} onExcursionsFetchEnd - Callback que se ejecuta al finalizar la búsqueda de excursiones.
+ */
+
 /**
  * Componente para la barra de navegación.
- * @param {object} props - Las propiedades del componente.
- * @param {(excursions: any[]) => void} props.onFetchSuccess - Función para actualizar el estado de la lista de excursiones.
- * @param {boolean} props.isAuthCheckComplete - Indica si la comprobación de autenticación ha finalizado.
- * @param {() => void} props.onExcursionsFetchStart - Callback que se ejecuta al iniciar la búsqueda de excursiones.
- * @param {(error: Error | null) => void} props.onExcursionsFetchEnd - Callback que se ejecuta al finalizar la búsqueda de excursiones.
+ * @param {NavigationBarProps} props - Las propiedades del componente.
  */
 function NavigationBarComponent({
 	onFetchSuccess,
@@ -230,6 +234,13 @@ function NavigationBarComponent({
 		</Navbar>
 	);
 }
+
+NavigationBarComponent.propTypes = {
+	onFetchSuccess: PropTypes.func.isRequired,
+	isAuthCheckComplete: PropTypes.bool.isRequired,
+	onExcursionsFetchStart: PropTypes.func.isRequired,
+	onExcursionsFetchEnd: PropTypes.func.isRequired,
+};
 
 const NavigationBar = memo(NavigationBarComponent);
 

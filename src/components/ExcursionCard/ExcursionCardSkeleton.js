@@ -1,14 +1,18 @@
 import { Card } from "react-bootstrap";
+import PropTypes from "prop-types";
 import Skeleton from "react-loading-skeleton";
 import cardStyles from "./ExcursionCard.module.css"; // Se reutiliza el CSS de la tarjeta real
 import detailItemStyles from "../ExcursionDetailItem/ExcursionDetailItem.module.css";
 import skeletonStyles from "./ExcursionCardSkeleton.module.css";
 import "react-loading-skeleton/dist/skeleton.css";
 
+/** @typedef {object} ExcursionCardSkeletonProps
+ * @property {boolean} [isLoggedIn=false] - Indica si el usuario ha iniciado sesión para mostrar el placeholder del botón.
+ */
+
 /**
  * Componente que muestra un esqueleto de carga para una ExcursionCard.
- * @param {object} props
- * @param {boolean} [props.isLoggedIn=false] - Indica si el usuario ha iniciado sesión para mostrar el placeholder del botón.
+ * @param {ExcursionCardSkeletonProps} props
  */
 function ExcursionCardSkeleton({ isLoggedIn = false }) {
 	return (
@@ -55,5 +59,13 @@ function ExcursionCardSkeleton({ isLoggedIn = false }) {
 		</Card>
 	);
 }
+
+ExcursionCardSkeleton.propTypes = {
+	isLoggedIn: PropTypes.bool,
+};
+
+ExcursionCardSkeleton.defaultProps = {
+	isLoggedIn: false,
+};
 
 export default ExcursionCardSkeleton;

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import PropTypes from "prop-types";
 import { useSelector, shallowEqual } from "react-redux";
 import { FiSearch, FiX } from "react-icons/fi";
 import cn from "classnames";
@@ -8,15 +9,18 @@ import styles from "./SearchBar.module.css";
 
 /** @typedef {import('types.js').RootState} RootState */
 
+/** @typedef {object} SearchBarProps
+ * @property {(excursions: any[]) => void} onFetchSuccess - Función para actualizar el estado de la lista de excursiones en el componente padre.
+ * @property {() => void} onFetchStart - Callback que se ejecuta al iniciar la búsqueda de excursiones.
+ * @property {(error: (Error & { secondaryMessage?: string }) | null) => void} onFetchEnd - Callback que se ejecuta al finalizar la búsqueda de excursiones
+ * @property {string} id - ID único para el input de búsqueda, útil para accesibilidad y múltiples instancias.
+ * @property {string} searchValue - El término de búsqueda actual.
+ * @property {(value: string) => void} onSearchChange - Callback para actualizar el término de búsqueda.
+ */
+
 /**
  * Componente que maneja la barra de búsqueda y la aplicación de filtros para las excursiones.
- * @param {object} props - Las propiedades del componente.
- * @param {(excursions: any[]) => void} props.onFetchSuccess - Función para actualizar el estado de la lista de excursiones en el componente padre.
- * @param {() => void} props.onFetchStart - Callback que se ejecuta al iniciar la búsqueda de excursiones.
- * @param {(error: (Error & { secondaryMessage?: string }) | null) => void} props.onFetchEnd - Callback que se ejecuta al finalizar la búsqueda de excursiones
- * @param {string} props.id - ID único para el input de búsqueda, útil para accesibilidad y múltiples instancias.
- * @param {string} props.searchValue - El término de búsqueda actual.
- * @param {(value: string) => void} props.onSearchChange - Callback para actualizar el término de búsqueda.
+ * @param {SearchBarProps} props - Las propiedades del componente.
  */
 function SearchBar({
 	onFetchSuccess,
@@ -91,7 +95,9 @@ function SearchBar({
 
 			// Si es un error de conexión, podemos añadir un log más específico para el desarrollador.
 			if (error instanceof TypeError && error.message === "Failed to fetch") {
-				console.error("Pista para el desarrollador: El servidor de la API no parece estar respondiendo. ¿Está en marcha? Revisa también la configuración de CORS.");
+				console.error(
+					"Pista para el desarrollador: El servidor de la API no parece estar respondiendo. ¿Está en marcha? Revisa también la configuración de CORS."
+				);
 			}
 
 			/** @type {Error & {secondaryMessage?: string}} */
@@ -163,5 +169,14 @@ function SearchBar({
 		</form>
 	);
 }
+
+SearchBar.propTypes = {
+	onFetchSuccess: PropTypes.func.isRequired,
+	onFetchStart: PropTypes.func.isRequired,
+	onFetchEnd: PropTypes.func.isRequired,
+	id: PropTypes.string.isRequired,
+	searchValue: PropTypes.string.isRequired,
+	onSearchChange: PropTypes.func.isRequired,
+};
 
 export default SearchBar;

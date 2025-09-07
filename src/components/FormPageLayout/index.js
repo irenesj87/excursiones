@@ -1,5 +1,6 @@
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import styles from "./FormPageLayout.module.css";
 
 /**
@@ -14,15 +15,17 @@ import styles from "./FormPageLayout.module.css";
  * @param {string} [props.switcherLinkText] - Texto del enlace de cambio de página (ej. "Regístrate").
  * @param {string} [props.switcherLinkTo] - La ruta a la que debe navegar el enlace (ej. "/register").
  */
-function FormPageLayout({
-	title,
-	subtitle,
-	children,
-	colWidth = "5",
-	switcherPrompt,
-	switcherLinkText,
-	switcherLinkTo,
-}) {
+function FormPageLayout(props) {
+	const {
+		title,
+		subtitle,
+		children,
+		colWidth = "5",
+		switcherPrompt,
+		switcherLinkText,
+		switcherLinkTo,
+	} = props;
+
 	// Genera un ID único para el título, que se usará para la accesibilidad.Reemplaza espacios y caracteres especiales para crear
 	// un ID válido.
 	const titleId = `form-layout-title-${title
@@ -37,7 +40,11 @@ function FormPageLayout({
 		<Container as="main" fluid className={`${styles.container} h-100`}>
 			<Row className="justify-content-center align-items-center h-100">
 				<Col xs={12} md={9} lg={8} xl={colWidth}>
-					<Card className={styles.contentPane} role="region" aria-labelledby={titleId}>
+					<Card
+						as="section"
+						className={styles.contentPane}
+						aria-labelledby={titleId}
+					>
 						<Card.Body>
 							<Card.Title as="h2" id={titleId} className={styles.cardTitle}>
 								{title}
@@ -47,8 +54,7 @@ function FormPageLayout({
 						</Card.Body>
 						{switcherPrompt && switcherLinkText && switcherLinkTo && (
 							<Card.Footer className={`${styles.switcher} d-lg-none`}>
-								{switcherPrompt}
-								{" "}
+								{switcherPrompt}{" "}
 								<Link to={switcherLinkTo} className={styles.switcherLink}>
 									{switcherLinkText}
 								</Link>
@@ -60,5 +66,23 @@ function FormPageLayout({
 		</Container>
 	);
 }
+
+FormPageLayout.propTypes = {
+	title: PropTypes.string.isRequired,
+	subtitle: PropTypes.string,
+	children: PropTypes.node.isRequired,
+	colWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	switcherPrompt: PropTypes.string,
+	switcherLinkText: PropTypes.string,
+	switcherLinkTo: PropTypes.string,
+};
+
+FormPageLayout.defaultProps = {
+	subtitle: null,
+	colWidth: "5",
+	switcherPrompt: null,
+	switcherLinkText: null,
+	switcherLinkTo: null,
+};
 
 export default FormPageLayout;

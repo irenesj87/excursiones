@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import PropTypes from "prop-types";
 import { Nav, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -9,13 +10,15 @@ import styles from "./UserNav.module.css";
 
 /** @typedef {import('types.js').RootState} RootState */
 
+/** @typedef {object} UserNavProps
+ * @property {() => void} [onCloseMenu] - Función para cerrar el menú contenedor en breakpoints pequeños.
+ */
+
 /**
  * Componente que muestra los enlaces de navegación para un usuario logueado, incluyendo un enlace al perfil y un botón para cerrar
  * sesión.
  * Permite cerrar un menú contenedor (como un Offcanvas o un Dropdown) si se proporciona la función `onCloseMenu`.
- * @param {object} props - Las propiedades del componente.
- * @param {() => void} [props.onCloseMenu] - Función para cerrar el menú contenedor en breakpoints pequeños.
- * @returns {React.ReactElement} Un elemento JSX que representa los enlaces de navegación del usuario.
+ * @param {UserNavProps} props - Las propiedades del componente.
  */
 function UserNav({ onCloseMenu }) {
 	const dispatch = useDispatch();
@@ -68,5 +71,13 @@ function UserNav({ onCloseMenu }) {
 		</>
 	);
 }
+
+UserNav.propTypes = {
+	onCloseMenu: PropTypes.func,
+};
+
+UserNav.defaultProps = {
+	onCloseMenu: null,
+};
 
 export default UserNav;

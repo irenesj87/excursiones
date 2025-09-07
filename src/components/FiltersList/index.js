@@ -1,4 +1,5 @@
 import { memo } from "react";
+import PropTypes from "prop-types";
 import { SkeletonTheme } from "react-loading-skeleton";
 import FiltersListCheckbox from "../FiltersListCheckbox";
 import FilterPillSkeleton from "./FilterPillSkeleton";
@@ -10,10 +11,13 @@ import styles from "./FiltersList.module.css";
 
 /** @typedef {import("../../types").RootState} RootState */
 
+/** @typedef {object} FiltersListProps
+ * @property {string} filterName - El nombre de la categoría de filtro (ej. "area").
+ */
+
 /**
  * Componente que muestra una lista de filtros para una categoría específica (ej. área, dificultad, tiempo).
- * @param {object} props - Las propiedades del componente.
- * @param {string} props.filterName - El nombre de la categoría de filtro (ej. "area").
+ * @param {FiltersListProps} props - Las propiedades del componente.
  * @return {React.ReactElement} El componente de la lista de filtros.
  */
 function FiltersListComponent({ filterName }) {
@@ -62,6 +66,10 @@ function FiltersListComponent({ filterName }) {
 		</ul>
 	);
 }
+
+FiltersListComponent.propTypes = {
+	filterName: PropTypes.string.isRequired,
+};
 
 const FiltersList = memo(FiltersListComponent);
 

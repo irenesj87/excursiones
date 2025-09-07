@@ -1,10 +1,15 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Alert } from "react-bootstrap";
 
-/** Componente que muestra una alerta de error.
- * @param {object} props - Las propiedades del componente.
- * @param {string} props.message - El mensaje de error a mostrar.
- * @param {() => void} props.onClose - Función que se ejecuta cuando se cierra la alerta.
+/** @typedef {object} ErrorMessageAlertProps
+ * @property {string} message - El mensaje de error a mostrar.
+ * @property {() => void} onClose - Función que se ejecuta cuando se cierra la alerta.
+ */
+
+/**
+ * Componente que muestra una alerta de error.
+ * @param {ErrorMessageAlertProps} props - Las propiedades del componente.
  * @returns {React.ReactElement} El componente de alerta de error.
  */
 function ErrorMessageAlert({ message, onClose }) {
@@ -15,5 +20,10 @@ function ErrorMessageAlert({ message, onClose }) {
 		</Alert>
 	);
 }
+
+ErrorMessageAlert.propTypes = {
+	message: PropTypes.string.isRequired,
+	onClose: PropTypes.func.isRequired,
+};
 
 export default ErrorMessageAlert;

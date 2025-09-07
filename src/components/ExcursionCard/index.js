@@ -1,4 +1,5 @@
 import { memo } from "react";
+import PropTypes from "prop-types";
 import { Card, Button, Spinner, Alert } from "react-bootstrap";
 import ExcursionDetailItem from "../ExcursionDetailItem";
 import { FiMapPin, FiClock, FiCheckCircle } from "react-icons/fi";
@@ -30,12 +31,15 @@ const getDifficultyClasses = (difficultyLevel) => {
 	);
 };
 
+/** @typedef {object} JoinButtonProps
+ * @property {boolean} isJoined - Indica si el usuario se ha apuntado a la excursión.
+ * @property {boolean} isJoining - Muestra si la acción de unirse está en progreso.
+ * @property {() => void} onJoin - Callback que se ejecuta cuando se cliquea el botón para apuntarse.
+ */
+
 /**
  * Renderiza el botón para unirse a una excursión. Muestra un botón "Apuntarse", un estado de carga o un estado "Apuntado/a".
- * @param {object} props
- * @param {boolean} props.isJoined - Indica si el usuario se ha apuntado a la excursión.
- * @param {boolean} props.isJoining - Muestra si la acción de unirse está en progreso.
- * @param {() => void} props.onJoin - Callback que se ejecuta cuando se cliquea el botón para apuntarse.
+ * @param {JoinButtonProps} props
  * @returns {React.ReactElement}
  */
 const JoinButton = ({ isJoined, isJoining, onJoin }) => {
@@ -75,17 +79,26 @@ const JoinButton = ({ isJoined, isJoining, onJoin }) => {
 	);
 };
 
+JoinButton.propTypes = {
+	isJoined: PropTypes.bool.isRequired,
+	isJoining: PropTypes.bool.isRequired,
+	onJoin: PropTypes.func.isRequired,
+};
+
+/** @typedef {object} ExcursionCardProps
+ * @property {string | number} id - El ID de la excursión.
+ * @property {string} name - El nombre de la excursión.
+ * @property {string} area - La zona donde se realiza la excursión.
+ * @property {string} difficulty - La dificultad de la excursión (ej. "Baja", "Media", "Alta").
+ * @property {string} time - El tiempo estimado de la excursión.
+ * @property {boolean} isLoggedIn - Indica si el usuario ha iniciado sesión.
+ * @property {boolean} isJoined - Indica si el usuario ya está apuntado a la excursión.
+ * @property {(id: string | number) => Promise<void>} [onJoin] - Función asíncrona que se ejecuta cuando el usuario se apunta a la excursión. Recibe el ID de la excursión.
+ */
+
 /**
  * Componente para la tarjeta de excursión.
- * @param {object} props - Las propiedades del componente.
- * @param {string | number} props.id - El ID de la excursión.
- * @param {string} props.name - El nombre de la excursión.
- * @param {string} props.area - La zona donde se realiza la excursión.
- * @param {string} props.difficulty - La dificultad de la excursión (ej. "Baja", "Media", "Alta").
- * @param {string} props.time - El tiempo estimado de la excursión.
- * @param {boolean} props.isLoggedIn - Indica si el usuario ha iniciado sesión.
- * @param {boolean} props.isJoined - Indica si el usuario ya está apuntado a la excursión.
- * @param {(id: string | number) => Promise<void>} [props.onJoin] - Función asíncrona que se ejecuta cuando el usuario se apunta a la excursión. Recibe el ID de la excursión.
+ * @param {ExcursionCardProps} props - Las propiedades del componente.
  * @returns {React.ReactElement}
  */
 function ExcursionCardComponent({
@@ -171,6 +184,21 @@ function ExcursionCardComponent({
 		</Card>
 	);
 }
+
+ExcursionCardComponent.propTypes = {
+	id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+	name: PropTypes.string.isRequired,
+	area: PropTypes.string.isRequired,
+	difficulty: PropTypes.string.isRequired,
+	time: PropTypes.string.isRequired,
+	isLoggedIn: PropTypes.bool.isRequired,
+	isJoined: PropTypes.bool.isRequired,
+	onJoin: PropTypes.func,
+};
+
+ExcursionCardComponent.defaultProps = {
+	onJoin: null,
+};
 
 const ExcursionCard = memo(ExcursionCardComponent);
 

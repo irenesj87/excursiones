@@ -1,14 +1,18 @@
 import { memo, useCallback } from "react";
+import PropTypes from "prop-types";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import styles from "./ExcursionDetailItem.module.css";
 
+/** @typedef {object} ExcursionDetailItemProps
+ * @property {React.ElementType} [IconComponent] - El componente de icono a renderizar.
+ * @property {string} [text] - El valor del detalle a mostrar (ej. "Media", "4 horas").
+ * @property {string} label - Etiqueta descriptiva para accesibilidad y tooltips (ej. "Dificultad").
+ * @property {React.ReactNode} [children] - Nodos hijos para renderizar contenido personalizado en lugar del texto.
+ */
+
 /**
  * Componente para mostrar un detalle específico de una excursión (ej. dificultad, tiempo).
- * @param {object} props - Las propiedades del componente.
- * @param {React.ElementType} [props.IconComponent] - El componente de icono a renderizar.
- * @param {string} [props.text] - El valor del detalle a mostrar (ej. "Media", "4 horas").
- * @param {string} props.label - Etiqueta descriptiva para accesibilidad y tooltips (ej. "Dificultad").
- * @param {React.ReactNode} [props.children] - Nodos hijos para renderizar contenido personalizado en lugar del texto.
+ * @param {ExcursionDetailItemProps} props - Las propiedades del componente.
  * @returns {React.ReactElement}
  */
 function ExcursionDetailItemComponent({
@@ -65,6 +69,19 @@ function ExcursionDetailItemComponent({
 		</OverlayTrigger>
 	);
 }
+
+ExcursionDetailItemComponent.propTypes = {
+	IconComponent: PropTypes.elementType,
+	text: PropTypes.string,
+	label: PropTypes.string.isRequired,
+	children: PropTypes.node,
+};
+
+ExcursionDetailItemComponent.defaultProps = {
+	IconComponent: null,
+	text: null,
+	children: null,
+};
 
 const ExcursionDetailItem = memo(ExcursionDetailItemComponent);
 export default ExcursionDetailItem;

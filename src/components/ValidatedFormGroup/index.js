@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Form } from "react-bootstrap";
+import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "./ValidatedFormGroup.module.css";
 
@@ -17,18 +18,19 @@ import styles from "./ValidatedFormGroup.module.css";
  * @param {string} props.autocomplete - Valor para el atributo autocomplete del input.
  * @param {string} [props.ariaDescribedBy] - IDs adicionales para aria-describedby, separados por espacios.
  */
-function ValidatedFormGroup({
-	id,
-	name,
-	inputType = "text", // Default inputType to text
-	inputToChange,
-	validationFunction,
-	value,
-	message,
-	errorMessage,
-	autocomplete,
-	ariaDescribedBy,
-}) {
+function ValidatedFormGroup(props) {
+	const {
+		id,
+		name,
+		inputType = "text",
+		inputToChange,
+		validationFunction,
+		value,
+		message,
+		errorMessage,
+		autocomplete,
+		ariaDescribedBy,
+	} = props;
 	// Estado para almacenar el mensaje de error de validación. `null` si es válido.
 	const [validationError, setValidationError] = useState(null);
 	// ID único para el mensaje de error, para asociarlo con el input.
@@ -45,7 +47,9 @@ function ValidatedFormGroup({
 
 	// Combina los IDs externos con el ID del error interno si es visible.
 	const isInvalid = message && validationError !== null;
-	const describedBy = [ariaDescribedBy, isInvalid ? errorId : null].filter(Boolean).join(" ");
+	const describedBy = [ariaDescribedBy, isInvalid ? errorId : null]
+		.filter(Boolean)
+		.join(" ");
 
 	return (
 		<Form.Group className="mb-3" controlId={id}>
@@ -76,5 +80,24 @@ function ValidatedFormGroup({
 		</Form.Group>
 	);
 }
+
+ValidatedFormGroup.propTypes = {
+	id: PropTypes.string.isRequired,
+	name: PropTypes.string.isRequired,
+	inputType: PropTypes.string,
+	inputToChange: PropTypes.func.isRequired,
+	validationFunction: PropTypes.func.isRequired,
+	value: PropTypes.string.isRequired,
+	message: PropTypes.bool.isRequired,
+	errorMessage: PropTypes.string,
+	autocomplete: PropTypes.string.isRequired,
+	ariaDescribedBy: PropTypes.string,
+};
+
+ValidatedFormGroup.defaultProps = {
+	inputType: "text",
+	errorMessage: "",
+	ariaDescribedBy: null,
+};
 
 export default ValidatedFormGroup;
