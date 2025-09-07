@@ -5,10 +5,13 @@ import detailItemStyles from "../ExcursionDetailItem/ExcursionDetailItem.module.
 import skeletonStyles from "./ExcursionCardSkeleton.module.css";
 import "react-loading-skeleton/dist/skeleton.css";
 
+/** @typedef {object} ExcursionCardSkeletonProps
+ * @property {boolean} [isLoggedIn=false] - Indica si el usuario ha iniciado sesión para mostrar el placeholder del botón.
+ */
+
 /**
  * Componente que muestra un esqueleto de carga para una ExcursionCard.
- * @param {object} props
- * @param {boolean} [props.isLoggedIn=false] - Indica si el usuario ha iniciado sesión para mostrar el placeholder del botón.
+ * @param {ExcursionCardSkeletonProps} props
  */
 function ExcursionCardSkeleton({ isLoggedIn = false }) {
 	return (

@@ -17,18 +17,19 @@ import styles from "./ValidatedFormGroup.module.css";
  * @param {string} props.autocomplete - Valor para el atributo autocomplete del input.
  * @param {string} [props.ariaDescribedBy] - IDs adicionales para aria-describedby, separados por espacios.
  */
-function ValidatedFormGroup({
-	id,
-	name,
-	inputType = "text", // Default inputType to text
-	inputToChange,
-	validationFunction,
-	value,
-	message,
-	errorMessage,
-	autocomplete,
-	ariaDescribedBy,
-}) {
+function ValidatedFormGroup(props) {
+	const {
+		id,
+		name,
+		inputType = "text",
+		inputToChange,
+		validationFunction,
+		value,
+		message,
+		errorMessage,
+		autocomplete,
+		ariaDescribedBy,
+	} = props;
 	// Estado para almacenar el mensaje de error de validación. `null` si es válido.
 	const [validationError, setValidationError] = useState(null);
 	// ID único para el mensaje de error, para asociarlo con el input.
@@ -45,7 +46,9 @@ function ValidatedFormGroup({
 
 	// Combina los IDs externos con el ID del error interno si es visible.
 	const isInvalid = message && validationError !== null;
-	const describedBy = [ariaDescribedBy, isInvalid ? errorId : null].filter(Boolean).join(" ");
+	const describedBy = [ariaDescribedBy, isInvalid ? errorId : null]
+		.filter(Boolean)
+		.join(" ");
 
 	return (
 		<Form.Group className="mb-3" controlId={id}>

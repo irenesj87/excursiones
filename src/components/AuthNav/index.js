@@ -17,11 +17,13 @@ const getInitialAuthState = () => {
 
 /**
  * Componente AuthNav que renderiza la navegación adecuada según el estado de autenticación del usuario.
- * Muestra un esqueleto de carga mientras se verifica la autenticación, y luego los enlaces para usuarios autenticados o invitados.
- * @param {object} props
- * @param {boolean} props.isAuthCheckComplete - Si la comprobación de autenticación ha finalizado.
- * @param {boolean} props.isLoggedIn - Si el usuario está logueado.
- * @param {() => void} [props.onCloseMenu] - Función para cerrar el menú al hacer clic en un enlace.
+ * Muestra un esqueleto de carga mientras se verifica la autenticación, y luego los enlaces para usuarios autenticados o
+ * invitados
+ * @typedef {object} AuthNavProps
+ * @property {boolean} isAuthCheckComplete - Si la comprobación de autenticación ha finalizado.
+ * @property {boolean} isLoggedIn - Si el usuario está logueado.
+ * @property {() => void} [onCloseMenu] - Función para cerrar el menú al hacer clic en un enlace.
+ * @param {AuthNavProps} props
  */
 const AuthNav = ({ isAuthCheckComplete, isLoggedIn, onCloseMenu }) => {
 	// Para evitar el "salto" del esqueleto, no reaccionamos al estado de Redux que cambia

@@ -148,10 +148,10 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	// Por defecto, mostrar las excursiones.
 	return (
 		<div className={styles.excursionsContainer}>
-			{/* Este elemento anuncia los resultados de los filtros a los lectores de pantalla sin ser visible. */}
-			<div role="status" aria-live="polite" className="visually-hidden">
+			{/* La etiqueta <output> anuncia semánticamente los resultados a los lectores de pantalla. */}
+			<output aria-live="polite" className="visually-hidden">
 				{announcement}
-			</div>
+			</output>
 			<h2 className={styles.title}>Próximas excursiones</h2>
 			<Row as="ul" className="gx-4 gy-5 list-unstyled">
 				{excursionComponents}
