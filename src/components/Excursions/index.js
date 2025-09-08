@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../../slices/loginSlice";
 import ExcursionCard from "../ExcursionCard";
 import { joinExcursion as joinExcursionService } from "../../services/excursionService";
-import ExcursionsLoading from "./ExcursionLoading";
+import ExcursionsLoading from "./ExcursionsLoading";
 import ExcursionsError from "./ExcursionsError";
 import NoExcursionsFound from "./NoExcursionsFound";
 import "bootstrap/dist/css/bootstrap.css";

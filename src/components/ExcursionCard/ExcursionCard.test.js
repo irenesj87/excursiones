@@ -39,9 +39,10 @@ describe("ExcursionCard Component", () => {
 			<ExcursionCard {...mockExcursion} isLoggedIn={false} isJoined={false} />
 		);
 
-		expect(
-			screen.getByRole("heading", { name: /ruta del cares/i })
-		).toBeInTheDocument();
+		// El título se renderiza como una <legend> dentro de un <fieldset>,
+		// por lo que no tiene el rol "heading". Lo buscamos por su texto,
+		// que es una forma robusta de encontrar el elemento.
+		expect(screen.getByText(/ruta del cares/i)).toBeInTheDocument();
 		expect(screen.getByText("Centro")).toBeInTheDocument();
 		expect(screen.getByText("Media")).toBeInTheDocument();
 		expect(screen.getByText("4 horas")).toBeInTheDocument();

@@ -1,10 +1,13 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import ExcursionsLoading from ".";
+// El error de TypeScript ocurre porque se estaba importando el componente `ExcursionCard`
+// en lugar de `ExcursionsLoading`. La solución es corregir la ruta de importación para
+// que apunte al componente correcto que se está probando (`./index.js` en la misma carpeta).
+import ExcursionsLoading from "./index";
 
 // Mock del hook useSkeletonTheme, ya que no es relevante para la lógica de este componente.
 // Su propio test ya se encarga de verificar su funcionamiento.
-jest.mock("../../hooks/useSkeletonTheme", () => ({
+jest.mock("../../../hooks/useSkeletonTheme", () => ({
 	useSkeletonTheme: () => ({
 		baseColor: "#e0e0e0",
 		highlightColor: "#f5f5f5",
