@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { MemoryRouter } from "react-router-dom";
 import Logo from "./index";
+import { COMPANY_NAME } from "../../constants";
 
 /**
  * Describe el conjunto de pruebas para el componente Logo.
@@ -26,8 +27,8 @@ describe("Logo Component", () => {
 	test("renderiza correctamente el texto del logo", () => {
 		renderWithRouter(<Logo />);
 
-		// Busca el texto del logo (insensible a mayúsculas/minúsculas)
-		const logoText = screen.getByText(/Excursiones Juntos/i);
+		// Busca el texto del logo usando la constante importada
+		const logoText = screen.getByText(COMPANY_NAME);
 		// Verifica que el texto esté en el documento
 		expect(logoText).toBeInTheDocument();
 	});
@@ -37,11 +38,11 @@ describe("Logo Component", () => {
 	 */
 	test("el logo es un enlace que apunta a la página de inicio", () => {
 		renderWithRouter(<Logo />);
-		// Busca un elemento de enlace con el texto del logo
-		const logoLink = screen.getByRole("link", { name: /Excursiones Juntos/i }); 
+		// Busca un elemento de enlace con el texto del logo, usando la constante.
+		const logoLink = screen.getByRole("link", { name: COMPANY_NAME });
 		// Verifica que el enlace esté en el documento
-		expect(logoLink).toBeInTheDocument(); 
+		expect(logoLink).toBeInTheDocument();
 		// Verifica que el atributo 'href' del enlace sea "/"
-		expect(logoLink).toHaveAttribute("href", "/"); 
+		expect(logoLink).toHaveAttribute("href", "/");
 	});
 });

@@ -1,18 +1,8 @@
 import { useCallback } from "react";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import { MdMail } from "react-icons/md";
-// La importación global de CSS de Bootstrap se debe mover a un componente de nivel superior (como App.js o Layout.js)
-// para evitar duplicaciones y gestionar mejor el orden de carga de los estilos.
-// import "bootstrap/dist/css/bootstrap.css";
+import { CONTACT_EMAIL, COMPANY_NAME, START_YEAR } from "../../constants";
 import styles from "./Footer.module.css";
-
-/**
- * Constantes para centralizar valores que podrían cambiar o reutilizarse, mejorando la mantenibilidad del código.
- */
-const CONTACT_EMAIL = "excursionesjuntos@gmail.com";
-const COMPANY_NAME = "Excursiones Juntos";
-const START_YEAR = 2021;
-const CURRENT_YEAR = new Date().getFullYear();
 
 /**
  * Genera el texto de copyright dinámicamente.
@@ -20,6 +10,7 @@ const CURRENT_YEAR = new Date().getFullYear();
  * @returns {string} El texto de copyright.
  */
 const getCopyrightText = () => {
+	const CURRENT_YEAR = new Date().getFullYear();
 	const yearDisplay =
 		START_YEAR === CURRENT_YEAR
 			? START_YEAR

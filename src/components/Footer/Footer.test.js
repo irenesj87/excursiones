@@ -1,10 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Footer from "./index";
-
-const CONTACT_EMAIL = "excursionesjuntos@gmail.com";
-const COMPANY_NAME = "Excursiones Juntos";
-const START_YEAR = 2021;
+import { CONTACT_EMAIL, COMPANY_NAME, START_YEAR } from "../../constants";
 
 // Se agrupan los tests relacionados con este componente en un bloque describe para mantener el código organizado
 describe("Footer Component", () => {
