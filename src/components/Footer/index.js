@@ -1,21 +1,38 @@
 import { useCallback } from "react";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import { MdMail } from "react-icons/md";
-import "bootstrap/dist/css/bootstrap.css";
+// La importación global de CSS de Bootstrap se debe mover a un componente de nivel superior (como App.js o Layout.js)
+// para evitar duplicaciones y gestionar mejor el orden de carga de los estilos.
+// import "bootstrap/dist/css/bootstrap.css";
 import styles from "./Footer.module.css";
 
 /**
- * Obtiene el año actual para mostrar en el pie de página.
- * @returns {number} El año actual.
+ * Constantes para centralizar valores que podrían cambiar o reutilizarse, mejorando la mantenibilidad del código.
  */
-const currentYear = new Date().getFullYear();
+const CONTACT_EMAIL = "excursionesjuntos@gmail.com";
+const COMPANY_NAME = "Excursiones Juntos";
+const START_YEAR = 2021;
+const CURRENT_YEAR = new Date().getFullYear();
+
+/**
+ * Genera el texto de copyright dinámicamente.
+ * Muestra un solo año si el año de inicio y el actual son el mismo.
+ * @returns {string} El texto de copyright.
+ */
+const getCopyrightText = () => {
+	const yearDisplay =
+		START_YEAR === CURRENT_YEAR
+			? START_YEAR
+			: `${START_YEAR} - ${CURRENT_YEAR}`;
+	return `© ${COMPANY_NAME} ${yearDisplay}. Todos los derechos reservados.`;
+};
 
 /**
  * Componente del pie de página que muestra información de contacto y derechos de autor.
  * Se adapta al tema claro/oscuro de la aplicación.
  * @returns {React.ReactElement} El componente del pie de página.
  */
-function Footer() {
+function FooterComponent() {
 	/**
 	 * Renderiza el Tooltip para el icono de correo.
 	 * Se memoiza con `useCallback` para evitar que se recree en cada renderizado.
@@ -23,30 +40,23 @@ function Footer() {
 	 * @returns {React.ReactElement}
 	 */
 	const renderMailTooltip = useCallback(
-		(props) => (
-			<Tooltip id="mail-tooltip" {...props}>
-				Envíanos un correo
-			</Tooltip>
-		),
+		(props) => <Tooltip {...props}>Envíanos un correo</Tooltip>,
 		[]
 	);
 	return (
 		<footer className={styles.footer}>
 			<OverlayTrigger placement="top" overlay={renderMailTooltip}>
 				<a
-					href="mailto:excursionesjuntos@gmail.com"
+					href={`mailto:${CONTACT_EMAIL}`}
 					className={styles.mailIconLink}
 					aria-label="Enviar correo electrónico"
 				>
 					<MdMail />
 				</a>
 			</OverlayTrigger>
-			<small className={styles.footerText}>
-				© Excursiones Juntos 2021 - {currentYear}. Todos los derechos
-				reservados.
-			</small>
+			<small className={styles.footerText}>{getCopyrightText()}</small>
 		</footer>
 	);
 }
 
-export default Footer;
+export default FooterComponent;

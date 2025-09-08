@@ -89,7 +89,7 @@ function UserPageInputEditComponent(props, ref) {
 					{typeof validationError === "string"
 						? validationError
 						: errorMessage ||
-						  "Recuerda, no puedes dejar un campo vacío o en un formato incorrecto."}
+						"Recuerda, no puedes dejar un campo vacío o en un formato incorrecto."}
 				</Form.Control.Feedback>
 			)}
 		</>
