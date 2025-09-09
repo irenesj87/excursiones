@@ -1,6 +1,7 @@
 import { Nav } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import styles from "./GuestNav.module.css";
+import { ROUTES } from "../../constants";
 
 /** @typedef {object} GuestNavProps
  * @property {() => void} [onCloseMenu] - Función para cerrar el menú contenedor en breakpoints pequeños.
@@ -11,19 +12,19 @@ import styles from "./GuestNav.module.css";
  * si se proporciona la función `onCloseMenu`.
  * @param {GuestNavProps} props - Las propiedades del componente.
  */
-const GuestNav = ({ onCloseMenu }) => (
+const GuestNav = ({ onCloseMenu = () => {} }) => (
 	<>
 		<Nav.Link
 			className={`${styles.navLink} ${styles.registerLink} me-lg-3`}
 			as={NavLink}
-			to="/registerPage"
+			to={ROUTES.REGISTER}
 			onClick={onCloseMenu}
 		>
 			Regístrate
 		</Nav.Link>
 		<Nav.Link
 			as={Link}
-			to="/loginPage"
+			to={ROUTES.LOGIN}
 			onClick={onCloseMenu}
 			className={`btn ${styles.navButton} loginLink`}
 		>

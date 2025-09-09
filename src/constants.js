@@ -5,3 +5,8 @@
 export const CONTACT_EMAIL = "excursionesjuntos@gmail.com";
 export const COMPANY_NAME = "Excursiones Juntos";
 export const START_YEAR = 2021;
+
+export const ROUTES = {
+	LOGIN: "/loginPage",
+	REGISTER: "/registerPage",
+};
