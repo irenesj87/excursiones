@@ -1,6 +1,7 @@
 # Archivos específicos del editor
 .vscode/
 .idea/
+.sonarlint/
 
 # Archivos del sistema operativo
 .DS_Store
