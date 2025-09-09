@@ -3,7 +3,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useSkeletonTheme } from "../../hooks/useSkeletonTheme";
 
 // Define placeholder dimensions as constants to avoid magic numbers and improve maintainability.
-const GUEST_NAV_SKELETON_SIZES = {
+export const GUEST_NAV_SKELETON_SIZES = {
 	REGISTER_LINK_WIDTH: 91.8,
 	LOGIN_LINK_WIDTH: 104.38,
 	HEIGHT: 38,
@@ -19,7 +19,11 @@ function GuestNavSkeleton() {
 
 	return (
 		<SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
-			<div className="d-flex align-items-center" aria-hidden="true">
+			<div
+				className="d-flex align-items-center"
+				aria-hidden="true"
+				data-testid="guest-nav-skeleton"
+			>
 				{/* Placeholder para el enlace "Regístrate" */}
 				<Skeleton
 					width={GUEST_NAV_SKELETON_SIZES.REGISTER_LINK_WIDTH}
