@@ -1,15 +1,9 @@
-.navbarContainer {
-	border-bottom: 1px solid var(--separator-color);
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-}
-
 .customNavbar {
-	padding-top: 1.2rem;
-	padding-bottom: 1.2rem;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
 	width: 100%;
 	background-color: var(--body-bg);
 	border-bottom: 1px solid var(--separator-color);
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
 .themeToggleBtn {
@@ -44,9 +38,7 @@
 
 .offcanvasMenu {
 	max-width: 300px;
-	background-color: var(
-		--excursion-card-bg
-	); /* Fondo para el menú lateral */
+	background-color: var(--excursion-card-bg); /* Fondo para el menú lateral */
 }
 
 /* Elimina el borde del botón de hamburguesa y su sombra al enfocarlo */
@@ -57,4 +49,3 @@
 .navbarToggler:focus {
 	box-shadow: none;
 }
-

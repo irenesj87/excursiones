@@ -20,14 +20,7 @@ const getDifficultyClasses = (difficultyLevel) => {
 		alta: styles.difficultyHigh,
 	};
 
-	return cn(
-		styles.difficultyBadge,
-		classMap[lowerCaseDifficulty], // Aplica la clase de color de fondo
-		{
-			[styles.difficultyTextLight]: lowerCaseDifficulty !== "media", // Texto claro para Baja/Alta
-			[styles.difficultyTextDark]: lowerCaseDifficulty === "media", // Texto oscuro para Media
-		}
-	);
+	return cn(styles.difficultyBadge, classMap[lowerCaseDifficulty]);
 };
 
 /** @typedef {object} JoinButtonProps

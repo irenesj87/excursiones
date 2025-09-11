@@ -126,7 +126,7 @@ function NavigationBarComponent({
 		 */
 		<Navbar
 			expand="lg" // prettier-ignore
-			className={`${styles.customNavbar} ${styles.navbarContainer}`}
+			className={styles.customNavbar}
 			variant={mode}
 			sticky="top"
 		>

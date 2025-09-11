@@ -4,7 +4,7 @@
 	height: 100%;
 	background-color: var(--excursion-card-bg);
 	border: none;
-	border-radius: 12px;
+	border-radius: var(--border-radius-lg);
 	box-shadow: var(--excursion-card-shadow);
 	/* Añade un outline para la accesibilidad del teclado */
 	outline-offset: 2px;
@@ -60,26 +60,19 @@
 	text-align: center;
 }
 
-/* Clases para el color del texto de la dificultad */
-.difficultyTextLight {
-	color: var(--white);
-}
-
-/* Se añade una clase para el texto oscuro para garantizar el contraste en badges claros. */
-.difficultyTextDark {
-	color: #1a202c; /* Un color oscuro muy legible */
-}
-
 .difficultyLow {
-	background-color: #00875a; /* Verde esmeralda accesible */
+	background-color: var(--difficulty-low-bg);
+	color: var(--difficulty-low-text);
 }
 
 .difficultyMedium {
-	background-color: #f59e0b; /* Amarillo/naranja vibrante */
+	background-color: var(--difficulty-medium-bg);
+	color: var(--difficulty-medium-text);
 }
 
 .difficultyHigh {
-	background-color: #e53e3e; /* Rojo intenso pero accesible */
+	background-color: var(--difficulty-high-bg);
+	color: var(--difficulty-high-text);
 }
 
 .joinedStatus {

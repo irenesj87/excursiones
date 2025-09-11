@@ -62,7 +62,7 @@
 	); /* Reutilizamos el fondo de las tarjetas */
 	color: var(--text-color);
 	border: 1px solid var(--separator-color);
-	border-radius: 0.5rem;
+	border-radius: var(--border-radius-lg);
 	margin-top: 2rem;
 	margin-bottom: 2rem;
 	padding: 2rem;

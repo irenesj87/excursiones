@@ -3,175 +3,205 @@
 /* ======================================== */
 :root {
 	/* Paleta de colores base y variables que no cambian con el tema */
-	--filter-clear-btn-color-hover: #dc3545; /* Color de peligro de Bootstrap */
 	--white: #fff;
 	--black: #000;
+
+	/* Radios de borde para consistencia */
+	--border-radius-sm: 0.25rem; /* 4px */
+	--border-radius-md: 0.5rem; /* 8px */
+	--border-radius-lg: 0.75rem; /* 12px */
 }
 
 /* ======================================== */
 /* --- ESTILOS PARA MODO CLARO --- */
 /* ======================================== */
 html.light body {
-	/* --- Paleta y Colores Base --- */
-	--primary-color: #315036; /* Verde principal */
-	--accent-color: #833800; /* Naranja oscuro para contraste (WCAG AA) */
-	--heading-color: var(--primary-color);
-	--body-bg: #f7f9f7; /* Blanco con un sutil tinte verde */
+	/* --- Paleta y Colores Base (Minimalista y Moderno) --- */
+	--primary-color: hsl(145, 60%, 35%); /* Verde con mejor contraste */
+	--primary-color-hover: hsl(145, 60%, 30%); /* Verde más oscuro */
+	--accent-color: hsl(145, 60%, 35%);
+	--heading-color: hsl(140, 25%, 25%); /* Verde oscuro y apagado */
+	--body-bg: hsl(140, 50%, 98%); /* Blanco con un ligero tinte verde */
 	background-color: var(--body-bg);
 
 	/* --- Texto --- */
-	--text-color: #1a2b1e; /* Verde muy oscuro, casi negro */
+	--text-color: hsl(210, 10%, 23%); /* Gris oscuro para texto: #333D49 */
 	color: var(--text-color);
-	--text-secondary: #5c7f67; /* Verde-grisáceo */
+	--text-secondary: hsl(210, 9%, 45%); /* Gris medio: #64748B */
 
 	/* --- Bordes y Separadores --- */
-	--separator-color: #dce3dd; /* Verde-grisáceo muy claro */
+	--separator-color: hsl(140, 30%, 94%); /* Verde-grisáceo muy claro */
 
 	/* --- Botones y Enlaces --- */
 	--login-btn-text: #ffffff;
 	--login-btn-bg: var(--primary-color);
 	--login-btn-border: var(--primary-color);
-	--login-btn-bg-hover: #253c29; /* Tono más oscuro de --primary-color */
-	--login-btn-border-hover: #253c29;
+	--login-btn-bg-hover: var(--primary-color-hover);
+	--login-btn-border-hover: var(--primary-color-hover);
 
-	--register-link-color: #1a2b1e;
-	--register-link-border-color: #1a2b1e;
+	--register-link-color: var(--heading-color);
+	--register-link-border-color: var(--separator-color);
 	--switcher-link-color: var(--primary-color);
 
-	--logout-bg-color: #6c757d; /* Gris secundario de Bootstrap */
-	--logout-bg-color-hover: #5c636a; /* Gris secundario más oscuro de Bootstrap */
-	--logout-text-color: #ffffff; /* Texto blanco para contraste en fondo oscuro */
+	--logout-bg-color: hsl(140, 30%, 94%); /* Verde-grisáceo claro */
+	--logout-bg-color-hover: hsl(140, 30%, 90%); /* Un poco más oscuro */
+	--logout-text-color: var(--text-color);
 
 	--theme-toggle-btn-color: var(--text-secondary);
 	--theme-toggle-btn-border-color: var(--separator-color);
-	--theme-toggle-btn-bg-hover: rgba(0, 0, 0, 0.05);
+	--theme-toggle-btn-bg-hover: hsl(140, 30%, 94%);
 
 	/* --- Tarjetas (ExcursionCard, UserInfo) --- */
-	--excursion-card-bg: #ffffff; /* Blanco puro para que las tarjetas resalten */
-	--excursion-card-shadow: 0 5px 15px rgba(49, 80, 54, 0.08);
-	--excursion-card-title-color: #1a2b1e;
+	--excursion-card-bg: #ffffff;
+	--excursion-card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+		0 2px 4px -2px rgb(0 0 0 / 0.1);
+	--excursion-card-title-color: var(--heading-color);
 	--excursion-card-icon-color: var(--primary-color);
-	--excursion-card-joined-status-text: var(--bs-success);
+	--excursion-card-joined-status-text: var(--primary-color);
 
 	/* --- Filtros --- */
 	--filter-container-bg: #ffffff;
-	--filter-title-color: #1a2b1e;
+	--filter-title-color: var(--heading-color);
 
-	--filters-toggle-btn-color: #5c7f67;
-	--filters-toggle-btn-border: #dce3dd;
-	--filters-toggle-btn-bg-hover: #e2e6ea;
-	--filters-toggle-btn-color-hover: #315036;
-	--filters-toggle-btn-border-hover: #dce3dd;
+	--filters-toggle-btn-color: var(--text-secondary);
+	--filters-toggle-btn-border: var(--separator-color);
+	--filters-toggle-btn-bg-hover: hsl(140, 30%, 94%);
+	--filters-toggle-btn-color-hover: var(--primary-color);
+	--filters-toggle-btn-border-hover: var(--primary-color);
 
-	--filter-pill-bg: #f1f3f5;
-	--filter-pill-text: #495057;
-	--filter-pill-border: #dee2e6;
-	--filter-pill-bg-hover: #e9ecef;
-	--filter-pill-border-hover: #adb5bd;
+	--filter-pill-bg: hsl(140, 30%, 94%);
+	--filter-pill-text: var(--text-color);
+	--filter-pill-border: var(--separator-color);
+	--filter-pill-bg-hover: hsl(210, 40%, 93%);
+	--filter-pill-border-hover: hsl(210, 31%, 80%);
 	--filter-pill-bg-checked: var(--primary-color);
 	--filter-pill-text-checked: #ffffff;
 	--filter-pill-border-checked: var(--primary-color);
-	--filter-pill-shadow-checked: 0 2px 5px rgba(0, 0, 0, 0.1);
+	--filter-pill-shadow-checked: none;
+
+	--filter-clear-btn-color-hover: hsl(347, 77%, 50%); /* Rojo */
 
 	/* --- Footer --- */
-	--footer-bg: var(--primary-color);
-	--footer-text-color: #ffffff;
+	--footer-bg: var(--body-bg);
+	--footer-text-color: var(--text-secondary);
 	--footer-border-top: var(--separator-color);
-	--footer-icon-bg: #ffffff;
-	--footer-icon-color: var(--primary-color);
-	--footer-icon-bg-hover: #f0f0f0;
+	--footer-icon-bg: hsl(140, 30%, 92%);
+	--footer-icon-color: var(--text-secondary);
+	--footer-icon-bg-hover: hsl(210, 40%, 88%);
 
 	/* --- Indicadores de Dificultad (Bootstrap Overrides) --- */
-	/* Se definen para asegurar consistencia y contraste */
-	--bs-success: var(--primary-color); /* #315036 */
-	--bs-warning: var(--accent-color); /* #c05600 */
-	--bs-danger: #d32f2f; /* Un rojo más oscuro para mejor contraste con texto blanco */
+	--bs-success: hsl(145, 60%, 35%);
+	--bs-warning: hsl(40, 80%, 60%);
+	--bs-danger: hsl(0, 60%, 40%);
+
+	/* --- Variables para badges de dificultad --- */
+	--difficulty-low-bg: hsl(140, 60%, 95%);
+	--difficulty-low-text: hsl(140, 50%, 35%);
+	--difficulty-medium-bg: hsl(40, 80%, 95%);
+	--difficulty-medium-text: hsl(40, 70%, 30%);
+	--difficulty-high-bg: hsl(0, 80%, 97%);
+	--difficulty-high-text: hsl(0, 60%, 40%);
 
 	/* --- Accesibilidad --- */
-	--focus-outline-color: var(--accent-color);
+	--focus-outline-color: var(--primary-color);
 }
 
 /* ======================================== */
 /* 3. TEMA OSCURO (DARK) */
 /* ======================================== */
 html.dark body {
-	/* --- Paleta y Colores Base --- */
-	--primary-color: #315036; /* Verde principal (mantenido para consistencia en headers) */
-	--accent-color: #f39c12; /* Naranja para alertas */
-	--heading-color: #9ccc65; /* Verde más brillante para contraste */
-	--body-bg: #1a2b1e; /* Verde muy oscuro para el fondo */
+	/* --- Paleta y Colores Base (Minimalista y Moderno) --- */
+	--primary-color: hsl(140, 45%, 70%); /* Verde pastel claro */
+	--primary-color-hover: hsl(140, 45%, 65%); /* Un poco más oscuro */
+	--accent-color: hsl(140, 45%, 70%);
+	--heading-color: hsl(140, 25%, 95%); /* Blanco con tinte verde */
+	--body-bg: hsl(140, 10%, 15%); /* Verde muy oscuro */
 	background-color: var(--body-bg);
 
 	/* --- Texto --- */
-	--text-color: #e8f5e9; /* Blanco verdoso muy claro */
+	--text-color: hsl(140, 15%, 85%); /* Gris verdoso claro */
 	color: var(--text-color);
-	--text-secondary: #a3b8a8; /* Verde-grisáceo */
+	--text-secondary: hsl(140, 10%, 65%); /* Gris verdoso medio */
 
 	/* --- Bordes y Separadores --- */
-	--separator-color: #3a5a40; /* Verde oscuro */
+	--separator-color: hsl(140, 10%, 25%); /* Verde-grisáceo oscuro */
 
 	/* --- Botones y Enlaces --- */
-	--login-btn-text: #1a2b1e; /* Texto oscuro para contraste en botón brillante */
-	--login-btn-bg: var(--heading-color);
-	--login-btn-border: var(--heading-color);
-	--login-btn-bg-hover: #8bc34a; /* Tono más oscuro de --heading-color */
-	--login-btn-border-hover: #8bc34a;
+	--login-btn-text: hsl(140, 15%, 10%); /* Verde muy oscuro, casi negro */
+	--login-btn-bg: var(--primary-color);
+	--login-btn-border: var(--primary-color);
+	--login-btn-bg-hover: var(--primary-color-hover);
+	--login-btn-border-hover: var(--primary-color-hover);
 
-	--register-link-color: #e8f5e9;
-	--register-link-border-color: #a3b8a8; /* Borde más sutil */
-	--switcher-link-color: var(--heading-color);
+	--register-link-color: var(--text-color);
+	--register-link-border-color: var(--separator-color);
+	--switcher-link-color: var(--primary-color);
 
-	--logout-bg-color: rgb(80, 73, 73);
-	--logout-bg-color-hover: rgb(100, 93, 93);
-	--logout-text-color: #e8f5e9; /* Texto claro para contraste en fondo oscuro */
+	--logout-bg-color: hsl(140, 10%, 25%);
+	--logout-bg-color-hover: hsl(140, 10%, 30%);
+	--logout-text-color: var(--text-color);
 
 	--theme-toggle-btn-color: #e8f5e9;
 	--theme-toggle-btn-border-color: #3a5a40;
 	--theme-toggle-btn-bg-hover: rgba(255, 255, 255, 0.1);
 
 	/* --- Tarjetas (ExcursionCard, UserInfo) --- */
-	--excursion-card-bg: #213426; /* Verde un poco más claro que el fondo */
-	--excursion-card-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-	--excursion-card-title-color: #e8f5e9;
-	--excursion-card-icon-color: var(--heading-color);
-	--excursion-card-joined-status-text: var(--heading-color);
+	--excursion-card-bg: hsl(140, 10%, 20%); /* Verde-grisáceo */
+	--excursion-card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.2),
+		0 2px 4px -2px rgb(0 0 0 / 0.2);
+	--excursion-card-title-color: var(--heading-color);
+	--excursion-card-icon-color: var(--primary-color);
+	--excursion-card-joined-status-text: hsl(
+		138,
+		71%,
+		65%
+	); /* Verde éxito claro */
 
 	/* --- Filtros --- */
-	--filter-container-bg: #213426;
-	--filter-title-color: #e8f5e9;
+	--filter-container-bg: hsl(140, 10%, 20%);
+	--filter-title-color: var(--heading-color);
 
-	--filters-toggle-btn-color: #e8f5e9;
-	--filters-toggle-btn-border: #a3b8a8;
-	--filters-toggle-btn-bg-hover: rgba(255, 255, 255, 0.1);
-	--filters-toggle-btn-color-hover: #e8f5e9;
-	--filters-toggle-btn-border-hover: #a3b8a8;
+	--filters-toggle-btn-color: var(--text-color);
+	--filters-toggle-btn-border: var(--separator-color);
+	--filters-toggle-btn-bg-hover: hsl(140, 10%, 25%);
+	--filters-toggle-btn-color-hover: var(--primary-color);
+	--filters-toggle-btn-border-hover: var(--primary-color);
 
-	--filter-pill-bg: #3a5a40; /* Verde oscuro para píldoras no seleccionadas */
-	--filter-pill-text: #e8f5e9;
-	--filter-pill-border: #4f7659;
-	--filter-pill-bg-hover: #4f7659;
-	--filter-pill-border-hover: #6a994e;
-	--filter-pill-bg-checked: var(--heading-color); /* Verde brillante */
-	--filter-pill-text-checked: #1a2b1e; /* Texto oscuro para máximo contraste */
-	--filter-pill-border-checked: var(--heading-color);
-	--filter-pill-shadow-checked: 0 2px 8px rgba(0, 0, 0, 0.4);
+	--filter-pill-bg: hsl(140, 10%, 25%);
+	--filter-pill-text: var(--text-color);
+	--filter-pill-border: hsl(140, 10%, 30%);
+	--filter-pill-bg-hover: hsl(140, 10%, 30%);
+	--filter-pill-border-hover: hsl(140, 10%, 40%);
+	--filter-pill-bg-checked: var(--primary-color);
+	--filter-pill-text-checked: hsl(140, 15%, 10%);
+	--filter-pill-border-checked: var(--primary-color);
+	--filter-pill-shadow-checked: none;
+
+	--filter-clear-btn-color-hover: hsl(355, 83%, 71%); /* Rojo claro */
 
 	/* --- Footer --- */
-	--footer-bg: #1a2b1e; /* Coincide con el fondo del body y la navbar */
-	--footer-text-color: var(--text-color); /* #e8f5e9 */
-	--footer-border-top: var(--separator-color); /* #3a5a40 */
-	--footer-icon-bg: #3a5a40; /* Coincide con el borde y las píldoras de filtro */
-	--footer-icon-color: var(--text-color); /* #e8f5e9 */
-	--footer-icon-bg-hover: #4f7659; /* Coincide con el hover de las píldoras de filtro */
+	--footer-bg: var(--body-bg);
+	--footer-text-color: var(--text-secondary);
+	--footer-border-top: var(--separator-color);
+	--footer-icon-bg: hsl(140, 10%, 20%);
+	--footer-icon-color: var(--text-secondary);
+	--footer-icon-bg-hover: hsl(140, 10%, 25%);
 
 	/* --- Indicadores de Dificultad (Bootstrap Overrides) --- */
-	/* Colores adaptados para no ser tan estridentes en fondo oscuro y mantener contraste */
-	--bs-success: var(--heading-color); /* #9CCC65 */
-	--bs-warning: var(--accent-color); /* #f39c12 */
-	--bs-danger: #ef5350; /* Un rojo más suave y brillante */
+	--bs-success: hsl(138, 71%, 65%);
+	--bs-warning: hsl(43, 94%, 66%);
+	--bs-danger: hsl(355, 83%, 71%);
+
+	/* --- Variables para badges de dificultad --- */
+	--difficulty-low-bg: hsl(145, 63%, 22%);
+	--difficulty-low-text: hsl(145, 63%, 82%);
+	--difficulty-medium-bg: hsl(35, 91%, 25%);
+	--difficulty-medium-text: hsl(35, 91%, 75%);
+	--difficulty-high-bg: hsl(347, 77%, 30%);
+	--difficulty-high-text: hsl(347, 77%, 80%);
 
 	/* --- Accesibilidad --- */
-	--focus-outline-color: var(--accent-color);
+	--focus-outline-color: var(--primary-color);
 }
 
 /* ======================================== */
@@ -200,30 +230,8 @@ body {
 }
 
 /* Invierte el color del botón de cierre en modo oscuro para que sea visible */
-html.dark .offcanvas-header .btn-close {
+html.dark .btn-close {
 	filter: invert(1) grayscale(100%) brightness(200%);
-}
-
-/* Estilo para los paneles de contenido principales, como los de las páginas de formulario */
-.contentPane {
-	/* Usa variables de tema para adaptarse al modo claro/oscuro */
-	background-color: var(
-		--excursion-card-bg
-	); /* Reutilizamos el fondo de las tarjetas */
-	color: var(--text-color);
-	border: 1px solid var(--separator-color);
-	border-radius: 0.5rem;
-	margin-top: 2rem;
-	margin-bottom: 2rem;
-	padding: 2rem;
-}
-
-/* Media query para breakpoints pequeños (xs breakpoint de Bootstrap es <576px) */
-@media (max-width: 575.98px) {
-	.contentPane {
-		margin-top: 1rem;
-		margin-bottom: 1.5rem;
-	}
 }
 
 /* --- Formularios (Inputs, etc.) --- */
@@ -288,7 +296,9 @@ html.dark .offcanvas-header .btn-close {
 	margin: 0 auto 0.6rem; /* Centrado horizontalmente y con margen inferior */
 	text-align: center;
 	padding: 0.6rem 1rem;
-	color: var(--text-color); /* Asegura que el texto sea legible en ambos temas */
+	color: var(
+		--text-color
+	); /* Asegura que el texto sea legible en ambos temas */
 	text-decoration: none;
 	border-radius: 0.375rem;
 	transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
@@ -327,56 +337,4 @@ html.dark .offcanvas-header .btn-close {
 /* Estilos específicos para los inputs de tipo 'plaintext' */
 .form-control-plaintext {
 	color: var(--text-color);
-}
-
-/* ======================================== */
-/* 5. INSIGNIAS DE DIFICULTAD (BADGES)      */
-/* ======================================== */
-
-.badge-difficulty {
-	padding: 0.35em 0.65em;
-	font-size: 0.875em;
-	font-weight: 700;
-	line-height: 1;
-	text-align: center;
-	white-space: nowrap;
-	vertical-align: baseline;
-	border-radius: 0.375rem;
-	transition: none;
-}
-
-/* --- Modo Claro (por defecto) --- */
-
-/* Baja */
-.badge-difficulty--baja {
-	color: #004d40;
-	background-color: #e0f2f1;
-}
-
-/* Media */
-.badge-difficulty--media {
-	color: #c76700;
-	background-color: #fff8e1;
-}
-
-/* Alta */
-.badge-difficulty--alta {
-	color: #b71c1c;
-	background-color: #ffeeee;
-}
-
-/* --- Modo Oscuro --- */
-html.dark .badge-difficulty--baja {
-	color: #e0f2f1;
-	background-color: #004d40;
-}
-
-html.dark .badge-difficulty--media {
-	color: #000000;
-	background-color: #ff8f00;
-}
-
-html.dark .badge-difficulty--alta {
-	color: #ffebee;
-	background-color: #b71c1c;
 }
