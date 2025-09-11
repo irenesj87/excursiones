@@ -88,7 +88,7 @@ export const verifyToken = async (token) => {
 
 /**
  * Cierra la sesión del usuario en el cliente.
- * Esto implica eliminar el token de autenticación del almacenamiento local.
+ * Esto implica eliminar el token de autenticación del almacenamiento de sesión.
  */
 export const logoutUser = () => {
 	// Eliminamos el token del almacenamiento de sesión para ser consistentes con el resto de la aplicación.
