@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import React, { useCallback } from "react";
 import { Nav, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -36,11 +36,7 @@ function UserNav({ onCloseMenu }) {
 		// 2. Limpia el estado de Redux.
 		dispatch(logout());
 
-		// 3. (Opcional) Si también usas sessionStorage, límpialo.
-		// Nota: authService.js usa localStorage.removeItem('authToken'). Asegúrate de que sea consistente.
-		sessionStorage.removeItem("token");
-
-		// 4. Redirige al usuario.
+		// 3. Redirige al usuario.
 		navigate("/");
 	}, [dispatch, navigate, onCloseMenu]);
 

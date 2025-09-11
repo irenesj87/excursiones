@@ -67,12 +67,9 @@ describe("UserNav Component", () => {
 	/**
 	 * Prueba que el flujo de cierre de sesión funciona correctamente.
 	 * Verifica que al hacer clic en "Cierra sesión", se llama a `logoutUser`,
-	 * se despacha la acción de Redux y se limpia el `sessionStorage`.
+	 * y se despacha la acción de Redux.
 	 */
 	test("maneja el cierre de sesión correctamente", () => {
-		// Creamos un "espía" para verificar que se llama a sessionStorage.removeItem
-		const removeItemSpy = jest.spyOn(Storage.prototype, "removeItem");
-
 		render(
 			<Provider store={store}>
 				<BrowserRouter>
@@ -90,11 +87,7 @@ describe("UserNav Component", () => {
 		// Se debe llamar al servicio de logout (que ahora es síncrono y no toma argumentos)
 		expect(mockedLogoutUser).toHaveBeenCalledTimes(1);
 
-		// Se debe despachar la acción de logout y limpiar la sesión
+		// Se debe despachar la acción de logout
 		expect(store.dispatch).toHaveBeenCalledWith(logout());
-		expect(removeItemSpy).toHaveBeenCalledWith("token");
-
-		// Restaurar el espía
-		removeItemSpy.mockRestore();
 	});
 });
