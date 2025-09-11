@@ -1,6 +1,6 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { Nav, Button } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../services/authService";
 import { logout } from "../../slices/loginSlice";
@@ -22,37 +22,27 @@ import styles from "./UserNav.module.css";
 function UserNav({ onCloseMenu }) {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { token } = useSelector(
-		/** @param {RootState} state */
-		(state) => state.loginReducer
-	);
 
 	/**
 	 * Maneja el proceso de cierre de sesión del usuario.
-	 * Llama al servicio para invalidar el token en el servidor y luego limpia el estado local (Redux y sessionStorage)
-	 * independientemente del resultado del servidor para garantizar que el usuario sea deslogueado en el cliente.
+	 * Llama al servicio de logout para limpiar el token, limpia el estado de Redux y redirige al usuario.
 	 */
-	const handleLogout = useCallback(async () => {
+	const handleLogout = useCallback(() => {
 		onCloseMenu?.();
-		try {
-			// Solo intenta invalidar el token en el servidor si realmente existe.
-			if (token) {
-				await logoutUser(token);
-			}
-		} catch (error) {
-			// Capturamos errores de red o del servidor, pero aún así deslogueamos en el cliente.
-			// Esto asegura que el usuario no quede en un estado inconsistente.
-			console.error(
-				"Falló el logout en el servidor, se procede al logout en el lado del cliente:",
-				error
-			);
-		} finally {
-			// La limpieza del lado del cliente se ejecuta siempre.
-			dispatch(logout());
-			sessionStorage.removeItem("token");
-			navigate("/");
-		}
-	}, [dispatch, navigate, onCloseMenu, token]);
+
+		// 1. Llama a la función de logout del servicio. Esta función es síncrona y ya no necesita 'await'.
+		logoutUser();
+
+		// 2. Limpia el estado de Redux.
+		dispatch(logout());
+
+		// 3. (Opcional) Si también usas sessionStorage, límpialo.
+		// Nota: authService.js usa localStorage.removeItem('authToken'). Asegúrate de que sea consistente.
+		sessionStorage.removeItem("token");
+
+		// 4. Redirige al usuario.
+		navigate("/");
+	}, [dispatch, navigate, onCloseMenu]);
 
 	return (
 		<>

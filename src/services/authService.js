@@ -87,22 +87,12 @@ export const verifyToken = async (token) => {
 };
 
 /**
- * Invalida la sesión/token del usuario en el servidor.
- * @param {string} token - El token de autenticación del usuario.
+ * Cierra la sesión del usuario en el cliente.
+ * Esto implica eliminar el token de autenticación del almacenamiento local.
  */
-export const logoutUser = async (token) => {
-	const url = `${API_BASE_URL}/logout`;
-	const options = {
-		method: "DELETE",
-		headers: { Authorization: `Bearer ${token}` },
-	};
-
-	const response = await fetch(url, options);
-	if (!response.ok) {
-		const errorData = await response.json().catch(() => null);
-		const errorMessage =
-			errorData?.message ||
-			`El cierre de sesión en el servidor falló con estado: ${response.status}`;
-		throw new Error(errorMessage);
-	}
+export const logoutUser = () => {
+	// Eliminamos el token del almacenamiento local.
+	// El nombre 'authToken' debe coincidir con el que se usa al guardar el token en el login.
+	localStorage.removeItem("authToken");
+	// Con JWT, el logout es una operación 100% del lado del cliente. No es necesario hacer una llamada a la API.
 };
