@@ -44,7 +44,7 @@ function FormPageLayout({
 						className={styles.contentPane}
 						aria-labelledby={titleId}
 					>
-						<Card.Body>
+						<Card.Body className="p-4">
 							<Card.Title as="h2" id={titleId} className={styles.cardTitle}>
 								{title}
 							</Card.Title>
@@ -52,7 +52,7 @@ function FormPageLayout({
 							{children}
 						</Card.Body>
 						{switcherPrompt && switcherLinkText && switcherLinkTo && (
-							<Card.Footer className={`${styles.switcher} d-lg-none`}>
+							<Card.Footer className={`${styles.switcher} d-lg-none p-3`}>
 								{switcherPrompt}{" "}
 								<Link to={switcherLinkTo} className={styles.switcherLink}>
 									{switcherLinkText}

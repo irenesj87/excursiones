@@ -21,7 +21,8 @@ html.light body {
 	--primary-color-hover: hsl(145, 60%, 30%); /* Verde más oscuro */
 	--accent-color: hsl(145, 60%, 35%);
 	--heading-color: hsl(140, 25%, 25%); /* Verde oscuro y apagado */
-	--body-bg: hsl(140, 50%, 98%); /* Blanco con un ligero tinte verde */
+	/*--body-bg: hsl(140, 50%, 98%); /* Blanco con un ligero tinte verde */
+	--body-bg: hsl(0, 0%, 100%); /* Blanco puro */
 	background-color: var(--body-bg);
 
 	/* --- Texto --- */
@@ -53,8 +54,8 @@ html.light body {
 
 	/* --- Tarjetas (ExcursionCard, UserInfo) --- */
 	--excursion-card-bg: #ffffff;
-	--excursion-card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
-		0 2px 4px -2px rgb(0 0 0 / 0.1);
+	--excursion-card-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+		0 4px 6px -4px rgb(0 0 0 / 0.1); /* Sombra más pronunciada */
 	--excursion-card-title-color: var(--heading-color);
 	--excursion-card-icon-color: var(--primary-color);
 	--excursion-card-joined-status-text: var(--primary-color);
@@ -82,10 +83,12 @@ html.light body {
 	--filter-clear-btn-color-hover: hsl(347, 77%, 50%); /* Rojo */
 
 	/* --- Footer --- */
-	--footer-bg: var(--body-bg);
+	--footer-bg: var(
+		--filter-pill-bg
+	); /* Verde-grisáceo muy claro, como los filtros */
 	--footer-text-color: var(--text-secondary);
 	--footer-border-top: var(--separator-color);
-	--footer-icon-bg: hsl(140, 30%, 92%);
+	--footer-icon-bg: hsl(0, 0%, 100%); /* Blanco puro */
 	--footer-icon-color: var(--text-secondary);
 	--footer-icon-bg-hover: hsl(210, 40%, 88%);
 
@@ -95,12 +98,12 @@ html.light body {
 	--bs-danger: hsl(0, 60%, 40%);
 
 	/* --- Variables para badges de dificultad --- */
-	--difficulty-low-bg: hsl(140, 60%, 95%);
-	--difficulty-low-text: hsl(140, 50%, 35%);
-	--difficulty-medium-bg: hsl(40, 80%, 95%);
-	--difficulty-medium-text: hsl(40, 70%, 30%);
-	--difficulty-high-bg: hsl(0, 80%, 97%);
-	--difficulty-high-text: hsl(0, 60%, 40%);
+	--difficulty-low-bg: hsl(140, 70%, 86%); /* Verde más vivo */
+	--difficulty-low-text: hsl(140, 60%, 20%);
+	--difficulty-medium-bg: hsl(40, 95%, 86%); /* Amarillo más vivo */
+	--difficulty-medium-text: hsl(40, 85%, 18%);
+	--difficulty-high-bg: hsl(0, 95%, 88%); /* Rojo más vivo */
+	--difficulty-high-text: hsl(0, 70%, 33%);
 
 	/* --- Accesibilidad --- */
 	--focus-outline-color: var(--primary-color);
@@ -147,8 +150,8 @@ html.dark body {
 
 	/* --- Tarjetas (ExcursionCard, UserInfo) --- */
 	--excursion-card-bg: hsl(140, 10%, 20%); /* Verde-grisáceo */
-	--excursion-card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.2),
-		0 2px 4px -2px rgb(0 0 0 / 0.2);
+	--excursion-card-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2),
+		0 4px 6px -4px rgb(0 0 0 / 0.2); /* Sombra más pronunciada */
 	--excursion-card-title-color: var(--heading-color);
 	--excursion-card-icon-color: var(--primary-color);
 	--excursion-card-joined-status-text: hsl(
@@ -193,12 +196,12 @@ html.dark body {
 	--bs-danger: hsl(355, 83%, 71%);
 
 	/* --- Variables para badges de dificultad --- */
-	--difficulty-low-bg: hsl(145, 63%, 22%);
-	--difficulty-low-text: hsl(145, 63%, 82%);
-	--difficulty-medium-bg: hsl(35, 91%, 25%);
-	--difficulty-medium-text: hsl(35, 91%, 75%);
-	--difficulty-high-bg: hsl(347, 77%, 30%);
-	--difficulty-high-text: hsl(347, 77%, 80%);
+	--difficulty-low-bg: hsl(145, 65%, 30%); /* Verde oscuro más vivo */
+	--difficulty-low-text: hsl(145, 35%, 92%);
+	--difficulty-medium-bg: hsl(35, 95%, 32%); /* Naranja oscuro más vivo */
+	--difficulty-medium-text: hsl(35, 60%, 90%);
+	--difficulty-high-bg: hsl(347, 85%, 38%); /* Rojo oscuro más vivo */
+	--difficulty-high-text: hsl(347, 55%, 92%);
 
 	/* --- Accesibilidad --- */
 	--focus-outline-color: var(--primary-color);
@@ -318,23 +321,19 @@ html.dark .btn-close {
 
 /* Estilos para el botón de 'Cerrar Sesión' dentro del Offcanvas */
 #offcanvasNavbar .offcanvas-body .logoutLink {
-	color: var(--logout-text-color);
-	background-color: var(--logout-bg-color);
-	border: 1px solid var(--logout-bg-color);
 	display: block;
 	width: 95%;
 	margin: 0 auto 0.6rem;
-	text-align: center;
-	padding: 0.6rem 1rem;
-	text-decoration: none;
-	border-radius: 0.375rem;
-	transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-}
-#offcanvasNavbar .offcanvas-body .logoutLink:hover {
-	background-color: var(--logout-bg-color-hover);
-	border-color: var(--logout-bg-color-hover);
 }
 /* Estilos específicos para los inputs de tipo 'plaintext' */
 .form-control-plaintext {
 	color: var(--text-color);
+}
+
+/* Estilos para los badges de dificultad (se aplica con una clase global) */
+.difficulty-badge {
+	font-size: 0.9rem;
+	padding: 0.3em 0.65em;
+	font-weight: 500;
+	letter-spacing: 0.5px;
 }

@@ -59,11 +59,13 @@
 	/* Usa variables de tema para adaptarse al modo claro/oscuro */
 	background-color: var(
 		--excursion-card-bg
-	); /* Reutilizamos el fondo de las tarjetas */
+			/* Reutilizamos el fondo de las tarjetas, como en ExcursionCard */
+	);
 	color: var(--text-color);
-	border: 1px solid var(--separator-color);
+	border: none; /* Eliminamos el borde para usar solo la sombra */
+	box-shadow: var(
+		--excursion-card-shadow
+	); /* Aplicamos la misma sombra que las tarjetas de excursión */
 	border-radius: var(--border-radius-lg);
-	margin-top: 2rem;
-	margin-bottom: 2rem;
-	padding: 2rem;
+	overflow: hidden; /* Asegura que el contenido (como el footer) respete los bordes redondeados */
 }
