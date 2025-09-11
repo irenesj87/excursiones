@@ -91,8 +91,7 @@ export const verifyToken = async (token) => {
  * Esto implica eliminar el token de autenticación del almacenamiento local.
  */
 export const logoutUser = () => {
-	// Eliminamos el token del almacenamiento local.
-	// El nombre 'authToken' debe coincidir con el que se usa al guardar el token en el login.
-	localStorage.removeItem("authToken");
+	// Eliminamos el token del almacenamiento de sesión para ser consistentes con el resto de la aplicación.
+	sessionStorage.removeItem("token");
 	// Con JWT, el logout es una operación 100% del lado del cliente. No es necesario hacer una llamada a la API.
 };
