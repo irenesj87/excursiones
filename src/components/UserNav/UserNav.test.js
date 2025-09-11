@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
@@ -65,12 +65,11 @@ describe("UserNav Component", () => {
 	});
 
 	/**
-	 * Prueba el flujo de cierre de sesión exitoso.
+	 * Prueba que el flujo de cierre de sesión funciona correctamente.
+	 * Verifica que al hacer clic en "Cierra sesión", se llama a `logoutUser`,
+	 * se despacha la acción de Redux y se limpia el `sessionStorage`.
 	 */
-	test("maneja el cierre de sesión correctamente en caso de éxito", async () => {
-		// Mockeamos la implementación de logoutUser para que resuelva correctamente
-		mockedLogoutUser.mockResolvedValue(undefined);
-
+	test("maneja el cierre de sesión correctamente", () => {
 		// Creamos un "espía" para verificar que se llama a sessionStorage.removeItem
 		const removeItemSpy = jest.spyOn(Storage.prototype, "removeItem");
 
@@ -85,57 +84,17 @@ describe("UserNav Component", () => {
 		const logoutButton = screen.getByRole("button", { name: /cierra sesión/i });
 		fireEvent.click(logoutButton);
 
-		// Verificar que se llamó a la función para cerrar el offcanvas
+		// Se debe llamar a la función para cerrar el menú
 		expect(handleClose).toHaveBeenCalledTimes(1);
 
-		// Esperar a que se resuelvan las promesas
-		await waitFor(() => {
-			// Verificar que se llamó al servicio de logout con el token correcto
-			expect(mockedLogoutUser).toHaveBeenCalledWith("fake-token");
-		});
+		// Se debe llamar al servicio de logout (que ahora es síncrono y no toma argumentos)
+		expect(mockedLogoutUser).toHaveBeenCalledTimes(1);
 
-		// Verificar que se despachó la acción de logout y se limpió la sesión
+		// Se debe despachar la acción de logout y limpiar la sesión
 		expect(store.dispatch).toHaveBeenCalledWith(logout());
 		expect(removeItemSpy).toHaveBeenCalledWith("token");
 
 		// Restaurar el espía
 		removeItemSpy.mockRestore();
-	});
-
-	/**
-	 * Prueba que el cierre de sesión se maneja correctamente incluso si la llamada al servicio `logoutUser` falla.
-	 */
-	test("maneja el cierre de sesión incluso si la llamada al servicio falla", async () => {
-		// Mockeamos la implementación de logoutUser para que falle
-		mockedLogoutUser.mockRejectedValue(new Error("Server error"));
-		const removeItemSpy = jest.spyOn(Storage.prototype, "removeItem");
-		// Silenciamos el console.error esperado
-		const consoleErrorSpy = jest
-			.spyOn(console, "error")
-			.mockImplementation(() => {});
-
-		render(
-			<Provider store={store}>
-				<BrowserRouter>
-					<UserNav onCloseMenu={handleClose} />
-				</BrowserRouter>
-			</Provider>
-		);
-
-		const logoutButton = screen.getByRole("button", { name: /cierra sesión/i });
-		fireEvent.click(logoutButton);
-
-		// Esperar a que se resuelvan las promesas
-		await waitFor(() => {
-			expect(mockedLogoutUser).toHaveBeenCalledWith("fake-token");
-		});
-
-		// AUNQUE FALLE, la lógica del cliente debe continuar
-		expect(store.dispatch).toHaveBeenCalledWith(logout());
-		expect(removeItemSpy).toHaveBeenCalledWith("token");
-
-		// Restaurar espías
-		removeItemSpy.mockRestore();
-		consoleErrorSpy.mockRestore();
 	});
 });
