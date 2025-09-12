@@ -72,15 +72,15 @@ html.light body {
 	--filters-toggle-btn-border-hover: var(--primary-color);
 
 	/* Píldoras de filtro (no seleccionadas) */
-	--filter-pill-bg: var(--primary-color);
-	--filter-pill-text: #ffffff;
-	--filter-pill-border: var(--primary-color);
-	--filter-pill-bg-hover: var(--primary-color-hover);
-	--filter-pill-border-hover: var(--primary-color-hover);
-	/* Píldora seleccionada ahora es verde más oscuro */
-	--filter-pill-bg-checked: var(--primary-color-hover);
-	--filter-pill-text-checked: #ffffff;
-	--filter-pill-border-checked: var(--primary-color-hover);
+	--filter-pill-bg: hsl(210, 20%, 96%); /* Gris muy claro */
+	--filter-pill-text: var(--text-color); /* Texto oscuro */
+	--filter-pill-border: hsl(210, 15%, 90%); /* Borde gris claro */
+	--filter-pill-bg-hover: hsl(210, 15%, 90%); /* Gris claro para hover */
+	--filter-pill-border-hover: hsl(210, 15%, 85%);
+	/* Píldora seleccionada ahora es gris más oscuro */
+	--filter-pill-bg-checked: hsl(210, 15%, 88%); /* Gris más oscuro */
+	--filter-pill-text-checked: var(--text-color); /* Texto oscuro */
+	--filter-pill-border-checked: hsl(210, 15%, 88%);
 	--filter-pill-shadow-checked: none;
 
 	--filter-clear-btn-color-hover: hsl(347, 77%, 50%); /* Rojo */
@@ -93,7 +93,7 @@ html.light body {
 	); /* Borde superior más oscuro */
 	--footer-icon-bg: hsl(0, 0%, 100%); /* Blanco puro */
 	--footer-icon-color: var(--text-secondary);
-	--footer-icon-bg-hover: hsl(210, 40%, 88%);
+	--footer-icon-bg-hover: hsl(0, 0%, 88%); /* Gris neutro claro */
 
 	/* --- Indicadores de Dificultad (Bootstrap Overrides) --- */
 	--bs-success: hsl(145, 60%, 35%);
