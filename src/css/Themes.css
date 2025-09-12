@@ -17,11 +17,10 @@
 /* ======================================== */
 html.light body {
 	/* --- Paleta y Colores Base (Minimalista y Moderno) --- */
-	--primary-color: hsl(145, 60%, 35%); /* Verde con mejor contraste */
-	--primary-color-hover: hsl(145, 60%, 30%); /* Verde más oscuro */
-	--accent-color: hsl(145, 60%, 35%);
+	--primary-color: hsl(150, 26%, 27%); /* Verde oscuro, un poco más claro */
+	--primary-color-hover: hsl(140, 10%, 20%); /* Más oscuro para el hover */
+	--accent-color: hsl(140, 10%, 25%);
 	--heading-color: hsl(140, 25%, 25%); /* Verde oscuro y apagado */
-	/*--body-bg: hsl(140, 50%, 98%); /* Blanco con un ligero tinte verde */
 	--body-bg: hsl(0, 0%, 100%); /* Blanco puro */
 	background-color: var(--body-bg);
 
@@ -54,15 +53,17 @@ html.light body {
 
 	/* --- Tarjetas (ExcursionCard, UserInfo) --- */
 	--excursion-card-bg: #ffffff;
-	--excursion-card-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-		0 4px 6px -4px rgb(0 0 0 / 0.1); /* Sombra más pronunciada */
+	--excursion-card-shadow: none;
 	--excursion-card-title-color: var(--heading-color);
+	--excursion-card-border: 1px solid hsl(210, 15%, 88%); /* Gris claro */
 	--excursion-card-icon-color: var(--primary-color);
 	--excursion-card-joined-status-text: var(--primary-color);
 
 	/* --- Filtros --- */
-	--filter-container-bg: #ffffff;
-	--filter-title-color: var(--heading-color);
+	--filter-container-bg: #ffffff; /* Fondo blanco para el contenedor de filtros */
+	--filter-title-color: var(
+		--heading-color
+	); /* Título oscuro sobre fondo blanco */
 
 	--filters-toggle-btn-color: var(--text-secondary);
 	--filters-toggle-btn-border: var(--separator-color);
@@ -70,24 +71,26 @@ html.light body {
 	--filters-toggle-btn-color-hover: var(--primary-color);
 	--filters-toggle-btn-border-hover: var(--primary-color);
 
-	--filter-pill-bg: hsl(140, 30%, 94%);
-	--filter-pill-text: var(--text-color);
-	--filter-pill-border: var(--separator-color);
-	--filter-pill-bg-hover: hsl(210, 40%, 93%);
-	--filter-pill-border-hover: hsl(210, 31%, 80%);
-	--filter-pill-bg-checked: var(--primary-color);
+	/* Píldoras de filtro (no seleccionadas) */
+	--filter-pill-bg: var(--primary-color);
+	--filter-pill-text: #ffffff;
+	--filter-pill-border: var(--primary-color);
+	--filter-pill-bg-hover: var(--primary-color-hover);
+	--filter-pill-border-hover: var(--primary-color-hover);
+	/* Píldora seleccionada ahora es verde más oscuro */
+	--filter-pill-bg-checked: var(--primary-color-hover);
 	--filter-pill-text-checked: #ffffff;
-	--filter-pill-border-checked: var(--primary-color);
+	--filter-pill-border-checked: var(--primary-color-hover);
 	--filter-pill-shadow-checked: none;
 
 	--filter-clear-btn-color-hover: hsl(347, 77%, 50%); /* Rojo */
 
 	/* --- Footer --- */
-	--footer-bg: var(
-		--filter-pill-bg
-	); /* Verde-grisáceo muy claro, como los filtros */
-	--footer-text-color: var(--text-secondary);
-	--footer-border-top: var(--separator-color);
+	--footer-bg: var(--primary-color); /* Verde oscuro */
+	--footer-text-color: #ffffff; /* Texto blanco para contraste */
+	--footer-border-top: var(
+		--primary-color-hover
+	); /* Borde superior más oscuro */
 	--footer-icon-bg: hsl(0, 0%, 100%); /* Blanco puro */
 	--footer-icon-color: var(--text-secondary);
 	--footer-icon-bg-hover: hsl(210, 40%, 88%);
@@ -150,9 +153,9 @@ html.dark body {
 
 	/* --- Tarjetas (ExcursionCard, UserInfo) --- */
 	--excursion-card-bg: hsl(140, 10%, 20%); /* Verde-grisáceo */
-	--excursion-card-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2),
-		0 4px 6px -4px rgb(0 0 0 / 0.2); /* Sombra más pronunciada */
+	--excursion-card-shadow: none;
 	--excursion-card-title-color: var(--heading-color);
+	--excursion-card-border: 1px solid var(--separator-color);
 	--excursion-card-icon-color: var(--primary-color);
 	--excursion-card-joined-status-text: hsl(
 		138,

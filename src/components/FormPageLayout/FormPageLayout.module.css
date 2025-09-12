@@ -62,7 +62,7 @@
 			/* Reutilizamos el fondo de las tarjetas, como en ExcursionCard */
 	);
 	color: var(--text-color);
-	border: none; /* Eliminamos el borde para usar solo la sombra */
+	border: var(--excursion-card-border);
 	box-shadow: var(
 		--excursion-card-shadow
 	); /* Aplicamos la misma sombra que las tarjetas de excursión */

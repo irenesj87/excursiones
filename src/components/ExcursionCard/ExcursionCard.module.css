@@ -3,7 +3,7 @@
 	flex-direction: column;
 	height: 100%;
 	background-color: var(--excursion-card-bg);
-	border: none;
+	border: var(--excursion-card-border);
 	border-radius: var(--border-radius-lg);
 	box-shadow: var(--excursion-card-shadow);
 	/* Añade un outline para la accesibilidad del teclado */
