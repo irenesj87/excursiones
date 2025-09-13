@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import { Col, Button, Offcanvas, Badge } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { FiFilter } from "react-icons/fi";
-import Filters from "../Filters"; // Asumiendo que Filters está en su propia carpeta
+import Filters from "../Filters/Filters"; // Asumiendo que Filters está en su propia carpeta
 import ExcursionsList from "../ExcursionsList/ExcursionsList"; // Renombramos la importación
 import layoutStyles from "../Layout/Layout.module.css";
 

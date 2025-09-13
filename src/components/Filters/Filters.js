@@ -1,0 +1,102 @@
+import { memo, useCallback } from "react";
+import { Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import FiltersList from "../FiltersList/FilterList";
+import { clearAllFilters } from "../../slices/filterSlice";
+import { FiMapPin, FiBarChart, FiClock, FiTrash2 } from "react-icons/fi";
+import "bootstrap/dist/css/bootstrap.css";
+import styles from "./Filters.module.css";
+
+/** @typedef {import('../../types').RootState} RootState */
+
+// Definimos las secciones de filtros con sus nombres, títulos e iconos.
+const filterSections = [
+	{
+		name: "area",
+		title: "Zona",
+		Icon: FiMapPin,
+	},
+	{
+		name: "difficulty",
+		title: "Dificultad",
+		Icon: FiBarChart,
+	},
+	{
+		name: "time",
+		title: "Tiempo estimado",
+		Icon: FiClock,
+	},
+];
+
+/** @typedef {object} FiltersProps
+ * @property {boolean} [showTitle=true] - Controla si se muestra el título o no.
+ */
+
+/** * Componente principal de los filtros que renderiza el tipo de los filtros de búsqueda (zona, dificultad, tiempo estimado).
+ * Utiliza Redux para manejar el estado.
+ * @param {FiltersProps} props - Propiedades del componente.
+ * @returns {React.ReactElement} El componente de filtros.
+ */
+function FiltersComponent({ showTitle = true }) {
+	const dispatch = useDispatch();
+	/**
+	 * Comprueba si hay algún filtro activo para habilitar/deshabilitar el botón de limpiar filtros.
+	 * Este selector está optimizado para que el componente solo se vuelva a renderizar cuando el valor booleano resultante cambie,
+	 * en lugar de en cada cambio de filtro individual.
+	 * @type {boolean}
+	 */
+	const hasActiveFilters = useSelector(
+		/** @param {RootState} state */
+		(state) =>
+			state.filterReducer.area.length > 0 ||
+			state.filterReducer.difficulty.length > 0 ||
+			state.filterReducer.time.length > 0
+	);
+
+	/**
+	 * Maneja el evento de click para limpiar todos los filtros. Despacha la acción `clearAllFilters` al store de Redux.
+	 * @returns {void}
+	 */
+	const handleClearFilters = useCallback(() => {
+		if (hasActiveFilters) {
+			dispatch(clearAllFilters());
+		}
+	}, [dispatch, hasActiveFilters]);
+
+	return (
+		// El contenedor principal usa flexbox para posicionar el footer abajo.
+		// La clase h-100 es crucial para que ocupe toda la altura de su padre (la Col o el Offcanvas.Body)
+		<div className={`${styles.filtersContainer} h-100 d-flex flex-column`}>
+			{/* Contenedor para el contenido que puede hacer scroll */}
+			<div className={styles.scrollableContent}>
+				{showTitle && <h2 className={styles.desktopTitle}>Filtros</h2>}
+				{filterSections.map(({ name, title, Icon }) => (
+					<section key={name} className={styles.filterSection}>
+						<h3 className={styles.filterTitle}>
+							<Icon className={styles.filterIcon} aria-hidden="true" />
+							<span>{title}</span>
+						</h3>
+						<FiltersList filterName={name} />
+					</section>
+				))}
+			</div>
+			{/* El footer se mantiene en la parte inferior */}
+			<footer className={styles.filtersFooter}>
+				<Button
+					variant={hasActiveFilters ? "danger" : "secondary"}
+					onClick={handleClearFilters}
+					className="w-100 d-flex align-items-center justify-content-center"
+					aria-label="Limpiar todos los filtros"
+					aria-disabled={!hasActiveFilters}
+				>
+					<FiTrash2 aria-hidden="true" className="me-2" />
+					<span>Limpiar Filtros</span>
+				</Button>
+			</footer>
+		</div>
+	);
+}
+
+const Filters = memo(FiltersComponent);
+
+export default Filters;

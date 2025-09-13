@@ -3,7 +3,7 @@ import { Container, Row } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
 import NavigationBar from "../NavigationBar";
 import ExcursionsPage from "../ExcursionsPage";
-import OriginalFooter from "../Footer"; // Se renombra la importación original para que no haya conflictos
+import OriginalFooter from "../Footer/Footer"; // Se renombra la importación original para que no haya conflictos
 import ProtectedRoute from "../ProtectedRoute";
 import RegisterPageSkeleton from "../RegisterPage/RegisterPageSkeleton";
 import LoginPageSkeleton from "../LoginPage/LoginPageSkeleton";
