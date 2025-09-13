@@ -1,4 +1,4 @@
-import LoginForm from "../LoginForm/LoginForm";
+import LoginForm from "../LoginForm";
 import FormPageLayout from "../FormPageLayout/FormPageLayout";
 import "bootstrap/dist/css/bootstrap.css";
 
