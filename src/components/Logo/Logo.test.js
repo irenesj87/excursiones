@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { MemoryRouter } from "react-router-dom";
 import Logo from "./Logo";
-import { COMPANY_NAME } from "../../constants";
+import { COMPANY_NAME, ROUTES } from "../../constants";
 
 /**
  * Describe el conjunto de pruebas para el componente Logo.
@@ -43,6 +43,6 @@ describe("Logo Component", () => {
 		// Verifica que el enlace esté en el documento
 		expect(logoLink).toBeInTheDocument();
 		// Verifica que el atributo 'href' del enlace sea "/"
-		expect(logoLink).toHaveAttribute("href", "/");
+		expect(logoLink).toHaveAttribute("href", ROUTES.HOME);
 	});
 });
