@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Row, Col, Button, Form, Spinner } from "react-bootstrap";
 import { validateMail, validateName } from "../../validation/validations.js";
 import ValidatedFormGroup from "../ValidatedFormGroup/index.js";
-import ErrorMessageAlert from "../ErrorMessageAlert/ErrorMessageAlert.js";
+import ErrorMessageAlert from "../ErrorMessageAlert";
 import { loginUser } from "../../services/authService.js";
 import { useAuthFormHandler } from "../../hooks/useAuthFormHandler.js";
 import "bootstrap/dist/css/bootstrap.css";
