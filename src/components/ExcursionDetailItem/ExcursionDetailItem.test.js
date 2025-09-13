@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { FiClock } from "react-icons/fi";
-import ExcursionDetailItem from "./index";
+import ExcursionDetailItem from "./ExcursionDetailItem";
 
 describe("ExcursionDetailItem Component", () => {
 	test("renderiza el texto y la etiqueta accesible correctamente", () => {

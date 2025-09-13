@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import ErrorMessageAlert from "./index";
+import ErrorMessageAlert from "./ErrorMessageAlert";
 
 describe("ErrorMessageAlert Component", () => {
 	// Preparamos las props que usaremos en los tests.

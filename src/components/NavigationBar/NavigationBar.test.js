@@ -8,7 +8,7 @@ import "@testing-library/jest-dom";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import NavigationBar from "./index";
+import NavigationBar from "./NavigationBar";
 import themeSliceReducer from "../../slices/themeSlice";
 import loginSliceReducer from "../../slices/loginSlice";
 import filterSliceReducer from "../../slices/filterSlice";
