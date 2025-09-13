@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback } from "react";
 import { Row, Col, Form } from "react-bootstrap";
-import ValidatedFormGroup from "../ValidatedFormGroup/index.js";
+import ValidatedFormGroup from "../ValidatedFormGroup";
 import {
 	validateName,
 	validateSurname,
