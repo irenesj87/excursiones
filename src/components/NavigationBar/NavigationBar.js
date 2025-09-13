@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import Logo from "../Logo";
-import AuthNav from "../AuthNav/AuthNav";
+import AuthNav from "../AuthNav";
 import SearchBar from "../SearchBar";
 import { toggleMode } from "../../slices/themeSlice";
 import { FaMoon, FaSun } from "react-icons/fa";
