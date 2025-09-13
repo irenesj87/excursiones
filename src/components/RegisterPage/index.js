@@ -1,4 +1,4 @@
-import RegisterForm from "../RegisterForm";
+import RegisterForm from "../RegisterForm/RegisterForm";
 import FormPageLayout from "../FormPageLayout/FormPageLayout";
 import "bootstrap/dist/css/bootstrap.css";
 
