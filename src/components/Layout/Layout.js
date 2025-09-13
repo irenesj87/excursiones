@@ -23,7 +23,7 @@ import styles from "./Layout.module.css";
  */
 const RegisterPage = lazyWithMinTime(() => import("../RegisterPage"));
 const LoginPage = lazyWithMinTime(() => import("../LoginPage"));
-const UserPage = lazyWithMinTime(() => import("../UserPage/UserPage"));
+const UserPage = lazyWithMinTime(() => import("../UserPage"));
 
 // Componente Footer memoizado para evitar re-renderizados innecesarios.
 const Footer = memo(OriginalFooter);
