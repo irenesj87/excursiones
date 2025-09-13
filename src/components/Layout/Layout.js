@@ -21,7 +21,7 @@ import styles from "./Layout.module.css";
  * Lazy loading de los componentes RegisterPage, LoginPage y UserPage.
  * Se utiliza `lazyWithMinTime` para optimizar la carga de estos componentes.
  */
-const RegisterPage = lazyWithMinTime(() => import("../RegisterPage/RegisterPage"));
+const RegisterPage = lazyWithMinTime(() => import("../RegisterPage"));
 const LoginPage = lazyWithMinTime(() => import("../LoginPage"));
 const UserPage = lazyWithMinTime(() => import("../UserPage/UserPage"));
 
