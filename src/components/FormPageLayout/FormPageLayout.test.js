@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import FormPageLayout from "./FormPageLayout";
+import FormPageLayout from "./index";
 
 // El componente <Link> necesita estar dentro de un Router, por lo que creamos un wrapper.
 const renderWithRouter = (ui, { route = "/" } = {}) => {
