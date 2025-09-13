@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
-import Excursions from "./index";
+import ExcursionsList from "./index";
 import { joinExcursion as joinExcursionService } from "../../services/excursionService";
 import { updateUser } from "../../slices/loginSlice";
 
@@ -18,33 +18,47 @@ const mockedJoinExcursionService =
 // interacciones que ocurren en el hijo, como hacer clic en "Apuntarse".
 jest.mock("../ExcursionCard", () => ({
 	__esModule: true,
-	default: ({ name, onJoin, id }) => (
-		<div>
-			<h3>{name}</h3>
-			<button type="button" onClick={() => onJoin(id)}>
-				Apuntarse
-			</button>
-		</div>
-	),
+	default: function MockExcursionCard({ name, onJoin, id }) {
+		return (
+			<div>
+				<h3>{name}</h3>
+				<button type="button" onClick={() => onJoin(id)}>
+					Apuntarse
+				</button>
+			</div>
+		);
+	},
 }));
 
 // 3. Mock de los componentes de estado para simplificar los tests de Excursions.
 // Ahora que estos componentes tienen sus propios tests unitarios, podemos mockearlos aquí
-// para centrarnos únicamente en la lógica de Excursions (es decir, que renderice el
+// para centrarnos únicamente en la lógica de ExcursionsList (es decir, que renderice el
 // componente correcto según el estado).
-jest.mock("./ExcursionsLoading", () => () => (
-	<div data-testid="excursions-loading" />
-));
-jest.mock("./ExcursionsError", () => ({ error }) => (
-	<div data-testid="excursions-error">{error.message}</div>
-));
-jest.mock("./NoExcursionsFound", () => () => (
-	<div data-testid="no-excursions-found" />
-));
+jest.mock(
+	"./ExcursionsLoading",
+	() =>
+		function MockExcursionsLoading() {
+			return <div data-testid="excursions-loading" />;
+		}
+);
+jest.mock(
+	"./ExcursionsError",
+	() =>
+		function MockExcursionsError({ error }) {
+			return <div data-testid="excursions-error">{error.message}</div>;
+		}
+);
+jest.mock(
+	"./NoExcursionsFound",
+	() =>
+		function MockNoExcursionsFound() {
+			return <div data-testid="no-excursions-found" />;
+		}
+);
 
 const mockStore = configureStore([]);
 
-describe("Excursions Component", () => {
+describe("ExcursionsList Component", () => {
 	let store;
 	const mockExcursionData = [
 		{ id: "1", name: "Ruta del Cares" },
@@ -64,7 +78,7 @@ describe("Excursions Component", () => {
 		store.dispatch = jest.fn();
 		return render(
 			<Provider store={store}>
-				<Excursions {...props} />
+				<ExcursionsList {...props} />
 			</Provider>
 		);
 	};

@@ -14,16 +14,16 @@ import styles from "./Excursions.module.css";
 /** @typedef {import('types.js').Excursion} Excursion */
 
 /**
- * Componente principal que orquesta la visualización de la lista de excursiones.
+ * Componente que orquesta la visualización de la lista de excursiones.
  * Gestiona los estados de carga, error y "no encontrado", renderizando el componente hijo apropiado.
- * @param {ExcursionsProps} props
- * @typedef {object} ExcursionsProps
+ * @param {ExcursionsListProps} props
+ * @typedef {object} ExcursionsListProps
  * @property {Excursion[]} [excursionData=[]] - Array de excursiones a mostrar.
  * @property {boolean} isLoading - Indica si los datos de las excursiones se están cargando.
  * @property {(Error & { secondaryMessage?: string }) | null} error - Objeto de error si ha ocurrido un problema al cargar
  * las excursiones.
  */
-function ExcursionsComponent({ excursionData = [], isLoading, error }) {
+function ExcursionsListComponent({ excursionData = [], isLoading, error }) {
 	// Se obtiene el estado del loginReducer, el objeto usuario y el token
 	const {
 		login: isLoggedIn,
@@ -160,5 +160,5 @@ function ExcursionsComponent({ excursionData = [], isLoading, error }) {
 	);
 }
 
-const Excursions = memo(ExcursionsComponent);
-export default Excursions;
+const ExcursionsList = memo(ExcursionsListComponent);
+export default ExcursionsList;
