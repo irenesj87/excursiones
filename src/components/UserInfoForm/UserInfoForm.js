@@ -21,7 +21,7 @@ function UserInfoForm() {
 	// Variable que necesitamos para poder usar los dispatchers de Redux.
 	const loginDispatch = useDispatch();
 	// Este useSelector nos da los datos del usuario actual.
-	const { user } = useSelector(
+	const { user, token } = useSelector(
 		/** @param {RootState} state */ (state) => state.loginReducer
 	);
 	// Estado inicial para el reducer del formulario
@@ -165,11 +165,7 @@ function UserInfoForm() {
 
 		formDispatch({ type: "SAVE_START" });
 		try {
-			const updatedUserData = await updateUserInfo(
-				user?.mail,
-				values,
-				window.sessionStorage["token"]
-			);
+			const updatedUserData = await updateUserInfo(user?.mail, values, token);
 			// Actualiza el estado de Redux con los nuevos datos del usuario.
 			loginDispatch(
 				updateUser({
