@@ -11,7 +11,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import Logo from "../Logo";
 import AuthNav from "../AuthNav";
-import SearchBar from "../SearchBar/SearchBar";
+import SearchBar from "../SearchBar";
 import { toggleMode } from "../../slices/themeSlice";
 import { FaMoon, FaSun } from "react-icons/fa";
 import "bootstrap/dist/css/bootstrap.css";
