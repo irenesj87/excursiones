@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import FiltersList from "./index";
+import FiltersList from "./FilterList";
 import * as useFiltersHook from "../../hooks/useFilters";
 
 // 1. Mock de los componentes hijos para aislar la lógica de FiltersList.

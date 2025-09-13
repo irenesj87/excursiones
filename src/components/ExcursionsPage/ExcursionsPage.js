@@ -2,8 +2,8 @@ import React, { useState, useCallback } from "react";
 import { Col, Button, Offcanvas, Badge } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { FiFilter } from "react-icons/fi";
-import Filters from "../Filters"; // Asumiendo que Filters está en su propia carpeta
-import ExcursionsList from "../ExcursionsList"; // Renombramos la importación
+import Filters from "../Filters";
+import ExcursionsList from "../ExcursionsList";
 import layoutStyles from "../Layout/Layout.module.css";
 
 /** @typedef {import('../../types').RootState} RootState */

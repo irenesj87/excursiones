@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Footer from "./index";
+import Footer from "./Footer";
 import { CONTACT_EMAIL, COMPANY_NAME, START_YEAR } from "../../constants";
 
 // Se agrupan los tests relacionados con este componente en un bloque describe para mantener el código organizado
