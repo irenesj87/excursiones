@@ -1,5 +1,5 @@
 import { Row, Col } from "react-bootstrap";
-import UserInfoForm from "../UserInfoForm/UserInfoForm";
+import UserInfoForm from "../UserInfoForm";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "./UserPage.module.css";
 
