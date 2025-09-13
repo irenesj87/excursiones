@@ -1,6 +1,10 @@
 import { useState, useCallback, useMemo } from "react";
 import { Form } from "react-bootstrap";
-import { validateMail, validateName } from "../../validation/validations.js";
+import {
+	validateMail,
+	validateName as isNotEmpty,
+} from "../../validation/validations.js";
+import { ROUTES, FORM_TEXT } from "../../constants.js";
 import ValidatedFormGroup from "../ValidatedFormGroup";
 import FormErrorAlert from "../FormErrorAlert";
 import FormSubmitButton from "../FormSubmitButton";
@@ -19,7 +23,7 @@ export function LoginForm() {
 	const formValues = useMemo(() => ({ mail, password }), [mail, password]);
 
 	const isFormValid = useCallback(
-		() => validateMail(mail) && validateName(password),
+		() => validateMail(mail) && isNotEmpty(password),
 		[mail, password]
 	);
 
@@ -27,7 +31,7 @@ export function LoginForm() {
 		formValues,
 		isFormValid,
 		loginUser,
-		"/userPage"
+		ROUTES.USER
 	);
 
 	return (
@@ -45,25 +49,25 @@ export function LoginForm() {
 			>
 				<ValidatedFormGroup
 					id="formLoginEmail"
-					name="Correo electrónico"
+					name={FORM_TEXT.EMAIL_LABEL}
 					inputType="email"
 					inputToChange={setMail}
 					validationFunction={validateMail}
 					value={mail}
 					message={true}
 					autocomplete="email"
-					errorMessage="El formato del correo electrónico no es válido."
+					errorMessage={FORM_TEXT.INVALID_EMAIL_FORMAT}
 				/>
 				<ValidatedFormGroup
 					id="formLoginPassword"
 					inputType="password"
-					name="Contraseña"
+					name={FORM_TEXT.PASSWORD_LABEL}
 					inputToChange={setPassword}
-					validationFunction={validateName}
+					validationFunction={isNotEmpty}
 					value={password}
 					message={true}
 					autocomplete="current-password"
-					errorMessage="La contraseña no puede estar vacía."
+					errorMessage={FORM_TEXT.PASSWORD_CANNOT_BE_EMPTY}
 				/>
 				<FormSubmitButton
 					isLoading={formState.isLoading}

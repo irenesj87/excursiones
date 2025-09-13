@@ -1,8 +1,9 @@
 import { Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { ROUTES, LOGIN_PAGE_TEXT } from "../../constants";
+import FormPageLayout from "../FormPageLayout";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import FormPageLayout from "../FormPageLayout";
 import loginFormStyles from "../LoginForm/LoginForm.module.css";
 
 /** @typedef {import('../../types').RootState} RootState */
@@ -31,12 +32,12 @@ function LoginPageSkeleton() {
 	return (
 		// Utiliza FormPageLayout para mantener la estructura de la página de inicio de sesión.
 		<FormPageLayout
-			title="Inicia sesión"
+			title={LOGIN_PAGE_TEXT.TITLE}
 			colWidth="3"
-			subtitle="Nos alegra verte de nuevo."
-			switcherPrompt="¿No tienes una cuenta?"
-			switcherLinkText="Regístrate"
-			switcherLinkTo="/registerPage"
+			subtitle={LOGIN_PAGE_TEXT.SUBTITLE}
+			switcherPrompt={LOGIN_PAGE_TEXT.SWITCHER_PROMPT}
+			switcherLinkText={LOGIN_PAGE_TEXT.SWITCHER_LINK_TEXT}
+			switcherLinkTo={ROUTES.REGISTER}
 		>
 			<SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
 				<div
@@ -53,8 +54,8 @@ function LoginPageSkeleton() {
 							  Para el esqueleto del botón, necesitamos un comportamiento responsivo:
 							  - En breakpoints pequeños 'xs', debe ocupar el 100% del ancho (como el botón real).
 							  - En breakpoints más grandes, debe tener un ancho fijo para simular el botón.
-							  - La clase `w-100` asegura el ancho completo, y el `min-width` en el estilo evita que la columna 
-							    `sm="auto"` colapse en breakpoints grandes.
+							  - La clase `w-100` asegura el ancho completo, y el `min-width` en el estilo evita que la 
+							  	columna `sm="auto"` colapse en breakpoints grandes.
 							*/}
 								<Skeleton
 									height={38}

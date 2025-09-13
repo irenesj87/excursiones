@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { COMPANY_NAME } from "../../constants";
+import { COMPANY_NAME, ROUTES } from "../../constants";
 import styles from "./Logo.module.css";
 
 /**
@@ -7,7 +7,7 @@ import styles from "./Logo.module.css";
  */
 function Logo() {
 	return (
-		<Link to="/" className={styles.logoContainer}>
+		<Link to={ROUTES.HOME} className={styles.logoContainer}>
 			<span className={styles.logoText}>{COMPANY_NAME}</span>
 		</Link>
 	);
