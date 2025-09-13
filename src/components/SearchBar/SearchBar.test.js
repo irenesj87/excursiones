@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
-import SearchBar from "./index";
+import SearchBar from "./SearchBar";
 import { searchExcursions } from "../../services/excursionService";
 
 // 1. Mock del servicio de búsqueda
@@ -147,7 +147,9 @@ describe("SearchBar Component", () => {
 		// Creamos un "espía" para console.error y lo reemplazamos con una función
 		// que no hace nada. Esto evita que el error esperado se imprima en la
 		// consola durante la ejecución del test, manteniendo la salida limpia.
-		const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+		const consoleErrorSpy = jest
+			.spyOn(console, "error")
+			.mockImplementation(() => {});
 
 		const errorMessage = "Network Error";
 		const mockError = new Error(errorMessage);
