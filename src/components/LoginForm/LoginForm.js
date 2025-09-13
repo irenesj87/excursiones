@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo } from "react";
 import { Form } from "react-bootstrap";
 import { validateMail, validateName } from "../../validation/validations.js";
-import ValidatedFormGroup from "../ValidatedFormGroup/ValidatedFormGroup.js";
+import ValidatedFormGroup from "../ValidatedFormGroup";
 import FormErrorAlert from "../FormErrorAlert";
 import FormSubmitButton from "../FormSubmitButton";
 import { loginUser } from "../../services/authService.js";
