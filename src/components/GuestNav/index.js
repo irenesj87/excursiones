@@ -1,3 +1,3 @@
-import GuestNav from "./GuestNav";  
+import GuestNav from "./GuestNav";
 
 export default GuestNav;
