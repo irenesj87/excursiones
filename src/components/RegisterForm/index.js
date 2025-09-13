@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, useMemo, useCallback } from "react";
-import { Row, Col, Form, Button, Spinner } from "react-bootstrap";
+import { useState, useMemo, useCallback } from "react";
+import { Row, Col, Form } from "react-bootstrap";
 import ValidatedFormGroup from "../ValidatedFormGroup/index.js";
 import {
 	validateName,
@@ -10,7 +10,8 @@ import {
 	validateSamePassword,
 } from "../../validation/validations.js";
 import { registerUser } from "../../services/authService.js";
-import ErrorMessageAlert from "../ErrorMessageAlert";
+import FormErrorAlert from "../FormErrorAlert";
+import FormSubmitButton from "../FormSubmitButton";
 import { useAuthFormHandler } from "../../hooks/useAuthFormHandler.js";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "./RegisterForm.module.css";
@@ -30,8 +31,6 @@ const initialState = {
  */
 function RegisterForm() {
 	const [values, setValues] = useState(initialState);
-	// Ref para la alerta de error, para poder mover el foco a ella.
-	const errorAlertRef = useRef(null);
 
 	/**
 	 * Función que se pasa a cada campo del formulario. Cuando cambia, llama a formDispatch con la acción UPDATE_FIELD para
@@ -71,15 +70,6 @@ function RegisterForm() {
 		registerUser,
 		"/"
 	);
-
-	/**
-	 * Efecto para mover el foco a la alerta de error cuando esta aparece.
-	 */
-	useEffect(() => {
-		if (formState.error && errorAlertRef.current) {
-			errorAlertRef.current.focus();
-		}
-	}, [formState.error]);
 
 	// Configuración de los campos del formulario para renderizarlos dinámicamente.
 	// Se usa useMemo para evitar que se recalcule en cada renderizado, optimizando el rendimiento.
@@ -151,15 +141,10 @@ function RegisterForm() {
 
 	return (
 		<>
-			{/* Muestra la alerta de error si showErrorAlert es true y hay un mensaje de error. */}
-			{formState.error && (
-				<div ref={errorAlertRef} tabIndex={-1}>
-					<ErrorMessageAlert
-						message={formState.error}
-						onClose={() => formDispatch({ type: "CLEAR_ERROR" })}
-					/>
-				</div>
-			)}
+			<FormErrorAlert
+				error={formState.error}
+				onClearError={() => formDispatch({ type: "CLEAR_ERROR" })}
+			/>
 			{/* Formulario de registro */}
 			<Form
 				id="registerForm"
@@ -201,40 +186,10 @@ function RegisterForm() {
 					</ul>
 				</div>
 
-				<div className="mt-5 pt-3">
-					{/* justify-content-sm-end alineará la Col a la derecha en breakpoints 'sm' y mayores */}
-					<Row className="justify-content-sm-end">
-						{/* sm="auto" hace que la Col se ajuste al contenido en breakpoints 'sm' y mayores */}
-						<Col xs={12} sm="auto">
-							<Button
-								variant={
-									formState.isButtonDisabled || formState.isLoading
-										? "secondary"
-										: "success"
-								}
-								type="submit"
-								aria-disabled={
-									formState.isButtonDisabled || formState.isLoading
-								}
-								className="w-100" // w-100 hace que el botón ocupe el ancho de su Col padre
-							>
-								{formState.isLoading ? (
-									<output>
-										<Spinner
-											as="span"
-											animation="border"
-											size="sm"
-											aria-hidden="true"
-										/>
-										<span className="visually-hidden">Cargando...</span>
-									</output>
-								) : (
-									"Enviar"
-								)}
-							</Button>
-						</Col>
-					</Row>
-				</div>
+				<FormSubmitButton
+					isLoading={formState.isLoading}
+					isButtonDisabled={formState.isButtonDisabled}
+				/>
 			</Form>
 		</>
 	);
