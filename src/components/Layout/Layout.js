@@ -22,7 +22,7 @@ import styles from "./Layout.module.css";
  * Se utiliza `lazyWithMinTime` para optimizar la carga de estos componentes.
  */
 const RegisterPage = lazyWithMinTime(() => import("../RegisterPage"));
-const LoginPage = lazyWithMinTime(() => import("../LoginPage/LoginPage"));
+const LoginPage = lazyWithMinTime(() => import("../LoginPage"));
 const UserPage = lazyWithMinTime(() => import("../UserPage"));
 
 // Componente Footer memoizado para evitar re-renderizados innecesarios.
