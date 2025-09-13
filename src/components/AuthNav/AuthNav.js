@@ -2,7 +2,7 @@ import { useState } from "react";
 import UserNavSkeleton from "../UserNav/UserNavSkeleton";
 import GuestNavSkeleton from "../GuestNav/GuestNavSkeleton";
 import UserNav from "../UserNav";
-import GuestNav from "../GuestNav";
+import GuestNav from "../GuestNav/GuestNav";
 
 /**
  * Obtiene de manera segura el estado de autenticación inicial de sessionStorage.

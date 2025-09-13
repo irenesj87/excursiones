@@ -9,7 +9,7 @@ import {
 	OverlayTrigger,
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import Logo from "../Logo";
+import Logo from "../Logo/Logo";
 import AuthNav from "../AuthNav";
 import SearchBar from "../SearchBar";
 import { toggleMode } from "../../slices/themeSlice";

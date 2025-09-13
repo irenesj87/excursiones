@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import "@testing-library/jest-dom";
-import GuestNav from "./index";
+import GuestNav from "./GuestNav";
 
 /**
  * Suite de pruebas para el componente GuestNav.

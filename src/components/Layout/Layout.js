@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import NavigationBar from "../NavigationBar";
 import ExcursionsPage from "../ExcursionsPage";
 import OriginalFooter from "../Footer/Footer"; // Se renombra la importación original para que no haya conflictos
-import ProtectedRoute from "../ProtectedRoute";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import RegisterPageSkeleton from "../RegisterPage/RegisterPageSkeleton";
 import LoginPageSkeleton from "../LoginPage/LoginPageSkeleton";
 import UserPageSkeleton from "../UserPage/UserPageSkeleton";
@@ -22,7 +22,7 @@ import styles from "./Layout.module.css";
  * Se utiliza `lazyWithMinTime` para optimizar la carga de estos componentes.
  */
 const RegisterPage = lazyWithMinTime(() => import("../RegisterPage"));
-const LoginPage = lazyWithMinTime(() => import("../LoginPage"));
+const LoginPage = lazyWithMinTime(() => import("../LoginPage/LoginPage"));
 const UserPage = lazyWithMinTime(() => import("../UserPage"));
 
 // Componente Footer memoizado para evitar re-renderizados innecesarios.

@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { MemoryRouter } from "react-router-dom";
-import Logo from "./index";
+import Logo from "./Logo";
 import { COMPANY_NAME } from "../../constants";
 
 /**
