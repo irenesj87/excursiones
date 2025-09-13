@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { Card, Button, Spinner, Alert } from "react-bootstrap";
-import ExcursionDetailItem from "../ExcursionDetailItem/ExcursionDetailItem";
+import ExcursionDetailItem from "../ExcursionDetailItem";
 import { FiMapPin, FiClock, FiCheckCircle } from "react-icons/fi";
 import cn from "classnames";
 import { useJoinExcursion } from "../../hooks/useJoinExcursion";
