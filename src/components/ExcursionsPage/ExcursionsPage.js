@@ -10,7 +10,8 @@ import layoutStyles from "../Layout/Layout.module.css";
 
 /**
  * Componente para la página de excursiones que muestra los filtros y la lista de excursiones.
- * @param {{excursionsState: object}} props
+ * @typedef {import('../../types').Excursion} Excursion
+ * @param {{excursionsState: {data: Excursion[], isLoading: boolean, error: (Error & { secondaryMessage?: string }) | null}}} props
  * @returns {React.ReactElement}
  */
 const ExcursionsPage = ({ excursionsState }) => {
