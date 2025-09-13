@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import ExcursionsError from "./index";
+import ExcursionsError from "./ExcursionsError";
 
 // Describe el conjunto de pruebas para el componente ExcursionsError.
 describe("ExcursionsError Component", () => {

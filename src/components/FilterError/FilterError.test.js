@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import FilterError from "./index";
+import FilterError from "./FilterError";
 
 describe("FilterError Component", () => {
 	/**

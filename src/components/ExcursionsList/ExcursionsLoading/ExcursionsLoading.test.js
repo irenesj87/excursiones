@@ -3,7 +3,7 @@ import "@testing-library/jest-dom";
 // El error de TypeScript ocurre porque se estaba importando el componente `ExcursionCard`
 // en lugar de `ExcursionsLoading`. La solución es corregir la ruta de importación para
 // que apunte al componente correcto que se está probando (`./index.js` en la misma carpeta).
-import ExcursionsLoading from "./index";
+import ExcursionsLoading from "./ExcursionsLoading";
 
 // Mock del hook useSkeletonTheme, ya que no es relevante para la lógica de este componente.
 // Su propio test ya se encarga de verificar su funcionamiento.

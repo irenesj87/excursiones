@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
-import ExcursionsList from "./index";
+import ExcursionsList from "./ExcursionsList";
 import { joinExcursion as joinExcursionService } from "../../services/excursionService";
 import { updateUser } from "../../slices/loginSlice";
 
