@@ -2,7 +2,7 @@ import { memo, useMemo, useCallback, useState, useEffect, useRef } from "react";
 import { Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../../slices/loginSlice";
-import ExcursionCard from "../ExcursionCard";
+import ExcursionCard from "../ExcursionCard/ExcursionCard";
 import { joinExcursion as joinExcursionService } from "../../services/excursionService";
 import ExcursionsLoading from "./ExcursionsLoading";
 import ExcursionsError from "./ExcursionsError";

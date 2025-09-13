@@ -1,20 +1,40 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import AuthNav from "./index";
+import AuthNav from "./AuthNav";
 
 // Mock de los componentes esqueleto y de navegación para aislar AuthNav en las pruebas.
-jest.mock("../UserNav/UserNavSkeleton", () => () => (
-	<div data-testid="user-nav-skeleton" />
-));
-jest.mock("../GuestNav/GuestNavSkeleton", () => () => (
-	<div data-testid="guest-nav-skeleton" />
-));
-jest.mock("../UserNav", () => ({ onCloseMenu }) => (
-	<button type="button" data-testid="user-nav" onClick={onCloseMenu} />
-));
-jest.mock("../GuestNav", () => ({ onCloseMenu }) => (
-	<button type="button" data-testid="guest-nav" onClick={onCloseMenu} />
-));
+jest.mock(
+	"../UserNav/UserNavSkeleton",
+	() =>
+		function MockUserNavSkeleton() {
+			return <div data-testid="user-nav-skeleton" />;
+		}
+);
+jest.mock(
+	"../GuestNav/GuestNavSkeleton",
+	() =>
+		function MockGuestNavSkeleton() {
+			return <div data-testid="guest-nav-skeleton" />;
+		}
+);
+jest.mock(
+	"../UserNav",
+	() =>
+		function MockUserNav({ onCloseMenu }) {
+			return (
+				<button type="button" data-testid="user-nav" onClick={onCloseMenu} />
+			);
+		}
+);
+jest.mock(
+	"../GuestNav",
+	() =>
+		function MockGuestNav({ onCloseMenu }) {
+			return (
+				<button type="button" data-testid="guest-nav" onClick={onCloseMenu} />
+			);
+		}
+);
 
 /**
  * Suite de pruebas para el componente AuthNav.

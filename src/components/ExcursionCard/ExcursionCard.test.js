@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import ExcursionCard from "./index";
+import ExcursionCard from "./ExcursionCard";
 import styles from "./ExcursionCard.module.css";
 import { useJoinExcursion } from "../../hooks/useJoinExcursion";
 

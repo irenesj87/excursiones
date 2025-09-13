@@ -10,7 +10,7 @@ import {
 	validateSamePassword,
 } from "../../validation/validations.js";
 import { registerUser } from "../../services/authService.js";
-import ErrorMessageAlert from "../ErrorMessageAlert/index.js";
+import ErrorMessageAlert from "../ErrorMessageAlert/ErrorMessageAlert.js";
 import { useAuthFormHandler } from "../../hooks/useAuthFormHandler.js";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "./RegisterForm.module.css";
