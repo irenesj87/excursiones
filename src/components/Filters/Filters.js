@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import FiltersList from "../FiltersList/FilterList";
 import { clearAllFilters } from "../../slices/filterSlice";
 import { FiMapPin, FiBarChart, FiClock, FiTrash2 } from "react-icons/fi";
-import "bootstrap/dist/css/bootstrap.css";
 import styles from "./Filters.module.css";
 
 /** @typedef {import('../../types').RootState} RootState */

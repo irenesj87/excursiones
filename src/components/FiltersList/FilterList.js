@@ -5,7 +5,6 @@ import FilterPillSkeleton from "./FilterPillSkeleton";
 import FilterError from "../FilterError";
 import { useFilters } from "../../hooks/useFilters";
 import { useSkeletonTheme } from "../../hooks/useSkeletonTheme";
-import "bootstrap/dist/css/bootstrap.css";
 import styles from "./FiltersList.module.css";
 
 /** @typedef {import("../../types").RootState} RootState */

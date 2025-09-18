@@ -3,8 +3,17 @@
 	padding-bottom: 1rem;
 	width: 100%;
 	background-color: var(--body-bg);
+	/* Por defecto, la barra de navegación tiene un borde inferior en todas las pantallas. */
 	border-bottom: 1px solid var(--separator-color);
 	z-index: 1030; /* Asegura que la barra de navegación esté por encima de otros elementos sticky */
+}
+
+/* En pantallas pequeñas (<768px) Y SOLO en la página de excursiones,
+   eliminamos el borde para evitar duplicidad con la barra de filtros. */
+@media (max-width: 767.98px) {
+	.onExcursionsPage {
+		border-bottom: none;
+	}
 }
 
 .themeToggleBtn {

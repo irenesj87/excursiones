@@ -2,10 +2,17 @@
 	/* top: Altura de la barra de navegación en breakpoints pequeños.
 	 * La clase 'sticky-top' de Bootstrap establece 'top: 0', pero necesitamos
 	 * que esta barra se pegue justo debajo de la barra de navegación. */
-	top: 129.81px;
+	top: var(--navbar-height);
 	background-color: var(--mobile-filters-bar-bg);
 	z-index: 1020; /* Justo por debajo del z-index de la barra de navegación (1030) */
 	border-bottom: 1px solid var(--mobile-filters-bar-border);
+	/* Usamos márgenes negativos para que la barra se extienda a lo ancho del viewport,
+	 * anulando el padding del contenedor padre. Luego, restauramos el padding internamente
+	 * para que el contenido (el botón) permanezca alineado. */
+	margin-right: calc(-0.5 * var(--bs-gutter-x));
+	margin-left: calc(-0.5 * var(--bs-gutter-x));
+	padding-left: calc(var(--bs-gutter-x) * 0.5);
+	padding-right: calc(var(--bs-gutter-x) * 0.5);
 }
 
 .filtersToggleButton {
