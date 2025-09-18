@@ -1,48 +1,46 @@
-/* Barra de filtros para móvil que se queda fija en la parte superior */
 .mobileFiltersBar {
-	/* top: Altura de la barra de navegación móvil. Ajustar si es necesario.
+	/* top: Altura de la barra de navegación en breakpoints pequeños.
 	 * La clase 'sticky-top' de Bootstrap establece 'top: 0', pero necesitamos
 	 * que esta barra se pegue justo debajo de la barra de navegación. */
 	top: 129.81px;
-	background-color: var(--bs-body-bg);
+	background-color: var(--mobile-filters-bar-bg);
 	z-index: 1020; /* Justo por debajo del z-index de la barra de navegación (1030) */
-	border-bottom: 1px solid var(--bs-border-color);
+	border-bottom: 1px solid var(--mobile-filters-bar-border);
 }
 
-/*
- * Estilos para el botón de filtros.
- * Se usa :global(.btn) para aumentar la especificidad y sobreescribir los estilos
- * de Bootstrap (.btn-outline-secondary) de forma segura, asegurando que se adapte
- * al modo claro y oscuro.
- */
-:global(.btn).filtersToggleButton {
-	color: var(--bs-secondary-color);
-	border-color: var(--bs-border-color);
+.filtersToggleButton {
+	color: var(--filters-toggle-btn-color);
+	border-color: var(--filters-toggle-btn-border);
 	background-color: transparent;
 	font-weight: 500;
 	transition: none;
 }
 
-/* Estilos para el botón de filtros en estado hover o active */
-:global(.btn).filtersToggleButton:hover,
-:global(.btn).filtersToggleButton:active {
-	color: var(--bs-body-bg);
-	background-color: var(--bs-secondary-color);
-	border-color: var(--bs-secondary-color);
+.filtersToggleButton:hover,
+.filtersToggleButton.active {
+	color: var(--filters-toggle-btn-color-active);
+	background-color: var(--filters-toggle-btn-bg-active);
+	border-color: var(--filters-toggle-btn-border-active);
+	box-shadow: none;
+}
+
+/* Usa un `box-shadow` en lugar de `outline` para respetar el `border-radius` del botón. */
+.filtersToggleButton:focus {
+	box-shadow: 0 0 0 0.25rem rgba(var(--primary-color-rgb), 0.5);
 }
 
 /* Estilos para el contador de filtros */
 .filterBadge {
-	background-color: var(--bs-primary);
-	color: var(--bs-light);
+	background-color: var(--filter-badge-bg);
+	color: var(--filter-badge-text);
 	font-size: 0.75em;
 	padding: 0.3em 0.6em;
-	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+	transition: none;
 }
 
 /* Estilos para el contador de filtros cuando el botón está en estado hover o active */
-:global(.btn).filtersToggleButton:hover .filterBadge,
-:global(.btn).filtersToggleButton:active .filterBadge {
-	background-color: var(--bs-body-bg);
-	color: var(--bs-secondary-color);
+.filtersToggleButton:hover .filterBadge,
+.filtersToggleButton.active .filterBadge {
+	background-color: var(--filters-toggle-btn-color-active);
+	color: var(--filters-toggle-btn-bg-active);
 }

@@ -3,7 +3,7 @@ import { Container, Row } from "react-bootstrap";
 import { Routes, Route } from "react-router-dom";
 import NavigationBar from "../NavigationBar";
 import ExcursionsPage from "../ExcursionsPage";
-import OriginalFooter from "../Footer"; // Se renombra la importación original para que no haya conflictos
+import OriginalFooter from "../Footer/Footer"; // Se renombra la importación original para que no haya conflictos
 import ProtectedRoute from "../ProtectedRoute";
 import RegisterPageSkeleton from "../RegisterPage/RegisterPageSkeleton";
 import LoginPageSkeleton from "../LoginPage/LoginPageSkeleton";
@@ -12,7 +12,6 @@ import { useAuth } from "../../hooks/useAuth";
 import { useExcursions } from "../../hooks/useExcursions";
 import { lazyWithMinTime } from "../../utils/lazyWithMinTime";
 import LazyRouteWrapper from "../../utils/LazyRouteWrapper";
-import "bootstrap/dist/css/bootstrap.css";
 import styles from "./Layout.module.css";
 
 /** @typedef {import('../../types').RootState} RootState */
