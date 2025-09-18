@@ -4,6 +4,7 @@
 	width: 100%;
 	background-color: var(--body-bg);
 	border-bottom: 1px solid var(--separator-color);
+	z-index: 1030; /* Asegura que la barra de navegación esté por encima de otros elementos sticky */
 }
 
 .themeToggleBtn {

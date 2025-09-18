@@ -2,9 +2,9 @@ import React, { useState, useCallback } from "react";
 import { Col, Button, Offcanvas, Badge } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { FiFilter } from "react-icons/fi";
-import Filters from "../Filters"; // Asumiendo que Filters está en su propia carpeta
-import ExcursionsList from "../ExcursionsList"; // Renombramos la importación
-import layoutStyles from "../Layout/Layout.module.css";
+import Filters from "../Filters/Filters"; // Asumiendo que Filters está en su propia carpeta
+import ExcursionsList from "../ExcursionsList";
+import styles from "./ExcursionsPage.module.css";
 
 /** @typedef {import('../../types').RootState} RootState */
 
@@ -64,21 +64,19 @@ const ExcursionsPage = ({ excursionsState }) => {
 				className="d-flex flex-column position-relative"
 			>
 				{/* Botón para mostrar filtros (visible hasta 'md') */}
-				<div className="d-grid d-md-none mt-3 mb-1">
+				<div
+					className={`d-grid d-md-none sticky-top py-2 px-3 ${styles.mobileFiltersBar}`}
+				>
 					<Button
 						variant="outline-secondary"
 						onClick={handleShowFilters}
-						className={layoutStyles.filtersToggleButton}
+						className={`w-100 ${styles.filtersToggleButton}`}
 					>
 						<FiFilter className="me-2" />
 						<span>
 							Mostrar Filtros
 							{activeFilterCount > 0 && (
-								<Badge
-									pill
-									bg={null}
-									className={`${layoutStyles.filterBadge} ms-2`}
-								>
+								<Badge pill bg={null} className={`${styles.filterBadge} ms-2`}>
 									{activeFilterCount} {filterCountText}
 								</Badge>
 							)}

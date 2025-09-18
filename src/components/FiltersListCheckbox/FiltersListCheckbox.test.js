@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
-import FiltersListCheckbox from "./index";
+import FiltersListCheckbox from "./FilterListCheckbox";
 import { toggleFilter } from "../../slices/filterSlice";
 import styles from "./FiltersListCheckbox.module.css";
 

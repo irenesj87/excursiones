@@ -1,0 +1,48 @@
+/* Barra de filtros para móvil que se queda fija en la parte superior */
+.mobileFiltersBar {
+	/* top: Altura de la barra de navegación móvil. Ajustar si es necesario.
+	 * La clase 'sticky-top' de Bootstrap establece 'top: 0', pero necesitamos
+	 * que esta barra se pegue justo debajo de la barra de navegación. */
+	top: 129.81px;
+	background-color: var(--bs-body-bg);
+	z-index: 1020; /* Justo por debajo del z-index de la barra de navegación (1030) */
+	border-bottom: 1px solid var(--bs-border-color);
+}
+
+/*
+ * Estilos para el botón de filtros.
+ * Se usa :global(.btn) para aumentar la especificidad y sobreescribir los estilos
+ * de Bootstrap (.btn-outline-secondary) de forma segura, asegurando que se adapte
+ * al modo claro y oscuro.
+ */
+:global(.btn).filtersToggleButton {
+	color: var(--bs-secondary-color);
+	border-color: var(--bs-border-color);
+	background-color: transparent;
+	font-weight: 500;
+	transition: none;
+}
+
+/* Estilos para el botón de filtros en estado hover o active */
+:global(.btn).filtersToggleButton:hover,
+:global(.btn).filtersToggleButton:active {
+	color: var(--bs-body-bg);
+	background-color: var(--bs-secondary-color);
+	border-color: var(--bs-secondary-color);
+}
+
+/* Estilos para el contador de filtros */
+.filterBadge {
+	background-color: var(--bs-primary);
+	color: var(--bs-light);
+	font-size: 0.75em;
+	padding: 0.3em 0.6em;
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+/* Estilos para el contador de filtros cuando el botón está en estado hover o active */
+:global(.btn).filtersToggleButton:hover .filterBadge,
+:global(.btn).filtersToggleButton:active .filterBadge {
+	background-color: var(--bs-body-bg);
+	color: var(--bs-secondary-color);
+}
