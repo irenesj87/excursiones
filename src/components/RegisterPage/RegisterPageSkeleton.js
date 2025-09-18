@@ -1,6 +1,6 @@
 import { Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import FormPageLayout from "../FormPageLayout";
+import FormPageLayout from "../FormPageLayout/FormPageLayout";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import registerFormStyles from "../RegisterForm/RegisterForm.module.css";

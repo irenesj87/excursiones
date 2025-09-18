@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
-import Filters from "./index";
+import Filters from "./Filters";
 import { clearAllFilters } from "../../slices/filterSlice";
 
 // 1. Mock del componente hijo para aislar la lógica de Filters.

@@ -1,32 +1,17 @@
 /* ======================================== */
-/* 1. VARIABLES GLOBALES (NO DEPENDEN DEL TEMA) */
-/* ======================================== */
-:root {
-	/* Paleta de colores base y variables que no cambian con el tema */
-	--white: #fff;
-	--black: #000;
-
-	/* Radios de borde para consistencia */
-	--border-radius-sm: 0.25rem; /* 4px */
-	--border-radius-md: 0.5rem; /* 8px */
-	--border-radius-lg: 0.75rem; /* 12px */
-}
-
-/* ======================================== */
 /* --- ESTILOS PARA MODO CLARO --- */
 /* ======================================== */
-html.light body {
-	/* --- Paleta y Colores Base (Minimalista y Moderno) --- */
-	--primary-color: hsl(150, 26%, 27%); /* Verde oscuro, un poco más claro */
+html.light {
+	/* --- Paleta y Colores Base --- */
+	--primary-color: hsl(150, 26%, 27%); /* Verde oscuro */
+	--primary-color-rgb: 48, 90, 69;
 	--primary-color-hover: hsl(140, 10%, 20%); /* Más oscuro para el hover */
 	--accent-color: hsl(140, 10%, 25%);
-	--heading-color: hsl(140, 25%, 25%); /* Verde oscuro y apagado */
-	--body-bg: hsl(0, 0%, 100%); /* Blanco puro */
-	background-color: var(--body-bg);
+	--heading-color: hsl(140, 25%, 25%);
+	--body-bg: hsl(0, 0%, 100%);
 
 	/* --- Texto --- */
 	--text-color: hsl(210, 10%, 23%); /* Gris oscuro para texto: #333D49 */
-	color: var(--text-color);
 	--text-secondary: hsl(210, 9%, 45%); /* Gris medio: #64748B */
 
 	/* --- Bordes y Separadores --- */
@@ -55,7 +40,7 @@ html.light body {
 	--excursion-card-bg: #ffffff;
 	--excursion-card-shadow: none;
 	--excursion-card-title-color: var(--heading-color);
-	--excursion-card-border: 1px solid hsl(210, 15%, 88%); /* Gris claro */
+	--excursion-card-border: 1px solid hsl(210, 15%, 88%);
 	--excursion-card-icon-color: var(--primary-color);
 	--excursion-card-joined-status-text: var(--primary-color);
 
@@ -70,6 +55,14 @@ html.light body {
 	--filters-toggle-btn-bg-hover: hsl(140, 30%, 94%);
 	--filters-toggle-btn-color-hover: var(--primary-color);
 	--filters-toggle-btn-border-hover: var(--primary-color);
+	--filters-toggle-btn-bg-active: var(--primary-color);
+	--filters-toggle-btn-color-active: var(--login-btn-text);
+	--filters-toggle-btn-border-active: var(--primary-color);
+
+	--mobile-filters-bar-bg: var(--body-bg);
+	--mobile-filters-bar-border: var(--separator-color);
+	--filter-badge-bg: var(--primary-color);
+	--filter-badge-text: var(--login-btn-text);
 
 	/* Píldoras de filtro (no seleccionadas) */
 	--filter-pill-bg: hsl(210, 20%, 96%); /* Gris muy claro */
@@ -77,13 +70,13 @@ html.light body {
 	--filter-pill-border: hsl(210, 15%, 90%); /* Borde gris claro */
 	--filter-pill-bg-hover: hsl(210, 15%, 90%); /* Gris claro para hover */
 	--filter-pill-border-hover: hsl(210, 15%, 85%);
-	/* Píldora seleccionada ahora es gris más oscuro */
+	/* Píldoras de filtro (seleccionadas) */
 	--filter-pill-bg-checked: hsl(210, 15%, 88%); /* Gris más oscuro */
 	--filter-pill-text-checked: var(--text-color); /* Texto oscuro */
 	--filter-pill-border-checked: hsl(210, 15%, 88%);
 	--filter-pill-shadow-checked: none;
 
-	--filter-clear-btn-color-hover: hsl(347, 77%, 50%); /* Rojo */
+	--filter-clear-btn-color-hover: hsl(347, 77%, 50%);
 
 	/* --- Footer --- */
 	--footer-bg: var(--primary-color); /* Verde oscuro */
@@ -91,9 +84,9 @@ html.light body {
 	--footer-border-top: var(
 		--primary-color-hover
 	); /* Borde superior más oscuro */
-	--footer-icon-bg: hsl(0, 0%, 100%); /* Blanco puro */
+	--footer-icon-bg: hsl(0, 0%, 100%);
 	--footer-icon-color: var(--text-secondary);
-	--footer-icon-bg-hover: hsl(0, 0%, 88%); /* Gris neutro claro */
+	--footer-icon-bg-hover: hsl(0, 0%, 88%);
 
 	/* --- Indicadores de Dificultad (Bootstrap Overrides) --- */
 	--bs-success: hsl(145, 60%, 35%);
@@ -112,21 +105,25 @@ html.light body {
 	--focus-outline-color: var(--primary-color);
 }
 
+html.light body {
+	background-color: var(--body-bg);
+	color: var(--text-color);
+}
+
 /* ======================================== */
 /* 3. TEMA OSCURO (DARK) */
 /* ======================================== */
-html.dark body {
-	/* --- Paleta y Colores Base (Minimalista y Moderno) --- */
+html.dark {
+	/* --- Paleta y Colores Base --- */
 	--primary-color: hsl(140, 45%, 70%); /* Verde pastel claro */
-	--primary-color-hover: hsl(140, 45%, 65%); /* Un poco más oscuro */
+	--primary-color-rgb: 156, 201, 178;
+	--primary-color-hover: hsl(140, 45%, 65%);
 	--accent-color: hsl(140, 45%, 70%);
 	--heading-color: hsl(140, 25%, 95%); /* Blanco con tinte verde */
 	--body-bg: hsl(140, 10%, 15%); /* Verde muy oscuro */
-	background-color: var(--body-bg);
 
 	/* --- Texto --- */
 	--text-color: hsl(140, 15%, 85%); /* Gris verdoso claro */
-	color: var(--text-color);
 	--text-secondary: hsl(140, 10%, 65%); /* Gris verdoso medio */
 
 	/* --- Bordes y Separadores --- */
@@ -172,6 +169,14 @@ html.dark body {
 	--filters-toggle-btn-bg-hover: hsl(140, 10%, 25%);
 	--filters-toggle-btn-color-hover: var(--primary-color);
 	--filters-toggle-btn-border-hover: var(--primary-color);
+	--filters-toggle-btn-bg-active: var(--primary-color);
+	--filters-toggle-btn-color-active: var(--login-btn-text);
+	--filters-toggle-btn-border-active: var(--primary-color);
+
+	--mobile-filters-bar-bg: var(--body-bg);
+	--mobile-filters-bar-border: var(--separator-color);
+	--filter-badge-bg: var(--primary-color);
+	--filter-badge-text: var(--login-btn-text);
 
 	--filter-pill-bg: hsl(140, 10%, 25%);
 	--filter-pill-text: var(--text-color);
@@ -210,30 +215,14 @@ html.dark body {
 	--focus-outline-color: var(--primary-color);
 }
 
+html.dark body {
+	background-color: var(--body-bg);
+	color: var(--text-color);
+}
+
 /* ======================================== */
 /* 4. ESTILOS DE COMPONENTES (DEPENDEN DEL TEMA) */
 /* ======================================== */
-
-/* --- Estilos Globales --- */
-/* Elimina transiciones por defecto para evitar parpadeos al cambiar de tema */
-.form-control,
-.page-link,
-.accordion-button,
-.accordion-body {
-	transition: none;
-}
-
-/* Elimina la transición del body para evitar parpadeos al cambiar de tema */
-body {
-	transition: none;
-}
-
-/* Estilos para botones deshabilitados de forma accesible.
-   Se mantienen en el DOM y son enfocables, pero visualmente parecen inactivos. */
-.btn[aria-disabled="true"] {
-	opacity: 0.65; /* Reduce la opacidad para indicar visualmente que está inactivo */
-	cursor: not-allowed; /* Cambia el cursor para indicar que no es clickeable */
-}
 
 /* Invierte el color del botón de cierre en modo oscuro para que sea visible */
 html.dark .btn-close {
@@ -256,10 +245,8 @@ html.dark .btn-close {
 	color: var(--text-color);
 	background-color: var(--excursion-card-bg);
 	border-color: var(
-		--separator-color
-	); /* Mantenemos el color de borde normal */
-	/* Se elimina el box-shadow por defecto de Bootstrap para que el outline de :focus-visible sea el único indicador */
-	box-shadow: none;
+		--primary-color
+	); /* Usamos el color primario para un mejor indicador de foco */
 }
 
 /* Estilos para inputs deshabilitados o de solo lectura, para que se adapten al tema */
@@ -268,46 +255,24 @@ html.dark .btn-close {
 .form-control[readonly]:not(.form-control-plaintext) {
 	background-color: var(--excursion-card-bg);
 	color: var(--text-secondary);
-	/* Reseteamos la opacidad que Bootstrap aplica por defecto a los campos deshabilitados */
-	opacity: 1;
-}
-
-/* --- Hamburguer menu --- */
-.navbar-toggler-icon {
-	width: 1.3em;
-	height: 1.3em;
 }
 
 /* --- Offcanvas (Menú y Filtros) --- */
-/* Estos estilos son globales para asegurar que se aplican a los componentes Offcanvas de react-bootstrap */
 .offcanvas-header {
-	font-weight: bolder;
-	padding: 1rem 1.25rem;
 	background-color: var(--body-bg);
 	color: var(--text-color);
 	border-bottom: 1px solid var(--separator-color);
 }
 
 .offcanvas-body {
-	/* El padding por defecto de Bootstrap es 1rem. Lo eliminamos aquí para que los contenedores hijos
-	   puedan controlarlo. El Offcanvas de filtros, por ejemplo, tiene su propio padding interno. */
-	padding: 0;
 	background-color: var(--excursion-card-bg);
 }
 
 /* Estilos específicos para los enlaces dentro del Offcanvas de navegación (identificado por su ID) */
 #offcanvasNavbar .offcanvas-body .nav-link {
-	display: block;
-	width: 95%;
-	margin: 0 auto 0.6rem; /* Centrado horizontalmente y con margen inferior */
-	text-align: center;
-	padding: 0.6rem 1rem;
 	color: var(
 		--text-color
 	); /* Asegura que el texto sea legible en ambos temas */
-	text-decoration: none;
-	border-radius: 0.375rem;
-	transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 /* Estilos para el botón de 'Iniciar Sesión' dentro del Offcanvas */
@@ -322,21 +287,7 @@ html.dark .btn-close {
 	border-color: var(--login-btn-border-hover);
 }
 
-/* Estilos para el botón de 'Cerrar Sesión' dentro del Offcanvas */
-#offcanvasNavbar .offcanvas-body .logoutLink {
-	display: block;
-	width: 95%;
-	margin: 0 auto 0.6rem;
-}
 /* Estilos específicos para los inputs de tipo 'plaintext' */
 .form-control-plaintext {
 	color: var(--text-color);
-}
-
-/* Estilos para los badges de dificultad (se aplica con una clase global) */
-.difficulty-badge {
-	font-size: 0.9rem;
-	padding: 0.3em 0.65em;
-	font-weight: 500;
-	letter-spacing: 0.5px;
 }

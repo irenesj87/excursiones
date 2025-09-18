@@ -1,7 +1,7 @@
 import { Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { ROUTES, LOGIN_PAGE_TEXT } from "../../constants";
-import FormPageLayout from "../FormPageLayout";
+import FormPageLayout from "../FormPageLayout/FormPageLayout";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import loginFormStyles from "../LoginForm/LoginForm.module.css";

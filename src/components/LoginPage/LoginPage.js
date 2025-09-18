@@ -1,5 +1,5 @@
 import LoginForm from "../LoginForm";
-import FormPageLayout from "../FormPageLayout";
+import FormPageLayout from "../FormPageLayout/FormPageLayout";
 import { ROUTES, LOGIN_PAGE_TEXT } from "../../constants";
 import "bootstrap/dist/css/bootstrap.css";
 

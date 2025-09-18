@@ -1,9 +1,9 @@
 import React, { memo } from "react";
 import { Container, Row } from "react-bootstrap";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import NavigationBar from "../NavigationBar";
 import ExcursionsPage from "../ExcursionsPage";
-import OriginalFooter from "../Footer"; // Se renombra la importación original para que no haya conflictos
+import OriginalFooter from "../Footer/Footer"; // Se renombra la importación original para que no haya conflictos
 import ProtectedRoute from "../ProtectedRoute";
 import RegisterPageSkeleton from "../RegisterPage/RegisterPageSkeleton";
 import LoginPageSkeleton from "../LoginPage/LoginPageSkeleton";
@@ -12,7 +12,6 @@ import { useAuth } from "../../hooks/useAuth";
 import { useExcursions } from "../../hooks/useExcursions";
 import { lazyWithMinTime } from "../../utils/lazyWithMinTime";
 import LazyRouteWrapper from "../../utils/LazyRouteWrapper";
-import "bootstrap/dist/css/bootstrap.css";
 import styles from "./Layout.module.css";
 
 /** @typedef {import('../../types').RootState} RootState */
@@ -34,6 +33,9 @@ const Footer = memo(OriginalFooter);
  * @returns {React.ReactElement} El layout
  */
 const Layout = () => {
+	const location = useLocation();
+	const isOnExcursionsPage = location.pathname === "/";
+
 	// Se usa el hook useAuth para saber si ya se ha verificado si el usuario tiene una sesión activa.
 	const { isAuthCheckComplete } = useAuth();
 
@@ -57,6 +59,7 @@ const Layout = () => {
 				onExcursionsFetchStart={handleExcursionsFetchStart}
 				onExcursionsFetchEnd={handleExcursionsFetchEnd}
 				isAuthCheckComplete={isAuthCheckComplete}
+				isOnExcursionsPage={isOnExcursionsPage}
 			/>
 			{/* Contenedor principal que alberga el contenido de la página */}
 			<main className={styles.mainContentWrapper}>

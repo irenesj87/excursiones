@@ -1,4 +1,11 @@
-import { useState, useEffect, memo, useCallback } from "react";
+import {
+	useState,
+	useEffect,
+	useLayoutEffect,
+	memo,
+	useCallback,
+	useRef,
+} from "react";
 import {
 	Nav,
 	Navbar,
@@ -10,11 +17,10 @@ import {
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import Logo from "../Logo";
-import AuthNav from "../AuthNav";
 import SearchBar from "../SearchBar";
+import AuthNav from "../AuthNav";
 import { toggleMode } from "../../slices/themeSlice";
 import { FaMoon, FaSun } from "react-icons/fa";
-import "bootstrap/dist/css/bootstrap.css";
 import styles from "./NavigationBar.module.css";
 import "../../css/Themes.css";
 
@@ -25,6 +31,7 @@ import "../../css/Themes.css";
  * @property {boolean} isAuthCheckComplete - Indica si la comprobación de autenticación ha finalizado.
  * @property {() => void} onExcursionsFetchStart - Callback que se ejecuta al iniciar la búsqueda de excursiones.
  * @property {(error: Error | null) => void} onExcursionsFetchEnd - Callback que se ejecuta al finalizar la búsqueda de excursiones.
+ * @property {boolean} isOnExcursionsPage - Indica si la página actual es la de excursiones.
  */
 
 /**
@@ -36,6 +43,7 @@ function NavigationBarComponent({
 	isAuthCheckComplete,
 	onExcursionsFetchStart,
 	onExcursionsFetchEnd,
+	isOnExcursionsPage,
 }) {
 	/**
 	 * Estado para el término de búsqueda, compartido entre las dos barras de búsqueda (móvil y escritorio).
@@ -48,6 +56,34 @@ function NavigationBarComponent({
 	 */
 	const [showMenu, setShowMenu] = useState(false);
 	/** Cierra el menú lateral (Offcanvas). */
+	const navRef = useRef(null);
+
+	// Usamos useLayoutEffect para medir la altura después de que el DOM se haya actualizado,
+	// pero antes de que el navegador pinte la pantalla. Esto evita parpadeos.
+	useLayoutEffect(() => {
+		const navElement = navRef.current;
+		if (!navElement) return;
+
+		const updateHeight = () => {
+			const height = navElement.offsetHeight;
+			document.documentElement.style.setProperty(
+				"--navbar-height",
+				`${height}px`
+			);
+		};
+
+		// El ResizeObserver es la forma moderna y eficiente de reaccionar a cambios de tamaño.
+		const observer = new ResizeObserver(() => {
+			// Usamos requestAnimationFrame para asegurar que la actualización se haga de forma fluida.
+			window.requestAnimationFrame(updateHeight);
+		});
+
+		updateHeight(); // Medimos la altura inicial
+		observer.observe(navElement);
+
+		// Limpiamos el observador cuando el componente se desmonta para evitar fugas de memoria.
+		return () => observer.disconnect();
+	}, []);
 	const handleCloseMenu = () => setShowMenu(false);
 	/** Abre el menú lateral (Offcanvas). */
 	const handleShowMenu = () => setShowMenu(true);
@@ -66,6 +102,7 @@ function NavigationBarComponent({
 		/** @param {RootState} state */
 		(state) => state.loginReducer
 	);
+
 	/**
 	 * Efecto que se ejecuta cuando el `mode` (tema) cambia.
 	 * Aplica la clase CSS correspondiente al elemento `<html>` y guarda la preferencia en `localStorage`.
@@ -125,8 +162,11 @@ function NavigationBarComponent({
 		 * Utiliza `Navbar` de `react-bootstrap` para crear una barra de navegación responsiva.
 		 */
 		<Navbar
+			ref={navRef}
 			expand="lg" // prettier-ignore
-			className={styles.customNavbar}
+			className={`${styles.customNavbar} ${
+				isOnExcursionsPage ? styles.onExcursionsPage : ""
+			}`}
 			variant={mode}
 			sticky="top"
 		>

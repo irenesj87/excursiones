@@ -1,0 +1,53 @@
+.mobileFiltersBar {
+	/* top: Altura de la barra de navegación en breakpoints pequeños.
+	 * La clase 'sticky-top' de Bootstrap establece 'top: 0', pero necesitamos
+	 * que esta barra se pegue justo debajo de la barra de navegación. */
+	top: var(--navbar-height);
+	background-color: var(--mobile-filters-bar-bg);
+	z-index: 1020; /* Justo por debajo del z-index de la barra de navegación (1030) */
+	border-bottom: 1px solid var(--mobile-filters-bar-border);
+	/* Usamos márgenes negativos para que la barra se extienda a lo ancho del viewport,
+	 * anulando el padding del contenedor padre. Luego, restauramos el padding internamente
+	 * para que el contenido (el botón) permanezca alineado. */
+	margin-right: calc(-0.5 * var(--bs-gutter-x));
+	margin-left: calc(-0.5 * var(--bs-gutter-x));
+	padding-left: calc(var(--bs-gutter-x) * 0.5);
+	padding-right: calc(var(--bs-gutter-x) * 0.5);
+}
+
+.filtersToggleButton {
+	color: var(--filters-toggle-btn-color);
+	border-color: var(--filters-toggle-btn-border);
+	background-color: transparent;
+	font-weight: 500;
+	transition: none;
+}
+
+.filtersToggleButton:hover,
+.filtersToggleButton.active {
+	color: var(--filters-toggle-btn-color-active);
+	background-color: var(--filters-toggle-btn-bg-active);
+	border-color: var(--filters-toggle-btn-border-active);
+	box-shadow: none;
+}
+
+/* Usa un `box-shadow` en lugar de `outline` para respetar el `border-radius` del botón. */
+.filtersToggleButton:focus {
+	box-shadow: 0 0 0 0.25rem rgba(var(--primary-color-rgb), 0.5);
+}
+
+/* Estilos para el contador de filtros */
+.filterBadge {
+	background-color: var(--filter-badge-bg);
+	color: var(--filter-badge-text);
+	font-size: 0.75em;
+	padding: 0.3em 0.6em;
+	transition: none;
+}
+
+/* Estilos para el contador de filtros cuando el botón está en estado hover o active */
+.filtersToggleButton:hover .filterBadge,
+.filtersToggleButton.active .filterBadge {
+	background-color: var(--filters-toggle-btn-color-active);
+	color: var(--filters-toggle-btn-bg-active);
+}
