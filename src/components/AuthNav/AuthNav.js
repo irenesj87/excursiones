@@ -1,4 +1,5 @@
 import { useState, lazy, Suspense } from "react";
+import ErrorBoundary from "../ErrorBoundary";
 import UserNavSkeleton from "../UserNav/UserNavSkeleton";
 import GuestNavSkeleton from "../GuestNav/GuestNavSkeleton";
 
@@ -46,15 +47,17 @@ const AuthNav = ({ isAuthCheckComplete, isLoggedIn, onCloseMenu }) => {
 	// Se envuelven en <Suspense> para manejar el estado de carga del componente perezoso.
 	// El `fallback` muestra el esqueleto adecuado mientras el chunk de JS se descarga.
 	return (
-		<Suspense
-			fallback={isLoggedIn ? <UserNavSkeleton /> : <GuestNavSkeleton />}
-		>
-			{isLoggedIn ? (
-				<UserNav onCloseMenu={onCloseMenu} />
-			) : (
-				<GuestNav onCloseMenu={onCloseMenu} />
-			)}
-		</Suspense>
+		<ErrorBoundary fallback={<GuestNavSkeleton />}>
+			<Suspense
+				fallback={isLoggedIn ? <UserNavSkeleton /> : <GuestNavSkeleton />}
+			>
+				{isLoggedIn ? (
+					<UserNav onCloseMenu={onCloseMenu} />
+				) : (
+					<GuestNav onCloseMenu={onCloseMenu} />
+				)}
+			</Suspense>
+		</ErrorBoundary>
 	);
 };
 
