@@ -26,6 +26,10 @@ html.light {
 
 	--register-link-color: var(--heading-color);
 	--register-link-border-color: var(--separator-color);
+	--register-link-bg-hover: hsl(140, 30%, 94%);
+	--nav-link-active-bg: hsl(210, 15%, 90%);
+	--nav-link-active-border: hsl(210, 15%, 85%);
+
 	--switcher-link-color: var(--primary-color);
 
 	--logout-bg-color: hsl(140, 30%, 94%); /* Verde-grisáceo claro */
@@ -138,6 +142,10 @@ html.dark {
 
 	--register-link-color: var(--text-color);
 	--register-link-border-color: var(--separator-color);
+	--register-link-bg-hover: rgba(255, 255, 255, 0.1);
+	--nav-link-active-bg: hsl(140, 10%, 30%);
+	--nav-link-active-border: hsl(140, 10%, 40%);
+
 	--switcher-link-color: var(--primary-color);
 
 	--logout-bg-color: hsl(140, 10%, 25%);

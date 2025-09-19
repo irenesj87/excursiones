@@ -16,15 +16,15 @@
 }
 
 .registerLink:hover {
-	background-color: var(--theme-toggle-btn-bg-hover);
+	background-color: var(--register-link-bg-hover);
 	outline: none;
 	box-shadow: none;
 }
 
 /* Estilo para el NavLink activo */
 .navLink.active {
-	background-color: var(--filter-pill-bg-hover);
-	border-color: var(--filter-pill-border-hover);
+	background-color: var(--nav-link-active-bg);
+	border-color: var(--nav-link-active-border);
 	color: var(--text-color);
 }
 
@@ -42,7 +42,7 @@
 
 .navButton:hover,
 .navButton:focus {
-	color: var(--login-btn-text, white) !important;
-	background-color: var(--login-btn-bg-hover) !important;
-	border-color: var(--login-btn-border-hover) !important;
+	color: var(--login-btn-text, white);
+	background-color: var(--login-btn-bg-hover);
+	border-color: var(--login-btn-border-hover);
 }

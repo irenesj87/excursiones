@@ -6,6 +6,18 @@ import App from "./App";
 import loginSliceReducer from "./slices/loginSlice";
 import filterSliceReducer from "./slices/filterSlice";
 import themeSliceReducer from "./slices/themeSlice";
+import { searchExcursions } from "./services/excursionService";
+
+// Mock de ResizeObserver para el entorno de JSDOM.
+// JSDOM no incluye esta API del navegador, por lo que la simulamos con una clase vacía.
+global.ResizeObserver = class ResizeObserver {
+	observe() {}
+	unobserve() {}
+	disconnect() {}
+};
+
+// Mock del servicio de búsqueda para evitar llamadas de red reales.
+jest.mock("./services/excursionService");
 
 /**
  * Función de ayuda para renderizar componentes que dependen de Redux y React Router.
@@ -42,7 +54,13 @@ const renderWithProviders = (
 	});
 };
 
-test("renders main title", () => {
+beforeEach(() => {
+	// Limpiamos los mocks antes de cada test.
+	/** @type {jest.MockedFunction<typeof searchExcursions>} */
+	(searchExcursions).mockClear();
+});
+
+test("renders main title", async () => {
 	renderWithProviders(<App />);
 	const titleElement = screen.getByText(/Próximas excursiones/i);
 	expect(titleElement).toBeInTheDocument();
