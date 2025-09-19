@@ -1,6 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import FiltersList from "./FilterList";
+import { Provider } from "react-redux";
+import configureStore from "redux-mock-store";
 import * as useFiltersHook from "../../hooks/useFilters";
 
 // 1. Mock de los componentes hijos para aislar la lógica de FiltersList.
@@ -11,19 +13,24 @@ import * as useFiltersHook from "../../hooks/useFilters";
  * @param {string} props.filter - El valor del filtro.
  * @returns {JSX.Element} Un div de prueba.
  */
-jest.mock("../FiltersListCheckbox", () => ({ filterName, filter }) => (
-	<div data-testid="filters-list-checkbox">
-		{filterName}: {filter}
-	</div>
-));
+jest.mock("../FiltersListCheckbox/FilterListCheckbox", () => {
+	const MockFiltersListCheckbox = ({ filterName, filter }) => (
+		<div data-testid="filters-list-checkbox">{`${filterName}: ${filter}`}</div>
+	);
+	return MockFiltersListCheckbox;
+});
 
 /**
  * Mock del componente FilterPillSkeleton.
  * @returns {JSX.Element} Un div de prueba.
  */
-jest.mock("./FilterPillSkeleton", () => () => (
-	<div data-testid="filter-pill-skeleton" />
-));
+jest.mock("./FilterPillSkeleton", () => {
+	const MockFilterPillSkeleton = () => (
+		<div data-testid="filter-pill-skeleton" />
+	);
+	MockFilterPillSkeleton.displayName = "MockFilterPillSkeleton";
+	return MockFilterPillSkeleton;
+});
 
 /**
  * Mock del componente FilterError.
@@ -31,9 +38,13 @@ jest.mock("./FilterPillSkeleton", () => () => (
  * @param {Error} props.error - El objeto de error.
  * @returns {JSX.Element} Un div de prueba con el mensaje de error.
  */
-jest.mock("../FilterError", () => ({ error }) => (
-	<div data-testid="filter-error">{error.message}</div>
-));
+jest.mock("../FilterError", () => {
+	const MockFilterError = ({ error }) => (
+		<div data-testid="filter-error">{error.message}</div>
+	);
+	MockFilterError.displayName = "MockFilterError";
+	return MockFilterError;
+});
 
 // 2. Mock del hook `useSkeletonTheme` ya que su lógica no es relevante para este test.
 /**
@@ -46,6 +57,8 @@ jest.mock("../../hooks/useSkeletonTheme", () => ({
 		highlightColor: "#f5f5f5",
 	}),
 }));
+
+const mockStore = configureStore([]);
 
 /**
  * Suite de pruebas para el componente FiltersList.
@@ -121,7 +134,19 @@ describe("FiltersList Component", () => {
 			error: null,
 		});
 
-		render(<FiltersList filterName="area" />);
+		const store = mockStore({
+			filterReducer: {
+				area: [],
+				difficulty: [],
+				time: [],
+			},
+		});
+
+		render(
+			<Provider store={store}>
+				<FiltersList filterName="area" />
+			</Provider>
+		);
 
 		// Verificamos que se renderiza el número correcto de filtros.
 		const filterItems = screen.getAllByTestId("filters-list-checkbox");

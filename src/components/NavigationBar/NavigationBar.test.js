@@ -12,6 +12,37 @@ import NavigationBar from "./NavigationBar";
 import themeSliceReducer from "../../slices/themeSlice";
 import loginSliceReducer from "../../slices/loginSlice";
 import filterSliceReducer from "../../slices/filterSlice";
+import { searchExcursions } from "../../services/excursionService";
+
+// Mock de los componentes lazy-loaded para poder encontrarlos en los tests.
+jest.mock(
+	"../GuestNav",
+	() =>
+		function MockGuestNav() {
+			return <div data-testid="guest-nav" />;
+		}
+);
+jest.mock("../UserNav", () => function MockUserNav() {});
+
+// Mock del servicio de búsqueda para evitar llamadas de red reales desde el SearchBar.
+jest.mock("../../services/excursionService");
+const mockedSearchExcursions =
+	/** @type {jest.MockedFunction<typeof searchExcursions>} */
+	(searchExcursions);
+
+// Mock de ResizeObserver para el entorno de JSDOM.
+// JSDOM no incluye esta API del navegador, por lo que la simulamos con una clase vacía.
+global.ResizeObserver = class ResizeObserver {
+	observe() {
+		// No hace nada, solo un mock.
+	}
+	unobserve() {
+		// No hace nada, solo un mock.
+	}
+	disconnect() {
+		// No hace nada, solo un mock.
+	}
+};
 
 /**
  * Función de ayuda para renderizar componentes que dependen de Redux y React Router.
@@ -64,6 +95,9 @@ describe("NavigationBar Component", () => {
 	// pero el componente las requiere.
 	const mockNavigationBarProps = {
 		onFetchSuccess: () => {},
+		// Mockeamos las funciones relacionadas con la búsqueda para que no den error.
+		searchValue: "",
+		onSearchChange: jest.fn(),
 		isAuthCheckComplete: true,
 		onExcursionsFetchStart: () => {},
 		onExcursionsFetchEnd: () => {},
@@ -73,7 +107,12 @@ describe("NavigationBar Component", () => {
 	/**
 	 * Test para verificar que el tema se alterna correctamente de claro a oscuro y viceversa.
 	 */
-	test("pasa el tema de claro a oscuro y de oscuro a claro", () => {
+	test("pasa el tema de claro a oscuro y de oscuro a claro", async () => {
+		// Configuramos el mock del servicio para que no haga nada.
+		mockedSearchExcursions.mockResolvedValue([]);
+		// Limpiamos los mocks antes de cada test.
+		mockNavigationBarProps.onSearchChange.mockClear();
+
 		// Estado inicial: modo claro
 		const initialThemeState = {
 			themeReducer: { mode: "light" }, // Estado para el tema
@@ -92,6 +131,9 @@ describe("NavigationBar Component", () => {
 		renderWithProviders(<NavigationBar {...mockNavigationBarProps} />, {
 			store,
 		});
+
+		// Esperamos a que el componente lazy dentro de AuthNav se cargue para evitar warnings de "act".
+		await screen.findByTestId("guest-nav");
 
 		// Verifica el estado inicial: modo claro, icono de luna visible
 		const themeToggleButton = screen.getByLabelText(/activa el modo oscuro/i);
@@ -119,6 +161,11 @@ describe("NavigationBar Component", () => {
 	 * Test para verificar que el menú Offcanvas se abre y se cierra correctamente.
 	 */
 	test("abre y cierra el menú Offcanvas", async () => {
+		// Configuramos el mock del servicio para que no haga nada.
+		mockedSearchExcursions.mockResolvedValue([]);
+		// Limpiamos los mocks antes de cada test.
+		mockNavigationBarProps.onSearchChange.mockClear();
+
 		const store = configureStore({
 			reducer: combineReducers({
 				loginReducer: loginSliceReducer,
@@ -135,6 +182,9 @@ describe("NavigationBar Component", () => {
 		renderWithProviders(<NavigationBar {...mockNavigationBarProps} />, {
 			store,
 		});
+
+		// Esperamos a que el componente lazy dentro de AuthNav se cargue para evitar warnings de "act".
+		await screen.findByTestId("guest-nav");
 
 		// El Offcanvas debería estar inicialmente cerrado y no presente en el DOM.
 		// Usamos queryByRole porque esperamos que no encuentre el elemento.

@@ -8,9 +8,12 @@ import { clearAllFilters } from "../../slices/filterSlice";
 // 1. Mock del componente hijo para aislar la lógica de Filters.
 // Esto nos permite verificar que Filters renderiza las secciones correctas
 // sin depender de la implementación interna de FiltersList.
-jest.mock("../FiltersList", () => ({ filterName }) => (
-	<div data-testid={`filters-list-${filterName}`}>{filterName}</div>
-));
+jest.mock("../FiltersList/FilterList", () => {
+	const MockFiltersList = ({ filterName }) => (
+		<div data-testid={`filters-list-${filterName}`}>{filterName}</div>
+	);
+	return MockFiltersList;
+});
 
 // 2. Configuración del mock store de Redux.
 const mockStore = configureStore([]);
@@ -35,10 +38,12 @@ describe("Filters Component", () => {
 
 	const initialStateWithoutFilters = {
 		filterReducer: { area: [], difficulty: [], time: [] },
+		themeReducer: { mode: "light" },
 	};
 
 	const initialStateWithFilters = {
 		filterReducer: { area: ["Centro"], difficulty: [], time: [] },
+		themeReducer: { mode: "light" },
 	};
 
 	test("renderiza correctamente con el título y las secciones de filtros por defecto", () => {
