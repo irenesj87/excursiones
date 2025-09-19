@@ -11,9 +11,15 @@ import { searchExcursions } from "./services/excursionService";
 // Mock de ResizeObserver para el entorno de JSDOM.
 // JSDOM no incluye esta API del navegador, por lo que la simulamos con una clase vacía.
 global.ResizeObserver = class ResizeObserver {
-	observe() {}
-	unobserve() {}
-	disconnect() {}
+	observe() {
+		// noop
+	}
+	unobserve() {
+		// noop
+	}
+	disconnect() {
+		// noop
+	}
 };
 
 // Mock del servicio de búsqueda para evitar llamadas de red reales.
@@ -62,6 +68,6 @@ beforeEach(() => {
 
 test("renders main title", async () => {
 	renderWithProviders(<App />);
-	const titleElement = screen.getByText(/Próximas excursiones/i);
+	const titleElement = await screen.findByText(/Próximas excursiones/i);
 	expect(titleElement).toBeInTheDocument();
 });

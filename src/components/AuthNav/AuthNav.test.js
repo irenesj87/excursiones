@@ -132,6 +132,10 @@ describe("AuthNav Component", () => {
 
 		// Una vez cargado, el esqueleto ya no debería estar.
 		expect(screen.queryByTestId("guest-nav-skeleton")).not.toBeInTheDocument();
+
+		// Verificamos que los componentes de usuario no se renderizan.
+		expect(screen.queryByTestId("user-nav")).not.toBeInTheDocument();
+		expect(screen.queryByTestId("user-nav-skeleton")).not.toBeInTheDocument();
 	});
 
 	// Test para el estado de "usuario logueado"
@@ -153,6 +157,10 @@ describe("AuthNav Component", () => {
 
 		// Una vez cargado, el esqueleto ya no debería estar.
 		expect(screen.queryByTestId("user-nav-skeleton")).not.toBeInTheDocument();
+
+		// Verificamos que los componentes de invitado no se renderizan.
+		expect(screen.queryByTestId("guest-nav")).not.toBeInTheDocument();
+		expect(screen.queryByTestId("guest-nav-skeleton")).not.toBeInTheDocument();
 	});
 
 	// Tests para el ErrorBoundary
