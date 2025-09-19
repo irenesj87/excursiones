@@ -53,7 +53,7 @@ const JoinButton = ({ isJoined, isJoining, onJoin }) => {
 				disabled={isJoining}
 			>
 				{isJoining ? (
-					<output className="d-flex align-items-center">
+					<>
 						<Spinner
 							as="span"
 							animation="border"
@@ -62,7 +62,7 @@ const JoinButton = ({ isJoined, isJoining, onJoin }) => {
 							className="me-2"
 						/>
 						Apuntando...
-					</output>
+					</>
 				) : (
 					"Apuntarse"
 				)}
@@ -122,7 +122,7 @@ function ExcursionCardComponent({
 					<Card.Title
 						as="legend"
 						id={titleId}
-						className={`${styles.excursionTitle} mb-3 h3`}
+						className={`${styles.excursionTitle} mb-3`}
 					>
 						{name}
 					</Card.Title>

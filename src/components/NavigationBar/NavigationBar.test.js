@@ -21,6 +21,7 @@ import filterSliceReducer from "../../slices/filterSlice";
  * @param {object} [options.preloadedState] - Estado inicial para el store de Redux.
  * @param {string} [options.route='/'] - Ruta inicial para MemoryRouter.
  * @param {import('@reduxjs/toolkit').Store} [options.store] - Instancia de store de Redux para usar. Si no se proporciona, se crea una nueva.
+ * @param isOnExcursionsPage - Indica si la ruta inicial es la página de excursiones.
  * @returns El resultado de la función `render` de Testing Library.
  */
 const renderWithProviders = (
@@ -66,6 +67,7 @@ describe("NavigationBar Component", () => {
 		isAuthCheckComplete: true,
 		onExcursionsFetchStart: () => {},
 		onExcursionsFetchEnd: () => {},
+		isOnExcursionsPage: false, // Añadido para satisfacer la prop requerida
 	};
 
 	/**
