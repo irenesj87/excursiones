@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
+import ErrorBoundary from "../ErrorBoundary";
 import UserNavSkeleton from "../UserNav/UserNavSkeleton";
 import GuestNavSkeleton from "../GuestNav/GuestNavSkeleton";
-import UserNav from "../UserNav";
-import GuestNav from "../GuestNav";
+
+// Carga perezosa (lazy loading) de los componentes de navegación.
+// Esto crea "chunks" de código separados que solo se descargan cuando son necesarios.
+const UserNav = lazy(() => import("../UserNav"));
+const GuestNav = lazy(() => import("../GuestNav"));
 
 /**
  * Obtiene de manera segura el estado de autenticación inicial de sessionStorage.
@@ -38,10 +42,22 @@ const AuthNav = ({ isAuthCheckComplete, isLoggedIn, onCloseMenu }) => {
 		return likelyLoggedIn ? <UserNavSkeleton /> : <GuestNavSkeleton />;
 	}
 
-	return isLoggedIn ? (
-		<UserNav onCloseMenu={onCloseMenu} />
-	) : (
-		<GuestNav onCloseMenu={onCloseMenu} />
+	// Una vez que la comprobación de autenticación ha finalizado, renderizamos el componente
+	// correspondiente (UserNav o GuestNav).
+	// Se envuelven en <Suspense> para manejar el estado de carga del componente perezoso.
+	// El `fallback` muestra el esqueleto adecuado mientras el chunk de JS se descarga.
+	return (
+		<ErrorBoundary fallback={<GuestNavSkeleton />}>
+			<Suspense
+				fallback={isLoggedIn ? <UserNavSkeleton /> : <GuestNavSkeleton />}
+			>
+				{isLoggedIn ? (
+					<UserNav onCloseMenu={onCloseMenu} />
+				) : (
+					<GuestNav onCloseMenu={onCloseMenu} />
+				)}
+			</Suspense>
+		</ErrorBoundary>
 	);
 };
 
