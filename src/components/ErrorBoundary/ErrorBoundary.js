@@ -23,6 +23,12 @@ class ErrorBoundary extends React.Component {
 		return { hasError: true };
 	}
 
+	/**
+	 * Captura los errores en los componentes hijo y loguea el error.
+	 * @param {Error} error - El error que se ha lanzado.
+	 * @param {object} errorInfo - Un objeto con una key `componentStack` que contiene la información sobre qué componente
+	 * lanzó el error.
+	 */
 	componentDidCatch(error, errorInfo) {
 		// La mejor práctica es ser explícito con el entorno de producción.
 		if (process.env.NODE_ENV === "production") {
