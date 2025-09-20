@@ -3,9 +3,12 @@ import ErrorBoundary from "./ErrorBoundary";
 
 describe("ErrorBoundary", () => {
 	// Suprimimos el error esperado en la consola para no ensuciar la salida del test.
-	// Guardamos la implementación original para restaurarla después.
+	// @type {jest.SpyInstance}
+	// Guarda una referencia al espía de console.error para poder restaurarlo después de cada test.
 	let consoleErrorSpy;
 
+	// Antes de cada test, se espía `console.error` y se mockea su implementación
+	// para evitar que los errores de los componentes de prueba se muestren en la consola.
 	beforeEach(() => {
 		consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
 	});
@@ -27,10 +30,11 @@ describe("ErrorBoundary", () => {
 		expect(screen.queryByText("Hubo un error")).not.toBeInTheDocument();
 	});
 
-	it("debe renderizar la UI de fallback cuando un componente hijo lanza un error", () => {
+	it("debe renderizar la UI de fallback y registrar el error cuando un componente hijo falla", () => {
 		// Componente que siempre lanza un error
+		const testError = new Error("Test Error");
 		const ProblematicComponent = () => {
-			throw new Error("Test Error");
+			throw testError;
 		};
 
 		render(
@@ -41,7 +45,13 @@ describe("ErrorBoundary", () => {
 
 		// Verificamos que la UI de fallback se muestra
 		expect(screen.getByText("Hubo un error")).toBeInTheDocument();
-		// Verificamos que console.error fue llamado por componentDidCatch
-		expect(consoleErrorSpy).toHaveBeenCalled();
+		// Verificamos que console.error fue llamado por componentDidCatch con los argumentos correctos
+		expect(consoleErrorSpy).toHaveBeenCalledWith(
+			"Error capturado por ErrorBoundary:",
+			testError,
+			expect.objectContaining({
+				componentStack: expect.any(String),
+			})
+		);
 	});
 });
