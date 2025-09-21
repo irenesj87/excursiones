@@ -2,8 +2,9 @@ import { memo, useCallback } from "react";
 import { Card, Button, Spinner, Alert } from "react-bootstrap";
 import ExcursionDetailItem from "../ExcursionDetailItem";
 import { FiMapPin, FiClock, FiCheckCircle } from "react-icons/fi";
-import cn from "classnames";
 import { useJoinExcursion } from "../../hooks/useJoinExcursion";
+import cn from "classnames";
+import { GENERIC_ERROR_MESSAGE } from "../../constants";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "./ExcursionCard.module.css";
 
@@ -168,7 +169,10 @@ function ExcursionCardComponent({
 								className="mb-2 small"
 								role="alert"
 							>
-								{joinError}
+								{/* Verificación de seguridad: Asegura que solo se rendericen strings. */}
+								{typeof joinError === "string"
+									? joinError
+									: GENERIC_ERROR_MESSAGE}
 							</Alert>
 						)}
 						<JoinButton
