@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import ErrorMessageAlert from "./ErrorMessageAlert";
+import { GENERIC_ERROR_MESSAGE } from "../../constants";
 
 describe("ErrorMessageAlert Component", () => {
 	// Preparamos las props que usaremos en los tests.
@@ -54,8 +55,6 @@ describe("ErrorMessageAlert Component", () => {
 		expect(screen.queryByText("Contenido malicioso")).not.toBeInTheDocument();
 
 		// VERIFICAR: Se debe mostrar el mensaje de respaldo seguro.
-		expect(
-			screen.getByText("Ha ocurrido un error inesperado.")
-		).toBeInTheDocument();
+		expect(screen.getByText(GENERIC_ERROR_MESSAGE)).toBeInTheDocument();
 	});
 });

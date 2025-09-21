@@ -1,5 +1,6 @@
 import React from "react";
 import { Alert } from "react-bootstrap";
+import { GENERIC_ERROR_MESSAGE } from "../../constants";
 
 /** @typedef {object} ErrorMessageAlertProps
  * @property {string} message - El mensaje de error a mostrar.
@@ -16,7 +17,7 @@ function ErrorMessageAlert({ message, onClose }) {
 	// para prevenir vulnerabilidades de Cross-Site Scripting (XSS). Si se recibe algo
 	// que no es un string, se mostrará un mensaje de error genérico y seguro.
 	const content =
-		typeof message === "string" ? message : "Ha ocurrido un error inesperado.";
+		typeof message === "string" ? message : GENERIC_ERROR_MESSAGE;
 
 	return (
 		<Alert variant="danger" onClose={onClose} dismissible>
