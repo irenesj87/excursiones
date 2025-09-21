@@ -3,6 +3,7 @@ import "@testing-library/jest-dom";
 import ExcursionCard from "./ExcursionCard";
 import styles from "./ExcursionCard.module.css";
 import { useJoinExcursion } from "../../hooks/useJoinExcursion";
+import { GENERIC_ERROR_MESSAGE } from "../../constants";
 
 // Mock del hook personalizado.
 // Esto nos permite controlar los valores que el hook retorna en cada test
@@ -124,7 +125,7 @@ describe("ExcursionCard Component", () => {
 		expect(mockHandleJoin).toHaveBeenCalledWith(mockExcursion.id);
 	});
 
-	test("muestra el estado de carga cuando el hook devuelve isJoining: true", () => {
+	test("muestra el estado de carga cuando el hook retorne isJoining: true", () => {
 		mockedUseJoinExcursion.mockReturnValue({
 			isJoining: true, // Simulamos el estado de carga
 			joinError: null,
@@ -166,6 +167,32 @@ describe("ExcursionCard Component", () => {
 		// La alerta de error debe ser visible con el mensaje correcto.
 		expect(screen.getByRole("alert")).toBeInTheDocument();
 		expect(screen.getByText(errorMessage)).toBeInTheDocument();
+	});
+
+	test("muestra un mensaje de error genérico si el hook retorna un error que no es un string", () => {
+		// Simulamos que el hook retorna un elemento React malicioso en lugar de un string.
+		const maliciousError = <span>Contenido malicioso</span>;
+		mockedUseJoinExcursion.mockReturnValue({
+			isJoining: false,
+			joinError: maliciousError,
+			handleJoin: jest.fn(),
+			clearError: jest.fn(),
+		});
+
+		render(
+			<ExcursionCard
+				{...mockExcursion}
+				isLoggedIn={true}
+				isJoined={false}
+				onJoin={jest.fn()}
+			/>
+		);
+
+		// VERIFICAR: El contenido malicioso NO debe renderizarse.
+		expect(screen.queryByText("Contenido malicioso")).not.toBeInTheDocument();
+
+		// VERIFICAR: Se debe mostrar el mensaje de respaldo seguro.
+		expect(screen.getByText(GENERIC_ERROR_MESSAGE)).toBeInTheDocument();
 	});
 
 	test("llama a clearError del hook cuando el usuario cierra el mensaje de error", () => {
