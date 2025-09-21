@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import { Card, Button, Spinner, Alert } from "react-bootstrap";
 import ExcursionDetailItem from "../ExcursionDetailItem";
 import { FiMapPin, FiClock, FiCheckCircle } from "react-icons/fi";
@@ -34,7 +34,7 @@ const getDifficultyClasses = (difficultyLevel) => {
  * @param {JoinButtonProps} props
  * @returns {React.ReactElement}
  */
-const JoinButton = ({ isJoined, isJoining, onJoin }) => {
+function JoinButtonComponent({ isJoined, isJoining, onJoin }) {
 	if (isJoined) {
 		return (
 			<div className="d-grid d-md-flex justify-content-center justify-content-md-end">
@@ -69,7 +69,11 @@ const JoinButton = ({ isJoined, isJoining, onJoin }) => {
 			</Button>
 		</div>
 	);
-};
+}
+
+// El componente JoinButton se memoiza para evitar re-renderizados si sus props no cambian.
+// Esto es efectivo porque la prop `onJoin` que recibe ahora será una función estable gracias a `useCallback`.
+const JoinButton = memo(JoinButtonComponent);
 
 /** @typedef {object} ExcursionCardProps
  * @property {string | number} id - El ID de la excursión.
@@ -106,6 +110,13 @@ function ExcursionCardComponent({
 	// Reemplaza espacios y caracteres especiales para crear un ID válido.
 	const titleId = `excursion-title-${id}`;
 
+	// Se crea una función estable para el evento onJoin usando useCallback.
+	// Esto evita que se cree una nueva función en cada render, lo que permite
+	// que el componente `JoinButton` (ahora memoizado) evite re-renderizados innecesarios.
+	const handleOnJoin = useCallback(() => {
+		handleJoin(id);
+	}, [handleJoin, id]);
+
 	return (
 		<Card
 			as="fieldset"
@@ -119,6 +130,7 @@ function ExcursionCardComponent({
 		>
 			<Card.Body className="d-flex flex-column">
 				<div>
+					{/* Título de la excursión */}
 					<Card.Title
 						as="legend"
 						id={titleId}
@@ -126,7 +138,7 @@ function ExcursionCardComponent({
 					>
 						{name}
 					</Card.Title>
-
+					{/* Detalles de la excursión */}
 					<div className={styles.excursionDetails}>
 						<ExcursionDetailItem
 							IconComponent={FiMapPin}
@@ -134,7 +146,6 @@ function ExcursionCardComponent({
 							label="Zona"
 						/>
 						<ExcursionDetailItem text={difficulty} label="Dificultad">
-							{/* Mapea la dificultad a la clase CSS y asegura el contraste del texto. */}
 							<span className={getDifficultyClasses(difficulty)}>
 								{difficulty}
 							</span>
@@ -146,6 +157,7 @@ function ExcursionCardComponent({
 						/>
 					</div>
 				</div>
+				{/* Área de acción: botón para unirse a la excursión */}
 				{isLoggedIn && (
 					<div className={`${styles.cardActionArea} mt-auto pt-3`}>
 						{joinError && (
@@ -162,7 +174,7 @@ function ExcursionCardComponent({
 						<JoinButton
 							isJoined={isJoined}
 							isJoining={isJoining}
-							onJoin={() => handleJoin(id)}
+							onJoin={handleOnJoin}
 						/>
 					</div>
 				)}
