@@ -8,8 +8,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 // Define las dimensiones del esqueleto como constantes para evitar "números mágicos"
 // y facilitar el mantenimiento.
 /**
- * @constant {object} SKELETON_SIZES - Define las dimensiones y anchos para los elementos del esqueleto.
- * y facilitar el mantenimiento.
+ * @constant {object} SKELETON_SIZES - Define las dimensiones y anchos para los elementos del esqueleto para facilitar su mantenimiento.
  */
 const SKELETON_SIZES = {
 	TITLE_HEIGHT: 21,
