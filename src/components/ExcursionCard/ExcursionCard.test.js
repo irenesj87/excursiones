@@ -1,3 +1,4 @@
+import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import ExcursionCard from "./ExcursionCard";
@@ -22,9 +23,19 @@ const mockExcursion = {
 };
 
 describe("ExcursionCard Component", () => {
+	// Definimos un ID predecible que retornará el mock de `useId`.
+	const MOCK_ID = "mock-id-12345";
+
 	beforeEach(() => {
 		// Limpiamos los mocks antes de cada test para asegurar que los tests son independientes.
 		mockedUseJoinExcursion.mockClear();
+		// Mockeamos React.useId para que retorne un valor constante y predecible.
+		// Esto es crucial para poder probar la relación de accesibilidad.
+		jest.spyOn(React, "useId").mockReturnValue(MOCK_ID);
+	});
+
+	afterEach(() => {
+		jest.restoreAllMocks();
 	});
 
 	test("renderiza la información para un usuario no logueado", () => {
@@ -74,6 +85,29 @@ describe("ExcursionCard Component", () => {
 		const joinButton = screen.getByRole("button", { name: /apuntarse/i });
 		expect(joinButton).toBeInTheDocument();
 		expect(joinButton).toBeEnabled();
+	});
+
+	test("asigna correctamente los IDs para accesibilidad usando useId", () => {
+		mockedUseJoinExcursion.mockReturnValue({
+			isJoining: false,
+			joinError: null,
+			handleJoin: jest.fn(),
+			clearError: jest.fn(),
+		});
+		render(
+			<ExcursionCard {...mockExcursion} isLoggedIn={false} isJoined={false} />
+		);
+
+		// El título (renderizado como <legend>) debe tener el ID mockeado.
+		const title = screen.getByText(mockExcursion.name);
+		expect(title).toHaveAttribute("id", MOCK_ID);
+
+		// La tarjeta (renderizada como <fieldset>) debe estar etiquetada por el título.
+		// La forma más robusta de verificarlo es buscando el elemento por su "accessible name",
+		// que gracias a `aria-labelledby` será el texto del título.
+		const card = screen.getByRole("group", { name: mockExcursion.name });
+		expect(card).toBeInTheDocument();
+		expect(card).toHaveAttribute("aria-labelledby", MOCK_ID);
 	});
 
 	test("muestra el estado 'Apuntado/a' si el usuario ya se ha apuntado", () => {

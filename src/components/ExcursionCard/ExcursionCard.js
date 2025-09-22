@@ -1,4 +1,4 @@
-import { memo, useCallback } from "react";
+import { memo, useCallback, useId } from "react";
 import { Card, Button, Spinner, Alert } from "react-bootstrap";
 import ExcursionDetailItem from "../ExcursionDetailItem";
 import { FiMapPin, FiClock, FiCheckCircle } from "react-icons/fi";
@@ -107,9 +107,8 @@ function ExcursionCardComponent({
 	const { isJoining, joinError, handleJoin, clearError } =
 		useJoinExcursion(onJoin);
 
-	// Genera un ID único para el título, que se usará para la accesibilidad.
-	// Reemplaza espacios y caracteres especiales para crear un ID válido.
-	const titleId = `excursion-title-${id}`;
+	// Genera un ID seguro para el título, que se usará para la accesibilidad, previniendo inyección de atributos.
+	const titleId = useId();
 
 	// Se crea una función estable para el evento onJoin usando useCallback.
 	// Esto evita que se cree una nueva función en cada render, lo que permite

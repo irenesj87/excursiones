@@ -2,7 +2,25 @@
 	display: flex;
 	align-items: center;
 	gap: 0.4rem;
-	font-size: 1.05rem;
+	font-size: 1.08rem;
+}
+
+/* Estilos para resetear el <button> y que parezca texto normal */
+.detailItemButton {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font-family: inherit;
+	cursor: pointer;
+	text-align: inherit; /* Asegura la alineación correcta */
+}
+
+/* Indicador de foco para cuando el elemento es interactivo */
+.detailItemButton:focus {
+	outline: 2px solid var(--excursion-card-icon-color);
+	outline-offset: 2px;
+	border-radius: 3px;
 }
 
 .detailIcon {
