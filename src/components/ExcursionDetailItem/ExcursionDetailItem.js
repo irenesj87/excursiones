@@ -1,5 +1,5 @@
 import { memo, useCallback } from "react";
-import { Tooltip, OverlayTrigger } from "react-bootstrap";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import styles from "./ExcursionDetailItem.module.css";
 
 /** @typedef {object} ExcursionDetailItemProps
@@ -27,46 +27,54 @@ function ExcursionDetailItemComponent({
 	 * @returns {React.ReactElement}
 	 */
 	const renderTooltip = useCallback(
-		(props) => {
-			// Construye el texto del tooltip, priorizando el formato "label: text".
-			const tooltipContent =
-				label && text ? `${label}: ${text}` : text || label;
-
-			// Si no hay contenido para el tooltip, no se renderiza.
-			// OverlayTrigger no mostrará nada si el overlay es null o un fragmento vacío,
-			// por lo que se retorna un fragmento para ser explícitos.
-			if (!tooltipContent) {
-				return <></>;
-			}
-			return (
-				<Tooltip id={`tooltip-${label}`} {...props}>
-					{tooltipContent}
-				</Tooltip>
-			);
-		},
+		(props) => (
+			<Tooltip id={`tooltip-${label}`} {...props}>
+				{`${label}: ${text}`}
+			</Tooltip>
+		),
 		[label, text]
 	);
 
 	// Si no hay texto ni hijos para mostrar, no renderizamos nada.
+	// Esta comprobación se hace DESPUÉS de los hooks para cumplir las reglas de los hooks.
 	if (!text && !children) {
 		return null;
 	}
 
-	return (
-		<OverlayTrigger placement="top" overlay={renderTooltip}>
-			<div className={styles.detailItem}>
-				{IconComponent && (
-					<IconComponent
-						className={styles.detailIcon}
-						aria-hidden="true"
-						data-testid="detail-item-icon"
-					/>
-				)}
-				{label && <span className="visually-hidden">{`${label}: `}</span>}
-				{children || <span>{text}</span>}
-			</div>
-		</OverlayTrigger>
+	const isInteractive = text && label;
+
+	const itemContent = (
+		<>
+			{IconComponent && (
+				<IconComponent
+					className={styles.detailIcon}
+					aria-hidden="true"
+					data-testid="detail-item-icon"
+				/>
+			)}
+			{label && <span className="visually-hidden">{`${label}: `}</span>}
+			{children || <span>{text}</span>}
+		</>
 	);
+
+	// Solo mostramos el tooltip si tenemos `text` y `label` para un contenido completo.
+	// Si se usan `children`, se deshabilita el tooltip por defecto para evitar inconsistencias.
+	if (isInteractive) {
+		return (
+			<OverlayTrigger placement="top" overlay={renderTooltip}>
+				{/* Usamos un botón para la semántica y accesibilidad nativa. */}
+				<button
+					type="button"
+					className={`${styles.detailItem} ${styles.detailItemButton}`}
+				>
+					{itemContent}
+				</button>
+			</OverlayTrigger>
+		);
+	}
+
+	// Si no es interactivo, usamos un <div> simple.
+	return <div className={styles.detailItem}>{itemContent}</div>;
 }
 
 const ExcursionDetailItem = memo(ExcursionDetailItemComponent);
