@@ -7,6 +7,8 @@ import styles from "./ExcursionDetailItem.module.css";
  * @property {string} [text] - El valor del detalle a mostrar (ej. "Media", "4 horas").
  * @property {string} label - Etiqueta descriptiva para accesibilidad y tooltips (ej. "Dificultad").
  * @property {React.ReactNode} [children] - Nodos hijos para renderizar contenido personalizado en lugar del texto.
+ * ¡ADVERTENCIA DE SEGURIDAD! Si el contenido de `children` proviene de una fuente externa (API, usuario),
+ * debe ser sanitizado para prevenir ataques XSS. No uses `dangerouslySetInnerHTML` sin una librería como DOMPurify.
  */
 
 /**
