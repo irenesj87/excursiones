@@ -106,4 +106,17 @@ describe("ExcursionDetailItem Component", () => {
 		// No debe haber un botón, ya que no es interactivo.
 		expect(screen.queryByRole("button")).not.toBeInTheDocument();
 	});
+
+	test("renderiza como un <div> no interactivo cuando se proporcionan 'children'", () => {
+		render(
+			<ExcursionDetailItem text="Texto" label="Etiqueta">
+				<span>Contenido hijo</span>
+			</ExcursionDetailItem>
+		);
+
+		// El texto del hijo debe estar presente.
+		expect(screen.getByText("Contenido hijo")).toBeInTheDocument();
+		// No debe renderizar un botón, ya que `children` tiene prioridad y desactiva la interactividad.
+		expect(screen.queryByRole("button")).not.toBeInTheDocument();
+	});
 });

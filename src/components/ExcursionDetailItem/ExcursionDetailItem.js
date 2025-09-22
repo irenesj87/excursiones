@@ -47,7 +47,8 @@ function ExcursionDetailItemComponent({
 		return null;
 	}
 
-	const isInteractive = text && label;
+	// El componente es interactivo solo si tiene texto y etiqueta, y no se está sobrescribiendo con `children`.
+	const isInteractive = text && label && !children;
 
 	const itemContent = (
 		<>
