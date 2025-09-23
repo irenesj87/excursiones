@@ -13,7 +13,7 @@ import * as useFiltersHook from "../../hooks/useFilters";
  * @param {string} props.filter - El valor del filtro.
  * @returns {JSX.Element} Un div de prueba.
  */
-jest.mock("../FiltersListCheckbox/FilterListCheckbox", () => {
+jest.mock("../FiltersListCheckbox/FiltersListCheckbox", () => {
 	const MockFiltersListCheckbox = ({ filterName, filter }) => (
 		<div data-testid="filters-list-checkbox">{`${filterName}: ${filter}`}</div>
 	);

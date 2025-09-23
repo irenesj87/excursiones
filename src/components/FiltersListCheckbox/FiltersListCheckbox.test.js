@@ -81,12 +81,10 @@ describe("FiltersListCheckbox Component", () => {
 
 	test("debe generar un ID de input y un htmlFor de etiqueta correctos", () => {
 		const filterWithSpaces = "Picos de Europa";
-		const initialState = {
+		const store = mockStore({
 			filterReducer: { area: [], difficulty: [], time: [] },
-		};
-		renderWithProvider(initialState);
+		});
 
-		// Renderizamos un segundo componente con un valor de filtro diferente para el test
 		render(
 			<Provider store={store}>
 				<FiltersListCheckbox filterName="area" filter={filterWithSpaces} />
@@ -96,9 +94,9 @@ describe("FiltersListCheckbox Component", () => {
 		const checkbox = screen.getByRole("checkbox", { name: filterWithSpaces });
 		const label = screen.getByText(filterWithSpaces);
 
-		// El ID debe ser el mismo que el atributo 'for' de la etiqueta, y los espacios deben ser reemplazados
-		const expectedId = "filter-area-Picos-de-Europa";
-		expect(checkbox).toHaveAttribute("id", expectedId);
-		expect(label).toHaveAttribute("for", expectedId);
+		// Con `useId`, el ID es opaco y no predecible.
+		// Verificamos que el checkbox tiene un ID y que el label lo usa correctamente.
+		expect(checkbox.id).toBeTruthy();
+		expect(label).toHaveAttribute("for", checkbox.id);
 	});
 });

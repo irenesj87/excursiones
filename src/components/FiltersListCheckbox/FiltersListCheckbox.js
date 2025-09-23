@@ -39,8 +39,7 @@ function FiltersListCheckboxComponent({ filterName, filter }) {
 	};
 
 	/**
-	 * Genera un ID único para el checkbox y su etiqueta asociada, asegurando la accesibilidad.
-	 * Reemplaza los espacios en el valor del filtro con guiones para crear un ID válido.
+	 * Genera un ID único para el checkbox y su etiqueta asociada.
 	 */
 	const id = useId();
 
