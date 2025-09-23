@@ -34,7 +34,7 @@ function FiltersListComponent({ filterName }) {
 				</output>
 				<ul className={styles.filtersGrid} aria-hidden="true">
 					{/* Mostramos 4 esqueletos para simular mejor el contenido real y evitar saltos de layout */}
-					{[...new Array(4)].map((_, index) => (
+                    {Array.from({ length: 4 }).map((_, index) => (
 						<li
 							// eslint-disable-next-line react/no-array-index-key
 							key={`skeleton-pill-${index}`}
