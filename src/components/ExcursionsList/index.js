@@ -1,3 +1,1 @@
-import ExcursionsList from "./ExcursionsList";
-
-export default ExcursionsList;
+export { default } from './ExcursionsList';

@@ -46,15 +46,15 @@ describe("ExcursionsLoading", () => {
 		// Renderiza con isLoggedIn={true}
 		const { rerender } = render(<ExcursionsLoading isLoggedIn={true} />);
 		let skeletonCards = screen.getAllByTestId("skeleton-card");
-		skeletonCards.forEach((card) => {
+		for (const card of skeletonCards) {
 			expect(card).toHaveTextContent("isLoggedIn: true");
-		});
+		}
 
 		// Re-renderiza con isLoggedIn={false} para asegurar que el cambio se refleja
 		rerender(<ExcursionsLoading isLoggedIn={false} />);
 		skeletonCards = screen.getAllByTestId("skeleton-card");
-		skeletonCards.forEach((card) => {
+		for (const card of skeletonCards) {
 			expect(card).toHaveTextContent("isLoggedIn: false");
-		});
+		}
 	});
 });

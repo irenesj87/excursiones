@@ -1,3 +1,1 @@
-import ExcursionDetailItem from "./ExcursionDetailItem";
-
-export default ExcursionDetailItem;
+export { default } from './ExcursionDetailItem';

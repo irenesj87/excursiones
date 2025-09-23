@@ -1,3 +1,1 @@
-import ExcursionsError from "./ExcursionsError";
-
-export default ExcursionsError;
+export { default } from './ExcursionsError';

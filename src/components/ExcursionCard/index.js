@@ -1,3 +1,1 @@
-import ExcursionCard from "./ExcursionCard";
-
-export default ExcursionCard;
+export { default } from './ExcursionCard';
