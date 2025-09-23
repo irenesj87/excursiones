@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { FiClock } from "react-icons/fi";
-import ExcursionDetailItem from "./ExcursionDetailItem";
+import ExcursionDetailItem from ".";
 
 describe("ExcursionDetailItem Component", () => {
 	const MOCK_ID = "mock-tooltip-id";

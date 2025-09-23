@@ -1,3 +1,1 @@
-import NoExcursionsFound from "./NoExcursionsFound";
-
-export default NoExcursionsFound;
+export { default } from "./NoExcursionsFound";
