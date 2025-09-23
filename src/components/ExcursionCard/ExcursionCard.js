@@ -145,11 +145,11 @@ function ExcursionCardComponent({
 							text={area}
 							label="Zona"
 						/>
-						<ExcursionDetailItem text={difficulty} label="Dificultad">
-							<span className={getDifficultyClasses(difficulty)}>
-								{difficulty}
-							</span>
-						</ExcursionDetailItem>
+						<ExcursionDetailItem
+							text={difficulty}
+							label="Dificultad"
+							contentClassName={getDifficultyClasses(difficulty)}
+						/>
 						<ExcursionDetailItem
 							IconComponent={FiClock}
 							text={time}

@@ -43,26 +43,6 @@ describe("ExcursionDetailItem Component", () => {
 		expect(screen.getByTestId("detail-item-icon")).toBeInTheDocument();
 	});
 
-	test("renderiza el contenido 'children' en lugar del texto", () => {
-		const childContent = (
-			<span data-testid="custom-child">Contenido personalizado</span>
-		);
-		render(
-			<ExcursionDetailItem label="Dato" text="Texto que no debe aparecer">
-				{childContent}
-			</ExcursionDetailItem>
-		);
-
-		// El contenido personalizado debe estar visible
-		expect(screen.getByTestId("custom-child")).toBeInTheDocument();
-		expect(screen.getByText("Contenido personalizado")).toBeInTheDocument();
-
-		// El texto original no debe renderizarse
-		expect(
-			screen.queryByText("Texto que no debe aparecer")
-		).not.toBeInTheDocument();
-	});
-
 	test("muestra el tooltip con el formato 'label: text' al pasar el ratón", async () => {
 		render(<ExcursionDetailItem text="4 horas" label="Tiempo" />);
 
@@ -76,7 +56,20 @@ describe("ExcursionDetailItem Component", () => {
 		expect(tooltip).toHaveTextContent("Tiempo: 4 horas");
 	});
 
-	test("no renderiza nada si no se proporcionan ni 'text' ni 'children'", () => {
+	test("muestra el tooltip con solo el texto cuando no hay etiqueta", async () => {
+		render(<ExcursionDetailItem text="Solo texto" />);
+
+		// Simulamos que el usuario pasa el ratón por encima
+		fireEvent.mouseOver(screen.getByText("Solo texto"));
+
+		// Esperamos a que el tooltip aparezca (es asíncrono)
+		const tooltip = await screen.findByRole("tooltip");
+		expect(tooltip).toHaveAttribute("id", MOCK_ID);
+		expect(tooltip).toBeInTheDocument();
+		expect(tooltip).toHaveTextContent("Solo texto");
+	});
+
+	test("no renderiza nada si no se proporciona 'text'", () => {
 		// Envolvemos el componente en un div con data-testid para poder verificar que no renderiza hijos.
 		// Esto evita usar `container`, que está desaconsejado por la regla `testing-library/no-container`.
 		render(
@@ -97,26 +90,14 @@ describe("ExcursionDetailItem Component", () => {
 		expect(button).toBeInTheDocument();
 	});
 
-	test("renderiza como un <div> no interactivo cuando solo tiene texto", () => {
+	test("renderiza como un <button> interactivo cuando solo tiene texto", () => {
 		render(<ExcursionDetailItem text="Solo texto" />);
 
 		// El texto debe estar presente.
 		const textElement = screen.getByText("Solo texto");
 		expect(textElement).toBeInTheDocument();
-		// No debe haber un botón, ya que no es interactivo.
-		expect(screen.queryByRole("button")).not.toBeInTheDocument();
-	});
-
-	test("renderiza como un <div> no interactivo cuando se proporcionan 'children'", () => {
-		render(
-			<ExcursionDetailItem text="Texto" label="Etiqueta">
-				<span>Contenido hijo</span>
-			</ExcursionDetailItem>
-		);
-
-		// El texto del hijo debe estar presente.
-		expect(screen.getByText("Contenido hijo")).toBeInTheDocument();
-		// No debe renderizar un botón, ya que `children` tiene prioridad y desactiva la interactividad.
-		expect(screen.queryByRole("button")).not.toBeInTheDocument();
+		// Debe renderizar un botón, ya que ahora es interactivo.
+		const button = screen.getByRole("button", { name: "Solo texto" });
+		expect(button).toBeInTheDocument();
 	});
 });
