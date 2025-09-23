@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useId } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFilter } from "../../slices/filterSlice";
 import cn from "classnames";
@@ -42,7 +42,7 @@ function FiltersListCheckboxComponent({ filterName, filter }) {
 	 * Genera un ID único para el checkbox y su etiqueta asociada, asegurando la accesibilidad.
 	 * Reemplaza los espacios en el valor del filtro con guiones para crear un ID válido.
 	 */
-	const id = `filter-${filterName}-${filter.replace(/\s+/g, "-")}`;
+	const id = useId();
 
 	return (
 		// Usamos un fragmento para agrupar el input y la etiqueta sin añadir un div extra al DOM.

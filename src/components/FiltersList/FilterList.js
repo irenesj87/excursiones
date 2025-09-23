@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { SkeletonTheme } from "react-loading-skeleton";
-import FiltersListCheckbox from "../FiltersListCheckbox/FilterListCheckbox";
+import FiltersListCheckbox from "../FiltersListCheckbox/FiltersListCheckbox";
 import FilterPillSkeleton from "./FilterPillSkeleton";
 import FilterError from "../FilterError";
 import { useFilters } from "../../hooks/useFilters";
@@ -34,7 +34,7 @@ function FiltersListComponent({ filterName }) {
 				</output>
 				<ul className={styles.filtersGrid} aria-hidden="true">
 					{/* Mostramos 4 esqueletos para simular mejor el contenido real y evitar saltos de layout */}
-					{[...Array(4)].map((_, index) => (
+					{[...new Array(4)].map((_, index) => (
 						<li
 							// eslint-disable-next-line react/no-array-index-key
 							key={`skeleton-pill-${index}`}

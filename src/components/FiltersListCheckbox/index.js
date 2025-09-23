@@ -1,3 +1,1 @@
-import FiltersListCheckbox from "./FilterListCheckbox";
-
-export default FiltersListCheckbox;
+export { default } from "./FiltersListCheckbox";

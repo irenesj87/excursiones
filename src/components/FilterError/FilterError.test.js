@@ -42,7 +42,7 @@ describe("FilterError Component", () => {
 		const expectedTextRegex = new RegExp(
 			`^Error: ${customError.message.replaceAll(
 				/[.*+?^${}()|[\]\\]/g,
-				String.raw`\\$&`
+				"\\$&"
 			)}$`
 		);
 		expect(alertContainer).toHaveTextContent(expectedTextRegex);

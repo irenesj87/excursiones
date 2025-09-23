@@ -1,3 +1,1 @@
-import FormErrorAlert from "./FormErrorAlert";
-
-export default FormErrorAlert;
+export { default } from './FormErrorAlert';
