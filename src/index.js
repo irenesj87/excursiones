@@ -10,8 +10,6 @@ import Store from "./store/store";
 import { Provider } from "react-redux";
 import reportWebVitals from "./reportWebVitals";
 
-// react v19.1
-
 ReactDOM.createRoot(document.getElementById("root")).render(
 	<React.StrictMode>
 		<Provider store={Store}>

@@ -13,7 +13,7 @@ const GuestNav = lazy(() => import("../GuestNav"));
  * @returns {boolean} True si es probable que haya un token, false en otros casos.
  */
 const getInitialAuthState = () => {
-	if (typeof window === "undefined") {
+	if (typeof globalThis.window === "undefined") {
 		return false;
 	}
 	return !!sessionStorage.getItem("token");

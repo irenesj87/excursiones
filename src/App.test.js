@@ -10,7 +10,7 @@ import { searchExcursions } from "./services/excursionService";
 
 // Mock de ResizeObserver para el entorno de JSDOM.
 // JSDOM no incluye esta API del navegador, por lo que la simulamos con una clase vacía.
-global.ResizeObserver = class ResizeObserver {
+globalThis.ResizeObserver = class ResizeObserver {
 	observe() {
 		// noop
 	}
