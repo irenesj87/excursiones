@@ -1,3 +1,1 @@
-import ExcursionsPage from "./ExcursionsPage";
-
-export default ExcursionsPage;
+export { default } from './ExcursionsPage';

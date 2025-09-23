@@ -1,3 +1,1 @@
-import ExcursionsLoading from "./ExcursionsLoading";
-
-export default ExcursionsLoading;
+export { default } from './ExcursionsLoading';

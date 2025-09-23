@@ -1,3 +1,1 @@
-import FilterError from "./FilterError";
-
-export default FilterError;
+export { default } from './FilterError';

@@ -40,7 +40,10 @@ describe("FilterError Component", () => {
 		// Usamos una expresión regular para asegurar que el contenido de texto sea exacto.
 		// Escapamos el mensaje por si contiene caracteres especiales de regex.
 		const expectedTextRegex = new RegExp(
-			`^Error: ${customError.message.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`
+			`^Error: ${customError.message.replaceAll(
+				/[.*+?^${}()|[\]\\]/g,
+				String.raw`\\$&`
+			)}$`
 		);
 		expect(alertContainer).toHaveTextContent(expectedTextRegex);
 

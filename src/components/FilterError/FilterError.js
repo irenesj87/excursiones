@@ -6,7 +6,7 @@ import styles from "./FilterError.module.css";
  * Componente para mostrar un mensaje de error cuando falla la carga de los filtros.
  * @param {FilterErrorProps} props
  * @typedef {object} FilterErrorProps
- * @property {(Error & { secondaryMessage?: string }) | null} error - El objeto de error.
+ * @property {(Error & { secondaryMessage?: string }) | null} [error] - El objeto de error.
  */
 function FilterErrorComponent({ error }) {
 	const message =
