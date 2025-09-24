@@ -107,6 +107,11 @@ html.light {
 
 	/* --- Accesibilidad --- */
 	--focus-outline-color: var(--primary-color);
+
+	/* --- Estados (Error, Alerta) --- */
+	--color-bg-danger-subtle: hsl(0, 100%, 97%); /* Rojo muy claro */
+	--color-border-danger: hsl(0, 90%, 85%); /* Rojo suave */
+	--color-text-danger: hsl(0, 70%, 40%); /* Rojo oscuro para texto/iconos */
 }
 
 html.light body {
@@ -221,6 +226,11 @@ html.dark {
 
 	/* --- Accesibilidad --- */
 	--focus-outline-color: var(--primary-color);
+
+	/* --- Estados (Error, Alerta) --- */
+	--color-bg-danger-subtle: hsl(0, 30%, 25%); /* Rojo oscuro desaturado */
+	--color-border-danger: hsl(0, 40%, 35%); /* Borde rojo oscuro */
+	--color-text-danger: hsl(0, 80%, 75%); /* Rojo claro para texto/iconos */
 }
 
 html.dark body {

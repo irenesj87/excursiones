@@ -24,6 +24,14 @@ export function validateSurname(surname) {
  * @returns {boolean} - Retorna true si el teléfono es válido, de lo contrario false.
  */
 export function validatePhone(phone) {
+	/**
+	 * La regex se desglosa así:
+	 * ^(\\(\\+?34\\))?   - Prefijo opcional +34, con o sin paréntesis.
+	 * \\s?               - Espacio opcional.
+	 * (?:6\\d|7[1-9])\\d - Debe empezar por 6, o por 7 seguido de un número del 1 al 9.
+	 * (-|\\s)?\\d{3}     - Bloque de 3 dígitos, precedido opcionalmente por espacio o guion.
+	 * (-|\\s)?\\d{3}$    - Bloque final de 3 dígitos, con la misma lógica de separador.
+	 */
 	const validPhone =
 		/^(\(\+?34\))?\s?(?:6\d|7[1-9])\d(-|\s)?\d{3}(-|\s)?\d{3}$/;
 

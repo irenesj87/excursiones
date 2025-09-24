@@ -70,11 +70,11 @@ export const useAuth = () => {
 		useMinDisplayTime(authDispatch);
 
 	useEffect(() => {
-		// Sirve para seguridad y para rastrear el estado de montaje. Esta variable nos ayuda a evitar errores si el usuario navega a otra página antes de que la
-		// verificación de autenticación termine.
+		// Flag para comprobar si el componente sigue montado.
+		// Es una salvaguarda crucial para evitar intentar actualizar el estado de un componente que ya ha sido 
+		// desmontado, (por ejmplo, si el usuario navega a otra página rápidamente), lo que causaría errores.
 		let isMounted = true;
-		// Función asíncrona para verificar el estado de autenticación del usuario. Esta función se ejecuta una vez cuando el
-		// componente se monta por primera vez.
+		// Esta función se ejecuta una vez cuando el componente se monta por primera vez.
 		const verifyAuthStatus = async () => {
 			authDispatch({ type: "AUTH_START_CHECK" });
 			// Inicia el temporizador para asegurar que la UI se muestre durante un tiempo mínimo.

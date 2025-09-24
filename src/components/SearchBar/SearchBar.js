@@ -102,16 +102,15 @@ function SearchBar({
 			/** @type {Error & {secondaryMessage?: string}} */
 			let userFriendlyError;
 
-			// Si es un error de conexión, creamos un mensaje específico.
+			// Si es un error de conexión (la API no responde), creamos un mensaje específico y seguro.
 			if (error instanceof TypeError && error.message === "Failed to fetch") {
 				userFriendlyError = new Error("Error de conexión");
 				userFriendlyError.secondaryMessage =
 					"No se pudo conectar con el servidor. Por favor, revisa tu conexión a internet e inténtalo de nuevo.";
 			} else {
-				// Para otros errores, usamos el mensaje que venga del servidor o uno genérico.
-				userFriendlyError = new Error(
-					error.message || "No se han podido cargar las excursiones."
-				);
+				// Para CUALQUIER OTRO error de la API, mostramos un mensaje genérico y seguro.
+				// NUNCA mostramos `error.message` de la API directamente al usuario.
+				userFriendlyError = new Error("No se han podido cargar las excursiones.");
 				userFriendlyError.secondaryMessage =
 					"Por favor, inténtalo de nuevo más tarde.";
 			}
