@@ -2,7 +2,7 @@ import { memo } from "react";
 import { FiAlertCircle } from "react-icons/fi";
 import styles from "./ExcursionsError.module.css";
 
-const DEFAULT_ERROR_MESSAGE =
+export const DEFAULT_ERROR_MESSAGE =
 	"Lo sentimos, ha ocurrido un error al cargar las excursiones.";
 
 /**

@@ -151,10 +151,9 @@ describe("SearchBar Component", () => {
 			.spyOn(console, "error")
 			.mockImplementation(() => {});
 
-		const errorMessage = "Network Error";
-		const mockError = new Error(errorMessage);
+		const apiError = new Error("Network Error");
 		// Configuramos el mock del servicio para que lance un error
-		mockedSearchExcursions.mockRejectedValue(mockError);
+		mockedSearchExcursions.mockRejectedValue(apiError);
 
 		render(
 			<Provider store={store}>
@@ -173,7 +172,13 @@ describe("SearchBar Component", () => {
 		expect(mockProps.onFetchStart).toHaveBeenCalledTimes(1);
 		expect(mockProps.onFetchSuccess).toHaveBeenCalledWith([]);
 		expect(mockProps.onFetchEnd).toHaveBeenCalledWith(expect.any(Error));
-		expect(mockProps.onFetchEnd.mock.calls[0][0].message).toBe(errorMessage);
+
+		// Verificamos que el mensaje de error que llega a la UI es el genérico y seguro,
+		// no el que proviene de la API, para prevenir vulnerabilidades XSS.
+		const userFacingError = mockProps.onFetchEnd.mock.calls[0][0];
+		expect(userFacingError.message).toBe(
+			"No se han podido cargar las excursiones."
+		);
 
 		// Restauramos la implementación original de console.error para no afectar a otros tests.
 		consoleErrorSpy.mockRestore();

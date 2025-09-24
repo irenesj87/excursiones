@@ -1,18 +1,16 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import ExcursionsError from "./ExcursionsError";
+import ExcursionsError, { DEFAULT_ERROR_MESSAGE } from "./ExcursionsError";
 
 // Describe el conjunto de pruebas para el componente ExcursionsError.
 describe("ExcursionsError Component", () => {
 	// Prueba que el componente renderiza el mensaje de error por defecto
 	// cuando no se proporciona un objeto de error o es nulo.
 	test("renderiza el mensaje de error por defecto si no se proporciona un error", () => {
+		// Se importa la constante DEFAULT_ERROR_MESSAGE para asegurar que el test y el componente
+		// estén siempre sincronizados, evitando strings "mágicos".
 		render(<ExcursionsError error={null} />);
-		expect(
-			screen.getByText(
-				"Lo sentimos, ha ocurrido un error al cargar las excursiones."
-			)
-		).toBeInTheDocument();
+		expect(screen.getByText(DEFAULT_ERROR_MESSAGE)).toBeInTheDocument();
 	});
 
 	test("renderiza el mensaje de error primario desde el objeto de error", () => {
