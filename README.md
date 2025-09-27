@@ -6,11 +6,9 @@ Aplicación web desarrollada con React para la visualización y gestión de excu
 
 ### Frontend
 
-- **CSS Custom Properties (Variables):** Utilizadas para implementar el sistema de temas (claro/oscuro) de forma eficiente.
 - **CSS Modules:** Para estilos encapsulados y específicos de cada componente.
 - **React:** Librería principal para construir la interfaz de usuario.
 - **React Bootstrap:** Para los componentes de la UI y el sistema de rejilla.
-- **React Icons:** Para el uso de iconos SVG de forma sencilla.
 - **React Loading Skeleton:** Para mostrar esqueletos de carga que mejoran la experiencia de usuario.
 - **React Router (`react-router-dom`):** Para la gestión de rutas y la navegación en la aplicación.
 - **Redux Toolkit (`@reduxjs/toolkit`):** Para la gestión centralizada y eficiente del estado de la aplicación (login, tema, filtros, etc.).
@@ -23,10 +21,8 @@ Aplicación web desarrollada con React para la visualización y gestión de excu
 ### Herramientas de Desarrollo
 
 - **@testing-library/jest-dom:** Añade matchers personalizados para Jest para probar el estado del DOM.
-- **Git:** Sistema de control de versiones.
 - **Jest:** Framework de pruebas para JavaScript.
 - **Nodemon:** Para el reinicio automático del servidor de desarrollo.
-- **npm:** Gestor de paquetes.
 - **React Testing Library:** Para escribir tests de componentes React que simulan la interacción del usuario.
 - **redux-mock-store:** Para crear un store simulado en los tests de Redux.
 
