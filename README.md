@@ -6,7 +6,6 @@ Aplicación web desarrollada con React para la visualización y gestión de excu
 
 ### Frontend
 
-- **CSS Modules:** Para estilos encapsulados y específicos de cada componente.
 - **React:** Librería principal para construir la interfaz de usuario.
 - **React Bootstrap:** Para los componentes de la UI y el sistema de rejilla.
 - **React Loading Skeleton:** Para mostrar esqueletos de carga que mejoran la experiencia de usuario.
