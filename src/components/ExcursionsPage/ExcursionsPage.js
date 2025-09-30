@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import { Col, Button, Offcanvas, Badge } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { FiFilter } from "react-icons/fi";
-import Filters from "../Filters/Filters"; // Asumiendo que Filters está en su propia carpeta
+import Filters from "../Filters";
 import ExcursionsList from "../ExcursionsList";
 import styles from "./ExcursionsPage.module.css";
 
@@ -71,9 +71,15 @@ const ExcursionsPage = ({ excursionsState }) => {
 						variant="outline-secondary"
 						onClick={handleShowFilters}
 						className={`w-100 ${styles.filtersToggleButton}`}
+						aria-controls="mobile-filters-offcanvas"
+						aria-label={`Mostrar filtros. ${activeFilterCount} ${
+							activeFilterCount === 1 ? "filtro aplicado" : "filtros aplicados"
+						}.`}
 					>
-						<FiFilter className="me-2" />
-						<span>
+						{/* Ocultamos el contenido visual a los lectores de pantalla para evitar redundancia,
+						ya que el aria-label ya proporciona toda la información necesaria. */}
+						<FiFilter className="me-2" aria-hidden="true" />
+						<span aria-hidden="true">
 							Mostrar Filtros
 							{activeFilterCount > 0 && (
 								<Badge pill bg={null} className={`${styles.filterBadge} ms-2`}>
@@ -90,9 +96,11 @@ const ExcursionsPage = ({ excursionsState }) => {
 					onHide={handleCloseFilters}
 					placement="start"
 					className="d-md-none"
+					id="mobile-filters-offcanvas"
+					aria-labelledby="mobile-filters-title"
 				>
 					<Offcanvas.Header closeButton>
-						<Offcanvas.Title>Filtros</Offcanvas.Title>
+						<Offcanvas.Title id="mobile-filters-title">Filtros</Offcanvas.Title>
 					</Offcanvas.Header>
 					<Offcanvas.Body className="d-flex flex-column">
 						<Filters showTitle={false} />
