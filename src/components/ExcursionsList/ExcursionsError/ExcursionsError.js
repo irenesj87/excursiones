@@ -3,15 +3,11 @@ import { FiAlertCircle } from "react-icons/fi";
 import styles from "./ExcursionsError.module.css";
 import DOMPurify from "dompurify";
 
+/** @typedef {import('react')} React */
+
 export const DEFAULT_ERROR_MESSAGE =
 	"Lo sentimos, ha ocurrido un error al cargar las excursiones.";
 
-/**
- * Componente que muestra un mensaje de error con un icono. Se renderiza cuando la carga de excursiones falla.
- * @param {ExcursionsErrorProps} props
- * @typedef {object} ExcursionsErrorProps
- * @property {(Error & { secondaryMessage?: string }) | null} error - El objeto de error que contiene el mensaje a mostrar.
- */
 const ExcursionsErrorComponent = ({ error }) => (
 	<div
 		className={`${styles.excursionsContainer} ${styles.centeredStatus}`}
@@ -40,5 +36,12 @@ const ExcursionsErrorComponent = ({ error }) => (
 	</div>
 );
 
+/**
+ * Componente que muestra un mensaje de error con un icono. Se renderiza cuando la carga de excursiones falla.
+ * @param {ExcursionsErrorProps} props - Las propiedades del componente.
+ * @typedef {object} ExcursionsErrorProps
+ * @property {(Error & { secondaryMessage?: string }) | null} error - El objeto de error que contiene el mensaje a mostrar.
+ * @returns {React.ReactElement}
+ */
 const ExcursionsError = memo(ExcursionsErrorComponent);
 export default ExcursionsError;

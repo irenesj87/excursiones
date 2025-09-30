@@ -34,6 +34,11 @@ const ExcursionsPage = ({ excursionsState }) => {
 	const filterCountText =
 		activeFilterCount === 1 ? "seleccionado" : "seleccionados";
 
+	// Se crea una variable para el texto del aria-label para no duplicar la lógica de pluralización.
+	const ariaFilterLabel = `Mostrar filtros. ${activeFilterCount} ${
+		activeFilterCount === 1 ? "filtro aplicado" : "filtros aplicados"
+	}.`;
+
 	// La lista de excursiones.
 	const excursionsList = (
 		<ExcursionsList
@@ -72,9 +77,7 @@ const ExcursionsPage = ({ excursionsState }) => {
 						onClick={handleShowFilters}
 						className={`w-100 ${styles.filtersToggleButton}`}
 						aria-controls="mobile-filters-offcanvas"
-						aria-label={`Mostrar filtros. ${activeFilterCount} ${
-							activeFilterCount === 1 ? "filtro aplicado" : "filtros aplicados"
-						}.`}
+						aria-label={ariaFilterLabel}
 					>
 						{/* Ocultamos el contenido visual a los lectores de pantalla para evitar redundancia,
 						ya que el aria-label ya proporciona toda la información necesaria. */}
