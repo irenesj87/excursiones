@@ -40,8 +40,11 @@ const AuthNav = ({ isAuthCheckComplete, isLoggedIn, onCloseMenu }) => {
 	// durante la comprobación. En su lugar, tomamos una "pista" inicial de sessionStorage.
 	// Si hay un token, es muy probable que el usuario esté logueado, por lo que mostramos
 	// el esqueleto correspondiente desde el principio. Esto estabiliza el layout.
+	/**
+	 * likelyLoggedIn: Almacena una pista inicial sobre si el usuario podría estar logueado, basada en sessionStorage,
+	 * para renderizar el esqueleto correcto y evitar un "layout shift".
+	 */
 	const [likelyLoggedIn] = useState(getInitialAuthState);
-	// likelyLoggedIn: Almacena una pista inicial sobre si el usuario podría estar logueado, basada en sessionStorage, para renderizar el esqueleto correcto y evitar un "layout shift".
 
 	if (!isAuthCheckComplete) {
 		// La elección del esqueleto se basa en la "pista" inicial para que no cambie
