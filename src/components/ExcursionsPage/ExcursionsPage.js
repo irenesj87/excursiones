@@ -51,7 +51,7 @@ const ExcursionsPage = ({ excursionsState }) => {
 	const filterCountText =
 		activeFilterCount === 1 ? "seleccionado" : "seleccionados";
 
-	/** Texto dinámico para el `aria-label` del botón de filtros, mejorando la accesibilidad. */
+	/** @type {string} Texto dinámico para el `aria-label` del botón de filtros, mejorando la accesibilidad. */
 	const ariaFilterLabel = `Mostrar filtros. ${activeFilterCount} ${
 		activeFilterCount === 1 ? "filtro aplicado" : "filtros aplicados"
 	}.`;
