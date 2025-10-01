@@ -1,5 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import React from "react";
+import { jest } from "@jest/globals";
 import AuthNav from "./AuthNav";
 import UserNav from "../UserNav";
 import GuestNav from "../GuestNav";
@@ -31,7 +33,13 @@ jest.mock("../GuestNav", () => jest.fn());
 // Mock del ErrorBoundary como una función de jest, para poder cambiar su implementación en tests específicos.
 // Por defecto, actúa como un Fragment que no hace nada.
 jest.mock("../ErrorBoundary", () =>
-	jest.fn().mockImplementation(({ children }) => <>{children}</>)
+	jest.fn().mockImplementation(
+		/**
+		 * @param {{children: React.ReactNode}} props - Las propiedades del componente, que incluyen los hijos a renderizar.
+		 * @returns {React.ReactElement} Los componentes hijos envueltos en un fragmento.
+		 */
+		({ children }) => <>{children}</>
+	)
 );
 // Importamos el mock después de definirlo.
 import ErrorBoundary from "../ErrorBoundary";
@@ -62,6 +70,11 @@ describe("AuthNav Component", () => {
 		// Restauramos la implementación por defecto del ErrorBoundary
 		/** @type {jest.Mock} */
 		(/** @type {unknown} */ (ErrorBoundary)).mockImplementation(
+			/**
+			 * @param {{children: React.ReactNode}} props - Las propiedades del componente, que incluyen los hijos a renderizar.
+			 * @returns {React.ReactElement} Los componentes hijos envueltos en un fragmento.
+			 */
+
 			({ children }) => <>{children}</>
 		);
 		mockOnClose.mockClear();
@@ -182,9 +195,13 @@ describe("AuthNav Component", () => {
 		test("muestra el fallback del ErrorBoundary en lugar de romper la app", async () => {
 			// Para este test, usamos la implementación real del ErrorBoundary.
 			/** @type {jest.Mock} */
-			(/** @type {unknown} */ (ErrorBoundary)).mockImplementation((props) => (
-				<RealErrorBoundary {...props} />
-			));
+			(/** @type {unknown} */ (ErrorBoundary)).mockImplementation(
+				/**
+				 * @param {{children: React.ReactNode, fallback: React.ReactNode}} props - Propiedades para el ErrorBoundary real.
+				 * @returns {React.ReactElement} El componente ErrorBoundary real.
+				 */
+				(props) => <RealErrorBoundary {...props} />
+			);
 
 			// Forzamos que el componente UserNav falle al renderizar.
 			/** @type {jest.Mock} */
