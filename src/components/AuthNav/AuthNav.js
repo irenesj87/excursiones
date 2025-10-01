@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from "react";
+import React, { useState, lazy, Suspense } from "react";
 import ErrorBoundary from "../ErrorBoundary";
 import UserNavSkeleton from "../UserNav/UserNavSkeleton";
 import GuestNavSkeleton from "../GuestNav/GuestNavSkeleton";
@@ -7,6 +7,13 @@ import GuestNavSkeleton from "../GuestNav/GuestNavSkeleton";
 // Esto crea "chunks" de código separados que solo se descargan cuando son necesarios.
 const UserNav = lazy(() => import("../UserNav"));
 const GuestNav = lazy(() => import("../GuestNav"));
+
+/**
+ * @typedef {object} AuthNavProps
+ * @property {boolean} isAuthCheckComplete - Indica si la comprobación inicial de autenticación ha finalizado.
+ * @property {boolean} isLoggedIn - Indica si el usuario está actualmente logueado.
+ * @property {() => void} [onCloseMenu] - Función opcional para cerrar el menú de navegación, pasada a los componentes hijos.
+ */
 
 /**
  * Obtiene de manera segura el estado de autenticación inicial de sessionStorage.
@@ -24,12 +31,9 @@ const getInitialAuthState = () => {
 /**
  * Componente AuthNav que renderiza la navegación adecuada según el estado de autenticación del usuario.
  * Muestra un esqueleto de carga mientras se verifica la autenticación, y luego los enlaces para usuarios autenticados o
- * invitados
- * @typedef {object} AuthNavProps
- * @property {boolean} isAuthCheckComplete - Si la comprobación de autenticación ha finalizado.
- * @property {boolean} isLoggedIn - Si el usuario está logueado.
- * @property {() => void} [onCloseMenu] - Función para cerrar el menú al hacer clic en un enlace.
- * @param {AuthNavProps} props
+ * invitados.
+ * @param {AuthNavProps} props - Las propiedades del componente.
+ * @returns {React.ReactElement} - El componente de navegación adecuado.
  */
 const AuthNav = ({ isAuthCheckComplete, isLoggedIn, onCloseMenu }) => {
 	// Para evitar el "salto" del esqueleto, no reaccionamos al estado de Redux que cambia
@@ -37,6 +41,7 @@ const AuthNav = ({ isAuthCheckComplete, isLoggedIn, onCloseMenu }) => {
 	// Si hay un token, es muy probable que el usuario esté logueado, por lo que mostramos
 	// el esqueleto correspondiente desde el principio. Esto estabiliza el layout.
 	const [likelyLoggedIn] = useState(getInitialAuthState);
+	// likelyLoggedIn: Almacena una pista inicial sobre si el usuario podría estar logueado, basada en sessionStorage, para renderizar el esqueleto correcto y evitar un "layout shift".
 
 	if (!isAuthCheckComplete) {
 		// La elección del esqueleto se basa en la "pista" inicial para que no cambie
