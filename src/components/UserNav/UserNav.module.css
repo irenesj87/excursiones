@@ -13,7 +13,6 @@
 	border: 1px solid var(--register-link-border-color);
 	color: var(--register-link-color);
 	transition: none;
-
 }
 
 .profileLink:hover {
@@ -22,9 +21,17 @@
 	box-shadow: none;
 }
 
-/* Estilo para el NavLink activo, igual que en AuthNav */
-.profileLink.active {
-	background-color: var(--filter-pill-bg-hover);
-	border-color: var(--filter-pill-border-hover);
-	color: var(--text-color);
+.logoutLink {
+	color: var(--bs-btn-color, #fff);
+	background-color: var(--bs-secondary, #6c757d);
+	border-color: var(--bs-secondary, #6c757d);
+	border-radius: 0.375rem;
+	padding: 0.375rem 0.75rem
+}
+
+.logoutLink:hover,
+.logoutLink:focus {
+	color: var(--bs-btn-hover-color, #fff);
+	background-color: var(--bs-btn-hover-bg, #5c636a);
+	border-color: var(--bs-btn-hover-border-color, #565e64);
 }

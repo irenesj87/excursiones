@@ -1,4 +1,4 @@
-import {
+import React, {
 	useState,
 	useEffect,
 	useLayoutEffect,
@@ -26,7 +26,8 @@ import "../../css/Themes.css";
 
 /** @typedef {import('types.js').RootState} RootState */
 
-/** @typedef {object} NavigationBarProps
+/** 
+ * @typedef {object} NavigationBarProps
  * @property {(excursions: any[]) => void} onFetchSuccess - Función para actualizar el estado de la lista de excursiones.
  * @property {boolean} isAuthCheckComplete - Indica si la comprobación de autenticación ha finalizado.
  * @property {() => void} onExcursionsFetchStart - Callback que se ejecuta al iniciar la búsqueda de excursiones.
@@ -37,6 +38,7 @@ import "../../css/Themes.css";
 /**
  * Componente para la barra de navegación.
  * @param {NavigationBarProps} props - Las propiedades del componente.
+ * @returns {React.ReactElement} - El componente de la barra de navegación.
  */
 function NavigationBarComponent({
 	onFetchSuccess,
@@ -194,10 +196,9 @@ function NavigationBarComponent({
 				</div>
 				{/* ms-auto: Cuando se utiliza dentro de un flex-container le dice al navegador que calcule el margen 
 				a la izquierda de ese elemento. Así que lo que hace, es poner ese elemento y lo que le siga lo más a la 
-				derecha que pueda dentro de ese container. ms-md-0 dice que deje de hacerlo a partir de breakpoints medianos.
-				y justify-content-end alinea los items hijos al final del contenedor. */}
+				derecha que pueda dentro de ese container. */}
 				{/* order-lg-3: para posicionarlo correctamente en breakpoints grandes */}
-				<div className="d-flex align-items-center justify-content-end ms-auto ms-md-0 order-md-3 order-lg-3">
+				<div className="d-flex align-items-center ms-auto ms-md-0 order-md-3 order-lg-3">
 					<OverlayTrigger placement="bottom" overlay={renderThemeTooltip}>
 						<Button
 							className={`${styles.themeToggleBtn} me-2`}
@@ -214,7 +215,6 @@ function NavigationBarComponent({
 					</OverlayTrigger>
 					{/* Inline items para breakpoints grandes */}
 					{/* No visible en breakpoints pequeños (d-none), visible en grandes (d-lg-flex) */}
-					{/* Posicionado antes del toggle para mantener el orden en breakpoints grandes */}
 					<Nav
 						className={`${styles.authNavItems} d-none d-lg-flex flex-row align-items-center`}
 					>

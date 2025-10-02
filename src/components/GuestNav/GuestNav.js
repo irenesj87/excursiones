@@ -1,9 +1,8 @@
 import React from "react";
 import { Nav } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
-import styles from "../AuthNav/AuthNav.module.css";
+import styles from "./GuestNav.module.css";
 import { ROUTES } from "../../constants";
-import { FiUserPlus, FiLogIn } from "react-icons/fi";
 
 /**
  * @typedef {object} GuestNavProps
@@ -24,15 +23,15 @@ const GuestNav = ({ onCloseMenu = () => {} }) => (
 			to={ROUTES.REGISTER}
 			onClick={onCloseMenu}
 		>
-			<FiUserPlus /> Regístrate
+			Regístrate
 		</Nav.Link>
 		<Nav.Link
 			as={Link}
 			to={ROUTES.LOGIN}
 			onClick={onCloseMenu}
-			className={`${styles.navButton} loginLink`}
+			className={styles.loginLink}
 		>
-			<FiLogIn /> Inicia sesión
+			Inicia sesión
 		</Nav.Link>
 	</>
 );

@@ -1,14 +1,6 @@
-import { useReducer, useEffect, useRef } from "react";
+import React, { useReducer, useEffect, useRef } from "react";
 import { Card, Col, Form, Row, Button, Spinner, Alert } from "react-bootstrap";
-import {
-	FiMail,
-	FiUser,
-	FiUsers,
-	FiPhone,
-	FiEdit,
-	FiX,
-	FiSave,
-} from "react-icons/fi";
+import { FiMail, FiUser, FiUsers, FiPhone } from "react-icons/fi";
 import UserPageInputEdit from "../UserPageInputEdit/UserPageInputEdit";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUserInfo } from "../../services/userService";
@@ -25,13 +17,18 @@ import styles from "./UserInfoForm.module.css";
 
 /**
  * Componente que se encarga del menú de edición y muestra de los datos del usuario logueado en ese momento
+ * @returns {React.ReactElement} - El componente de formulario de información del usuario.
  */
 function UserInfoForm() {
 	// Variable que necesitamos para poder usar los dispatchers de Redux.
 	const loginDispatch = useDispatch();
 	// Este useSelector nos da los datos del usuario actual.
 	const { user, token } = useSelector(
-		/** @param {RootState} state */ (state) => state.loginReducer
+		/**
+		 * @param {RootState} state - Estado de Redux
+		 * @returns {object} El slice del reducer de login.
+		 */
+		(state) => state.loginReducer
 	);
 	// Estado inicial para el reducer del formulario
 	const initialState = {
@@ -55,6 +52,7 @@ function UserInfoForm() {
 	 * Reducer para gestionar el estado del formulario de información del usuario.
 	 * @param {object} state - El estado actual del formulario.
 	 * @param {object} action - La acción a despachar.
+	 * @returns {object} - El nuevo estado del formulario.
 	 */
 	const formReducer = (state, action) => {
 		switch (action.type) {
@@ -339,7 +337,7 @@ function UserInfoForm() {
 									onClick={startEdit}
 									className={`${styles.editButton} w-100`}
 								>
-									<FiEdit /> Editar
+									Editar
 								</Button>
 							</Col>
 						</Row>
@@ -355,7 +353,7 @@ function UserInfoForm() {
 									onClick={cancelEdit}
 									className={`${styles.cancelButton} w-100`}
 								>
-									<FiX /> Cancelar
+									Cancelar
 								</Button>
 							</Col>
 							<Col xs={12} sm="auto">
@@ -377,9 +375,7 @@ function UserInfoForm() {
 											/>
 										</output>
 									) : (
-										<>
-											<FiSave /> Guardar
-										</>
+										<>Guardar</>
 									)}
 								</Button>
 							</Col>

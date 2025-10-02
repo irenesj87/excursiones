@@ -1,17 +1,18 @@
+import React from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useSkeletonTheme } from "../../hooks/useSkeletonTheme";
 
 // Define placeholder dimensions as constants to avoid magic numbers and improve maintainability.
 const USER_NAV_SKELETON_SIZES = {
-	PROFILE_LINK_WIDTH: 77.25,
-	LOGOUT_BUTTON_WIDTH: 120.79,
+	PROFILE_LINK_WIDTH: 107.03,
+	LOGOUT_BUTTON_WIDTH: 110.79,
 	HEIGHT: 38,
 };
 
 /**
  * Componente que muestra un esqueleto de carga para los botones de navegación de un usuario logueado.
- * @returns {React.ReactElement}
+ * @returns {React.ReactElement} - El componente de esqueleto de navegación de usuario.
  */
 function UserNavSkeleton() {
 	// Obtiene los colores del esqueleto de forma centralizada a través del hook.

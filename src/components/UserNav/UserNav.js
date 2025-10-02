@@ -6,8 +6,7 @@ import { logoutUser } from "../../services/authService";
 import { logout } from "../../slices/loginSlice";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "./UserNav.module.css";
-import authNavStyles from "../AuthNav/AuthNav.module.css";
-import { FiUser, FiLogOut } from "react-icons/fi";
+import { FiUser } from "react-icons/fi";
 
 /**
  * @typedef {import('types.js').RootState} RootState
@@ -35,13 +34,9 @@ function UserNav({ onCloseMenu }) {
 	 */
 	const handleLogout = useCallback(() => {
 		onCloseMenu?.();
-
-		// 1. Llama a la función de logout del servicio. Esta función es síncrona y ya no necesita 'await'.
 		logoutUser();
-
-		// 2. Limpia el estado de Redux.
+		// Limpia el estado de Redux.
 		dispatch(logout());
-
 		// 3. Redirige al usuario.
 		navigate("/");
 	}, [dispatch, navigate, onCloseMenu]);
@@ -49,19 +44,20 @@ function UserNav({ onCloseMenu }) {
 	return (
 		<>
 			<Nav.Link
-				className={`${styles.profileLink} me-lg-3`}
+				className={`${styles.profileLink} me-3`}
 				as={NavLink}
 				to="/userPage"
 				onClick={onCloseMenu}
+				aria-label="Tu perfil"
 			>
 				<FiUser /> Tu perfil
 			</Nav.Link>
 			<Nav.Link
 				as="button"
 				onClick={handleLogout}
-				className={`${authNavStyles.navButton} logoutLink`}
+				className={styles.logoutLink}
 			>
-				<FiLogOut /> Cierra sesión
+				Cierra sesión
 			</Nav.Link>
 		</>
 	);
