@@ -21,7 +21,6 @@
 	box-shadow: none;
 }
 
-/* Estilo para el NavLink activo */
 .navLink.active {
 	background-color: var(--nav-link-active-bg);
 	border-color: var(--nav-link-active-border);

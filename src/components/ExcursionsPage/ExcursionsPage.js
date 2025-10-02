@@ -12,18 +12,35 @@ import styles from "./ExcursionsPage.module.css";
  * Componente para la página de excursiones que muestra los filtros y la lista de excursiones.
  * @typedef {import('../../types').Excursion} Excursion
  * @typedef {{data: Excursion[], isLoading: boolean, error: (Error & { secondaryMessage?: string }) | null}} ExcursionsState
- * @param {{excursionsState: ExcursionsState}} props
- * @returns {React.ReactElement}
+ * @param {{excursionsState: ExcursionsState}} props - Las propiedades del componente, que incluyen el estado de las excursiones.
+ * @returns {React.ReactElement} - El componente de la página de excursiones.
  */
 const ExcursionsPage = ({ excursionsState }) => {
-	// Estado y manejadores para el Offcanvas de filtros en móvil
+	/**
+	 * Estado para controlar la visibilidad del menú de filtros en breakpoints pequeños.
+	 * @type {[boolean, React.Dispatch<React.SetStateAction<boolean>>]}
+	 */
 	const [showFilters, setShowFilters] = useState(false);
+	/**
+	 * Cierra el menú de filtros. Memoizada con `useCallback`.
+	 * @type {() => void}
+	 */
 	const handleCloseFilters = useCallback(() => setShowFilters(false), []);
+	/**
+	 * Muestra el menú de filtros. Memoizada con `useCallback`.
+	 * @type {() => void}
+	 */
 	const handleShowFilters = useCallback(() => setShowFilters(true), []);
 
-	// Se obtienen los filtros activos del estado global de Redux.
+	/**
+	 * Calcula el número total de filtros activos (área, dificultad, tiempo) desde el estado de Redux.
+	 * @type {number}
+	 */
 	const activeFilterCount = useSelector(
-		/** @param {RootState} state */
+		/**
+		 * @param {RootState} state - El estado global de la aplicación Redux.
+		 * @returns {number} El número total de filtros activos.
+		 */
 		(state) =>
 			state.filterReducer.area.length +
 			state.filterReducer.difficulty.length +
@@ -34,7 +51,7 @@ const ExcursionsPage = ({ excursionsState }) => {
 	const filterCountText =
 		activeFilterCount === 1 ? "seleccionado" : "seleccionados";
 
-	// Se crea una variable para el texto del aria-label para no duplicar la lógica de pluralización.
+	/** @type {string} Texto dinámico para el `aria-label` del botón de filtros, mejorando la accesibilidad. */
 	const ariaFilterLabel = `Mostrar filtros. ${activeFilterCount} ${
 		activeFilterCount === 1 ? "filtro aplicado" : "filtros aplicados"
 	}.`;
