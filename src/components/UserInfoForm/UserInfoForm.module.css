@@ -31,3 +31,19 @@
 .saveButton {
 	transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
+
+/* Alinea los iconos con el texto en los botones del formulario */
+.editButton svg,
+.cancelButton svg,
+.saveButton svg {
+	margin-right: 0.5rem;
+	vertical-align: -0.125em;
+	font-size: 1.1em;
+}
+
+/* Alinea los iconos con el texto en las etiquetas del formulario */
+.cardBody .form-label svg {
+	margin-right: 0.5rem;
+	vertical-align: -0.125em;
+	color: var(--accent-color); /* Usamos el color de acento para los iconos */
+}

@@ -67,6 +67,15 @@ body {
 	transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
+/* Alinea los iconos con el texto en los enlaces de navegación */
+#offcanvasNavbar .offcanvas-body .nav-link svg,
+.navbar-nav .nav-link svg {
+	margin-right: 0.5rem; /* Espacio entre el icono y el texto */
+	vertical-align: -0.125em; /* Alineación vertical fina */
+	font-size: 1.1em; /* Ligeramente más grande para mejor visibilidad */
+	stroke-width: 2.2; /* Hacemos el trazo del icono un poco más grueso */
+}
+
 #offcanvasNavbar .offcanvas-body .logoutLink {
 	display: block;
 	width: 95%;

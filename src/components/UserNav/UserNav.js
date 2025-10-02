@@ -1,15 +1,20 @@
 import React, { useCallback } from "react";
-import { Nav, Button } from "react-bootstrap";
+import { Nav } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../services/authService";
 import { logout } from "../../slices/loginSlice";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "./UserNav.module.css";
+import authNavStyles from "../AuthNav/AuthNav.module.css";
+import { FiUser, FiLogOut } from "react-icons/fi";
 
-/** @typedef {import('types.js').RootState} RootState */
+/**
+ * @typedef {import('types.js').RootState} RootState
+ */
 
-/** @typedef {object} UserNavProps
+/**
+ * @typedef {object} UserNavProps
  * @property {() => void} [onCloseMenu] - Función para cerrar el menú contenedor en breakpoints pequeños.
  */
 
@@ -18,6 +23,7 @@ import styles from "./UserNav.module.css";
  * sesión.
  * Permite cerrar un menú contenedor (como un Offcanvas o un Dropdown) si se proporciona la función `onCloseMenu`.
  * @param {UserNavProps} props - Las propiedades del componente.
+ * @returns {React.ReactElement} - El componente de navegación para usuarios logueados.
  */
 function UserNav({ onCloseMenu }) {
 	const dispatch = useDispatch();
@@ -48,11 +54,15 @@ function UserNav({ onCloseMenu }) {
 				to="/userPage"
 				onClick={onCloseMenu}
 			>
-				Tu perfil
+				<FiUser /> Tu perfil
 			</Nav.Link>
-			<Button variant="secondary" onClick={handleLogout} className="logoutLink">
-				Cierra sesión
-			</Button>
+			<Nav.Link
+				as="button"
+				onClick={handleLogout}
+				className={`${authNavStyles.navButton} logoutLink`}
+			>
+				<FiLogOut /> Cierra sesión
+			</Nav.Link>
 		</>
 	);
 }

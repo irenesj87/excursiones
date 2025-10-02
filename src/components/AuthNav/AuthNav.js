@@ -10,7 +10,7 @@ const GuestNav = lazy(() => import("../GuestNav"));
 
 /**
  * Obtiene de manera segura el estado de autenticación inicial de sessionStorage.
- * @returns {boolean} True si es probable que haya un token, false en otros casos.
+ * @returns {boolean} - True si es probable que haya un token, false en otros casos.
  */
 const getInitialAuthState = () => {
 	// Comprobación para evitar errores en entornos de renderizado en servidor (SSR),
@@ -23,13 +23,10 @@ const getInitialAuthState = () => {
 
 /**
  * Componente AuthNav que renderiza la navegación adecuada según el estado de autenticación del usuario.
- * Muestra un esqueleto de carga mientras se verifica la autenticación, y luego los enlaces para usuarios autenticados o
- * invitados
- * @typedef {object} AuthNavProps
- * @property {boolean} isAuthCheckComplete - Si la comprobación de autenticación ha finalizado.
- * @property {boolean} isLoggedIn - Si el usuario está logueado.
- * @property {() => void} [onCloseMenu] - Función para cerrar el menú al hacer clic en un enlace.
- * @param {AuthNavProps} props
+ * Muestra un esqueleto de carga mientras se verifica la autenticación. Hay dos esqueletos, uno para usuarios 
+ * autenticados y otro para invitados.
+ * @param {AuthNavProps} props - Las propiedades del componente.
+ * @returns {React.ReactElement} - El componente de navegación adecuado.
  */
 const AuthNav = ({ isAuthCheckComplete, isLoggedIn, onCloseMenu }) => {
 	// Para evitar el "salto" del esqueleto, no reaccionamos al estado de Redux que cambia
