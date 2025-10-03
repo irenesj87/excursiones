@@ -2,12 +2,14 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import React from "react";
 import { Provider } from "react-redux";
-import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { configureStore, createSlice, combineReducers } from "@reduxjs/toolkit";
 import { jest } from "@jest/globals";
 import AuthNav from "./AuthNav";
 import UserNav from "../UserNav";
 import GuestNav from "../GuestNav";
 import { AuthContext } from "../../context/AuthContext";
+import themeSliceReducer from "../../slices/themeSlice";
+import filterSliceReducer from "../../slices/filterSlice";
 
 // Mock de los componentes esqueleto y de navegación para aislar AuthNav en las pruebas.
 jest.mock(
@@ -40,26 +42,42 @@ const mockLoginSlice = createSlice({
 const loginReducer = mockLoginSlice.reducer;
 
 /**
+ * @typedef {object} RenderOptions
+ * @property {object} [preloadedState] - Estado inicial para el store de Redux.
+ * @property {import('@reduxjs/toolkit').Store} [store] - Instancia de store de Redux. Si no se proporciona, se crea una.
+ * @property {{isAuthCheckComplete: boolean}} [authContextValue] - Valor para el AuthContext.
+ */
+
+/**
  * Función de utilidad para renderizar componentes que dependen de Redux y AuthContext.
  * @param {React.ReactElement} ui - El componente a renderizar.
- * @param {object} options - Opciones de configuración.
- * @param {{isAuthCheckComplete: boolean}} [options.authContextValue] - Valor para el AuthContext.
- * @param {object} [options.preloadedState] - Estado inicial para el store de Redux.
- * @returns {import("@testing-library/react").RenderResult} El resultado de la función `render` de Testing Library.
+ * @param {RenderOptions & import('@testing-library/react').RenderOptions} [options] - Opciones de configuración.
+ * @returns {import("@testing-library/react").RenderResult} - El resultado de la función `render` de Testing Library.
  */
 const renderWithProviders = (
 	ui,
 	{
+		// El estado inicial para el store de Redux.
+		preloadedState = {},
+		// Crea automáticamente un store si no se pasa uno.
+		store = configureStore({
+			reducer: combineReducers({
+				loginReducer,
+				themeReducer: themeSliceReducer,
+				filterReducer: filterSliceReducer,
+			}),
+			preloadedState,
+		}),
 		authContextValue = { isAuthCheckComplete: true },
-		preloadedState = { loginReducer: { login: false } },
 		...renderOptions
 	} = {}
 ) => {
-	const store = configureStore({
-		reducer: { loginReducer },
-		preloadedState,
-	});
-
+	/**
+	 * Componente Wrapper que proporciona el store de Redux y el contexto de autenticación.
+	 * @param {object} props - Propiedades del wrapper.
+	 * @param {React.ReactNode} props.children - Componentes hijos a renderizar.
+	 * @returns {React.ReactElement} El componente envuelto en los providers.
+	 */
 	const Wrapper = ({ children }) => (
 		<Provider store={store}>
 			<AuthContext.Provider value={authContextValue}>
@@ -138,7 +156,9 @@ describe("AuthNav Component", () => {
 	test("muestra GuestNav cuando el usuario no está logueado", async () => {
 		renderWithProviders(<AuthNav onCloseMenu={mockOnClose} />, {
 			authContextValue: { isAuthCheckComplete: true },
-			preloadedState: { loginReducer: { login: false } },
+			preloadedState: {
+				loginReducer: { login: false, user: null, token: null },
+			},
 		});
 
 		// Verificamos que se renderiza el fallback de Suspense inicialmente.
@@ -160,7 +180,9 @@ describe("AuthNav Component", () => {
 	test("muestra UserNav cuando el usuario está logueado", async () => {
 		renderWithProviders(<AuthNav onCloseMenu={mockOnClose} />, {
 			authContextValue: { isAuthCheckComplete: true },
-			preloadedState: { loginReducer: { login: true } },
+			preloadedState: {
+				loginReducer: { login: true, user: { name: "Test" }, token: "token" },
+			},
 		});
 
 		// Verificamos que se renderiza el fallback de Suspense inicialmente.
@@ -203,7 +225,9 @@ describe("AuthNav Component", () => {
 
 			renderWithProviders(<AuthNav />, {
 				authContextValue: { isAuthCheckComplete: true },
-				preloadedState: { loginReducer: { login: true } },
+				preloadedState: {
+					loginReducer: { login: true, user: { name: "Test" }, token: "token" },
+				},
 			});
 
 			// El ErrorBoundary debería capturar el error y renderizar su fallback (GuestNavSkeleton).

@@ -1,6 +1,5 @@
 import React, { useState, useLayoutEffect, memo, useRef } from "react";
 import { Nav, Navbar, Container, Offcanvas } from "react-bootstrap";
-import { useSelector } from "react-redux";
 import Logo from "../Logo";
 import SearchBar from "../SearchBar";
 import AuthNav from "../AuthNav";
@@ -11,8 +10,11 @@ import "../../css/Themes.css";
 /** @typedef {import('types.js').RootState} RootState */
 
 /**
+ * @typedef {import('types.js').Excursion} Excursion
+ */
+/**
  * @typedef {object} NavigationBarProps
- * @property {(excursions: any[]) => void} onFetchSuccess - Función para actualizar el estado de la lista de excursiones.
+ * @property {(excursions: Excursion[]) => void} onFetchSuccess - Función para actualizar el estado de la lista de excursiones.
  * @property {() => void} onExcursionsFetchStart - Callback que se ejecuta al iniciar la búsqueda de excursiones.
  * @property {(error: Error | null) => void} onExcursionsFetchEnd - Callback que se ejecuta al finalizar la búsqueda de excursiones.
  * @property {boolean} isOnExcursionsPage - Indica si la página actual es la de excursiones.
@@ -68,13 +70,16 @@ function NavigationBarComponent({
 		// Limpiamos el observador cuando el componente se desmonta para evitar fugas de memoria.
 		return () => observer.disconnect();
 	}, []);
+	/**
+	 * Cierra el menú lateral (Offcanvas).
+	 * @returns {void}
+	 */
 	const handleCloseMenu = () => setShowMenu(false);
-	/** Abre el menú lateral (Offcanvas). */
+	/**
+	 * Abre el menú lateral (Offcanvas).
+	 * @returns {void}
+	 */
 	const handleShowMenu = () => setShowMenu(true);
-	const { login: isLoggedIn } = useSelector(
-		/** @param {RootState} state - Selector de Redux */
-		(state) => state.loginReducer
-	);
 
 	return (
 		/**

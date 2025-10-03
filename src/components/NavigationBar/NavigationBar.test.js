@@ -1,3 +1,4 @@
+import React from "react";
 import {
 	render,
 	screen,
@@ -46,15 +47,18 @@ global.ResizeObserver = class ResizeObserver {
 };
 
 /**
+ * @typedef {object} RenderOptions
+ * @property {object} [preloadedState] - Estado inicial para el store de Redux.
+ * @property {string} [route='/'] - Ruta inicial para MemoryRouter.
+ * @property {import('@reduxjs/toolkit').Store} [store] - Instancia de store de Redux. Si no se proporciona, se crea una.
+ * @property {{isAuthCheckComplete: boolean}} [authContextValue] - Valor para el AuthContext.
+ */
+
+/**
  * Función de ayuda para renderizar componentes que dependen de Redux y React Router.
- * Crea un store de Redux de prueba y envuelve el componente en Provider y MemoryRouter.
  * @param {React.ReactElement} ui - El componente a renderizar.
- * @param {object} [options] - Opciones adicionales.
- * @param {object} [options.preloadedState] - Estado inicial para el store de Redux.
- * @param {string} [options.route='/'] - Ruta inicial para MemoryRouter.
- * @param {import('@reduxjs/toolkit').Store} [options.store] - Instancia de store de Redux para usar. Si no se proporciona, se crea una nueva.
- * @param isOnExcursionsPage - Indica si la ruta inicial es la página de excursiones.
- * @returns El resultado de la función `render` de Testing Library.
+ * @param {RenderOptions} [options] - Opciones de renderizado.
+ * @returns {import("@testing-library/react").RenderResult} - El resultado de la función `render` de Testing Library.
  */
 const renderWithProviders = (
 	ui,
