@@ -57,7 +57,7 @@ const renderWithProviders = (
 ) => {
 	const store = configureStore({
 		reducer: { loginReducer },
-		preloadedState: { loginReducer: preloadedState.loginReducer },
+		preloadedState,
 	});
 
 	const Wrapper = ({ children }) => (
