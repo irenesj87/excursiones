@@ -1,9 +1,8 @@
 import React from "react";
 
 /**
- * Un componente de React que captura errores de JavaScript en cualquier parte de su árbol de componentes hijo,
- * registra esos errores y muestra una UI de respaldo en lugar del árbol de componentes que se ha roto.
- *
+ * Componente que captura errores de JavaScript en cualquier parte de su árbol de componentes hijo, registra esos errores 
+ * y muestra una UI de respaldo en lugar del árbol de componentes que se ha roto.
  * @param {object} props - Las propiedades del componente.
  * @param {React.ReactNode} props.children - Los componentes hijos que el ErrorBoundary protegerá.
  * @param {React.ReactNode} props.fallback - La UI que se mostrará cuando ocurra un error.
