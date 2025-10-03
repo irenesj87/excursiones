@@ -50,7 +50,7 @@ const AuthNav = ({ onCloseMenu }) => {
 	const { isAuthCheckComplete } = useAuthContext();
 
 	// Para evitar el "salto" del esqueleto, no reaccionamos al estado de Redux que cambia durante la comprobación.
-	// En su lugar, cogemos una "pista" inicial de sessionStorage. Si hay un token, es muy probable que el usuario esté
+	// En su lugar, tomamos una "pista" inicial de sessionStorage. Si hay un token, es muy probable que el usuario esté
 	// logueado, por lo que mostramos el esqueleto correspondiente desde el principio.
 	const [likelyLoggedIn] = useState(getInitialAuthState);
 
