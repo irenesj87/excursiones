@@ -9,9 +9,13 @@ import React, { createContext, useContext } from "react";
  * Contexto para proporcionar el estado de la comprobación de autenticación a los componentes anidados.
  * @type {React.Context<AuthContextType | undefined>}
  */
-export const AuthContext = createContext(undefined);
+export const AuthContext = createContext(
+	// El valor inicial es `undefined` para permitir la comprobación en `useAuthContext`
+	// y asegurar que el hook se use dentro de un `AuthProvider`.
+	undefined
+);
 
-/** 
+/**
  * Hook personalizado para acceder fácilmente al AuthContext.
  * @returns {AuthContextType} El contexto de autenticación.
  */

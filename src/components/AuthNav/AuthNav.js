@@ -33,8 +33,8 @@ const getInitialAuthState = () => {
 };
 
 /**
- * Renderiza la navegación condicionalmente (`UserNav` o `GuestNav`) según el estado de autenticación.
- * Muestra un esqueleto de carga optimizado para evitar cambios de layout (layout shifts) durante la verificación inicial.
+ * Renderiza la navegación condicionalmente (`UserNav` o `GuestNav`) según el estado de autenticación del usuario.
+ * Muestra esqueletos de carga optimizados para evitar cambios de layout (layout shifts) durante la verificación inicial.
  * @param {AuthNavProps} props - Las propiedades del componente.
  * @returns {React.ReactElement} - El componente de navegación adecuado.
  */
@@ -49,14 +49,9 @@ const AuthNav = ({ onCloseMenu }) => {
 	// Obtenemos el estado de la comprobación de autenticación desde el contexto.
 	const { isAuthCheckComplete } = useAuthContext();
 
-	// Para evitar el "salto" del esqueleto, no reaccionamos al estado de Redux que cambia
-	// durante la comprobación. En su lugar, tomamos una "pista" inicial de sessionStorage.
-	// Si hay un token, es muy probable que el usuario esté logueado, por lo que mostramos
-	// el esqueleto correspondiente desde el principio. Esto estabiliza el layout.
-	/**
-	 * likelyLoggedIn: Almacena una pista inicial sobre si el usuario podría estar logueado, basada en sessionStorage,
-	 * para renderizar el esqueleto correcto y evitar un "layout shift".
-	 */
+	// Para evitar el "salto" del esqueleto, no reaccionamos al estado de Redux que cambia durante la comprobación.
+	// En su lugar, tomamos una "pista" inicial de sessionStorage. Si hay un token, es muy probable que el usuario esté
+	// logueado, por lo que mostramos el esqueleto correspondiente desde el principio.
 	const [likelyLoggedIn] = useState(getInitialAuthState);
 
 	if (!isAuthCheckComplete) {
@@ -72,6 +67,9 @@ const AuthNav = ({ onCloseMenu }) => {
 	return (
 		<ErrorBoundary fallback={<GuestNavSkeleton />}>
 			<Suspense
+				/* Se usa el fallback porque UserNav y GuestNav cargan de manera perezosa y puede haber un momento
+				en el que isAuthCheckComplete sea true pero los componentes mencionados no se han conseguido cargar
+				todavía */
 				fallback={isLoggedIn ? <UserNavSkeleton /> : <GuestNavSkeleton />}
 			>
 				{isLoggedIn ? (
