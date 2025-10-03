@@ -47,8 +47,7 @@ const AuthNav = ({ onCloseMenu }) => {
 	);
 
 	// Obtenemos el estado de la comprobación de autenticación desde el contexto.
-	const authContext = useAuthContext();
-	const isAuthCheckComplete = authContext?.isAuthCheckComplete ?? false;
+	const { isAuthCheckComplete } = useAuthContext();
 
 	// Para evitar el "salto" del esqueleto, no reaccionamos al estado de Redux que cambia
 	// durante la comprobación. En su lugar, tomamos una "pista" inicial de sessionStorage.
