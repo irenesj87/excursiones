@@ -34,7 +34,7 @@ const getInitialAuthState = () => {
 
 /**
  * Renderiza la navegación condicionalmente (`UserNav` o `GuestNav`) según el estado de autenticación del usuario.
- * Muestra esqueletos de carga optimizado para evitar cambios de layout (layout shifts) durante la verificación inicial.
+ * Muestra esqueletos de carga optimizados para evitar cambios de layout (layout shifts) durante la verificación inicial.
  * @param {AuthNavProps} props - Las propiedades del componente.
  * @returns {React.ReactElement} - El componente de navegación adecuado.
  */
