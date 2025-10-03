@@ -1,4 +1,6 @@
 import React, { useState, lazy, Suspense } from "react";
+import { useSelector } from "react-redux";
+import { useAuthContext } from "../../context/AuthContext";
 import ErrorBoundary from "../ErrorBoundary";
 import UserNavSkeleton from "../UserNav/UserNavSkeleton";
 import GuestNavSkeleton from "../GuestNav/GuestNavSkeleton";
@@ -9,9 +11,11 @@ const UserNav = lazy(() => import("../UserNav"));
 const GuestNav = lazy(() => import("../GuestNav"));
 
 /**
+ * @typedef {import('types.js').RootState} RootState
+ */
+
+/**
  * @typedef {object} AuthNavProps
- * @property {boolean} isAuthCheckComplete - Indica si la comprobación inicial de autenticación ha finalizado.
- * @property {boolean} isLoggedIn - Indica si el usuario está actualmente logueado.
  * @property {() => void} [onCloseMenu] - Función opcional para cerrar el menú de navegación, pasada a los componentes hijos.
  */
 
@@ -21,7 +25,7 @@ const GuestNav = lazy(() => import("../GuestNav"));
  */
 const getInitialAuthState = () => {
 	// Comprobación para evitar errores en entornos de renderizado en servidor (SSR),
-	// donde el objeto `window` (y por tanto `sessionStorage`) no está disponible.
+	// donde el objeto `window` (y por tanto `sessionStorage`) no está disponible. Usamos `globalThis` para compatibilidad universal.
 	if (globalThis.window === undefined) {
 		return false;
 	}
@@ -29,13 +33,22 @@ const getInitialAuthState = () => {
 };
 
 /**
- * Componente AuthNav que renderiza la navegación adecuada según el estado de autenticación del usuario.
- * Muestra un esqueleto de carga mientras se verifica la autenticación. Hay dos esqueletos, uno para usuarios 
- * autenticados y otro para invitados.
+ * Renderiza la navegación condicionalmente (`UserNav` o `GuestNav`) según el estado de autenticación.
+ * Muestra un esqueleto de carga optimizado para evitar cambios de layout (layout shifts) durante la verificación inicial.
  * @param {AuthNavProps} props - Las propiedades del componente.
  * @returns {React.ReactElement} - El componente de navegación adecuado.
  */
-const AuthNav = ({ isAuthCheckComplete, isLoggedIn, onCloseMenu }) => {
+const AuthNav = ({ onCloseMenu }) => {
+	const { login: isLoggedIn } = useSelector(
+		/**
+		 * @param {RootState} state - El estado global de la aplicación Redux.
+		 * @returns {{login: boolean}} El estado de login del usuario.
+		 */ (state) => state.loginReducer
+	);
+
+	// Obtenemos el estado de la comprobación de autenticación desde el contexto.
+	const { isAuthCheckComplete } = useAuthContext();
+
 	// Para evitar el "salto" del esqueleto, no reaccionamos al estado de Redux que cambia
 	// durante la comprobación. En su lugar, tomamos una "pista" inicial de sessionStorage.
 	// Si hay un token, es muy probable que el usuario esté logueado, por lo que mostramos

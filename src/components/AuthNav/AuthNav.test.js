@@ -1,13 +1,15 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import React from "react";
+import { Provider } from "react-redux";
+import { configureStore, createSlice, combineReducers } from "@reduxjs/toolkit";
 import { jest } from "@jest/globals";
 import AuthNav from "./AuthNav";
 import UserNav from "../UserNav";
 import GuestNav from "../GuestNav";
-// Importamos la implementación real del ErrorBoundary directamente desde su fichero.
-// Esto es necesario para poder usarlo en el test de error, ya que el import normal ("../ErrorBoundary") está mockeado.
-import RealErrorBoundary from "../ErrorBoundary/ErrorBoundary";
+import { AuthContext } from "../../context/AuthContext";
+import themeSliceReducer from "../../slices/themeSlice";
+import filterSliceReducer from "../../slices/filterSlice";
 
 // Mock de los componentes esqueleto y de navegación para aislar AuthNav en las pruebas.
 jest.mock(
@@ -27,22 +29,65 @@ jest.mock(
 
 // Mockeamos los componentes que se cargan con React.lazy como funciones de jest.
 // Esto nos permite cambiar su comportamiento en cada test (ej. simular un renderizado exitoso o un error).
-jest.mock("../UserNav", () => jest.fn());
-jest.mock("../GuestNav", () => jest.fn());
+jest.mock("../UserNav");
+jest.mock("../GuestNav");
 
-// Mock del ErrorBoundary como una función de jest, para poder cambiar su implementación en tests específicos.
-// Por defecto, actúa como un Fragment que no hace nada.
-jest.mock("../ErrorBoundary", () =>
-	jest.fn().mockImplementation(
-		/**
-		 * @param {{children: React.ReactNode}} props - Las propiedades del componente, que incluyen los hijos a renderizar.
-		 * @returns {React.ReactElement} Los componentes hijos envueltos en un fragmento.
-		 */
-		({ children }) => <>{children}</>
-	)
-);
-// Importamos el mock después de definirlo.
-import ErrorBoundary from "../ErrorBoundary";
+// Creamos un slice de Redux simulado para los tests.
+// Esto nos da un reducer simple y bien tipado para usar en nuestro store de prueba.
+const mockLoginSlice = createSlice({
+	name: "login",
+	initialState: { login: false },
+	reducers: {},
+});
+const loginReducer = mockLoginSlice.reducer;
+
+/**
+ * @typedef {object} RenderOptions
+ * @property {object} [preloadedState] - Estado inicial para el store de Redux.
+ * @property {import('@reduxjs/toolkit').Store} [store] - Instancia de store de Redux. Si no se proporciona, se crea una.
+ * @property {{isAuthCheckComplete: boolean}} [authContextValue] - Valor para el AuthContext.
+ */
+
+/**
+ * Función de utilidad para renderizar componentes que dependen de Redux y AuthContext.
+ * @param {React.ReactElement} ui - El componente a renderizar.
+ * @param {RenderOptions & import('@testing-library/react').RenderOptions} [options] - Opciones de configuración.
+ * @returns {import("@testing-library/react").RenderResult} - El resultado de la función `render` de Testing Library.
+ */
+const renderWithProviders = (
+	ui,
+	{
+		// El estado inicial para el store de Redux.
+		preloadedState = {},
+		// Crea automáticamente un store si no se pasa uno.
+		store = configureStore({
+			reducer: combineReducers({
+				loginReducer,
+				themeReducer: themeSliceReducer,
+				filterReducer: filterSliceReducer,
+			}),
+			preloadedState,
+		}),
+		authContextValue = { isAuthCheckComplete: true },
+		...renderOptions
+	} = {}
+) => {
+	/**
+	 * Componente Wrapper que proporciona el store de Redux y el contexto de autenticación.
+	 * @param {object} props - Propiedades del wrapper.
+	 * @param {React.ReactNode} props.children - Componentes hijos a renderizar.
+	 * @returns {React.ReactElement} El componente envuelto en los providers.
+	 */
+	const Wrapper = ({ children }) => (
+		<Provider store={store}>
+			<AuthContext.Provider value={authContextValue}>
+				{children}
+			</AuthContext.Provider>
+		</Provider>
+	);
+
+	return render(ui, { wrapper: Wrapper, ...renderOptions });
+};
 
 /**
  * Suite de pruebas para el componente AuthNav.
@@ -56,26 +101,15 @@ describe("AuthNav Component", () => {
 		(UserNav).mockClear();
 		/** @type {jest.Mock} */
 		(GuestNav).mockClear();
-		/** @type {jest.Mock} */
-		(/** @type {unknown} */ (ErrorBoundary)).mockClear();
-		// Proporcionamos una implementación por defecto para los componentes lazy.
+		// Proporcionamos una implementación por defecto para los componentes lazy y ErrorBoundary.
 		/** @type {jest.Mock} */
 		(UserNav).mockImplementation(({ onCloseMenu }) => (
 			<button type="button" data-testid="user-nav" onClick={onCloseMenu} />
 		));
-		/** @type {jest.Mock} */
-		(GuestNav).mockImplementation(({ onCloseMenu }) => (
-			<button type="button" data-testid="guest-nav" onClick={onCloseMenu} />
-		));
-		// Restauramos la implementación por defecto del ErrorBoundary
-		/** @type {jest.Mock} */
-		(/** @type {unknown} */ (ErrorBoundary)).mockImplementation(
-			/**
-			 * @param {{children: React.ReactNode}} props - Las propiedades del componente, que incluyen los hijos a renderizar.
-			 * @returns {React.ReactElement} Los componentes hijos envueltos en un fragmento.
-			 */
-
-			({ children }) => <>{children}</>
+		/** @type {jest.Mock} */ (GuestNav).mockImplementation(
+			({ onCloseMenu }) => (
+				<button type="button" data-testid="guest-nav" onClick={onCloseMenu} />
+			)
 		);
 		mockOnClose.mockClear();
 	});
@@ -95,13 +129,9 @@ describe("AuthNav Component", () => {
 
 		test("muestra GuestNavSkeleton si no hay token en sessionStorage", () => {
 			getItemSpy.mockReturnValue(null);
-			render(
-				<AuthNav
-					isAuthCheckComplete={false}
-					isLoggedIn={false}
-					onCloseMenu={mockOnClose}
-				/>
-			);
+			renderWithProviders(<AuthNav onCloseMenu={mockOnClose} />, {
+				authContextValue: { isAuthCheckComplete: false },
+			});
 
 			// Verificamos que se renderiza el esqueleto de invitado
 			expect(screen.getByTestId("guest-nav-skeleton")).toBeInTheDocument();
@@ -110,13 +140,9 @@ describe("AuthNav Component", () => {
 
 		test("muestra UserNavSkeleton si hay un token en sessionStorage", () => {
 			getItemSpy.mockReturnValue("fake-token");
-			render(
-				<AuthNav
-					isAuthCheckComplete={false}
-					isLoggedIn={false}
-					onCloseMenu={mockOnClose}
-				/>
-			);
+			renderWithProviders(<AuthNav onCloseMenu={mockOnClose} />, {
+				authContextValue: { isAuthCheckComplete: false },
+			});
 
 			// Verificamos que se renderiza el esqueleto de usuario
 			expect(screen.getByTestId("user-nav-skeleton")).toBeInTheDocument();
@@ -128,13 +154,12 @@ describe("AuthNav Component", () => {
 
 	// Test para el estado de "invitado" (no logueado)
 	test("muestra GuestNav cuando el usuario no está logueado", async () => {
-		render(
-			<AuthNav
-				isAuthCheckComplete={true}
-				isLoggedIn={false}
-				onCloseMenu={mockOnClose}
-			/>
-		);
+		renderWithProviders(<AuthNav onCloseMenu={mockOnClose} />, {
+			authContextValue: { isAuthCheckComplete: true },
+			preloadedState: {
+				loginReducer: { login: false, user: null, token: null },
+			},
+		});
 
 		// Verificamos que se renderiza el fallback de Suspense inicialmente.
 		expect(screen.getByTestId("guest-nav-skeleton")).toBeInTheDocument();
@@ -153,13 +178,12 @@ describe("AuthNav Component", () => {
 
 	// Test para el estado de "usuario logueado"
 	test("muestra UserNav cuando el usuario está logueado", async () => {
-		render(
-			<AuthNav
-				isAuthCheckComplete={true}
-				isLoggedIn={true}
-				onCloseMenu={mockOnClose}
-			/>
-		);
+		renderWithProviders(<AuthNav onCloseMenu={mockOnClose} />, {
+			authContextValue: { isAuthCheckComplete: true },
+			preloadedState: {
+				loginReducer: { login: true, user: { name: "Test" }, token: "token" },
+			},
+		});
 
 		// Verificamos que se renderiza el fallback de Suspense inicialmente.
 		expect(screen.getByTestId("user-nav-skeleton")).toBeInTheDocument();
@@ -193,23 +217,18 @@ describe("AuthNav Component", () => {
 		});
 
 		test("muestra el fallback del ErrorBoundary en lugar de romper la app", async () => {
-			// Para este test, usamos la implementación real del ErrorBoundary.
-			/** @type {jest.Mock} */
-			(/** @type {unknown} */ (ErrorBoundary)).mockImplementation(
-				/**
-				 * @param {{children: React.ReactNode, fallback: React.ReactNode}} props - Propiedades para el ErrorBoundary real.
-				 * @returns {React.ReactElement} El componente ErrorBoundary real.
-				 */
-				(props) => <RealErrorBoundary {...props} />
-			);
-
 			// Forzamos que el componente UserNav falle al renderizar.
 			/** @type {jest.Mock} */
 			(UserNav).mockImplementation(() => {
 				throw new Error("Simulated network error");
 			});
 
-			render(<AuthNav isAuthCheckComplete={true} isLoggedIn={true} />);
+			renderWithProviders(<AuthNav />, {
+				authContextValue: { isAuthCheckComplete: true },
+				preloadedState: {
+					loginReducer: { login: true, user: { name: "Test" }, token: "token" },
+				},
+			});
 
 			// El ErrorBoundary debería capturar el error y renderizar su fallback (GuestNavSkeleton).
 			expect(

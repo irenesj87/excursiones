@@ -1,6 +1,5 @@
 import React, { useState, useLayoutEffect, memo, useRef } from "react";
 import { Nav, Navbar, Container, Offcanvas } from "react-bootstrap";
-import { useSelector } from "react-redux"; // useSelector se mantiene para isLoggedIn
 import Logo from "../Logo";
 import SearchBar from "../SearchBar";
 import AuthNav from "../AuthNav";
@@ -11,9 +10,11 @@ import "../../css/Themes.css";
 /** @typedef {import('types.js').RootState} RootState */
 
 /**
+ * @typedef {import('types.js').Excursion} Excursion
+ */
+/**
  * @typedef {object} NavigationBarProps
- * @property {(excursions: any[]) => void} onFetchSuccess - Función para actualizar el estado de la lista de excursiones.
- * @property {boolean} isAuthCheckComplete - Indica si la comprobación de autenticación ha finalizado.
+ * @property {(excursions: Excursion[]) => void} onFetchSuccess - Función para actualizar el estado de la lista de excursiones.
  * @property {() => void} onExcursionsFetchStart - Callback que se ejecuta al iniciar la búsqueda de excursiones.
  * @property {(error: Error | null) => void} onExcursionsFetchEnd - Callback que se ejecuta al finalizar la búsqueda de excursiones.
  * @property {boolean} isOnExcursionsPage - Indica si la página actual es la de excursiones.
@@ -26,7 +27,6 @@ import "../../css/Themes.css";
  */
 function NavigationBarComponent({
 	onFetchSuccess,
-	isAuthCheckComplete,
 	onExcursionsFetchStart,
 	onExcursionsFetchEnd,
 	isOnExcursionsPage,
@@ -70,19 +70,16 @@ function NavigationBarComponent({
 		// Limpiamos el observador cuando el componente se desmonta para evitar fugas de memoria.
 		return () => observer.disconnect();
 	}, []);
-	const handleCloseMenu = () => setShowMenu(false);
-	/** Abre el menú lateral (Offcanvas). */
-	const handleShowMenu = () => setShowMenu(true);
-
 	/**
-	 * Variable que guarda el modo de tema actual (claro u oscuro) del estado de Redux. Se inicializa con la preferencia del
-	 * sistema o un valor guardado en localStorage.
+	 * Cierra el menú lateral (Offcanvas).
+	 * @returns {void}
 	 */
-	// Variable que dice si hay un usuario logueado o no
-	const { login: isLoggedIn } = useSelector(
-		/** @param {RootState} state - Selector de Redux */
-		(state) => state.loginReducer
-	);
+	const handleCloseMenu = () => setShowMenu(false);
+	/**
+	 * Abre el menú lateral (Offcanvas).
+	 * @returns {void}
+	 */
+	const handleShowMenu = () => setShowMenu(true);
 
 	return (
 		/**
@@ -129,11 +126,7 @@ function NavigationBarComponent({
 					<Nav
 						className={`${styles.authNavItems} d-none d-lg-flex flex-row align-items-center`}
 					>
-						<AuthNav
-							isAuthCheckComplete={isAuthCheckComplete}
-							isLoggedIn={isLoggedIn}
-							onCloseMenu={handleCloseMenu}
-						/>
+						<AuthNav onCloseMenu={handleCloseMenu} />
 					</Nav>
 					<ThemeToggleButton className="d-none d-lg-flex" />
 					{/* Toggle Offcanvas (Hamburguesa) */}
@@ -174,11 +167,7 @@ function NavigationBarComponent({
 					<Offcanvas.Body>
 						<Nav className="d-flex flex-column pt-2">
 							<ThemeToggleButton className="w-100 mb-2" showText={true} />
-							<AuthNav
-								isAuthCheckComplete={isAuthCheckComplete}
-								isLoggedIn={isLoggedIn}
-								onCloseMenu={handleCloseMenu}
-							/>
+							<AuthNav onCloseMenu={handleCloseMenu} />
 						</Nav>
 					</Offcanvas.Body>
 				</Offcanvas>
