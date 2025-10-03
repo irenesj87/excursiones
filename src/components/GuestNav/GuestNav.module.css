@@ -9,24 +9,21 @@
 	cursor: pointer;
 	user-select: none;
 	border-radius: 0.375rem;
-	background-color: transparent;
-	border: 1px solid var(--register-link-border-color);
-	color: var(--register-link-color);
-	transition: none;
+	/* Restauramos el borde para que coincida con el estilo de los botones outline */
+	border: 1px solid;
 }
 
-.registerLink:hover {
-	background-color: var(--theme-toggle-btn-bg-hover);
+.registerLink:hover,
+.registerLink:focus {
+	/* Unificamos el comportamiento del hover para que sea idéntico al de "Inicia Sesión" */
+	background-color: var(--navbar-color);
+	color: var(
+		--color-primary
+	); /* Usamos !important para asegurar la precedencia */
 	outline: none;
 	box-shadow: none;
 }
 
-/* Estilo para el NavLink activo */
-.registerLink.active {
-	background-color: var(--filter-pill-bg-hover);
-	border-color: var(--filter-pill-border-hover);
-	color: var(--text-color);
-}
 
 .loginLink {
 	/* Forzamos los colores para que anulen los estilos por defecto de Nav.Link */

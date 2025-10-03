@@ -1,9 +1,8 @@
 .customNavbar {
 	padding-top: 1rem;
 	padding-bottom: 1rem;
-	width: 100%;
-	background-color: var(--body-bg);
-	/* Por defecto, la barra de navegación tiene un borde inferior en todas las pantallas. */
+	background-color: var(--navbar-bg);
+	transition: none;
 	border-bottom: 1px solid var(--separator-color);
 	z-index: 1030; /* Asegura que la barra de navegación esté por encima de otros elementos sticky */
 }
@@ -16,28 +15,57 @@
 	}
 }
 
-.themeToggleBtn {
-	background-color: transparent;
-	transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
-	color: var(--theme-toggle-btn-color);
-	border: none;
-	padding: 3px 6px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	line-height: 1;
+/* --- Estilos para elementos internos de la Navbar --- */
+
+/* Usamos :global para apuntar a las clases de Bootstrap sin que se modifiquen */
+:global(.navbar-brand) {
+	/* Forzamos el color usando la variable de Bootstrap para asegurar que se aplique sobre los estilos por defecto del enlace */
+	--bs-btn-color: var(--navbar-brand-color);
+	color: var(
+		--navbar-brand-color
+	); /* Usamos !important como último recurso para asegurar la visibilidad */
 }
 
-.themeIcon {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 1.2rem; /* Tamaño base del icono */
+:global(.navbar-brand:hover) {
+	color: var(--navbar-brand-color);
 }
 
-.themeToggleBtn:hover {
+:global(.navbar .nav-link) {
+	color: var(--navbar-color);
+}
+
+:global(.navbar .nav-link:hover) {
+	color: white;
+}
+
+/* --- Botones de Login/Registro en la Navbar --- */
+
+/* Botón "Iniciar Sesión" en modo claro (outline) */
+:global(html.light .navbar .btn-login) {
 	background-color: transparent;
-	color: var(--theme-toggle-btn-color); /* Mantenemos el color del icono */
+	border: 1px solid var(--navbar-color);
+	color: var(--navbar-color);
+	/* Al pasar el ratón, el texto se vuelve del color primario y el fondo blanco */
+	transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+:global(html.light .navbar .btn-login:hover) {
+	background-color: var(--navbar-color);
+	color: var(--color-primary);
+}
+
+/* Botón "Iniciar Sesión" en modo oscuro (sólido) */
+:global(html.dark .navbar .btn-login) {
+	background-color: transparent;
+	border: 1px solid var(--navbar-color);
+	color: var(--navbar-color);
+	transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+:global(html.dark .navbar .btn-login:hover) {
+	background-color: var(--navbar-color);
+	/* El color del texto en hover será el del fondo de la navbar oscura */
+	color: var(--navbar-bg);
 }
 
 .authNavItems {
@@ -52,10 +80,18 @@
 }
 
 /* Elimina el borde del botón de hamburguesa y su sombra al enfocarlo */
-.navbarToggler {
-	border: none;
+.navbarToggler,
+.navbarToggler:focus {
+	border: 1px solid var(--navbar-toggler-border-color);
+	box-shadow: none;
 }
 
-.navbarToggler:focus {
-	box-shadow: none;
+/* Cambiamos el color del icono de la hamburguesa */
+:global(.navbar-toggler-icon) {
+	--bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='#{var(--navbar-toggler-icon-color)}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Ajuste para el foco del toggler */
+:global(.navbar-toggler:focus) {
+	box-shadow: var(--navbar-toggler-focus-shadow);
 }

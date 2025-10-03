@@ -1,5 +1,5 @@
 import React from "react";
-import { Nav } from "react-bootstrap";
+import { Nav, Button } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import styles from "./GuestNav.module.css";
 import { ROUTES } from "../../constants";
@@ -18,21 +18,24 @@ import { ROUTES } from "../../constants";
 const GuestNav = ({ onCloseMenu = () => {} }) => (
 	<>
 		<Nav.Link
-			className={`${styles.registerLink} me-lg-3`}
 			as={NavLink}
 			to={ROUTES.REGISTER}
+			href={ROUTES.REGISTER} // Añadimos href para ayudar a TypeScript
 			onClick={onCloseMenu}
+			className={`${styles.registerLink} btn-outline me-lg-3`}
 		>
 			Regístrate
 		</Nav.Link>
-		<Nav.Link
-			as={Link}
-			to={ROUTES.LOGIN}
-			onClick={onCloseMenu}
-			className={styles.loginLink}
-		>
-			Inicia sesión
-		</Nav.Link>
+		{/* Envolvemos el Button con Link para evitar conflictos de tipos con la prop 'as' */}
+		<Link to={ROUTES.LOGIN} onClick={onCloseMenu}>
+			<Button
+				variant="" // <-- Añadimos esto para anular los estilos por defecto de React-Bootstrap
+				// La clase 'btn-login' es para nuestros estilos personalizados.
+				className="btn-login w-100"
+			>
+				Inicia sesión
+			</Button>
+		</Link>
 	</>
 );
 

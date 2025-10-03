@@ -1,0 +1,18 @@
+.themeToggleBtn {
+	background-color: transparent;
+	color: var(--theme-toggle-btn-color);
+	border: none;
+	padding: 3px 6px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 1;
+}
+
+.themeIcon {
+	font-size: 1.2rem; /* Tamaño base del icono */
+}
+
+.themeToggleBtn:hover {
+	background-color: transparent;
+}

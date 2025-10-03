@@ -1,101 +1,159 @@
 /* ======================================== */
-/* --- ESTILOS PARA MODO CLARO --- */
+/* 1. PRIMITIVAS (TOKENS DE DISEÑO) */
 /* ======================================== */
-html.light {
-	/* --- Paleta y Colores Base --- */
-	--primary-color: hsl(150, 26%, 27%); /* Verde Bosque */
-	--primary-color-rgb: 48, 90, 69;
-	--primary-color-hover: hsl(150, 26%, 22%); /* Verde Bosque más oscuro para hover */
-	--accent-color: hsl(145, 30%, 40%); /* Verde Pradera */
-	--heading-color: hsl(150, 15%, 25%); /* Gris verdoso oscuro */
-	--body-bg: hsl(30, 20%, 96%); /* Gris piedra muy claro (casi blanco) */
+/* Estos son los valores brutos y no cambian con el tema. */
+/* Definen la paleta de colores disponible en todo el proyecto. */
+:root {
+	/* Paleta de Verdes */
+	--color-green-100: hsl(150, 35%, 65%);
+	--color-green-200: hsl(150, 35%, 60%);
+	--color-green-300: hsl(145, 35%, 60%);
+	--color-green-500: hsl(145, 30%, 40%);
+	--color-green-700: hsl(150, 26%, 27%);
+	--color-green-800: hsl(150, 26%, 22%);
+	--color-green-900: hsl(150, 15%, 12%);
 
-	/* --- Texto --- */
-	--text-color: hsl(150, 10%, 20%); /* Gris oscuro para texto */
-	--text-secondary: hsl(150, 5%, 45%); /* Gris medio */
+	/* Paleta de Grises (con tinte verdoso) */
+	--color-gray-green-100: hsl(140, 30%, 94%);
+	--color-gray-green-200: hsl(150, 15%, 88%);
+	--color-gray-green-400: hsl(150, 10%, 65%);
+	--color-gray-green-500: hsl(150, 5%, 45%);
+	--color-gray-green-700: hsl(150, 15%, 25%);
+	--color-gray-green-800: hsl(150, 10%, 22%);
+	--color-gray-green-900: hsl(150, 10%, 20%);
+	--color-gray-green-950: hsl(150, 10%, 16%);
+
+	/* Paleta de Grises (neutros) */
+	--color-gray-neutral-100: hsl(30, 20%, 96%);
+	--color-gray-neutral-200: hsl(210, 20%, 96%);
+	--color-gray-neutral-300: hsl(210, 15%, 94%);
+	--color-gray-neutral-400: hsl(210, 15%, 90%);
+	--color-gray-neutral-500: hsl(210, 15%, 88%);
+	--color-gray-neutral-600: hsl(210, 15%, 85%);
+
+	/* Blancos y Negros */
+	--color-white: #ffffff;
+	--color-white-off: hsl(0, 0%, 98%);
+	--color-black-soft: hsl(140, 15%, 10%);
+
+	/* Colores de Éxito, Advertencia y Peligro */
+	--color-success-light: hsl(145, 55%, 40%);
+	--color-warning-light: hsl(40, 75%, 55%);
+	--color-danger-light: hsl(0, 60%, 40%);
+	--color-success-dark: hsl(145, 50%, 60%);
+	--color-warning-dark: hsl(43, 80%, 65%);
+	--color-danger-dark: hsl(355, 75%, 70%);
+}
+
+/* ======================================== */
+/* 2. VARIABLES SEMÁNTICAS Y DE COMPONENTES */
+/* ======================================== */
+
+/* --- MODO CLARO (LIGHT) --- */
+html.light {
+	/* --- 2a. Variables Semánticas --- */
+	--color-primary: var(--color-green-700);
+	--color-primary-hover: var(--color-green-800);
+	--color-accent: var(--color-green-500);
+	--color-background-body: var(--color-gray-neutral-100);
+	--color-background-surface: var(
+		--color-white
+	); /* Para tarjetas, modales, etc. */
+	--color-text-base: var(--color-gray-green-900);
+	--color-text-muted: var(--color-gray-green-500);
+	--color-text-on-primary: var(--color-white);
+	--color-border-default: var(--color-gray-neutral-500);
+	--color-border-subtle: var(--color-gray-green-100);
+
+	/* --- 2b. Variables de Componente --- */
+
+	/* --- Navbar --- */
+	--navbar-bg: var(--color-primary);
+	--navbar-color: var(--color-white-off);
+	--navbar-brand-color: var(--color-white);
+	--navbar-toggler-icon-color: var(--color-white);
+	--navbar-toggler-border-color: rgba(255, 255, 255, 0.25);
+	--navbar-toggler-focus-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.5);
 
 	/* --- Bordes y Separadores --- */
-	--separator-color: hsl(140, 30%, 94%); /* Verde-grisáceo muy claro */
+	--separator-color: var(--color-border-subtle);
 
 	/* --- Botones y Enlaces --- */
-	--login-btn-text: #ffffff;
-	--login-btn-bg: var(--primary-color);
-	--login-btn-border: var(--primary-color);
-	--login-btn-bg-hover: var(--primary-color-hover);
-	--login-btn-border-hover: var(--primary-color-hover);
+	--login-btn-text: var(--color-text-on-primary);
+	--login-btn-bg: var(--color-primary);
+	--login-btn-border: var(--color-primary);
+	/* En la navbar, el botón de login será outline. Estos :hover son para fuera de la navbar */
+	--login-btn-bg-hover: var(--color-primary-hover);
+	--login-btn-border-hover: var(--color-primary-hover);
 
-	--register-link-color: var(--heading-color);
-	--register-link-border-color: hsl(210, 15%, 90%);
-	--register-link-bg-hover: hsl(210, 15%, 94%);
-	--nav-link-active-bg: hsl(210, 15%, 90%);
-	--nav-link-active-border: hsl(210, 15%, 85%);
+	--register-link-color: var(--color-text-base);
+	--register-link-bg-hover: var(--color-gray-neutral-300);
+	--nav-link-active-bg: var(--color-gray-neutral-400);
+	--nav-link-active-border: var(--color-gray-neutral-600);
 
-	--switcher-link-color: var(--primary-color);
+	--switcher-link-color: var(--color-primary);
 
-	--logout-bg-color: hsl(210, 15%, 94%); /* Gris claro */
-	--logout-bg-color-hover: hsl(210, 15%, 90%); /* Un poco más oscuro */
-	--logout-text-color: var(--text-color);
+	--logout-bg-color: var(--color-gray-neutral-300);
+	--logout-bg-color-hover: var(--color-gray-neutral-400);
+	--logout-text-color: var(--color-text-base);
 
-	--theme-toggle-btn-color: var(--text-secondary);
+	--theme-toggle-btn-color: var(--navbar-color);
 	--theme-toggle-btn-border-color: var(--separator-color);
-	--theme-toggle-btn-bg-hover: hsl(140, 30%, 94%);
+	--theme-toggle-btn-bg-hover: var(--color-gray-green-100);
 
 	/* --- Tarjetas (ExcursionCard, UserInfo) --- */
-	--excursion-card-bg: #ffffff;
+	--excursion-card-bg: var(--color-background-surface);
 	--excursion-card-shadow: none;
-	--excursion-card-title-color: var(--heading-color);
-	--excursion-card-border: 1px solid hsl(210, 15%, 88%);
-	--excursion-card-icon-color: var(--primary-color);
-	--excursion-card-joined-status-text: var(--primary-color);
+	--excursion-card-title-color: var(--color-text-base);
+	--excursion-card-border: 1px solid var(--color-border-default);
+	--excursion-card-icon-color: var(--color-primary);
+	--excursion-card-joined-status-text: var(--color-primary);
 
 	/* --- Filtros --- */
-	--filter-container-bg: #ffffff; /* Fondo blanco para el contenedor de filtros */
-	--filter-title-color: var(
-		--heading-color
-	); /* Título oscuro sobre fondo blanco */
+	--filter-container-bg: var(--color-background-surface);
+	--filter-title-color: var(--color-text-base);
 
-	--filters-toggle-btn-color: var(--text-secondary);
+	--filters-toggle-btn-color: var(--color-text-muted);
 	--filters-toggle-btn-border: var(--separator-color);
-	--filters-toggle-btn-bg-hover: hsl(210, 15%, 94%);
-	--filters-toggle-btn-color-hover: var(--primary-color);
-	--filters-toggle-btn-border-hover: var(--accent-color);
-	--filters-toggle-btn-bg-active: var(--primary-color);
+	--filters-toggle-btn-bg-hover: var(--color-gray-neutral-300);
+	--filters-toggle-btn-color-hover: var(--color-primary);
+	--filters-toggle-btn-border-hover: var(--color-accent);
+	--filters-toggle-btn-bg-active: var(--color-primary);
 	--filters-toggle-btn-color-active: var(--login-btn-text);
-	--filters-toggle-btn-border-active: var(--primary-color);
+	--filters-toggle-btn-border-active: var(--color-primary);
 
 	--mobile-filters-bar-bg: var(--body-bg);
 	--mobile-filters-bar-border: var(--separator-color);
-	--filter-badge-bg: var(--primary-color);
+	--filter-badge-bg: var(--color-primary);
 	--filter-badge-text: var(--login-btn-text);
 
 	/* Píldoras de filtro (no seleccionadas) */
-	--filter-pill-bg: hsl(210, 20%, 96%); /* Gris muy claro */
-	--filter-pill-text: var(--text-color); /* Texto oscuro */
-	--filter-pill-border: hsl(210, 15%, 90%); /* Borde gris claro */
-	--filter-pill-bg-hover: hsl(210, 15%, 90%); /* Gris claro para hover */
-	--filter-pill-border-hover: hsl(210, 15%, 85%);
+	--filter-pill-bg: var(--color-gray-neutral-200);
+	--filter-pill-text: var(--color-text-base);
+	--filter-pill-border: var(--color-gray-neutral-400);
+	--filter-pill-bg-hover: var(--color-gray-neutral-400);
+	--filter-pill-border-hover: var(--color-gray-neutral-600);
 	/* Píldoras de filtro (seleccionadas) */
-	--filter-pill-bg-checked: hsl(210, 15%, 88%); /* Gris más oscuro */
-	--filter-pill-text-checked: var(--text-color); /* Texto oscuro */
-	--filter-pill-border-checked: hsl(210, 15%, 88%);
+	--filter-pill-bg-checked: var(--color-gray-neutral-500);
+	--filter-pill-text-checked: var(--color-text-base);
+	--filter-pill-border-checked: var(--color-gray-neutral-500);
 	--filter-pill-shadow-checked: none;
 
 	--filter-clear-btn-color-hover: hsl(347, 77%, 50%);
 
 	/* --- Footer --- */
-	--footer-bg: var(--primary-color); /* Verde oscuro */
-	--footer-text-color: hsl(210, 15%, 95%); /* Texto blanco para contraste */
-	--footer-border-top: var(
-		--primary-color-hover
-	); /* Borde superior más oscuro */
-	--footer-icon-bg: hsl(0, 0%, 100%);
-	--footer-icon-color: var(--text-secondary);
-	--footer-icon-bg-hover: hsl(0, 0%, 88%);
+	--footer-bg: var(--color-background-body);
+	--footer-text-color: var(--color-text-muted);
+	--footer-border-color: var(--color-gray-neutral-500);
+	--footer-border-top: var(--footer-border-color);
+	--footer-icon-bg: var(--color-white);
+	--footer-icon-color: var(--color-text-muted);
+	--footer-icon-bg-hover: var(--color-gray-neutral-500);
 
 	/* --- Indicadores de Dificultad (Bootstrap Overrides) --- */
-	--bs-success: hsl(145, 55%, 40%);
-	--bs-warning: hsl(40, 75%, 55%);
-	--bs-danger: hsl(0, 60%, 40%);
+	--bs-success: var(--color-success-light);
+	--bs-warning: var(--color-warning-light);
+	--bs-danger: var(--color-danger-light);
 
 	/* --- Variables para badges de dificultad --- */
 	--difficulty-low-bg: hsl(140, 70%, 86%); /* Verde más vivo */
@@ -106,115 +164,121 @@ html.light {
 	--difficulty-high-text: hsl(0, 70%, 33%);
 
 	/* --- Accesibilidad --- */
-	--focus-outline-color: var(--primary-color);
+	--focus-outline-color: var(--color-primary);
 
 	/* --- Estados (Error, Alerta) --- */
-	--color-bg-danger-subtle: hsl(0, 100%, 97%); /* Rojo muy claro */
+	--color-bg-danger-subtle: hsl(0, 100%, 97%);
 	--color-border-danger: hsl(0, 90%, 85%); /* Rojo suave */
 	--color-text-danger: hsl(0, 70%, 40%); /* Rojo oscuro para texto/iconos */
 }
 
 html.light body {
-	background-color: var(--body-bg);
-	color: var(--text-color);
+	background-color: var(--color-background-body);
+	color: var(--color-text-base);
 }
 
 /* ======================================== */
-/* 3. TEMA OSCURO (DARK) */
+/* --- MODO OSCURO (DARK) --- */
 /* ======================================== */
 html.dark {
-	/* --- Paleta y Colores Base --- */
-	--primary-color: hsl(150, 35%, 65%); /* Verde Bosque claro */
-	--primary-color-rgb: 139, 192, 165;
-	--primary-color-hover: hsl(150, 35%, 60%);
-	--accent-color: hsl(145, 35%, 60%); /* Verde Pradera claro */
-	--heading-color: hsl(150, 25%, 95%); /* Blanco con tinte verdoso */
-	--body-bg: hsl(150, 15%, 12%); /* Verde muy oscuro */
+	/* --- 2a. Variables Semánticas --- */
+	--color-primary: var(--color-green-100);
+	--color-primary-hover: var(--color-green-200);
+	--color-accent: var(--color-green-300);
+	--color-background-body: var(--color-green-900);
+	--color-background-surface: var(--color-gray-green-950);
+	--color-text-base: var(--color-gray-green-200);
+	--color-text-muted: var(--color-gray-green-400);
+	--color-text-on-primary: var(--color-black-soft);
+	--color-border-default: var(--color-gray-green-800);
+	--color-border-subtle: var(--color-gray-green-800);
 
-	/* --- Texto --- */
-	--text-color: hsl(150, 15%, 88%); /* Gris verdoso claro */
-	--text-secondary: hsl(150, 10%, 65%); /* Gris verdoso medio */
+	/* --- 2b. Variables de Componente --- */
+
+	/* --- Navbar --- */
+	--navbar-bg: var(--color-gray-green-950);
+	--navbar-color: var(--color-text-base);
+	--navbar-brand-color: var(--color-white);
+	--navbar-toggler-icon-color: var(--color-text-base);
+	--navbar-toggler-border-color: var(--separator-color);
+	--navbar-toggler-focus-shadow: 0 0 0 0.25rem rgba(139, 192, 165, 0.5); /* Primitiva RGB de --color-green-100 */
 
 	/* --- Bordes y Separadores --- */
-	--separator-color: hsl(150, 10%, 22%); /* Gris-verdoso oscuro */
+	--separator-color: var(--color-border-subtle);
 
 	/* --- Botones y Enlaces --- */
-	--login-btn-text: hsl(140, 15%, 10%); /* Verde muy oscuro, casi negro */
-	--login-btn-bg: var(--primary-color);
-	--login-btn-border: var(--primary-color);
-	--login-btn-bg-hover: var(--primary-color-hover);
-	--login-btn-border-hover: var(--primary-color-hover);
+	--login-btn-text: var(--color-text-on-primary);
+	--login-btn-bg: var(--color-primary);
+	--login-btn-border: var(--color-primary);
+	--login-btn-bg-hover: var(--color-primary-hover);
+	--login-btn-border-hover: var(--color-primary-hover);
 
-	--register-link-color: var(--text-color);
-	--register-link-border-color: var(--separator-color);
+	--register-link-color: var(--navbar-color);
 	--register-link-bg-hover: rgba(255, 255, 255, 0.1);
 	--nav-link-active-bg: hsl(150, 10%, 25%);
 	--nav-link-active-border: hsl(150, 10%, 35%);
 
-	--switcher-link-color: var(--primary-color);
+	--switcher-link-color: var(--color-primary);
 
 	--logout-bg-color: hsl(210, 15%, 25%);
 	--logout-bg-color-hover: hsl(210, 15%, 30%);
-	--logout-text-color: var(--text-color);
+	--logout-text-color: var(--color-text-base);
 
-	--theme-toggle-btn-color: var(--text-secondary);
+	--theme-toggle-btn-color: var(--navbar-color);
 	--theme-toggle-btn-border-color: var(--separator-color);
 	--theme-toggle-btn-bg-hover: rgba(255, 255, 255, 0.1);
 
 	/* --- Tarjetas (ExcursionCard, UserInfo) --- */
-	--excursion-card-bg: hsl(150, 10%, 16%); /* Gris-verdoso oscuro */
+	--excursion-card-bg: var(--color-background-surface);
 	--excursion-card-shadow: none;
-	--excursion-card-title-color: var(--heading-color);
+	--excursion-card-title-color: var(--color-text-base);
 	--excursion-card-border: 1px solid var(--separator-color);
-	--excursion-card-icon-color: var(--primary-color);
-	--excursion-card-joined-status-text: hsl(
-		138,
-		71%,
-		65%
-	); /* Verde éxito claro */
+	--excursion-card-icon-color: var(--color-primary);
+	--excursion-card-joined-status-text: hsl(138, 71%, 65%);
 
 	/* --- Filtros --- */
-	--filter-container-bg: hsl(150, 10%, 16%);
-	--filter-title-color: var(--heading-color);
+	--filter-container-bg: var(--color-background-surface);
+	--filter-title-color: var(--color-text-base);
 
-	--filters-toggle-btn-color: var(--text-color);
+	--filters-toggle-btn-color: var(--color-text-base);
 	--filters-toggle-btn-border: var(--separator-color);
 	--filters-toggle-btn-bg-hover: hsl(150, 10%, 25%);
-	--filters-toggle-btn-color-hover: var(--accent-color);
-	--filters-toggle-btn-border-hover: var(--primary-color);
-	--filters-toggle-btn-bg-active: var(--primary-color);
+	--filters-toggle-btn-color-hover: var(--color-accent);
+	--filters-toggle-btn-border-hover: var(--color-primary);
+	--filters-toggle-btn-bg-active: var(--color-primary);
 	--filters-toggle-btn-color-active: var(--login-btn-text);
-	--filters-toggle-btn-border-active: var(--primary-color);
+	--filters-toggle-btn-border-active: var(--color-primary);
 
 	--mobile-filters-bar-bg: var(--body-bg);
 	--mobile-filters-bar-border: var(--separator-color);
-	--filter-badge-bg: var(--primary-color);
+	--filter-badge-bg: var(--color-primary);
 	--filter-badge-text: var(--login-btn-text);
 
 	--filter-pill-bg: hsl(150, 10%, 25%);
-	--filter-pill-text: var(--text-color);
+	--filter-pill-text: var(--color-text-base);
 	--filter-pill-border: hsl(150, 10%, 30%);
 	--filter-pill-bg-hover: hsl(150, 10%, 30%);
 	--filter-pill-border-hover: hsl(150, 10%, 40%);
-	--filter-pill-bg-checked: var(--primary-color);
-	--filter-pill-text-checked: hsl(210, 20%, 10%);
-	--filter-pill-border-checked: var(--primary-color);
+	--filter-pill-bg-checked: var(--color-primary);
+	--filter-pill-text-checked: var(--color-text-on-primary);
+	--filter-pill-border-checked: var(--color-primary);
 	--filter-pill-shadow-checked: none;
 
 	--filter-clear-btn-color-hover: hsl(355, 83%, 71%); /* Rojo claro */
 
 	/* --- Footer --- */
-	--footer-bg: var(--body-bg);
-	--footer-text-color: var(--text-secondary);
-	--footer-border-top: var(--separator-color);
-	--footer-icon-bg: hsl(150, 10%, 16%);
-	--footer-icon-color: var(--text-secondary);
+	--footer-bg: var(--color-background-body);
+	--footer-text-color: var(--color-text-muted);
+	--footer-border-color: hsl(150, 10%, 18%);
+	--footer-border-top: var(--footer-border-color);
+	--footer-icon-bg: var(--color-background-surface);
+	--footer-icon-color: var(--color-text-muted);
 	--footer-icon-bg-hover: hsl(150, 10%, 25%);
 
 	/* --- Indicadores de Dificultad (Bootstrap Overrides) --- */
-	--bs-success: hsl(145, 50%, 60%);
-	--bs-warning: hsl(43, 80%, 65%);
-	--bs-danger: hsl(355, 75%, 70%);
+	--bs-success: var(--color-success-dark);
+	--bs-warning: var(--color-warning-dark);
+	--bs-danger: var(--color-danger-dark);
 
 	/* --- Variables para badges de dificultad --- */
 	--difficulty-low-bg: hsl(145, 65%, 30%); /* Verde oscuro más vivo */
@@ -225,7 +289,7 @@ html.dark {
 	--difficulty-high-text: hsl(347, 55%, 92%);
 
 	/* --- Accesibilidad --- */
-	--focus-outline-color: var(--primary-color);
+	--focus-outline-color: var(--color-primary);
 
 	/* --- Estados (Error, Alerta) --- */
 	--color-bg-danger-subtle: hsl(0, 30%, 25%); /* Rojo oscuro desaturado */
@@ -234,12 +298,12 @@ html.dark {
 }
 
 html.dark body {
-	background-color: var(--body-bg);
-	color: var(--text-color);
+	background-color: var(--color-background-body);
+	color: var(--color-text-base);
 }
 
 /* ======================================== */
-/* 4. ESTILOS DE COMPONENTES (DEPENDEN DEL TEMA) */
+/* 3. ESTILOS DE COMPONENTES (DEPENDEN DEL TEMA) */
 /* ======================================== */
 
 /* Invierte el color del botón de cierre en modo oscuro para que sea visible */
@@ -250,21 +314,19 @@ html.dark .btn-close {
 /* --- Formularios (Inputs, etc.) --- */
 .form-control {
 	background-color: var(--excursion-card-bg);
-	color: var(--text-color);
+	color: var(--color-text-base);
 	border: 1px solid var(--separator-color);
 }
 
 .form-control::placeholder {
-	color: var(--text-secondary);
+	color: var(--color-text-muted);
 }
 
 /* Sobrescribe el estilo de foco de Bootstrap para que sea consistente con el :focus-visible global */
 .form-control:focus {
-	color: var(--text-color);
+	color: var(--color-text-base);
 	background-color: var(--excursion-card-bg);
-	border-color: var(
-		--primary-color
-	); /* Usamos el color primario para un mejor indicador de foco */
+	border-color: var(--color-primary);
 }
 
 /* Estilos para inputs deshabilitados o de solo lectura, para que se adapten al tema */
@@ -272,13 +334,13 @@ html.dark .btn-close {
 .form-control:disabled:not(.form-control-plaintext),
 .form-control[readonly]:not(.form-control-plaintext) {
 	background-color: var(--excursion-card-bg);
-	color: var(--text-secondary);
+	color: var(--color-text-muted);
 }
 
 /* --- Offcanvas (Menú y Filtros) --- */
 .offcanvas-header {
-	background-color: var(--body-bg);
-	color: var(--text-color);
+	background-color: var(--color-background-body);
+	color: var(--color-text-base);
 	border-bottom: 1px solid var(--separator-color);
 }
 
@@ -288,9 +350,7 @@ html.dark .btn-close {
 
 /* Estilos específicos para los enlaces dentro del Offcanvas de navegación (identificado por su ID) */
 #offcanvasNavbar .offcanvas-body .nav-link {
-	color: var(
-		--text-color
-	); /* Asegura que el texto sea legible en ambos temas */
+	color: var(--color-text-base);
 }
 
 /* Estilos para el botón de 'Iniciar Sesión' dentro del Offcanvas */
@@ -307,5 +367,5 @@ html.dark .btn-close {
 
 /* Estilos específicos para los inputs de tipo 'plaintext' */
 .form-control-plaintext {
-	color: var(--text-color);
+	color: var(--color-text-base);
 }

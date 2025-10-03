@@ -1,32 +1,16 @@
-import React, {
-	useState,
-	useEffect,
-	useLayoutEffect,
-	memo,
-	useCallback,
-	useRef,
-} from "react";
-import {
-	Nav,
-	Navbar,
-	Container,
-	Button,
-	Offcanvas,
-	Tooltip,
-	OverlayTrigger,
-} from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useLayoutEffect, memo, useRef } from "react";
+import { Nav, Navbar, Container, Offcanvas } from "react-bootstrap";
+import { useSelector } from "react-redux"; // useSelector se mantiene para isLoggedIn
 import Logo from "../Logo";
 import SearchBar from "../SearchBar";
 import AuthNav from "../AuthNav";
-import { toggleMode } from "../../slices/themeSlice";
-import { FaMoon, FaSun } from "react-icons/fa";
+import ThemeToggleButton from "../ThemeToggleButton";
 import styles from "./NavigationBar.module.css";
 import "../../css/Themes.css";
 
 /** @typedef {import('types.js').RootState} RootState */
 
-/** 
+/**
  * @typedef {object} NavigationBarProps
  * @property {(excursions: any[]) => void} onFetchSuccess - Función para actualizar el estado de la lista de excursiones.
  * @property {boolean} isAuthCheckComplete - Indica si la comprobación de autenticación ha finalizado.
@@ -94,68 +78,10 @@ function NavigationBarComponent({
 	 * Variable que guarda el modo de tema actual (claro u oscuro) del estado de Redux. Se inicializa con la preferencia del
 	 * sistema o un valor guardado en localStorage.
 	 */
-	const mode = useSelector(
-		/** @param {RootState} state */
-		(state) => state.themeReducer.mode
-	);
-	const dispatch = useDispatch();
 	// Variable que dice si hay un usuario logueado o no
 	const { login: isLoggedIn } = useSelector(
-		/** @param {RootState} state */
+		/** @param {RootState} state - Selector de Redux */
 		(state) => state.loginReducer
-	);
-
-	/**
-	 * Efecto que se ejecuta cuando el `mode` (tema) cambia.
-	 * Aplica la clase CSS correspondiente al elemento `<html>` y guarda la preferencia en `localStorage`.
-	 */
-	useEffect(() => {
-		if (mode === "light" || mode === "dark") {
-			// Se selecciona la etiqueta <html>
-			const root = document.documentElement;
-			// Se asegura de que la etiqueta <html> no tiene las clases 'light' y 'dark' aplicadas antes que el código añada
-			// la correcta basada en 'mode'
-			root.classList.remove("light", "dark");
-			// Añade la clase 'mode' ('light' o 'dark') a <html>
-			root.classList.add(mode);
-			// Actualiza la variable 'mode' en localStorage
-			localStorage.setItem("themeMode", mode);
-		}
-	}, [mode]);
-
-	/**
-	 * Alterna el modo de tema (claro/oscuro).
-	 */
-	const toggleTheme = () => {
-		dispatch(toggleMode());
-	};
-
-	/**
-	 * Icono para el botón de cambio de tema, varía según el modo actual.
-	 */
-	const icon =
-		mode === "light" ? (
-			//Icono de luna para el modo claro, sugiriendo cambio a oscuro.
-			<FaMoon className={styles.themeIcon} data-testid="fa-moon-icon" />
-		) : (
-			//Icono de sol para el modo oscuro, sugiriendo cambio a claro.
-			<FaSun className={styles.themeIcon} data-testid="fa-sun-icon" />
-		);
-
-	/**
-	 * Renderiza el Tooltip para el botón de cambio de tema.
-	 * Se memoiza con `useCallback` para evitar que se recree en cada renderizado,
-	 * a menos que el `mode` cambie.
-	 * @param {object} props - Propiedades inyectadas por OverlayTrigger.
-	 * @returns {React.ReactElement}
-	 */
-	const renderThemeTooltip = useCallback(
-		(props) => (
-			<Tooltip id="button-tooltip" {...props}>
-				{mode === "light" ? "Cambia a modo oscuro" : "Cambia a modo claro"}
-			</Tooltip>
-		),
-		[mode]
 	);
 
 	return (
@@ -169,7 +95,6 @@ function NavigationBarComponent({
 			className={`${styles.customNavbar} ${
 				isOnExcursionsPage ? styles.onExcursionsPage : ""
 			}`}
-			variant={mode}
 			sticky="top"
 		>
 			<Container fluid>
@@ -198,21 +123,7 @@ function NavigationBarComponent({
 				a la izquierda de ese elemento. Así que lo que hace, es poner ese elemento y lo que le siga lo más a la 
 				derecha que pueda dentro de ese container. */}
 				{/* order-lg-3: para posicionarlo correctamente en breakpoints grandes */}
-				<div className="d-flex align-items-center ms-auto ms-md-0 order-md-3 order-lg-3">
-					<OverlayTrigger placement="bottom" overlay={renderThemeTooltip}>
-						<Button
-							className={`${styles.themeToggleBtn} me-2`}
-							id="toggleButton"
-							onClick={toggleTheme}
-							aria-label={
-								mode === "light"
-									? "Activa el modo oscuro"
-									: "Activa el modo claro"
-							}
-						>
-							{icon}
-						</Button>
-					</OverlayTrigger>
+				<div className="d-flex align-items-center ms-auto ms-md-0 order-md-3 order-lg-3 me-2">
 					{/* Inline items para breakpoints grandes */}
 					{/* No visible en breakpoints pequeños (d-none), visible en grandes (d-lg-flex) */}
 					<Nav
@@ -224,6 +135,7 @@ function NavigationBarComponent({
 							onCloseMenu={handleCloseMenu}
 						/>
 					</Nav>
+					<ThemeToggleButton className="d-none d-lg-flex" />
 					{/* Toggle Offcanvas (Hamburguesa) */}
 					<Navbar.Toggle
 						aria-controls="offcanvasNavbar" // prettier-ignore
@@ -261,6 +173,7 @@ function NavigationBarComponent({
 					</Offcanvas.Header>
 					<Offcanvas.Body>
 						<Nav className="d-flex flex-column pt-2">
+							<ThemeToggleButton className="w-100 mb-2" showText={true} />
 							<AuthNav
 								isAuthCheckComplete={isAuthCheckComplete}
 								isLoggedIn={isLoggedIn}
