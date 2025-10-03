@@ -18,7 +18,7 @@ export const useAuthContext = () => {
 	// Esta comprobación asegura que el hook solo se use dentro de un AuthProvider.
 	// Si 'context' es 'undefined', significa que falta el Provider en el árbol de componentes.
 	if (context === undefined) {
-		throw new Error("useAuthContext debe ser usado dentro de un AuthProvider");
+throw new Error("useAuthContext debe ser usado dentro de un AuthContext.Provider");
 	}
 
 	return context;
