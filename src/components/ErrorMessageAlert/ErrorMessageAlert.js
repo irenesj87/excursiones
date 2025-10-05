@@ -2,7 +2,8 @@ import React from "react";
 import { Alert } from "react-bootstrap";
 import { GENERIC_ERROR_MESSAGE } from "../../constants";
 
-/** @typedef {object} ErrorMessageAlertProps
+/**
+ * @typedef {object} ErrorMessageAlertProps
  * @property {string} message - El mensaje de error a mostrar.
  * @property {() => void} onClose - Función que se ejecuta cuando se cierra la alerta.
  */

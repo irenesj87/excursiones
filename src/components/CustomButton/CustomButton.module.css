@@ -1,0 +1,45 @@
+.customButton {
+	border-radius: 8px;
+	font-weight: 600;
+	padding: 0.6rem 1.2rem;
+	transition: all 0.2s ease-in-out;
+	border: none;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo de foco para accesibilidad con teclado */
+.customButton:focus-visible {
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+}
+
+.primary {
+	background-color: var(--bs-primary);
+	color: white;
+}
+
+.primary:hover {
+	background-color: #0b5ed7; /* Un poco más oscuro que el primario de Bootstrap */
+	color: white;
+}
+
+.primary:active {
+	transform: scale(0.98);
+}
+
+.secondary {
+	background-color: var(--bs-gray-500);
+	color: var(--bs-dark);
+}
+
+.secondary:hover {
+	background-color: #9a9fa5; /* Un poco más oscuro que el gris 500 de Bootstrap */
+}
+.secondary:active {
+	transform: scale(0.98);
+}
+
+.secondary:disabled {
+	background-color: var(--bs-gray-500);
+	opacity: 0.65;
+}

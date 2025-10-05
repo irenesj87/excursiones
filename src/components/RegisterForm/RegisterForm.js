@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { Row, Col, Form } from "react-bootstrap";
 import ValidatedFormGroup from "../ValidatedFormGroup";
 import {
@@ -10,8 +10,8 @@ import {
 	validateSamePassword,
 } from "../../validation/validations.js";
 import { registerUser } from "../../services/authService.js";
-import FormErrorAlert from "../FormErrorAlert/index.js";
-import FormSubmitButton from "../FormSubmitButton/index.js";
+import FormErrorAlert from "../FormErrorAlert";
+import CustomButton from "../CustomButton";
 import { useAuthFormHandler } from "../../hooks/useAuthFormHandler.js";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "./RegisterForm.module.css";
@@ -28,6 +28,7 @@ const initialState = {
 
 /**
  * Componente que contiene la lógica del formulario de registro.
+ * @returns {React.ReactElement} El componente del formulario de registro.
  */
 function RegisterForm() {
 	const [values, setValues] = useState(initialState);
@@ -35,6 +36,8 @@ function RegisterForm() {
 	/**
 	 * Función que se pasa a cada campo del formulario. Cuando cambia, llama a formDispatch con la acción UPDATE_FIELD para
 	 * actualizar el estado.
+	 * @param {string} field - El campo que ha cambiado.
+	 * @param {string} value - El nuevo valor del campo.
 	 */
 	const handleInputChange = (field, value) => {
 		setValues((prev) => ({ ...prev, [field]: value }));
@@ -139,6 +142,8 @@ function RegisterForm() {
 		[values.password]
 	);
 
+	const isButtonDisabled = !isFormValid();
+
 	return (
 		<>
 			<FormErrorAlert
@@ -186,10 +191,16 @@ function RegisterForm() {
 					</ul>
 				</div>
 
-				<FormSubmitButton
-					isLoading={formState.isLoading}
-					isButtonDisabled={formState.isButtonDisabled}
-				/>
+				<div className="d-grid d-sm-flex justify-content-sm-end">
+					<CustomButton
+						type="submit"
+						variant={isButtonDisabled ? "secondary" : "primary"}
+						isLoading={formState.isLoading}
+						disabled={isButtonDisabled}
+					>
+						Enviar
+					</CustomButton>
+				</div>
 			</Form>
 		</>
 	);
