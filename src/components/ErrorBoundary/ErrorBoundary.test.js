@@ -45,13 +45,13 @@ describe("ErrorBoundary", () => {
 
 		// Verificamos que la UI de fallback se muestra
 		expect(screen.getByText("Hubo un error")).toBeInTheDocument();
-		// Verificamos que console.error fue llamado por componentDidCatch con los argumentos correctos
+		// Verificamos que console.error fue llamado por componentDidCatch con el objeto de error sanitizado.
 		expect(consoleErrorSpy).toHaveBeenCalledWith(
 			"Error capturado por ErrorBoundary:",
-			testError,
-			expect.objectContaining({
+			{
+				message: testError.message,
 				componentStack: expect.any(String),
-			})
+			}
 		);
 	});
 });

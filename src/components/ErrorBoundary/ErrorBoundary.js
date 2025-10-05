@@ -1,7 +1,7 @@
 import React from "react";
 
 /**
- * Componente que captura errores de JavaScript en cualquier parte de su árbol de componentes hijo, registra esos errores 
+ * Componente que captura errores de JavaScript en cualquier parte de su árbol de componentes hijo, registra esos errores
  * y muestra una UI de respaldo en lugar del árbol de componentes que se ha roto.
  * @param {object} props - Las propiedades del componente.
  * @param {React.ReactNode} props.children - Los componentes hijos que el ErrorBoundary protegerá.
@@ -33,11 +33,15 @@ class ErrorBoundary extends React.Component {
 		if (process.env.NODE_ENV === "production") {
 			// EN PRODUCCIÓN: No exponer detalles en la consola del cliente.
 			// Enviar el error a un servicio de logging externo (ej: Sentry, LogRocket, etc.).
-			// logErrorToMyService(error, errorInfo);
 			console.error("Se ha producido un error en la aplicación."); // Mensaje genérico
 		} else {
 			// En cualquier otro entorno (development, test, etc.), es útil ver el error completo.
-			console.error("Error capturado por ErrorBoundary:", error, errorInfo);
+			// Para evitar la exposición accidental de datos sensibles en el error, solo mostramos
+			// información que es segura para la depuración.
+			console.error("Error capturado por ErrorBoundary:", {
+				message: error.message, // Solo el mensaje, no el objeto de error completo.
+				componentStack: errorInfo.componentStack,
+			});
 		}
 	}
 
