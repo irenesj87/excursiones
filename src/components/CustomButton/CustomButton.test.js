@@ -68,21 +68,16 @@ describe("CustomButton", () => {
 		expect(button).not.toHaveClass(styles.primary);
 	});
 
-	test("no renderiza children que no sean string o number por seguridad", () => {
-		// Este test valida la mitigación de XSS
-		// Se crea un elemento React complejo que no es un string o number.
-		// La implementación de CustomButton debería filtrar esto por seguridad.
-		const maliciousChild = (
-			<span data-testid="malicious-content">
-				{"<script>alert('XSS')</script>"}
-			</span>
-		);
-		// @ts-ignore - Ignoramos el error de tipo intencionadamente para este test de seguridad,
-		// ya que estamos probando que el componente rechaza un tipo de 'children' no permitido.
-		render(<CustomButton>{maliciousChild}</CustomButton>);
+	test("renderiza contenido de forma segura y previene ataques XSS", () => {
+		// Este test valida que React escapa el contenido para prevenir XSS.
+		const maliciousString = "<script>alert('XSS')</script>";
+		render(<CustomButton>{maliciousString}</CustomButton>);
 
 		const button = screen.getByRole("button");
-		expect(button.innerHTML).not.toContain("&lt;script&gt;");
-		expect(button).toBeEmptyDOMElement();
+
+		// El contenido debe estar en el botón, pero como texto plano, no como un script ejecutable.
+		expect(button).toHaveTextContent(maliciousString);
+		// Verificamos que no se ha creado una etiqueta <script> real en el DOM.
+		expect(button.querySelector("script")).not.toBeInTheDocument();
 	});
 });

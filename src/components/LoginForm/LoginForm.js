@@ -23,17 +23,24 @@ export function LoginForm() {
 
 	const formValues = useMemo(() => ({ mail, password }), [mail, password]);
 
+	/**
+	 * Comprueba si el formulario es válido.
+	 * @returns {boolean} - `true` si el formulario es válido, `false` en caso contrario.
+	 */
 	const isFormValid = useCallback(
 		() => validateMail(mail) && isNotEmpty(password),
 		[mail, password]
 	);
 
 	const { formState, formDispatch, handleSubmit } = useAuthFormHandler(
+		// El hook espera los argumentos para la API en el mismo orden.
 		formValues,
 		isFormValid,
 		loginUser,
 		ROUTES.USER
 	);
+
+	const isButtonDisabled = !isFormValid();
 
 	return (
 		<>
@@ -73,9 +80,9 @@ export function LoginForm() {
 				<div className="d-grid d-sm-flex justify-content-sm-end">
 					<CustomButton
 						type="submit"
-						variant={!isFormValid() ? "secondary" : "primary"}
+						variant={isButtonDisabled ? "secondary" : "primary"}
 						isLoading={formState.isLoading}
-						disabled={!isFormValid()}
+						disabled={isButtonDisabled}
 					>
 						Enviar
 					</CustomButton>

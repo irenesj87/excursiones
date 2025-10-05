@@ -142,6 +142,8 @@ function RegisterForm() {
 		[values.password]
 	);
 
+	const isButtonDisabled = !isFormValid();
+
 	return (
 		<>
 			<FormErrorAlert
@@ -192,9 +194,9 @@ function RegisterForm() {
 				<div className="d-grid d-sm-flex justify-content-sm-end">
 					<CustomButton
 						type="submit"
-						variant={!isFormValid() ? "secondary" : "primary"}
+						variant={isButtonDisabled ? "secondary" : "primary"}
 						isLoading={formState.isLoading}
-						disabled={!isFormValid()}
+						disabled={isButtonDisabled}
 					>
 						Enviar
 					</CustomButton>

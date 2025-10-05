@@ -42,6 +42,4 @@
 .secondary:disabled {
 	background-color: var(--bs-gray-500);
 	opacity: 0.65;
-	/* Se añade la transición para suavizar el cambio al habilitarse */
-	transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
