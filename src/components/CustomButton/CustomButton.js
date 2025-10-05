@@ -4,7 +4,7 @@ import styles from "./CustomButton.module.css";
 
 /**
  * @typedef {object} CustomButtonProps
- * @property {string | number} children - El contenido textual del botón. Por seguridad, solo se aceptan strings o números.
+ * @property {import("react").ReactNode} children - El contenido del botón.
  * @property {() => void} [onClick] - Función a ejecutar al hacer clic.
  * @property {'button' | 'submit' | 'reset'} [type='button'] - El tipo de botón.
  * @property {'primary' | 'secondary'} [variant='primary'] - La variante de estilo del botón.
