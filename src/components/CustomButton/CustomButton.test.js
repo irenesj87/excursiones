@@ -48,14 +48,14 @@ describe("CustomButton", () => {
 			</CustomButton>
 		);
 
-		const button = screen.getByRole("button", { name: /enviando/i });
+		const button = screen.getByRole("button", { name: /cargando/i });
 		expect(button).toBeDisabled();
 		expect(button).toHaveAttribute("aria-busy", "true");
 
-		// Verifica que el spinner, el texto original y el texto accesible están presentes
+		// Verifica que el spinner y el texto accesible están presentes
 		expect(screen.getByText("Cargando...")).toBeInTheDocument();
-		// El texto original "Enviando" ahora debe estar visible junto al spinner.
-		expect(screen.getByText("Enviando")).toBeInTheDocument();
+		// El texto original "Enviando" no debe estar visible
+		expect(screen.queryByText("Enviando")).not.toBeInTheDocument();
 
 		fireEvent.click(button);
 		expect(handleClick).not.toHaveBeenCalled();

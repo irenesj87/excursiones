@@ -53,6 +53,7 @@ const CustomButton = ({
 					{children}
 					<span className="visually-hidden">Cargando...</span>
 				</>
+				</>
 			) : (
 				children
 			)}
