@@ -38,6 +38,7 @@ const CustomButton = ({
 			className={buttonClass}
 			onClick={!isLoading ? onClick : undefined}
 			disabled={disabled || isLoading}
+			aria-busy={isLoading}
 			{...rest}
 		>
 			{isLoading ? (
