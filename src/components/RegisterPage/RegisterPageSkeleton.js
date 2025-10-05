@@ -92,19 +92,16 @@ function RegisterPageSkeleton() {
 							</li>
 						</ul>
 					</div>
-
 					{/* Esqueleto para el botón de envío */}
-					<div className="mt-5 pt-3">
-						<Row className="justify-content-sm-end">
-							<Col xs={12} sm="auto">
-								<Skeleton
-									height={38}
-									className="w-100"
-									style={{ minWidth: 70 }}
-								/>
-							</Col>
-						</Row>
-					</div>
+					<Row className="justify-content-sm-end">
+						<Col xs={12} sm="auto">
+							<Skeleton
+								height={44}
+								className="w-100"
+								style={{ minWidth: 85 }}
+							/>
+						</Col>
+					</Row>
 				</div>
 			</SkeletonTheme>
 		</FormPageLayout>

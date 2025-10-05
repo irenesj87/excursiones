@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { Form } from "react-bootstrap";
 import {
 	validateMail,
@@ -6,8 +6,8 @@ import {
 } from "../../validation/validations.js";
 import { ROUTES, FORM_TEXT } from "../../constants.js";
 import ValidatedFormGroup from "../ValidatedFormGroup";
-import FormErrorAlert from "../FormErrorAlert";
-import FormSubmitButton from "../FormSubmitButton";
+import FormErrorAlert from "../FormErrorAlert/index.js";
+import CustomButton from "../CustomButton";
 import { loginUser } from "../../services/authService.js";
 import { useAuthFormHandler } from "../../hooks/useAuthFormHandler.js";
 import "bootstrap/dist/css/bootstrap.css";
@@ -15,6 +15,7 @@ import styles from "./LoginForm.module.css";
 
 /**
  * Componente que representa el formulario de inicio de sesión.
+ * @returns {React.ReactElement} El formulario de inicio de sesión.
  */
 export function LoginForm() {
 	const [mail, setMail] = useState("");
@@ -69,10 +70,16 @@ export function LoginForm() {
 					autocomplete="current-password"
 					errorMessage={FORM_TEXT.PASSWORD_CANNOT_BE_EMPTY}
 				/>
-				<FormSubmitButton
-					isLoading={formState.isLoading}
-					isButtonDisabled={formState.isButtonDisabled}
-				/>
+				<div className="d-grid d-sm-flex justify-content-sm-end">
+					<CustomButton
+						type="submit"
+						variant={!isFormValid() ? "secondary" : "primary"}
+						isLoading={formState.isLoading}
+						disabled={!isFormValid()}
+					>
+						Enviar
+					</CustomButton>
+				</div>
 			</Form>
 		</>
 	);

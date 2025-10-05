@@ -47,24 +47,23 @@ function LoginPageSkeleton() {
 					{renderInputPlaceholder()}
 					{renderInputPlaceholder()}
 					{/* Esqueleto para el botón de envío */}
-					<div className="mt-5 pt-3">
-						<Row className="justify-content-sm-end">
-							<Col xs={12} sm="auto">
-								{/*
+
+					<Row className="justify-content-sm-end">
+						<Col xs={12} sm="auto">
+							{/*
 							  Para el esqueleto del botón, necesitamos un comportamiento responsivo:
 							  - En breakpoints pequeños 'xs', debe ocupar el 100% del ancho (como el botón real).
 							  - En breakpoints más grandes, debe tener un ancho fijo para simular el botón.
 							  - La clase `w-100` asegura el ancho completo, y el `min-width` en el estilo evita que la 
 							  	columna `sm="auto"` colapse en breakpoints grandes.
 							*/}
-								<Skeleton
-									height={38}
-									className="w-100"
-									style={{ minWidth: 70 }}
-								/>
-							</Col>
-						</Row>
-					</div>
+							<Skeleton
+								height={44}
+								className="w-100"
+								style={{ minWidth: 85 }}
+							/>
+						</Col>
+					</Row>
 				</div>
 			</SkeletonTheme>
 		</FormPageLayout>
