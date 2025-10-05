@@ -38,8 +38,8 @@ class ErrorBoundary extends React.Component {
 			// En cualquier otro entorno (development, test, etc.), es útil ver el error completo.
 			// Para evitar la exposición accidental de datos sensibles en el error, solo mostramos
 			// información que es segura para la depuración.
-			console.error("Error capturado por ErrorBoundary:", {
-				message: error.message, // Solo el mensaje, no el objeto de error completo.
+            console.error("Error capturado por ErrorBoundary:", {
+				stack: error.stack,
 				componentStack: errorInfo.componentStack,
 			});
 		}
