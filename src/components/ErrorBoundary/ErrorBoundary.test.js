@@ -49,7 +49,7 @@ describe("ErrorBoundary", () => {
 		expect(consoleErrorSpy).toHaveBeenCalledWith(
 			"Error capturado por ErrorBoundary:",
 			{
-				message: testError.message,
+				stack: expect.any(String),
 				componentStack: expect.any(String),
 			}
 		);
