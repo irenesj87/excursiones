@@ -1,4 +1,11 @@
-import { memo, useMemo, useCallback, useState, useEffect, useRef } from "react";
+import React, {
+	memo,
+	useMemo,
+	useCallback,
+	useState,
+	useEffect,
+	useRef,
+} from "react";
 import { Row, Col } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../../slices/loginSlice";
@@ -16,12 +23,11 @@ import styles from "./ExcursionsList.module.css";
 /**
  * Componente que orquesta la visualización de la lista de excursiones.
  * Gestiona los estados de carga, error y "no encontrado", renderizando el componente hijo apropiado.
- * @param {ExcursionsListProps} props
- * @typedef {object} ExcursionsListProps
- * @property {Excursion[]} [excursionData=[]] - Array de excursiones a mostrar.
- * @property {boolean} isLoading - Indica si los datos de las excursiones se están cargando.
- * @property {(Error & { secondaryMessage?: string }) | null} error - Objeto de error si ha ocurrido un problema al cargar
- * las excursiones.
+ * @param {object} props - Las propiedades del componente.
+ * @param {Excursion[]} [props.excursionData] - Array de excursiones a mostrar. El valor por defecto es un array vacío.
+ * @param {boolean} props.isLoading - Indica si los datos de las excursiones se están cargando.
+ * @param {(Error & { secondaryMessage?: string }) | null} props.error - Objeto de error si ha ocurrido un problema al cargar las excursiones.
+ * @returns {React.ReactElement} El componente de la lista de excursiones.
  */
 function ExcursionsListComponent({ excursionData = [], isLoading, error }) {
 	// Se obtiene el estado del loginReducer, el objeto usuario y el token
@@ -30,7 +36,10 @@ function ExcursionsListComponent({ excursionData = [], isLoading, error }) {
 		user,
 		token,
 	} = useSelector(
-		/** @param {RootState} state */
+		/**
+		 * @param {RootState} state - El estado global de Redux.
+		 * @returns {{login: boolean, user: import('types.js').User | null, token: string | null}} - El estado del loginReducer.
+		 */
 		(state) => state.loginReducer
 	);
 	const loginDispatch = useDispatch();
@@ -71,7 +80,7 @@ function ExcursionsListComponent({ excursionData = [], isLoading, error }) {
 	const joinExcursion = useCallback(
 		async (excursionId) => {
 			try {
-				/** Llamamos al servicio para unirse a la excursión. Este es el que hace la petición al servidor para apuntar
+				/* Llamamos al servicio para unirse a la excursión. Este es el que hace la petición al servidor para apuntar
 				 * al usuario a la excursión. El 'await' le dice a JavaScript que pause la ejecución de la función
 				 * 'joinExcursion'hasta que 'joinExcursionService' termine y retorne una respuesta o un error.
 				 * Si la petición es exitosa, 'updateUser' contendrá la info actualizada del usuario (con la nueva excursión
