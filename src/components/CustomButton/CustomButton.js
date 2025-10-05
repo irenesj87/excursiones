@@ -42,10 +42,10 @@ const CustomButton = ({
 			{...rest}
 		>
 			{isLoading ? (
-				<output>
+				<>
 					<Spinner as="span" animation="border" size="sm" aria-hidden="true" />
 					<span className="visually-hidden">Cargando...</span>
-				</output>
+				</>
 			) : (
 				children
 			)}
