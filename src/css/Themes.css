@@ -43,6 +43,11 @@
 	--color-success-dark: hsl(145, 50%, 60%);
 	--color-warning-dark: hsl(43, 80%, 65%);
 	--color-danger-dark: hsl(355, 75%, 70%);
+
+	/* Icono de hamburguesa para el tema claro (color blanco #ffffff) */
+	--navbar-toggler-icon-bg-light: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+	/* Icono de hamburguesa para el tema oscuro (color blanco #ffffff) */
+	--navbar-toggler-icon-bg-dark: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
 /* ======================================== */
@@ -73,6 +78,7 @@ html.light {
 	--navbar-brand-color: var(--color-white);
 	--navbar-toggler-icon-color: var(--color-white);
 	--navbar-toggler-border-color: rgba(255, 255, 255, 0.25);
+	--bs-navbar-toggler-icon-bg: var(--navbar-toggler-icon-bg-light);
 	--navbar-toggler-focus-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.5);
 
 	/* --- Bordes y Separadores --- */
@@ -201,6 +207,7 @@ html.dark {
 	--navbar-brand-color: var(--color-white);
 	--navbar-toggler-icon-color: var(--color-text-base);
 	--navbar-toggler-border-color: var(--separator-color);
+	--bs-navbar-toggler-icon-bg: var(--navbar-toggler-icon-bg-dark);
 	--navbar-toggler-focus-shadow: 0 0 0 0.25rem rgba(139, 192, 165, 0.5); /* Primitiva RGB de --color-green-100 */
 
 	/* --- Bordes y Separadores --- */

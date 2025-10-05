@@ -121,19 +121,18 @@ function NavigationBarComponent({
 				derecha que pueda dentro de ese container. */}
 				{/* order-lg-3: para posicionarlo correctamente en breakpoints grandes */}
 				<div className="d-flex align-items-center ms-auto ms-md-0 order-md-3 order-lg-3 me-2">
-					{/* Inline items para breakpoints grandes */}
-					{/* No visible en breakpoints pequeños (d-none), visible en grandes (d-lg-flex) */}
-					<Nav
-						className={`${styles.authNavItems} d-none d-lg-flex flex-row align-items-center`}
-					>
-						<AuthNav onCloseMenu={handleCloseMenu} />
-					</Nav>
-					<ThemeToggleButton className="d-none d-lg-flex" />
-					{/* Toggle Offcanvas (Hamburguesa) */}
+					<ThemeToggleButton className="me-2" />
+					<div className="d-none d-lg-flex align-items-center">
+						<Nav
+							className={`${styles.authNavItems} flex-row align-items-center`}
+						>
+							<AuthNav onCloseMenu={handleCloseMenu} />
+						</Nav>
+					</div>
 					<Navbar.Toggle
-						aria-controls="offcanvasNavbar" // prettier-ignore
-						label="Abrir menú de navegación" // prettier-ignore
-						onClick={handleShowMenu} // prettier-ignore
+						aria-controls="offcanvasNavbar" 
+						label="Abrir menú de navegación" 
+						onClick={handleShowMenu} 
 						className={`d-lg-none ${styles.navbarToggler}`}
 					/>
 				</div>
@@ -165,10 +164,7 @@ function NavigationBarComponent({
 						<Offcanvas.Title>Menú</Offcanvas.Title>
 					</Offcanvas.Header>
 					<Offcanvas.Body>
-						<Nav className="d-flex flex-column pt-2">
-							<ThemeToggleButton className="w-100 mb-2" showText={true} />
-							<AuthNav onCloseMenu={handleCloseMenu} />
-						</Nav>
+						<AuthNav onCloseMenu={handleCloseMenu} />
 					</Offcanvas.Body>
 				</Offcanvas>
 			</Container>
