@@ -1,3 +1,4 @@
+/* Estilos para la tarjeta de excursión */
 .excursionItemCard {
 	display: flex;
 	flex-direction: column;
@@ -8,16 +9,14 @@
 	box-shadow: var(--excursion-card-shadow);
 	/* Añade un outline para la accesibilidad del teclado */
 	outline-offset: 2px;
-}
-.excursionItemCard:focus-visible {
-	outline: 2px solid var(--focus-outline-color);
-}
 
-.excursionItemCard .card-body {
-	background-color: transparent;
-	flex-grow: 1;
-	display: flex;
-	flex-direction: column;
+	& .card-body {
+		background-color: transparent; /* Asegura que el fondo del cuerpo sea transparente */
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--focus-outline-color);
+	}
 }
 
 /* Título de la tarjeta */
@@ -29,37 +28,27 @@
 	color: var(--excursion-card-title-color);
 }
 
-.areaIcon {
-	margin-right: 0.25rem;
-	font-size: 1.2rem;
-	color: var(--bs-primary);
-}
-
-.excursionArea {
-	display: flex;
-	align-items: center;
-	font-size: 1rem;
-	font-style: italic;
-}
-
+/* Detalles de la excursión (zona, dificultad, tiempo) */
 .excursionDetails {
 	margin-bottom: 1rem;
 	display: flex;
 	flex-wrap: wrap;
 	gap: 1rem;
-	color: var(--text-color);
+	color: var(--color-text-base);
 }
 
+/* Estilos para el badge de dificultad */
 .difficultyBadge {
 	display: inline-block;
 	padding: 0.25em 0.6em;
 	border-radius: 1em;
-	font-size: 0.85rem;
+	font-size: 0.95rem;
 	font-weight: 600;
 	line-height: 1;
 	text-align: center;
 }
 
+/* Colores específicos para cada nivel de dificultad */
 .difficultyLow {
 	background-color: var(--difficulty-low-bg);
 	color: var(--difficulty-low-text);
@@ -75,22 +64,17 @@
 	color: var(--difficulty-high-text);
 }
 
+.cardActionArea {
+	min-height: 42px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+/* Estilos para la tarjeta cuando el usuario ya está apuntado */
 .joinedStatus {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.5rem;
 	color: var(--excursion-card-joined-status-text);
 	font-weight: 600;
-}
-
-.cardActionArea {
-	min-height: 42px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	transition: background-color 0.3s ease-in-out;
-}
-
-.joinButton {
-	transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
