@@ -6,7 +6,6 @@ import { FiMapPin, FiClock, FiCheckCircle } from "react-icons/fi";
 import { useJoinExcursion } from "../../hooks/useJoinExcursion";
 import cn from "classnames";
 import { getSafeErrorMessage } from "../../utils/errorUtils";
-import { GENERIC_ERROR_MESSAGE } from "../../constants";
 import "bootstrap/dist/css/bootstrap.css";
 import styles from "./ExcursionCard.module.css";
 
