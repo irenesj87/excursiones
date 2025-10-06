@@ -118,17 +118,17 @@ function ExcursionCardComponent({
 	// Efecto para anunciar el resultado (éxito o error) de la acción.
 	// Usamos una referencia para evitar que se anuncie el estado "Apuntado" en la carga inicial.
 	const isInitialMount = React.useRef(true);
-	useEffect(() => {
-		if (isInitialMount.current) {
-			isInitialMount.current = false;
-			return;
-		}
-		if (joinError) {
-			setAnnouncement(`Error al apuntarse: ${GENERIC_ERROR_MESSAGE}`);
-		} else if (isJoined) {
-			setAnnouncement(`Te has apuntado correctamente a la excursión ${name}.`);
-		}
-	}, [joinError, isJoined, name]);
+useEffect(() => {
+	if (isInitialMount.current) {
+		isInitialMount.current = false;
+		return;
+	}
+	if (joinError) {
+		setAnnouncement(`Error al apuntarse: ${getSafeErrorMessage(joinError)}`);
+	} else if (isJoined) {
+		setAnnouncement(`Te has apuntado correctamente a la excursión ${name}.`);
+	}
+}, [joinError, isJoined, name]);
 
 	return (
 		<Card
