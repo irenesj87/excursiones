@@ -1,3 +1,4 @@
+import React from "react";
 import { Card } from "react-bootstrap";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { useSkeletonTheme } from "../../hooks/useSkeletonTheme";
@@ -17,8 +18,8 @@ const SKELETON_SIZES = {
 	AREA_TEXT_WIDTH: 84,
 	DIFFICULTY_TEXT_WIDTH: 76,
 	TIME_TEXT_WIDTH: 58,
-	BUTTON_HEIGHT: 38,
-	BUTTON_MIN_WIDTH: 100,
+	BUTTON_HEIGHT: 43,
+	BUTTON_MIN_WIDTH: 117,
 };
 
 /**
@@ -29,7 +30,8 @@ const SKELETON_SIZES = {
 
 /**
  * Componente auxiliar para renderizar el esqueleto de un ítem de detalle.
- * @param {DetailItemSkeletonProps} props
+ * @param {DetailItemSkeletonProps} props - Las propiedades del componente.
+ * @returns {React.ReactElement} - El elemento React que representa el esqueleto del ítem de detalle.
  */
 const DetailItemSkeleton = ({ withIcon = false, width }) => (
 	<div className={detailItemStyles.detailItem}>
@@ -44,13 +46,15 @@ const DetailItemSkeleton = ({ withIcon = false, width }) => (
 	</div>
 );
 
-/** @typedef {object} ExcursionCardSkeletonProps
+/** 
+ * @typedef {object} ExcursionCardSkeletonProps
  * @property {boolean} [isLoggedIn=false] - Indica si el usuario ha iniciado sesión para mostrar el placeholder del botón.
  */
 
 /**
  * Componente que muestra un esqueleto de carga para una ExcursionCard.
- * @param {ExcursionCardSkeletonProps} props
+ * @param {ExcursionCardSkeletonProps} props - Las propiedades del componente.
+ * @returns {React.ReactElement} - El elemento React que representa el esqueleto de la tarjeta de excursión.
  */
 function ExcursionCardSkeleton({ isLoggedIn = false }) {
 	const { baseColor, highlightColor } = useSkeletonTheme();
