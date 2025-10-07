@@ -10,6 +10,19 @@ import "bootstrap/dist/css/bootstrap.css";
 import styles from "./ExcursionCard.module.css";
 
 /**
+ * Hook para obtener el valor anterior de una prop o estado.
+ * @param {T} value El valor actual.
+ * @returns {T | undefined} El valor de la renderización anterior.
+ * @template T
+ */
+const usePrevious = (value) => {
+	const ref = React.useRef(undefined);
+	React.useEffect(() => {
+		ref.current = value;
+	});
+	return ref.current;
+};
+/**
  * Determina las clases CSS para el badge de dificultad.
  * @param {string} difficultyLevel - El nivel de dificultad ("Baja", "Media", "Alta").
  * @returns {string} - Una cadena de clases CSS.
@@ -99,6 +112,9 @@ function ExcursionCardComponent({
 	// Estado para gestionar los anuncios para lectores de pantalla.
 	const [announcement, setAnnouncement] = useState("");
 
+	// Hook para obtener el valor anterior de `isJoined` y evitar anuncios repetidos.
+	const prevIsJoined = usePrevious(isJoined);
+
 	// Genera un ID seguro para el título, que se usará para la accesibilidad, previniendo inyección de atributos.
 	const titleId = useId();
 
@@ -125,11 +141,12 @@ function ExcursionCardComponent({
 			return;
 		}
 		if (joinError) {
-			setAnnouncement(`Error al apuntarse: ${getSafeErrorMessage(joinError)}`);
-		} else if (isJoined) {
+			setAnnouncement(`Error al apuntarse: ${getSafeErrorMessage(joinError)}.`);
+		} else if (isJoined && !prevIsJoined) {
+			// Solo anunciar el éxito cuando el estado cambia de no apuntado a apuntado.
 			setAnnouncement(`Te has apuntado correctamente a la excursión ${name}.`);
 		}
-	}, [joinError, isJoined, name]);
+	}, [joinError, isJoined, prevIsJoined, name]);
 
 	return (
 		<Card
