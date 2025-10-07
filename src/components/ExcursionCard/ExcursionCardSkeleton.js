@@ -6,20 +6,27 @@ import cardStyles from "./ExcursionCard.module.css"; // Se reutiliza el CSS de l
 import detailItemStyles from "../ExcursionDetailItem/ExcursionDetailItem.module.css";
 import "react-loading-skeleton/dist/skeleton.css";
 
-// Define las dimensiones del esqueleto como constantes para evitar "números mágicos"
-// y facilitar el mantenimiento.
 /**
- * @constant {object} SKELETON_SIZES - Define las dimensiones y anchos para los elementos del esqueleto para facilitar su mantenimiento.
+ * @constant {object} TEST_IDS - Identificadores para los elementos del componente para facilitar las pruebas.
+ */
+export const TEST_IDS = {
+	SKELETON_CARD: "excursion-card-skeleton",
+	BUTTON_CONTAINER: "button-skeleton-container",
+};
+
+/**
+ * @constant {object} SKELETON_SIZES - Define las dimensiones y anchos para los elementos del esqueleto para facilitar
+ * su mantenimiento.
  */
 const SKELETON_SIZES = {
-	TITLE_HEIGHT: 21,
-	TITLE_WIDTH: "70%",
-	ICON_SIZE: 20,
-	AREA_TEXT_WIDTH: 84,
-	DIFFICULTY_TEXT_WIDTH: 76,
-	TIME_TEXT_WIDTH: 58,
-	BUTTON_HEIGHT: 43,
-	BUTTON_MIN_WIDTH: 117,
+	TITLE_HEIGHT: 21, // Altura del esqueleto del título
+	TITLE_WIDTH: "70%", // Ancho del esqueleto del título
+	ICON_SIZE: 20, // Tamaño del esqueleto del icono
+	AREA_TEXT_WIDTH: 84, // Ancho del esqueleto del texto de área
+	DIFFICULTY_TEXT_WIDTH: 76, // Ancho del esqueleto del texto de dificultad
+	TIME_TEXT_WIDTH: 58, // Ancho del esqueleto del texto de tiempo
+	BUTTON_HEIGHT: 43, // Altura del esqueleto del botón
+	BUTTON_MIN_WIDTH: 117, // Ancho mínimo del esqueleto del botón
 };
 
 /**
@@ -46,7 +53,7 @@ const DetailItemSkeleton = ({ withIcon = false, width }) => (
 	</div>
 );
 
-/** 
+/**
  * @typedef {object} ExcursionCardSkeletonProps
  * @property {boolean} [isLoggedIn=false] - Indica si el usuario ha iniciado sesión para mostrar el placeholder del botón.
  */
@@ -64,7 +71,7 @@ function ExcursionCardSkeleton({ isLoggedIn = false }) {
 			<Card
 				className={`${cardStyles.excursionItemCard} h-100 w-100`}
 				aria-hidden="true"
-				data-testid="excursion-card-skeleton"
+				data-testid={TEST_IDS.SKELETON_CARD}
 			>
 				<Card.Body className="d-flex flex-column flex-grow-1">
 					<div>
@@ -93,7 +100,7 @@ function ExcursionCardSkeleton({ isLoggedIn = false }) {
 					{isLoggedIn && (
 						<div
 							className="mt-auto pt-3"
-							data-testid="button-skeleton-container"
+							data-testid={TEST_IDS.BUTTON_CONTAINER}
 						>
 							<div className="d-grid d-md-flex justify-content-md-end">
 								<Skeleton

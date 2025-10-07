@@ -5,14 +5,14 @@ import ExcursionCard from "./ExcursionCard";
 import styles from "./ExcursionCard.module.css";
 import { useJoinExcursion } from "../../hooks/useJoinExcursion";
 import { GENERIC_ERROR_MESSAGE } from "../../constants";
+import { mocked } from "jest-mock";
 
 // Mock del hook personalizado.
 // Esto nos permite controlar los valores que el hook retorna en cada test
 // para verificar que el componente reacciona correctamente.
 jest.mock("../../hooks/useJoinExcursion");
-const mockedUseJoinExcursion = /** @type {jest.Mock<any, any>} */ (
-	useJoinExcursion
-);
+const mockedUseJoinExcursion = mocked(useJoinExcursion);
+
 // Mock data para una excursión
 const mockExcursion = {
 	id: "1",
@@ -24,14 +24,10 @@ const mockExcursion = {
 
 describe("ExcursionCard Component", () => {
 	// Definimos un ID predecible que retornará el mock de `useId`.
-	const MOCK_ID = "mock-id-12345";
 
 	beforeEach(() => {
 		// Limpiamos los mocks antes de cada test para asegurar que los tests son independientes.
 		mockedUseJoinExcursion.mockClear();
-		// Mockeamos React.useId para que retorne un valor constante y predecible.
-		// Esto es crucial para poder probar la relación de accesibilidad.
-		jest.spyOn(React, "useId").mockReturnValue(MOCK_ID);
 	});
 
 	afterEach(() => {
@@ -98,16 +94,16 @@ describe("ExcursionCard Component", () => {
 			<ExcursionCard {...mockExcursion} isLoggedIn={false} isJoined={false} />
 		);
 
-		// El título (renderizado como <legend>) debe tener el ID mockeado.
+		// El título (renderizado como <legend>) debe tener un ID.
 		const title = screen.getByText(mockExcursion.name);
-		expect(title).toHaveAttribute("id", MOCK_ID);
+		expect(title).toHaveAttribute("id");
 
 		// La tarjeta (renderizada como <fieldset>) debe estar etiquetada por el título.
 		// La forma más robusta de verificarlo es buscando el elemento por su "accessible name",
 		// que gracias a `aria-labelledby` será el texto del título.
 		const card = screen.getByRole("group", { name: mockExcursion.name });
 		expect(card).toBeInTheDocument();
-		expect(card).toHaveAttribute("aria-labelledby", MOCK_ID);
+		expect(card).toHaveAttribute("aria-labelledby", title.id);
 	});
 
 	test("muestra el estado 'Apuntado/a' si el usuario ya se ha apuntado", () => {
@@ -204,14 +200,18 @@ describe("ExcursionCard Component", () => {
 	});
 
 	test("muestra un mensaje de error genérico si el hook retorna un error que no es un string", () => {
-		// Simulamos que el hook retorna un elemento React malicioso en lugar de un string.
-		const maliciousError = <span>Contenido malicioso</span>;
-		mockedUseJoinExcursion.mockReturnValue({
-			isJoining: false,
-			joinError: maliciousError,
-			handleJoin: jest.fn(),
-			clearError: jest.fn(),
-		});
+		// Simulamos que el hook retorna un objeto en lugar de un string para probar la lógica de seguridad.
+		const maliciousError = { message: "Contenido malicioso" };
+		/* eslint-disable */
+		mockedUseJoinExcursion.mockReturnValue(
+			/** @type {any} */ ({
+				isJoining: false,
+				joinError: maliciousError,
+				handleJoin: jest.fn(),
+				clearError: jest.fn(),
+			})
+		);
+		/* eslint-enable */
 
 		render(
 			<ExcursionCard
@@ -223,7 +223,7 @@ describe("ExcursionCard Component", () => {
 		);
 
 		// VERIFICAR: El contenido malicioso NO debe renderizarse.
-		expect(screen.queryByText("Contenido malicioso")).not.toBeInTheDocument();
+		expect(screen.queryByText(/contenido malicioso/i)).not.toBeInTheDocument();
 
 		// VERIFICAR: Se debe mostrar el mensaje de respaldo seguro.
 		expect(screen.getByText(GENERIC_ERROR_MESSAGE)).toBeInTheDocument();
