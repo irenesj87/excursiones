@@ -10,6 +10,19 @@ import "bootstrap/dist/css/bootstrap.css";
 import styles from "./ExcursionCard.module.css";
 
 /**
+ * Hook para obtener el valor anterior de una prop o estado.
+ * @param {T} value El valor actual.
+ * @returns {T | undefined} El valor de la renderización anterior.
+ * @template T
+ */
+const usePrevious = (value) => {
+	const ref = React.useRef(undefined);
+	React.useEffect(() => {
+		ref.current = value;
+	});
+	return ref.current;
+};
+/**
  * Determina las clases CSS para el badge de dificultad.
  * @param {string} difficultyLevel - El nivel de dificultad ("Baja", "Media", "Alta").
  * @returns {string} - Una cadena de clases CSS.
@@ -99,6 +112,9 @@ function ExcursionCardComponent({
 	// Estado para gestionar los anuncios para lectores de pantalla.
 	const [announcement, setAnnouncement] = useState("");
 
+	// Hook para obtener el valor anterior de `isJoined` y evitar anuncios repetidos.
+	const prevIsJoined = usePrevious(isJoined);
+
 	// Genera un ID seguro para el título, que se usará para la accesibilidad, previniendo inyección de atributos.
 	const titleId = useId();
 
@@ -115,22 +131,30 @@ function ExcursionCardComponent({
 	}, [isJoining, name]);
 
 	// Efecto para anunciar el resultado (éxito o error) de la acción.
-	// Usamos una referencia para evitar que se anuncie el estado "Apuntado" en la carga inicial.
+	// Usamos una referencia para saber si es la primera vez que el componente se monta
 	const isInitialMount = React.useRef(true);
-useEffect(() => {
-	if (isInitialMount.current) {
-		isInitialMount.current = false;
-		return;
-	}
-	if (joinError) {
-		setAnnouncement(`Error al apuntarse: ${getSafeErrorMessage(joinError)}`);
-	} else if (isJoined) {
-		setAnnouncement(`Te has apuntado correctamente a la excursión ${name}.`);
-	}
-}, [joinError, isJoined, name]);
+	useEffect(() => {
+		// Si es la primera vez que se monta, Detiene la ejecución del efecto inmediatamente.
+		// Esto evita anuncios innecesarios al cargar el componente.
+		if (isInitialMount.current) {
+			isInitialMount.current = false;
+			return;
+		}
+		if (joinError) {
+			setAnnouncement(`Error al apuntarse: ${getSafeErrorMessage(joinError)}.`);
+		} else if (isJoined && !prevIsJoined) {
+			// Solo anunciar el éxito cuando el estado cambia de no apuntado a apuntado.
+			setAnnouncement(`Te has apuntado correctamente a la excursión ${name}.`);
+		}
+	}, [joinError, isJoined, prevIsJoined, name]);
 
 	return (
 		<Card
+			// Usamos un fieldset para agrupar la información relacionada de la excursión.
+			// Esto mejora la accesibilidad al proporcionar un contexto claro para los lectores de pantalla.
+			// El atributo aria-labelledby asocia el fieldset con su título, proporcionando una descripción clara.
+			// Esto es especialmente útil para usuarios de lectores de pantalla, ya que les permite entender
+			// rápidamente el propósito del grupo de información.
 			as="fieldset"
 			// La tarjeta es programáticamente enfocable con el teclado para mejorar la accesibilidad,
 			// para que todos los usuarios puedan navegar por el contenido.
@@ -149,6 +173,7 @@ useEffect(() => {
 				<div>
 					{/* Título de la excursión */}
 					<Card.Title
+						/* 'legend' proporciona un título para su <fieldset> padre */
 						as="legend"
 						id={titleId}
 						className={`${styles.excursionTitle} mb-3`}
@@ -178,6 +203,8 @@ useEffect(() => {
 				{isLoggedIn && (
 					<div className={`${styles.cardActionArea} mt-auto pt-3`}>
 						{joinError && (
+							/* Componente Alert de Bootstrap para mostrar errores al unirse a la excursión. */
+							/* El mensaje de error se sanitiza para prevenir inyección de HTML. */
 							<Alert
 								variant="danger"
 								onClose={clearError}
