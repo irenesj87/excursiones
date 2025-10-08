@@ -32,7 +32,7 @@ function FooterComponent() {
 				<MdMail />
 			</a>
 
-			<p className={styles.footerText}>{getCopyrightText()}</p>
+			<small className={styles.footerText}>{getCopyrightText()}</small>
 		</footer>
 	);
 }
