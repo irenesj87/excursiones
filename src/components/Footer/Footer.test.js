@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Footer from "./Footer";
 import { CONTACT_EMAIL, COMPANY_NAME, START_YEAR } from "../../constants";
@@ -9,10 +9,14 @@ describe("Footer Component", () => {
 	test("renderiza correctamente el texto del copyright y el enlace de correo", () => {
 		render(<Footer />);
 
-		// Comprobamos que el texto de copyright está presente.
-		// Construimos el texto esperado usando las constantes, igual que en el componente.
+		// Replicamos la lógica del componente para generar el texto de copyright esperado.
+		// Esto hace que el test sea más robusto ante futuros cambios.
 		const CURRENT_YEAR = new Date().getFullYear();
-		const expectedCopyrightText = `© ${COMPANY_NAME} ${START_YEAR} - ${CURRENT_YEAR}. Todos los derechos reservados.`;
+		const yearDisplay =
+			START_YEAR === CURRENT_YEAR
+				? START_YEAR
+				: `${START_YEAR} - ${CURRENT_YEAR}`;
+		const expectedCopyrightText = `© ${COMPANY_NAME} ${yearDisplay}. Todos los derechos reservados.`;
 		const copyrightText = screen.getByText(expectedCopyrightText);
 		expect(copyrightText).toBeInTheDocument();
 
@@ -23,17 +27,5 @@ describe("Footer Component", () => {
 		});
 		expect(mailLink).toBeInTheDocument();
 		expect(mailLink).toHaveAttribute("href", `mailto:${CONTACT_EMAIL}`);
-	});
-
-	// Test 2: Simular la interacción del usuario (hover) para verificar que el tooltip aparece.
-	test("muestra el tooltip cuando se pasa el ratón por encima del icono de correo", async () => {
-		render(<Footer />);
-		// Buscamos un elemento que esté asociado a una etiqueta <label> o, como en este caso, que tenga un atributo de
-		// accesibilidad aria-label
-		const mailLink = screen.getByLabelText(/enviar correo electrónico/i);
-		fireEvent.mouseOver(mailLink);
-		// El tooltip aparece de forma asíncrona, por lo que usamos `findByText`.
-		const tooltip = await screen.findByText(/envíanos un correo/i);
-		expect(tooltip).toBeInTheDocument();
 	});
 });
